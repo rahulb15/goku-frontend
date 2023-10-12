@@ -366,11 +366,21 @@ const HotCollectionsTab = (props) => {
     // (test-capability (pass.coin.TRANSFER "user2" "arya" 0.08))
     // (test-capability (pass.coin.TRANSFER "user2" "user" 1.96))
 
+    // const a = accountName;
+    // // const b = "k:78a6d3d3ea9f2ad21a347d6715554de20b0ac9234057ed50ae8776fa96493826"
+    // const b = data.creator;
+    // const c = "marketplacefinalacc002";
+    // console.log("b", b, "c", c, "a", a);
     const a = accountName;
-    // const b = "k:78a6d3d3ea9f2ad21a347d6715554de20b0ac9234057ed50ae8776fa96493826"
-    const b = data.creator;
-    const c = "marketplacefinalacc002";
-    console.log("b", b, "c", c, "a", a);
+    // account -> a = buyer account
+    // account -> b = royalty account
+    // account -> c = marketplace admin account
+    //account -> d = seller account
+    const b = data.collection_info[0].royaltyAddress;
+    const c =
+      "k:56609bf9d1983f0c13aaf3bd3537fe00db65eb15160463bb641530143d4e9bcf";
+    const d = data.creator;
+console.log("b", b, "c", c, "a", a, "d", d);
     const pactCode = `(free.marketplacefinal002.buy ${JSON.stringify(
       data.tokenId
     )} ${JSON.stringify(a)})`;
@@ -400,7 +410,7 @@ const HotCollectionsTab = (props) => {
             "Transfer",
             "Capability to allow coin transfer",
             "coin.TRANSFER",
-            [a, c, sellerPayout]
+            [a, d, sellerPayout]
           ),
         ],
         sender: a,
@@ -521,7 +531,7 @@ const HotCollectionsTab = (props) => {
               "Transfer",
               "Capability to allow coin transfer",
               "coin.TRANSFER",
-              [a, c, sellerPayout]
+              [a, d, sellerPayout]
             ),
           ],
           envData: {
