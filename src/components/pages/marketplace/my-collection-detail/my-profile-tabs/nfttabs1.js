@@ -549,7 +549,7 @@ const NftTabs1 = (props) => {
         _id: data._id,
         tokenId: `${datum["collectionName"]}:${datum["tokenId"]}`,
         collectionName: datum["collectionName"],
-        creator: datum.creator,
+        creator: walletAddress,
         tokenImage: datum["imageUrl"],
         revealed: true,
         hash: datum["hash"],
