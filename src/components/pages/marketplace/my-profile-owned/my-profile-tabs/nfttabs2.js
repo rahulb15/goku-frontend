@@ -1327,7 +1327,7 @@ const NftTabs1 = () => {
           </div>
           {limit > total ? null : (
             <>
-              {limit >= 2 ? (
+              {limit >= 10 ? (
                 <div className="loadmoreBtn">
                   <button
                     onClick={() => setLimit(limit + 10)}

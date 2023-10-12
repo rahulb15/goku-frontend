@@ -48,7 +48,7 @@ const HotCollectionsTab = (props) => {
   const [recipientAddress, setRecipientAddress] = useState("");
   const [loadingGift, setLoadingGift] = useState(false);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(10);
   const [total, setTotal] = useState(0);
   const [fee, setFee] = useState(0);
   const [fee1, setFee1] = useState(0);
@@ -1208,7 +1208,7 @@ const HotCollectionsTab = (props) => {
           )} */}
           {limit > total ? null : (
             <>
-              {limit >= 2 ? (
+              {limit >= 10 ? (
                 <div className="loadmoreBtn">
                   <button
                     onClick={() => setLimit(limit + 2)}
