@@ -154,6 +154,7 @@ const HotCollectionsTab = (props) => {
         revealed: true,
         hash: datum["hash"],
         imageIndex: datum.imageIndex.int,
+        nftPrice: data.passCost,
         history: {
           owner: walletAddress,
           price: data.passCost,

@@ -87,7 +87,7 @@ const NftTabs1 = () => {
                     <Link
                       to={{
                         pathname: "/marketplace/nft-overview",
-                        search: item?.collectionName == "pass3" || item?.collectionName == "dbc" ? `?id=${item?._id}` :
+                        search: item?.collectionName == "pass3" || item?.collectionName == "dbc4" ? `?id=${item?._id}` :
                         `?id=${item?._id}&for=all`,
                       }}
                     >
