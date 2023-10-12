@@ -1,0 +1,40 @@
+@import "../../../../scss/mixin.scss";
+.items_qty {
+    max-width: 510px;
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-between;
+    text-align: center;
+    align-items: stretch;
+    border: #d5d5d5 solid 1px;
+    border-radius: 10px;
+    .itemQtyBx {
+        width: 25%;
+        border-right: #d5d5d5 solid 1px;
+        padding: 10px;
+        @include respond-to(media-sm) {
+            padding: 10px 5px;
+        }
+        small {
+            display: block;
+            color: #777;
+            font-size: 15px;
+            @include respond-to(media-sm) {
+                font-size: 13px;
+            }
+        }
+        strong {
+            color: #000;
+            font-size: 20px;
+            @include respond-to(media-sm) {
+                font-size: 17px;
+            }
+            @include respond-to(media-xs) {
+                font-size: 16px;
+            }
+        }
+        &:last-child{
+            margin-right: 0;
+        }
+    }
+}

@@ -1,0 +1,113 @@
+@import "../../../scss/mixin.scss";
+.kdmOuter {
+    max-width: 1040px;
+    margin: 0 auto;
+    text-align: center;
+    .kdmIconBx {
+        background: #CBCE2E 0% 0% no-repeat padding-box;
+        box-shadow: 0px 0px 50px #0000004D;
+        border-radius: 25px;
+        width: 51px;
+        height: 51px;
+        margin: 0 auto 40px auto;
+        text-align: center;
+        line-height: 51px;
+        font-size: 32px;
+        font-weight: 800;
+        color: #fff;
+    }
+    .kdmHd {
+        font-size: 60px;
+        line-height: 72px;
+        padding-bottom: 30px;
+        @include respond-to(media-md) {
+            font-size: 42px;
+            line-height: 60px;
+            padding-bottom: 20px;
+        }
+        @include respond-to(media-xs) {
+            font-size: 28px;
+            line-height: 42px;
+        }
+        span{
+            background: transparent linear-gradient(90deg, #CBCF2E 0%, #D0672E 100%) 0% 0% no-repeat padding-box;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    }
+    .kdmCont{
+        padding-bottom: 30px;
+        p{
+            font-size: 17px;
+            line-height: 30px;
+            margin-bottom: 20px;
+            @include respond-to(media-xs) {
+                font-size: 15px;
+                line-height: 26px;
+            }
+        }
+    }
+    .kdmtokenBx {
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        box-shadow: 0px 8px 50px #0000001A;
+        border-radius: 10px;
+        max-width: 900px;
+        margin: 0 auto 70px auto;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        @include respond-to(media-sm) {
+            display: block;
+            margin: 0 auto 30px auto;
+        }
+        .kdmtoken1{
+            text-align: left;
+            padding-bottom: 10px;
+            span{
+                font-size: 17px;
+                color: #777;
+                font-weight: 600;
+                display: block;
+                @include respond-to(media-sm) {
+                    font-size: 15px;
+                }
+            }
+            strong{
+                font-size: 22px;
+                color: #000000;
+                @include respond-to(media-sm) {
+                    font-size: 20px;
+                }
+            }
+        }
+        .nothingclaim{
+            @include respond-to(media-sm) {
+                text-align: left;
+            }
+            .noclaimBtn{
+                background: #EEEEEE;
+                border-radius: 6px;
+                width: 200px;
+                height: 51px;
+                border: 0;
+                margin-right: 15px;
+                font-size: 16px;
+                font-weight: 600;
+                display: inline-block;
+                vertical-align: top;
+            }
+            .claimQues{
+                background: #fff;
+                border: #000000 solid 1px;
+                border-radius: 6px;
+                height: 50px;
+                width: 50px;
+                text-align: center;
+                font-size: 30px;
+                display: inline-block;
+                vertical-align: top;
+            }
+        }
+    }
+}

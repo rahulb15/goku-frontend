@@ -1,0 +1,221 @@
+@import "../../../../scss/mixin.scss";
+
+.cartOuter {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 30px;
+
+    @include respond-to(media-md) {
+        display: block;
+    }
+
+    .cartLeft {
+        width: 65%;
+        background: #FFFFFF;
+        box-shadow: 0px 10px 30px #00000014;
+        border-radius: 6px;
+        padding: 20px 30px;
+
+        @include respond-to(media-lg) {
+            width: 70%;
+            padding: 10px 20px;
+        }
+
+        @include respond-to(media-md) {
+            width: 100%;
+        }
+
+        @include respond-to(media-sm) {
+            overflow: auto;
+        }
+
+        table {
+            width: 100%;
+
+            @include respond-to(media-sm) {
+                width: 700px;
+            }
+
+            tr {
+                td {
+                    padding: 25px 10px;
+                    height: 110px;
+                    border-bottom: #f5f5f5 solid 1px;
+                    font-weight: 600;
+                    font-size: 17px;
+                    line-height: 30px;
+
+                    svg {
+                        font-size: 24px;
+                        line-height: 30px;
+                        color: #8F8F8F;
+                    }
+
+                    &:nth-child(1) {
+                        padding-left: 0;
+                    }
+                }
+
+                &:last-child {
+                    td {
+                        border-bottom: 0;
+                        padding-bottom: 10px;
+                    }
+                }
+            }
+        }
+
+        .cartList {
+            position: relative;
+            padding-left: 110px;
+            min-height: 90px;
+            padding-top: 15px;
+
+            i {
+                position: absolute;
+                width: 90px;
+                height: 90px;
+                left: 0;
+                top: 0;
+
+                img {
+                    border-radius: 6px;
+                }
+            }
+
+            span {
+                color: #6E6E6E;
+                font-size: 14px;
+                display: block;
+            }
+
+            strong {
+                font-size: 17px;
+                color: #000000;
+                display: block;
+            }
+        }
+
+    }
+
+    .cartRight {
+        width: 33%;
+        background: #FFFFFF;
+        box-shadow: 0px 10px 30px #00000014;
+        border-radius: 6px;
+        padding: 20px 30px;
+
+        @include respond-to(media-lg) {
+            width: 28%;
+            padding: 10px 20px;
+        }
+
+        @include respond-to(media-md) {
+            width: 100%;
+            margin-top: 30px !important;
+        }
+
+        h4 {
+            font-size: 20px;
+            padding-bottom: 20px !important;
+        }
+
+        ul {
+            li {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 17px;
+                padding-bottom: 15px;
+                margin-bottom: 15px;
+                border-bottom: #e5e5e5 solid 1px;
+
+                span {
+                    color: #6E6E6E;
+                }
+
+                strong {
+                    color: #000000;
+                }
+
+                &:last-child {
+                    border-bottom: 0;
+
+                    span {
+                        font-size: 20px;
+                    }
+
+                    strong {
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+
+        .nextpayBtn {
+            button {
+                width: 100%;
+                height: 51px;
+                font-size: 18px;
+                color: #fff;
+                background: #000000;
+                border-radius: 6px;
+                cursor: pointer;
+                border: #000000 solid 1px;
+
+                &:hover {
+                    color: #000000;
+                    background: #fff;
+                }
+            }
+        }
+    }
+}
+
+
+.darkTheme {
+    .cartOuter {
+        .cartLeft {
+            background: #333;
+
+            .cartList {
+                span {
+                    color: #ccc;
+                }
+
+                strong {
+                    color: #fff;
+                }
+            }
+
+            table {
+                tr {
+                    td {
+                        border-bottom: #666 solid 1px;
+
+                        svg {
+                            color: #ccc;
+                        }
+                    }
+                }
+            }
+        }
+
+        .cartRight {
+            background: #333;
+
+            ul {
+                li {
+                    span {
+                        color: #ccc;
+                    }
+
+                    strong {
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+}

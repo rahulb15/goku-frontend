@@ -1,0 +1,491 @@
+@import "../../../../scss/mixin.scss";
+
+.midSectionBx {
+    padding: 150px 0 20px 0;
+
+    @include respond-to(media-xs) {
+        padding: 100px 0 20px 0;
+    }
+
+    .listing_TabOuter {
+        ul.nav.nav-tabs {
+            margin-bottom: 20px !important;
+            border-bottom: #e8e8e8 solid 1px;
+
+            a.nav-link {
+                color: #a2a2a3;
+                font-size: 17px;
+
+                @include respond-to(media-md) {
+                    font-size: 17px;
+                }
+
+                @include respond-to(media-xs) {
+                    font-size: 15px;
+                    padding: 5px 7px;
+                }
+            }
+
+            a.active.nav-link {
+                border: 0;
+                color: #000 !important;
+                border-bottom: #000 solid 2px !important;
+            }
+
+            .nav-link:focus,
+            .nav-link:hover {
+                border-color: transparent !important;
+            }
+        }
+
+        .filterBx {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+
+            @include respond-to(media-sm) {
+                display: block;
+            }
+
+            .FltrLeft {
+                width: 135px;
+                padding-right: 20px;
+
+                @include respond-to(media-sm) {
+                    padding-bottom: 20px;
+                }
+
+                button {
+                    width: 100%;
+                    background: transparent;
+                    color: #000;
+                    position: relative;
+                    height: 46px;
+                    font-size: 15px;
+                    border: #d8d8d8 solid 1px;
+
+                    &:hover {
+                        border: #CF682E solid 1px;
+                        color: #CF682E;
+                    }
+                }
+            }
+
+            .FltrRight {
+                width: calc(100% - 135px);
+
+                @include respond-to(media-sm) {
+                    width: 100%;
+                }
+
+                .fltrRgtInn {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    @include respond-to(media-sm) {
+                        display: block;
+                    }
+
+                    .fltrRgtInn_Left {
+                        width: calc(100% - 395px);
+
+                        @include respond-to(media-md) {
+                            width: calc(100% - 355px);
+                        }
+
+                        @include respond-to(media-sm) {
+                            width: 100%;
+                            margin-bottom: 20px;
+                        }
+
+                        .iftSrch {
+                            position: relative;
+
+                            .mb-3 {
+                                margin-bottom: 0 !important;
+
+                                input {
+                                    height: 46px;
+                                    border: #d8d8d8 solid 1px;
+                                }
+                            }
+
+                            button {
+                                position: absolute;
+                                right: 0;
+                                top: 0;
+                                width: 46px;
+                                height: 46px;
+                                background: transparent;
+                                border: 0;
+                                font-size: 24px;
+                                color: #999;
+                            }
+                        }
+                    }
+
+                    .fltrRgtInn_Right {
+                        width: 395px;
+                        padding-left: 63px;
+
+                        @include respond-to(media-md) {
+                            width: 355px;
+                            padding-left: 20px;
+                        }
+
+                        @include respond-to(media-sm) {
+                            width: 100%;
+                            padding-left: 0px;
+                        }
+
+                        .trendingBtn {
+                            display: inline-block;
+
+                            .mb-3 {
+                                margin-bottom: 0 !important;
+
+                                select {
+                                    height: 46px;
+                                    width: 153px;
+                                    box-shadow: none;
+
+                                    @include respond-to(media-xs) {
+                                        width: 140px;
+                                    }
+                                }
+                            }
+                        }
+
+                        .gridBtnBx {
+                            display: inline-block;
+                            margin-left: 20px;
+                            border-radius: 5px;
+                            border: #d8d8d8 solid 1px;
+
+                            @include respond-to(media-xs) {
+                                margin-left: 10px;
+                            }
+
+                            button {
+                                background: #fff;
+                                color: #dfdfdf;
+                                width: 46px;
+                                height: 44px;
+                                margin-left: -1px;
+                                border: 0;
+                                font-size: 20px;
+                            }
+
+                            .gridBtn {
+                                background: #d8d8d8;
+                                color: #000;
+                                border-radius: 5px 0 0 5px;
+                            }
+
+                            .gridListBtn {
+                                border-radius: 0 5px 5px 0;
+                            }
+                        }
+
+                        .refreshBtnBx {
+                            display: inline-block;
+
+                            button {
+                                width: 46px;
+                                height: 46px;
+                                margin-left: 20px;
+                                background: #fff;
+                                color: #000;
+                                border: #d8d8d8 solid 1px;
+                                font-size: 22px;
+
+                                @include respond-to(media-xs) {
+                                    margin-left: 10px;
+                                }
+
+                                &:hover {
+                                    background: #d8d8d8;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .nftProdListOuter {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+
+            @include respond-to(media-sm) {
+                display: block;
+            }
+
+            .nftFlt_Left {
+                width: 340px;
+                border: #efefef solid 1px;
+                border-radius: 10px;
+                padding: 10px 20px 0 20px;
+
+                @include respond-to(media-lg) {
+                    width: 240px;
+                }
+
+                @include respond-to(media-md) {
+                    width: 240px;
+                    padding: 0 10px;
+                }
+
+                @include respond-to(media-sm) {
+                    width: 100%;
+                    margin-bottom: 20px;
+                }
+            }
+
+            .nftFlt_Right {
+                width: calc(100% - 360px);
+
+                @include respond-to(media-lg) {
+                    width: calc(100% - 300px);
+                }
+
+                @include respond-to(media-lg) {
+                    width: calc(100% - 260px);
+                }
+
+                @include respond-to(media-sm) {
+                    width: 100%;
+                }
+
+                .nftList {
+                    ul {
+                        li {
+                            width: 32%;
+                            display: inline-block;
+                            margin-right: 2%;
+                            margin-bottom: 20px;
+
+                            @include respond-to(media-md) {
+                                width: 49%;
+                            }
+
+                            @include respond-to(media-xs) {
+                                width: 100%;
+                                max-width: 340px;
+                                margin: 0 auto 20px auto !important;
+                                display: block;
+                            }
+
+                            &:nth-child(3n) {
+                                margin-right: 2%;
+                            }
+
+                            &:nth-child(2n) {
+                                margin-right: 0;
+                            }
+
+                            a {
+                                display: block;
+                                color: #000;
+                                font-weight: 400;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiAccordion-root.MuiAccordion-rounded.MuiAccordion-gutters.css-1elwnq4-MuiPaper-root-MuiAccordion-root {
+    box-shadow: none;
+    border-radius: 0;
+    border-bottom: #e5e5e5 solid 1px;
+    margin: 0;
+    padding-bottom: 10px;
+
+    .css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root {
+        padding: 0;
+
+    }
+
+    .css-15v22id-MuiAccordionDetails-root {
+        padding: 0;
+    }
+}
+
+.loadmoreBtn {
+    button {
+        background: #eee;
+        height: 46px;
+        border-radius: 6px;
+        font-size: 15px;
+        color: #000;
+        width: 100%;
+        border: 0;
+
+        &:hover {
+            background: #000;
+            color: #fff;
+        }
+    }
+}
+
+.statusList {
+    li {
+        padding-bottom: 10px;
+
+        .form-check {
+            padding-left: 0 !important;
+
+            label {
+                display: block;
+                font-size: 16px;
+                color: #3E3E3E;
+
+                .form-check-input {
+                    float: right;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 0;
+                }
+
+                .form-check-input:focus {
+                    border-color: #000;
+                    outline: 0;
+                    box-shadow: none;
+                }
+
+                .form-check-input:checked {
+                    background-color: #000;
+                    border-color: #000;
+                }
+            }
+        }
+    }
+}
+
+.collectionList {
+    .collectionSrch {
+        position: relative;
+        margin-bottom: 20px;
+
+        .mb-3 {
+            margin-bottom: 0 !important;
+
+            input {
+                height: 46px;
+                border: #d8d8d8 solid 1px;
+            }
+        }
+
+        button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 46px;
+            height: 46px;
+            background: transparent;
+            border: 0;
+            font-size: 20px;
+            color: #999;
+        }
+    }
+
+    ul {
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+
+            .collectionLeft {
+                padding-left: 48px;
+                position: relative;
+                min-height: 40px;
+
+                i {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+
+                    img {
+                        border-radius: 50%;
+                        height: 40px;
+                        width: 40px;
+                    }
+                }
+
+                strong {
+                    font-size: 14px;
+                    display: block;
+                    line-height: 20px;
+                }
+
+                small {
+                    color: #787878;
+                    display: block;
+                }
+            }
+
+            .collectionRight {
+                text-align: right;
+
+                strong {
+                    display: block;
+                    font-size: 14px;
+                }
+
+                small {
+                    display: block;
+                    font-size: 13px;
+                    color: #787878;
+                }
+            }
+        }
+    }
+}
+
+.PriceOuter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+
+    .mb-3 {
+        margin-bottom: 0 !important;
+    }
+
+    .priceSel {
+        width: 30%;
+        margin-right: 2%;
+    }
+
+    .pricemin {
+        width: 28%;
+    }
+
+    .priceTo {
+        width: 10%;
+        text-align: center;
+        font-size: 14px;
+        color: #999;
+    }
+
+    .pricemax {
+        width: 28%;
+    }
+}
+
+.darkTheme {
+    .midSectionBx {
+        .listing_TabOuter {
+            ul.nav.nav-tabs {
+                border-bottom: #262626 solid 1px;
+            }
+        }
+    }
+}

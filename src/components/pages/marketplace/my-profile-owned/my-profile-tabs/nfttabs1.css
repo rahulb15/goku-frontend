@@ -1,0 +1,55 @@
+.btn-sell{
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
+    margin-right: 10px;
+    width: 60px;
+    height: 40px;
+}
+
+.btn-gift{
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
+    width: 60px;
+    height: 40px;
+}
+
+.btn-reveal{
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
+    width: 60px;
+    height: 40px;
+}
+
+.darkTheme .fade {
+    background: rgb(20 20 20 / 27%);
+}
+
+.btm-accept-bid{
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
+    height: 40px;
+}
+.btn-reject-bid{
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
+    height: 40px;
+}
+
+.btn-cancel-bid{
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
+    height: 40px;
+}
+
+.btm-close-sale{
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
+    height: 40px;
+}

@@ -1,0 +1,127 @@
+@import "../../../../scss/mixin.scss";
+
+.helpcenterHd {
+    max-width: 650px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 52px;
+    padding-bottom: 20px;
+}
+
+.helpSrchBx {
+    max-width: 650px;
+    margin: 0 auto 80px auto;
+    position: relative;
+
+    input {
+        height: 51px;
+        width: 100%;
+        border: #d8d8d8 solid 1px;
+        padding: 0 10px;
+    }
+
+    button {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        background: transparent !important;
+        color: #666 !important;
+        font-size: 20px;
+        border: 0;
+        cursor: pointer;
+    }
+}
+
+.helpcenterList {
+    padding-bottom: 50px;
+
+    li {
+        display: inline-block;
+        width: 23.5%;
+        margin-right: 2%;
+        margin-bottom: 20px;
+
+        &:nth-child(4n) {
+            margin-right: 0;
+        }
+
+        a {
+            border: #efefef solid 1px;
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+            color: #000000;
+            display: block;
+            position: relative;
+            transition: all 0.5s ease-in-out;
+            top: 0px;
+
+            &:hover {
+                border: #ccc solid 1px;
+                top: -8px;
+                box-shadow: #ccc 0 0 0px 3px;
+            }
+
+            i {
+                display: block;
+                background: #fafafa;
+                border-radius: 6px;
+                height: 200px;
+                position: relative;
+
+                svg {
+                    font-size: 60px;
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                }
+            }
+
+            span {
+                display: block;
+                font-size: 20px;
+                font-weight: 600;
+                padding: 20px 0 10px 0;
+            }
+        }
+
+    }
+}
+
+.pramotedartHd {
+    font-size: 52px;
+    font-weight: 600;
+    padding-bottom: 30px;
+    text-align: center;
+}
+
+.pramotedList {
+    padding-bottom: 40px;
+
+    li {
+        width: 32%;
+        margin-right: 2%;
+        margin-bottom: 20px;
+        display: inline-block;
+
+        a {
+            display: block;
+            text-align: center;
+            color: #000000;
+            border: #efefef solid 1px;
+            border-radius: 10px;
+            padding: 10px 0;
+            line-height: 31px;
+
+            &:hover {
+                color: #cd9f2e;
+                border: #cd9f2e solid 1px;
+            }
+        }
+
+        &:nth-child(3n) {
+            margin-right: 0;
+        }
+    }
+}

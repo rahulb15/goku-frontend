@@ -1,0 +1,383 @@
+@import "../../../../scss/mixin.scss";
+
+.profileHd {
+    font-size: 60px;
+    line-height: 72px;
+    padding-bottom: 20px;
+
+    @include respond-to(media-md) {
+        font-size: 40px;
+    }
+
+    @include respond-to(media-xs) {
+        font-size: 32px;
+        padding-bottom: 0;
+    }
+}
+
+.profileTab_Outer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    @include respond-to(media-sm) {
+        display: block;
+    }
+
+    ul.nav.nav-tabs {
+        width: 400px;
+        display: block;
+        border: 0;
+
+        @include respond-to(media-md) {
+            width: 250px;
+        }
+
+        @include respond-to(media-sm) {
+            width: 100%;
+        }
+
+        li.nav-item {
+            display: block;
+            padding-bottom: 20px;
+
+            @include respond-to(media-sm) {
+                padding-bottom: 10px;
+            }
+
+            a.nav-link {
+                border: 1px solid #D8D8D8;
+                border-radius: 6px;
+                font-size: 18px;
+                font-weight: 600;
+                line-height: 49px;
+                padding: 0 20px;
+                color: #000;
+
+                @include respond-to(media-xs) {
+                    line-height: 44px;
+                    font-size: 16px;
+                }
+            }
+
+            a.active.nav-link {
+                border: #000 solid 1px;
+                background: #000;
+                color: #fff;
+            }
+        }
+    }
+
+    .tab-content {
+        width: calc(100% - 440px);
+
+        @include respond-to(media-md) {
+            width: calc(100% - 280px);
+        }
+
+        @include respond-to(media-sm) {
+            width: 100%;
+            padding-top: 15px;
+        }
+
+        .accHd {
+            font-size: 24px;
+            font-weight: 600;
+            padding-bottom: 20px;
+
+            span {
+                display: block;
+                font-size: 15px;
+                color: #777;
+                font-weight: 400;
+
+                a {
+                    color: #000;
+
+                    &:hover {
+                        color: #0099ff;
+                    }
+                }
+            }
+        }
+
+        .profileBannerBx {
+            padding-bottom: 100px;
+
+            .profBanner {
+                position: relative;
+
+                >img {
+                    border-radius: 6px;
+
+                    @include respond-to(media-sm) {
+                        height: 160px;
+                    }
+                }
+
+                span {
+                    position: absolute;
+                    right: 10px;
+                    top: 10px;
+                    background: #fff;
+                    width: 44px;
+                    height: 44px;
+                    border-radius: 50%;
+
+                    input {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        bottom: 0;
+                        right: 0;
+                        opacity: 0;
+                    }
+
+                    svg {
+                        position: absolute;
+                        left: 50%;
+                        top: 50%;
+                        transform: translate(-50%, -50%);
+                        font-size: 20px;
+                    }
+                }
+
+                i {
+                    width: 150px;
+                    height: 150px;
+                    position: absolute;
+                    left: 50%;
+                    bottom: -75px;
+                    transform: translate(-50%, 0);
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 50%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.dispBx {
+    position: relative;
+
+    label {
+        font-weight: 600;
+    }
+
+    input {
+        height: 51px;
+        border: #d8d8d8 solid 1px;
+        color: #000;
+        padding: 0 15px;
+        font-size: 15px;
+    }
+
+    input.iconInp {
+        padding: 0 15px 0 40px;
+    }
+
+    span {
+        font-size: 14px;
+        position: relative;
+        top: -13px;
+        color: #777;
+    }
+
+    button {
+        position: absolute;
+        right: 10px;
+        color: #CCC72E;
+        border: 0;
+        background: transparent;
+        font-weight: 400;
+        font-size: 14px;
+        top: 48px;
+    }
+
+    svg {
+        position: absolute;
+        left: 10px;
+        top: 45px;
+        font-size: 20px;
+    }
+}
+
+.savesetting {
+    padding-bottom: 40px;
+
+    button {
+        background: #000;
+        width: 160px;
+        height: 51px;
+        font-size: 16px;
+        border: #000 solid 1px;
+        color: #fff;
+        display: inline-block;
+        border-radius: 6px;
+        cursor: pointer;
+
+        &:hover {
+            background: transparent;
+            color: #000;
+        }
+    }
+}
+
+.savesettingNightMode {
+    padding-bottom: 40px;
+
+    button {
+        background: #fff;
+        width: 160px;
+        height: 51px;
+        font-size: 16px;
+        border: #fff solid 1px;
+        color: #000;
+        display: inline-block;
+        border-radius: 6px;
+        cursor: pointer;
+
+        &:hover {
+            background: transparent;
+            color: #fff;
+        }
+    }
+}
+
+.profwalletBx {
+    padding: 20px;
+    border: #d8d8d8 solid 1px;
+    border-radius: 10px;
+
+    li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 15px;
+
+        &:hover {
+            background: #F8F8F8;
+        }
+
+        .walletthumb {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 26px;
+            font-weight: 600;
+            color: #fff;
+            font-weight: 600;
+            background: #000;
+            text-align: center;
+        }
+
+        .walletlistHd {
+            width: calc(100% - 110px);
+
+            strong {
+                display: block;
+                font-size: 18px;
+                color: #000;
+
+                button {
+                    border: 0;
+                    background: transparent;
+                    font-size: 16px;
+                    margin-left: 10px;
+                }
+            }
+
+            small {
+                display: block;
+                color: #777;
+            }
+        }
+
+        .walletIcon {
+            button {
+                width: 40px;
+                height: 40px;
+                border: #000 solid 1px;
+                background: transparent;
+                border-radius: 6px;
+                font-size: 24px;
+                cursor: pointer;
+                background: #fff;
+            }
+        }
+    }
+}
+
+.notificationList {
+    border-radius: 6px;
+    border: #d8d8d8 solid 1px;
+    padding: 20px;
+
+    li {
+        display: flex;
+        margin-bottom: 20px;
+        justify-content: space-between;
+        align-items: center;
+
+        .notifiLeft {
+            strong {
+                display: block;
+                font-size: 20px;
+            }
+
+            span {
+                font-size: 16px;
+            }
+        }
+
+        .notifiRight {
+            position: relative;
+
+            input {
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                opacity: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 9;
+            }
+
+            input+span {
+                position: relative;
+                width: 40px;
+                border-radius: 10px;
+                height: 20px;
+                display: block;
+                background: #666666;
+
+                i {
+                    width: 12px;
+                    height: 12px;
+                    position: absolute;
+                    left: 5px;
+                    top: 3px;
+                    background: #fff;
+                    border-radius: 50%;
+                    transition: all 0.5s ease-in-out;
+                }
+            }
+
+            input:checked+span {
+                background: #4A1616;
+
+                i {
+                    left: auto;
+                    right: 4px;
+                    transition: all 0.5s ease-in-out;
+                }
+            }
+        }
+    }
+}

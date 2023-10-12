@@ -1,0 +1,174 @@
+@import "../../../../scss/mixin.scss";
+
+.bloBanner {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    padding-bottom: 40px;
+    @include respond-to(media-sm) {
+        display: block;
+    }
+    .blogbannerImg {
+        width: 50%;
+        line-height: 0;
+        @include respond-to(media-sm) {
+            width: 100%;
+        }
+        img{
+            width: 100%;
+            border-radius: 6px 0 0 6px;
+            line-height: 0;
+            @include respond-to(media-lg) {
+                height: 100%;
+            }
+            @include respond-to(media-sm) {
+                border-radius: 6px 6px 0 0;
+            }
+        }
+    }
+    .blogbannerCOntent{
+        width: 50%;
+        border: 1px solid #ECECEC;
+        border-radius: 0px 6px 6px 0px;
+        padding: 50px;
+        @include respond-to(media-lg) {
+            padding: 25px;
+        }
+        @include respond-to(media-sm) {
+            width: 100%;
+            border-radius: 0 0 6px 6px;
+        }
+        @include respond-to(media-md) {
+            padding: 15px;
+        }
+        .blogerName{
+            padding: 0 0 0 50px;
+            margin-bottom: 15px;
+            position: relative;
+            i{
+                position: absolute;
+                left: 0;
+                img{
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    line-height: 0;
+                }
+            }
+            strong{
+                display: block;
+            }
+            span{
+                color: #777777;
+            }
+        }
+        h2{
+            font-size: 32px;
+            font-weight: 800;
+            padding-bottom: 15px !important;
+            @include respond-to(media-md) {
+                font-size: 26px;
+            }
+            @include respond-to(media-xs) {
+                font-size: 20px;
+            }
+        }
+        p{
+            font-size: 17px;
+            padding-bottom: 20px;
+            line-height: 30px;
+            @include respond-to(media-md) {
+                font-size: 15px;
+                line-height: 26px;
+            }
+        }
+        button{
+            width: 140px;
+            height: 51px;
+            border: #000 solid 1px;
+            border-radius: 6px;
+            font-size: 16px;
+            color: #000;
+            background: transparent;
+            &:hover{
+                background: #E0E21A;
+                border: #E0E21A solid 1px;
+            }
+        }
+    }
+
+}
+.blogList{
+    ul{
+        li{
+            width: 32%;
+            margin-right: 2%;
+            margin-bottom: 30px;
+            padding: 10px;
+            border-radius: 10px;
+            border: #efefef solid 1px;
+            display: inline-block;
+            @include respond-to(media-sm) {
+                width: 49%;
+                margin-bottom: 20px;
+            }
+            @include respond-to(media-xs) {
+                width: 100%;
+            }
+            &:nth-child(2n){
+                @include respond-to(media-sm) {
+                    margin-right: 0 !important;
+                }
+            }
+            &:nth-child(3n){
+                margin-right: 0;
+                @include respond-to(media-sm) {
+                    margin-right: 2%;
+                }
+            }
+            .blogName{
+                padding: 0 0 0 50px;
+                margin-bottom: 15px;
+                position: relative;
+                i{
+                    position: absolute;
+                    left: 0;
+                    img{
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        line-height: 0;
+                    }
+                }
+                strong{
+                    display: block;
+                }
+                span{
+                    color: #777777;
+                }
+            }
+            img{
+                border-radius: 10px;
+            }
+            h3{
+                font-size: 24px;
+                font-weight: 600;
+                padding: 15px 0 !important;
+                @include respond-to(media-md) {
+                    font-size: 20px;
+                }
+                @include respond-to(media-xs) {
+                    font-size: 18px;
+                }
+            }
+            p{
+                font-size: 17px;
+                line-height: 30px;
+                @include respond-to(media-md) {
+                    font-size: 15px;
+                    line-height: 26px;
+                }
+            }
+        }
+    }
+}

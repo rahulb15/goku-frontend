@@ -1,0 +1,310 @@
+@import "../../../scss/mixin.scss";
+
+.brandingBannerBx{
+    padding-bottom: 30px;
+    text-align: center;
+    @include respond-to(media-lg) {
+        padding-bottom: 0;
+    }
+    h2{
+        font-size: 90px;
+        padding-bottom: 30px !important;
+        @include respond-to(media-lg) {
+            font-size: 72px;
+        }
+        @include respond-to(media-sm) {
+            font-size: 48px;
+        }
+        @include respond-to(media-xs) {
+            font-size: 42px;
+        }
+    }
+    i{
+        display: block;
+        margin-top: 50px;
+        img{
+            width: 150px;
+            height: 150px;
+            border-radius: 6px;
+            @include respond-to(media-lg) {
+                width: 120px;
+                height: 120px;
+            }
+            @include respond-to(media-xs) {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    }
+    button{
+        width: 240px;
+        height: 51px;
+        border: 1px solid #000000;
+        border-radius: 6px;
+        font-size: 16px;
+        background: #fff;
+        display: inline-block;
+        &:hover{
+            background: #CBCA2E;
+            color: #000000;
+            border: 1px solid #CBCA2E;
+        }
+    }
+    small{
+        display: block;
+        padding-top: 200px;
+        font-size: 15px;
+        text-transform: uppercase;
+        font-weight: 600;
+        @include respond-to(media-lg) {
+            padding-top: 100px;
+        }
+        @include respond-to(media-lg) {
+            padding-top: 70px;
+        }
+    }
+}
+.brandLogoList{
+    padding-bottom: 50px;
+    li {
+        width: 23.5%;
+        display: inline-block;
+        margin-right: 2%;
+        background: #fff;
+        box-shadow: 0px 8px 30px #0000000D;
+        border-radius: 25px;
+        height: 130px;
+        text-align: center;
+        position: relative;
+        @include respond-to(media-lg) {
+            height: 110px;
+        }
+        @include respond-to(media-sm) {
+            width: 49%;
+            margin-bottom: 10px;
+        }
+        @include respond-to(media-xs) {
+            width: 100%;
+            margin-right: 0;
+        }
+        img{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            @include respond-to(media-lg) {
+                max-width: 80%;
+            }    
+        }
+        &:nth-child(2n){
+            @include respond-to(media-sm) {
+                margin-right: 0;
+            }
+        }
+        &:last-child{
+            margin-right: 0;
+        }
+
+    }
+    .blackBg{
+        background: #000;
+    }
+    .gradientBg{
+        background: transparent linear-gradient(90deg, #CBCF2E 0%, #D0672E 100%) 0% 0% no-repeat padding-box;
+    }
+}
+.incorrectLogoList{
+    li{
+        width: 23.5%;
+        display: inline-block;
+        margin-right: 2%;
+        margin-bottom: 40px;
+        text-align: center;
+        vertical-align: top;
+        @include respond-to(media-sm) {
+            width: 49%;
+            margin-bottom: 15px;
+        }
+        @include respond-to(media-xs) {
+            width: 100%;
+            margin-right: 0;
+        }
+        i{
+            background: #fff;
+            box-shadow: 0px 8px 30px #0000000D;
+            border-radius: 25px;
+            height: 130px;
+            text-align: center;
+            position: relative;
+            display: block;
+            margin-bottom: 20px;
+            > img{
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                @include respond-to(media-lg) {
+                    max-width: 80%;
+                }
+            }
+            button{
+                position: absolute;
+                right: 15px;
+                top: 10px;
+                border: 0;
+                background: transparent;
+                cursor: pointer;
+            }
+        }
+        &:nth-child(2n){
+            @include respond-to(media-sm) {
+                margin-right: 0;
+            }
+        }
+        &:nth-child(4n){
+            margin-right: 0;
+        }
+        span{
+            display: block;
+            font-size: 17px;
+            font-weight: 600;
+            @include respond-to(media-md) {
+                font-size: 14px;
+            }
+        }
+    }
+}
+.colorsList{
+    padding-bottom: 50px;
+    li{
+        width: 23.5%;
+        margin-right: 2%;
+        border-radius: 25px;
+        height: 130px;
+        display: inline-block;
+        vertical-align: top;
+        padding: 15px 20px;
+        @include respond-to(media-sm) {
+            width: 49%;
+            margin-bottom: 15px;
+        }
+        @include respond-to(media-xs) {
+            width: 100%;
+            margin-right: 0;
+        }
+        strong{
+            display: block;
+            padding-bottom: 20px;
+            font-size: 20px;
+        }
+        span{
+            display: block;
+            font-size: 17px;
+            padding-bottom: 5px;
+        }
+        small{
+            display: block;
+            font-size: 14px;
+        }
+        &:nth-child(2n){
+            @include respond-to(media-sm) {
+                margin-right: 0;
+            }
+        }
+        &:last-child{
+            margin-right: 0;
+        }
+    }
+    .yellowBg{
+        background: #E0E21A;
+    }
+    .blackBg{
+        background: #000000;
+    }
+    .whiteBg{
+        background: #fff;
+        border: 1px solid #C7C7C7;
+    }
+    .greyBg{
+        background: #808080;
+    }
+    .blackclr{
+        color: #000000;
+    }
+    .whiteclr{
+        color: #fff;
+    }
+
+}
+.spacingBx {
+    background: #f2f2f2;
+    padding: 52px 0;
+    text-align: center;
+    border-radius: 25px;
+    margin-bottom: 50px;
+}
+.relprodOuter {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 50px;
+    @include respond-to(media-sm) {
+        display: block;
+        padding-bottom: 0;
+    }
+    .relprod_Inn {
+        width: 48%;
+        @include respond-to(media-sm) {
+            width: 100%;
+            padding-bottom: 30px;
+        }
+        i{
+            display: block;
+            padding-bottom: 10px;
+        }
+        h2{
+            font-size: 28px;
+            padding-bottom: 10px !important;
+            @include respond-to(media-xs) {
+                font-size: 22px;
+            }
+        }
+        ul{
+            li{
+                font-size: 17px;
+                line-height: 30px;
+                padding: 0 0 30px 30px;
+                position: relative;
+                svg{
+                    color: #CE9A2E;
+                    position: absolute;
+                    left: 0;
+                    top: 5px;
+                }
+            }
+            .notcool{
+                svg{
+                    color: #FF0000;
+                }
+            }
+        }
+    }
+}
+.branddownBtn {
+    text-align: center;
+    padding-bottom: 50px;
+    button{
+        width: 140px;
+        height: 51px;
+        border-radius: 6px;
+        color: #000000;
+        font-size: 17px;
+        border: #000000 solid 1px;
+        display: inline-block;
+        background: #fff;
+        &:hover{
+            background: #CBCF2E;
+            border: #CBCA2E solid 1px;
+        }
+    }
+}

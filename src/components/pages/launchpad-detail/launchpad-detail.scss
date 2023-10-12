@@ -1,0 +1,833 @@
+@import "../../../scss/mixin.scss";
+
+.launchpadBannerBx {
+    padding-top: 150px;
+
+    @include respond-to(media-xs) {
+        padding-top: 90px;
+    }
+
+    .launchpadBanInn {
+        padding: 20px;
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        box-shadow: 0px 10px 50px #0000001A;
+        border-radius: 6px;
+        margin-bottom: 50px;
+
+        @include respond-to(media-md) {
+            padding: 10px;
+        }
+
+        .lb-topBx {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            padding-bottom: 20px;
+
+            @include respond-to(media-sm) {
+                display: block;
+            }
+
+            .lb-topLeft {
+                width: 49%;
+                background: #FAFAFA;
+                border: 1px solid #EAEAEA;
+                border-radius: 6px;
+                padding: 44px 10px;
+
+                @include respond-to(media-sm) {
+                    width: 100%;
+                    margin-bottom: 20px;
+                    padding: 25px 10px;
+                }
+
+                ul {
+                    display: flex;
+                    justify-content: space-between;
+
+                    li {
+                        text-align: center;
+                        width: 33.33%;
+                        position: relative;
+
+                        &::after {
+                            background: #ABABAB;
+                            content: '';
+                            position: absolute;
+                            right: 0px;
+                            width: 50%;
+                            top: 20px;
+                            height: 1px;
+                        }
+
+                        &::before {
+                            background: #ABABAB;
+                            content: '';
+                            position: absolute;
+                            left: 0px;
+                            width: 50%;
+                            top: 20px;
+                            height: 1px;
+                        }
+
+                        &:nth-child(1) {
+                            &::after {
+                                background: #D0682E;
+
+                            }
+
+                            &::before {
+                                display: none;
+                            }
+                        }
+
+                        &:nth-child(2) {
+                            &::before {
+                                background: #D0682E;
+                            }
+                        }
+
+                        &:last-child {
+                            &::after {
+                                display: none;
+                            }
+
+                        }
+
+                        i {
+                            background: #FFFFFF;
+                            border: 1px solid #ABABAB;
+                            width: 40px;
+                            height: 40px;
+                            border-radius: 50%;
+                            display: block;
+                            text-align: center;
+                            font-style: normal;
+                            line-height: 38px;
+                            font-size: 16px;
+                            margin-bottom: 20px;
+                            display: inline-block;
+                            position: relative;
+                            z-index: 9;
+                        }
+
+                        span {
+                            font-size: 16px;
+                            display: block;
+
+                            @include respond-to(media-md) {
+                                font-size: 14px;
+                            }
+                        }
+
+                        .selected {
+                            background: transparent linear-gradient(90deg, #CBCF2E 0%, #D0672E 100%) 0% 0% no-repeat padding-box;
+                            color: #FFFFFF;
+                            border: 1px solid transparent;
+                        }
+                    }
+                }
+            }
+
+            .lb-topRight {
+                width: 49%;
+                background: #FAFAFA;
+                border: 1px solid #EAEAEA;
+                border-radius: 6px;
+                padding: 30px 10px;
+                text-align: center;
+
+                @include respond-to(media-sm) {
+                    width: 100%;
+                    padding: 25px 10px;
+                }
+
+                h3 {
+                    font-size: 24px;
+                    line-height: 29px;
+                    padding-bottom: 10px !important;
+                }
+
+                p {
+                    font-size: 17px;
+                    color: #777777;
+                    margin-bottom: 0;
+                    padding-bottom: 10px;
+
+                    @include respond-to(media-md) {
+                        font-size: 14px;
+                    }
+                }
+
+                h2 {
+                    background: transparent linear-gradient(88deg, #CBCE2E 0%, #D0692E 100%) 0% 0% no-repeat padding-box;
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                }
+            }
+        }
+
+        .launchWalletBx {
+            background: #FAFAFA 0% 0% no-repeat padding-box;
+            border: 1px solid #EAEAEA;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            padding: 30px;
+
+            @include respond-to(media-sm) {
+                padding: 15px;
+                display: block;
+            }
+
+            .lpdetLeft {
+                width: 50%;
+                border-right: #777777 solid 2px;
+
+                @include respond-to(media-md) {
+                    width: 65%;
+                }
+
+                @include respond-to(media-sm) {
+                    width: 100%;
+                    border-right: 0;
+                }
+
+                .cooperBx {
+                    display: flex;
+                    justify-content: space-between;
+
+                    @include respond-to(media-xs) {
+                        display: block;
+                    }
+
+                    .cooperLeft {
+                        width: 125px;
+
+                        @include respond-to(media-xs) {
+                            margin: 0 auto;
+                        }
+                    }
+
+                    .cooperRight {
+                        width: calc(100% - 150px);
+                        padding-right: 80px;
+
+                        @include respond-to(media-md) {
+                            padding-right: 40px;
+                        }
+
+                        @include respond-to(media-sm) {
+                            padding-right: 0;
+                        }
+
+                        @include respond-to(media-xs) {
+                            width: 100%;
+                            padding-top: 20px;
+                        }
+
+                        h2 {
+                            font-size: 28px;
+                            padding-bottom: 5px;
+                        }
+
+                        p {
+                            font-size: 17px;
+                            line-height: 30px;
+                            margin-bottom: 20px;
+
+                            @include respond-to(media-md) {
+                                font-size: 15px;
+                                line-height: 25px;
+                            }
+                        }
+
+                        button {
+                            background: #FAFAFA;
+                            border: 1px solid #000000;
+                            border-radius: 6px;
+                            font-size: 16px;
+                            height: 51px;
+                            color: #000000;
+                            width: 175px;
+
+                            @include respond-to(media-sm) {
+                                height: 45px;
+                            }
+
+                            &:hover {
+                                background: #CBCE2E;
+                                border: #CBCE2E solid 1px;
+                            }
+                        }
+                    }
+
+                    .coopersocial {
+                        padding: 10px 0 0 0;
+
+                        a {
+                            font-size: 20px;
+                            color: #000000;
+                            display: inline-block;
+                            margin: 0 10px;
+
+                        }
+                    }
+
+                    .countdownBx {
+                        margin-bottom: 20px;
+
+                        button {
+                            display: inline-block;
+                            background: #D0672E;
+                            width: 40px;
+                            height: 40px;
+                            border: 0;
+                            font-size: 30px;
+                            font-weight: 600;
+                            color: #fff;
+                            vertical-align: top;
+                            line-height: 27px;
+                            outline: 0 !important;
+                            border-radius: 10px;
+                            cursor: pointer;
+                        }
+
+                        p.cn {
+                            display: inline-block;
+                            margin: 0 10px;
+                            line-height: 40px;
+                            font-size: 28px;
+                            color: #000;
+                        }
+                    }
+                }
+
+            }
+
+            .lpdetRight {
+                width: 50%;
+                padding-left: 100px;
+
+                @include respond-to(media-md) {
+                    width: 35%;
+                    padding-left: 50px;
+                }
+
+                @include respond-to(media-sm) {
+                    width: 100%;
+                    padding-left: 0;
+                }
+
+                ul {
+                    li {
+                        padding-bottom: 45px;
+
+                        @include respond-to(media-xs) {
+                            padding-bottom: 20px;
+                        }
+
+                        span {
+                            font-size: 18px;
+                            color: #777777;
+                            display: block;
+
+                            @include respond-to(media-md) {
+                                font-size: 16px;
+                            }
+                        }
+
+                        strong {
+                            font-size: 24px;
+                            display: block;
+
+                            @include respond-to(media-md) {
+                                font-size: 20px;
+                            }
+                        }
+
+                        &:last-child {
+                            padding-bottom: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.launchrangeSlide {
+    padding-top: 40px;
+    padding-right: 80px;
+
+    @include respond-to(media-sm) {
+        padding-right: 0;
+    }
+
+    >span {
+        font-size: 18px;
+        color: #777777;
+
+        @include respond-to(media-xs) {
+            font-size: 16px;
+        }
+    }
+
+    .slider {
+        position: relative;
+
+        .slidval {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .value {
+                font-size: 24px;
+
+                @include respond-to(media-xs) {
+                    font-size: 20px;
+                }
+            }
+
+            .fixvalue {
+                font-size: 24px;
+
+                @include respond-to(media-xs) {
+                    font-size: 20px;
+                }
+            }
+        }
+
+        .rangeslider {
+            margin: 0 0 20px 0;
+            background: #ABABAB;
+        }
+
+        .rangeslider__handle {
+            display: none;
+        }
+
+    }
+}
+
+.regvalueBx {
+    padding-bottom: 50px;
+
+    .regvalueInn {
+        background: #FFFFFF;
+        box-shadow: 0px 8px 50px #0000001a;
+        border-radius: 10px;
+        padding: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        @include respond-to(media-sm) {
+            padding: 20px;
+            display: block;
+        }
+
+        .regImg {
+            width: 70px;
+            margin-bottom: 20px;
+        }
+
+        .regvalBx {
+            width: calc(100% - 115px);
+
+            @include respond-to(media-sm) {
+                width: 100%;
+            }
+
+            .regvalInnBx {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                @include respond-to(media-sm) {
+                    display: block;
+                }
+
+                .regvalInn {
+                    padding-bottom: 10px;
+
+                    span {
+                        display: block;
+                        font-size: 18px;
+                        color: #777777;
+                        padding-bottom: 5px;
+
+                        @include respond-to(media-md) {
+                            font-size: 16px;
+                        }
+                    }
+
+                    strong {
+                        display: block;
+                        color: #000000;
+                        font-size: 24px;
+
+                        @include respond-to(media-md) {
+                            font-size: 18px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.aboutLaunchpadOuter {
+    .aboutTagline {
+        font-size: 16px;
+        letter-spacing: 1.6px;
+        text-align: center;
+    }
+
+    .aboutlaunchBanner {
+        padding-bottom: 30px;
+    }
+
+    .aboutLaunchCont {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        @include respond-to(media-sm) {
+            display: block;
+        }
+
+        .aboutCont {
+            width: 47%;
+
+            @include respond-to(media-sm) {
+                width: 100%;
+                padding-bottom: 20px;
+            }
+
+            p {
+                margin-bottom: 20px !important;
+                font-size: 17px;
+                line-height: 30px;
+
+                @include respond-to(media-sm) {
+                    font-size: 15px;
+                    line-height: 25px;
+                }
+            }
+        }
+    }
+}
+
+/*------------Launchpad Teams--------------------*/
+.launch_teamsOuter {
+    .teamsList {
+        text-align: center;
+        padding-bottom: 100px;
+
+        @include respond-to(media-lg) {
+            padding-bottom: 30px;
+        }
+
+        .owl-carousel .owl-stage-outer {
+            padding: 12px 0 10px 0;
+        }
+
+        .item {
+            display: inline-block;
+            text-align: center;
+            margin: 0 15px;
+            padding: 10px;
+            background: #fff;
+            border: #efefef solid 1px;
+            border-radius: 10px;
+            transition: all 0.5s ease-in-out;
+            position: relative;
+            top: 0;
+
+            @include respond-to(media-xxl) {
+                margin: 0 15px;
+            }
+
+            @include respond-to(media-lg) {
+                margin: 0 10px;
+            }
+
+            @include respond-to(media-md) {
+                margin: 0 8px 0 8px;
+            }
+
+            @include respond-to(media-sm) {
+                margin: 0 8px 20px 8px;
+            }
+
+            &:hover {
+                box-shadow: #efefef 0 0 1px 2px;
+                top: -10px;
+                transition: all 0.5s ease-in-out;
+            }
+
+            i {
+                width: 230px;
+                height: 210px;
+                display: block;
+                margin: 0 auto 20px auto;
+                position: relative;
+
+                @include respond-to(media-xl) {
+                    width: 210px;
+                    height: 200px;
+                }
+
+                @include respond-to(media-lg) {
+                    width: 150px;
+                    height: 170px;
+                    margin-bottom: 15px;
+                }
+
+                @include respond-to(media-md) {
+                    width: 132px;
+                    height: 140px;
+                    margin-bottom: 15px;
+                }
+
+                img {
+                    width: 100%;
+                }
+            }
+
+            span {
+                font-size: 17px;
+                display: block;
+
+                @include respond-to(media-md) {
+                    font-size: 15px;
+                }
+            }
+
+            small {
+                color: #373737;
+                display: block;
+                font-size: 15px;
+
+                @include respond-to(media-md) {
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+
+}
+
+/*------------Launchpad Teams--------------------*/
+
+/*---------------*/
+.stepBx_teams {
+    text-align: center;
+
+    @include respond-to(media-sm) {
+        margin-top: 40px;
+    }
+
+    i {
+        display: block;
+        width: 1px;
+        height: 140px;
+        background: #D0672E;
+        margin: 0 auto;
+
+        @include respond-to(media-sm) {
+            height: 100px;
+            background: transparent linear-gradient(0deg, #D0672E 0%, #FFFFFF00 60%) 0% 0% no-repeat padding-box;
+        }
+
+        @include respond-to(media-xs) {
+            height: 80px;
+        }
+    }
+
+    span {
+        width: 50px;
+        height: 50px;
+        display: block;
+        background: transparent linear-gradient(90deg, #CBCF2E 0%, #D0672E 100%) 0% 0% no-repeat padding-box;
+        margin: 0 auto;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 50px;
+        color: #fff;
+        font-size: 20px;
+    }
+}
+
+.mainHd_teams {
+    text-align: center;
+    padding-top: 30px;
+
+    h3 {
+        background: transparent linear-gradient(90deg, #CBCF2E 0%, #D0672E 100%) 0% 0% no-repeat padding-box;
+        background-size: 150%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        position: relative;
+        font-size: 27px;
+        padding-bottom: 15px !important;
+
+        @include respond-to(media-lg) {
+            padding-bottom: 10px !important;
+        }
+
+        @include respond-to(media-md) {
+            font-size: 34px;
+        }
+
+        @include respond-to(media-sm) {
+            font-size: 28px;
+        }
+
+        @include respond-to(media-xs) {
+            font-size: 24px;
+        }
+    }
+
+    h2 {
+        font-size: 60px;
+        padding-bottom: 40px !important;
+        color: #000;
+
+        @include respond-to(media-md) {
+            font-size: 52px;
+        }
+
+        @include respond-to(media-sm) {
+            font-size: 36px;
+        }
+
+        @include respond-to(media-xs) {
+            font-size: 30px;
+            padding-bottom: 20px !important;
+        }
+
+        span {
+            background: transparent linear-gradient(89deg, #69009A 0%, #E8078C 100%) 0% 0% no-repeat padding-box;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    }
+}
+
+.launchroadmap {
+    .roadmapList>ul>li:last-child::after {
+        background: #D0672E;
+    }
+}
+
+
+
+/*--------Dark Theme------------*/
+.darkTheme {
+    .launchpadBannerBx {
+        .launchpadBanInn {
+            background: #111111;
+
+            .lb-topBx {
+                .lb-topLeft {
+                    background: #1e1e1e;
+                    border: #1e1e1e solid 1px;
+
+                    ul {
+                        li {
+                            i {
+                                background: #1e1e1e;
+                                border: #ababab solid 1px;
+                            }
+
+                            .selected {
+                                background: transparent linear-gradient(90deg, #CBCF2E 0%, #D0672E 100%) 0% 0% no-repeat padding-box;
+                                border: #1e1e1e solid 1px;
+                            }
+                        }
+                    }
+                }
+
+                .lb-topRight {
+                    background: #1e1e1e;
+                    border: #1e1e1e solid 1px;
+
+                    h3 {
+                        color: #fff;
+                    }
+                }
+            }
+
+            .launchWalletBx {
+                background: #1e1e1e;
+                border: #1e1e1e solid 1px;
+
+                .lpdetLeft {
+                    .cooperBx {
+                        .coopersocial {
+                            a {
+                                color: #fff;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .regvalueBx {
+        .regvalueInn {
+            background: #111111;
+
+            .regvalBx {
+                .regvalInnBx {
+                    .regvalInn {
+                        span {
+                            color: #A7A7A7;
+                        }
+
+                        strong {
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .launch_teamsOuter {
+        .teamsList {
+            .owl-carousel {
+                .owl-stage-outer {
+                    padding: 12px 0 10px 0;
+                }
+            }
+
+            .item {
+                background: #111111;
+                border: 1px solid #222528;
+
+                &:hover {
+                    box-shadow: #222528 0 0 1px 2px;
+                }
+
+                i {
+                    margin: 0 auto 15px auto;
+                }
+
+                span {
+                    padding-bottom: 5px;
+                }
+
+                small {
+                    color: #a7a7a7;
+                }
+            }
+        }
+    }
+}
+
+/*--------Dark Theme------------*/

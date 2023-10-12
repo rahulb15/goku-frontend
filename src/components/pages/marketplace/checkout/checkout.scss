@@ -1,0 +1,164 @@
+@import "../../../../scss/mixin.scss";
+
+.contInfOuter {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 50px;
+
+    .continf_Left {
+        width: calc(100% - 590px);
+
+        h4 {
+            font-size: 20px;
+            color: #000000;
+            padding-bottom: 20px !important;
+        }
+
+        .contfrmBx {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+
+            .contfrmHalf {
+                width: 48%;
+
+            }
+        }
+    }
+
+    .continf_Right {
+        width: 460px;
+        background: #FFFFFF;
+        box-shadow: 0px 10px 30px #00000014;
+        border-radius: 6px;
+        padding: 20px 30px;
+
+        h3 {
+            font-size: 20px;
+            line-height: 24px;
+            padding-bottom: 10px !important;
+        }
+
+        .orderItem {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px !important;
+
+            .orderImg {
+                width: 100px;
+
+                img {
+                    width: 90px;
+                    height: 90px;
+                    border-radius: 6px;
+                }
+            }
+
+            .orderName {
+                small {
+                    font-size: 14px;
+                    color: #6e6e6e;
+                }
+
+                strong {
+                    font-size: 17px;
+                    display: block;
+                    color: #000;
+                }
+            }
+
+            .orderName {
+                width: calc(100% - 160px);
+            }
+
+            .orderval {
+                color: #000000;
+                font-size: 17px;
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+.totlList {
+    li {
+        border-top: #e5e5e5 solid 1px;
+        padding: 15px 0;
+        font-size: 17px;
+        display: flex;
+        justify-content: space-between;
+
+        span {
+            color: #6e6e6e;
+        }
+    }
+
+    .totalvalue {
+        font-size: 22px;
+    }
+}
+
+.paymentBtn {
+    padding-top: 10px;
+
+    button {
+        width: 100%;
+        height: 51px;
+        background: #000;
+        font-size: 16px;
+        border: 0;
+
+        &:hover {
+            background: #CBCA2E;
+            color: #000;
+        }
+    }
+}
+
+.checkoutfrmBx {
+    padding-bottom: 20px;
+
+    label {
+        font-size: 14px;
+        color: #606060;
+    }
+
+    input {
+        width: 100%;
+        height: 51px;
+        border: 1px solid #D8D8D8;
+        border-radius: 6px;
+        padding: 0 10px;
+    }
+
+    select {
+        width: 100%;
+        height: 51px;
+        border: 1px solid #D8D8D8;
+        border-radius: 6px;
+        padding: 0 10px;
+    }
+}
+
+.addresCheck {
+    padding-bottom: 20px !important;
+
+    label.form-check-label {
+        vertical-align: top;
+        font-size: 16px;
+        color: #000;
+        line-height: 25px;
+
+        input.form-check-input {
+            width: 25px;
+            height: 25px;
+            vertical-align: top;
+            display: inline-block;
+            margin-right: 10px;
+            float: none;
+            margin-top: 0;
+        }
+    }
+}

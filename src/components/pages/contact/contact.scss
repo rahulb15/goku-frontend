@@ -1,0 +1,139 @@
+@import "../../../scss/mixin.scss";
+.contactHd{
+    padding-bottom: 50px;
+    text-align: center;
+    padding-top: 20px;
+    @include respond-to(media-sm) {
+        padding-bottom: 30px;
+    }
+    h2{
+        font-size: 60px;
+        padding-bottom: 20px !important;
+        @include respond-to(media-sm) {
+            font-size: 40px;
+            padding-bottom: 10px !important;
+        }
+        @include respond-to(media-xs) {
+            font-size: 34px;
+        }
+    }
+    span{
+        font-size: 17px;
+        color: #777777;
+        @include respond-to(media-sm) {
+            font-size: 15px;
+        }
+    }
+}
+.contfrmOuter{
+    border: #CBCB2E solid 2px;
+    padding: 50px;
+    border-radius: 10px;
+    max-width: 700px;
+    margin: 0 auto;
+    @include respond-to(media-sm) {
+        padding: 20px;
+    }
+    @include respond-to(media-xs) {
+        padding: 15px;
+    }
+    .contfrmBx {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        @include respond-to(media-xs) {
+            display: block;
+        }
+        .contfrm {
+            width: 47%;
+            @include respond-to(media-xs) {
+                width: 100%;
+            }
+            label{
+                font-size: 16px;
+                font-weight: 600;
+                @include respond-to(media-sm) {
+                    font-size: 15px;
+                }
+            }
+            input{
+                width: 100%;
+                height: 51px;
+                border: #d8d8d8 solid 1px;
+                padding: 0 15px;
+                font-size: 16px;
+                @include respond-to(media-xs) {
+                    font-size: 15px;
+                }
+            }
+        }
+        .contTxtarea{
+            width: 100%;
+            label{
+                font-size: 16px;
+                font-weight: 600;
+                @include respond-to(media-xs) {
+                    font-size: 15px;
+                }
+            }
+            textarea{
+                padding: 10px;
+                width: 100%;
+                height: 200px;
+                resize: none;
+                font-size: 16px;
+                @include respond-to(media-xs) {
+                    height: 150px;
+                }
+            }
+        }
+        
+    }
+    .sendBtnBx{
+        button{
+            width: 100px;
+            height: 51px;
+            border-radius: 6px;
+            background: #000000;
+            cursor: pointer;
+            color: #fff;
+            font-size: 16px;
+            &:hover{
+                background: transparent;
+                color: #000;
+            }
+        }
+    }
+}
+
+
+.darkTheme{
+    .contfrmOuter{
+        .contfrmBx{
+            .contfrm{
+                input{
+                    border: #808080 solid 1px;
+                    background: transparent;
+                    color: #fff;
+                }
+            }
+            .contTxtarea{
+                textarea{
+                    border: #808080 solid 1px;
+                    background: transparent;
+                    color: #fff;
+                }
+            }
+        }
+        .sendBtnBx{
+            button{
+                background: #fff;
+                color: #000;
+                &:hover{
+                    background: #CBCF2E;
+                    color: #000;
+                }
+            }
+        }
+    }
+}

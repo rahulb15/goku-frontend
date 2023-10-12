@@ -1,0 +1,52 @@
+@import "../../../../scss/mixin.scss";
+
+.designCollection {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #EFEFEF;
+    border-radius: 10px;
+    padding: 7px;
+    font-weight: 600;
+    text-align: left;
+
+    &:nth-child(4n) {
+        margin-right: 0;
+    }
+
+    i {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    span {
+        font-size: 17px;
+        padding-bottom: 5px;
+        display: block;
+
+        @include respond-to(media-xs) {
+            font-size: 15px;
+        }
+    }
+
+    small {
+        color: #000;
+        font-size: 16px;
+        display: block;
+
+        @include respond-to(media-xs) {
+            font-size: 15px;
+        }
+    }
+}
+
+
+
+.darkTheme {
+    .designCollection {
+        background: #262626;
+        border: #262626 solid 1px;
+
+        small {
+            color: #EFEFEF;
+        }
+    }
+}

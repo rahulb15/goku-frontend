@@ -1,0 +1,185 @@
+@import "../../../../scss/mixin.scss";
+
+.customizeOuter {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    padding-bottom: 50px;
+
+    .customize_Left {
+        width: calc(100% - 480px);
+        position: relative;
+        background: #F7F7F7;
+        border-radius: 10px;
+        min-height: 685px;
+        padding: 20px;
+
+        .frontbackBtn {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+
+            button {
+                width: 100px;
+                height: 37px;
+                border-radius: 6px;
+                border: #000000 solid 1px;
+                font-size: 15px;
+            }
+
+            .frontBtn {
+                background: #000000;
+                color: #FFFFFF;
+                margin-right: 10px;
+
+                &:hover {
+                    background: #CBCA2E;
+                    color: #000000;
+                    border: #CBCA2E solid 1px;
+                }
+            }
+
+            .backBtn {
+                background: #fff;
+                color: #000000;
+
+                &:hover {
+                    background: #000000;
+                    color: #ffffff;
+                }
+            }
+        }
+
+        .videwBtnBx {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+
+            button {
+                width: 36px;
+                height: 36px;
+                background: #000000;
+                border-radius: 50%;
+                border: 0;
+                color: #FFFFFF;
+                font-size: 18px;
+                padding: 0;
+            }
+        }
+
+        .tshirtImgBx {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
+            span {
+                width: 165px;
+                height: 165px;
+                border: #404040 dashed 1px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                margin-top: -50px;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
+
+    .customize_Right {
+        width: 460px;
+        background: #FFFFFF;
+        box-shadow: 0px 10px 30px #00000014;
+        border-radius: 6px;
+        padding: 20px;
+
+        h3 {
+            font-size: 22px;
+            color: #000000;
+            padding-bottom: 10px !important;
+        }
+
+        .designSrch {
+            position: relative;
+            padding-bottom: 15px;
+
+            input {
+                height: 51px;
+                width: 100%;
+            }
+
+            button {
+                position: absolute;
+                right: 7px;
+                top: 7px;
+                background: transparent;
+                color: #000000;
+                border: 0;
+                font-size: 18px;
+                color: #6e6e6e;
+            }
+        }
+
+        .designList {
+            li {
+                width: 48%;
+                background: #FFFFFF;
+                border: 1px solid #EFEFEF;
+                border-radius: 10px;
+                padding: 8px;
+                display: inline-block;
+                margin-right: 4%;
+                margin-bottom: 15px;
+
+                button {
+                    background: transparent;
+                    border: 0;
+                    color: #000000;
+                    text-align: left;
+                    width: 100%;
+                    padding: 0;
+
+                    .adddesignImg {
+                        margin-bottom: 5px;
+                        position: relative;
+
+                        img {
+                            width: 100%;
+                            border-radius: 6px;
+                        }
+
+                        span {
+                            position: absolute;
+                            right: 10px;
+                            top: 10px;
+                            background: #fff;
+                            border: #c8c8c8 solid 1px;
+                            width: 18px;
+                            height: 18px;
+                            border-radius: 50%;
+                        }
+                    }
+
+                    small {
+                        color: #777777;
+                        display: block;
+                    }
+
+                    strong {
+                        display: block;
+                        font-weight: 600;
+                    }
+                }
+
+                &:nth-child(2n) {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}

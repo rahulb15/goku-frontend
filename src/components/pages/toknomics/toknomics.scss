@@ -1,0 +1,340 @@
+@import "../../../scss/mixin.scss";
+.toknomicsOuter{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 180px;
+    padding-bottom: 97px;
+    @include respond-to(media-sm) {
+        display: block;
+        padding: 120px 0 60px 0;
+    }
+    @include respond-to(media-xs) {
+        display: block;
+        padding: 140px 0 60px 0;
+    }
+    .toknomics_Left{
+        @include respond-to(media-sm) {
+            width: 100%;
+            padding-bottom: 30px;
+            text-align: center;
+        }
+        h2{
+            font-size: 100px;
+            line-height: 100px;
+            padding-bottom: 20px !important; 
+            @include respond-to(media-xl) {
+                font-size: 90px;
+                line-height: 90px;
+            }
+            @include respond-to(media-lg) {
+                font-size: 72px;
+                line-height: 78px;
+            }
+            @include respond-to(media-md) {
+                font-size: 52px;
+                line-height: 52px;
+            }
+            @include respond-to(media-xs) {
+                font-size: 36px;
+                line-height: 36px;
+                padding-bottom: 15px !important;
+            }
+            &:hover{
+                background: transparent linear-gradient(270deg, #CBCF2E 0%, #D0652E 50%, var(--unnamed-color-e0e21a) 100%) 0% 0% no-repeat padding-box;
+                background: transparent linear-gradient(270deg, #CBCF2E 0%, #D0652E 50%, #CBCF2E 100%) 0% 0% no-repeat padding-box;
+                background-size: 200%;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                animation: animated_text 5s ease-in-out infinite;
+                -moz-animation: animated_text 5s ease-in-out infinite;
+                -webkit-animation: animated_text 5s ease-in-out infinite;
+                position: relative;
+                transition: all 0.5s ease-in-out;
+            }
+        }
+        button{
+            width: 135px;
+            height: 51px;
+            background: #000;
+            border-radius: 6px;
+            border: #000 solid 1px;
+            color: #fff;
+            font-size: 16px;
+            &:hover{
+                background: #fff;
+                color: #000;
+            }
+        }
+    }
+    .toknomics_Right{
+        box-shadow: 0px 10px 50px #00000029;
+        padding: 35px 40px;
+        max-width: 580px;
+        width: 100%;
+        @include respond-to(media-lg) {
+            padding: 30px 30px;
+            max-width: 450px;
+        }
+        @include respond-to(media-md) {
+            padding: 20px;
+            max-width: 50%;
+        }
+        @include respond-to(media-sm) {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        h2 {
+            text-align: center;
+            padding-bottom: 20px !important;
+            @include respond-to(media-xs) {
+                padding-bottom: 10px !important;
+            }
+        }
+        .walletBal{
+            font-size: 16px;
+            padding-bottom: 20px;
+            strong{
+                font-weight: 600;
+            }
+        }
+        .rangeslider{
+            padding-bottom: 10px;
+            background: transparent;
+            box-shadow: none;
+            position: relative;
+            margin: 10px 0 0 0;
+            .slider{
+                padding: 10px 0 10px 0;
+                .rangeslider-horizontal {
+                    height: 12px;
+                    border-radius: 10px;
+                    background: #efefef !important;
+                    .rangeslider__fill{
+                        height: 12px;
+                        background: #E0E21A;
+                    }
+                    .rangeslider__handle{
+                        width: 20px !important;
+                        height: 20px !important;
+                        &:after {
+                            top: 1px;
+                            left: 1px;
+                            border-radius: 50%;
+                            background-color: #E0E21A;
+                        }
+                    }
+                }
+                .value {
+                    position: absolute;
+                    left: 0;
+                    top: -18px;
+                    font-size: 14px;
+                }
+                .fixvalue {
+                    position: absolute;
+                    right: 0;
+                    top: -18px;
+                    font-size: 14px;
+                }
+            }
+        }
+        
+        .tokenValue{
+            position: relative;
+            padding-bottom: 15px;
+            input{
+                width: 100%;
+                height: 51px;
+                border: 1px solid #D8D8D8;
+                border-radius: 6px;
+                padding: 0 15px;
+            }
+            img{
+                position: absolute;
+                right: 10px;
+                top:15px;
+            }
+        }
+        .buytokenBtn{
+            text-align: center;
+            padding-bottom: 20px;
+            button{
+                width: 135px;
+                height: 51px;
+                background: #000;
+                border-radius: 6px;
+                border: #000 solid 1px;
+                color: #fff;
+                font-size: 16px;
+                &:hover{
+                    background: #fff;
+                    color: #000;
+                }
+            }
+        }
+        .tokenworthOut{
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            .tokenwrthLeft{
+                width: 50%;
+                strong{
+                    font-size: 20px;
+                    line-height: 24px;
+                    display: block;
+                    padding-bottom: 7px;
+                    @include respond-to(media-xs) {
+                        font-size: 17px;
+                        line-height: 20px;
+                        padding-bottom: 5px;
+                    }
+                }
+                span{
+                    font-size: 17px;
+                    line-height: 22px;
+                    color: #777777;
+                    @include respond-to(media-xs) {
+                        font-size: 14px;
+                        line-height: 17px;
+                    }
+                }
+            }
+            .tokenwrthRight{
+                width: 50%;
+                text-align: right;
+                strong{
+                    font-size: 20px;
+                    line-height: 24px;
+                    display: block;
+                    padding-bottom: 7px;
+                    @include respond-to(media-xs) {
+                        font-size: 17px;
+                        line-height: 20px;
+                        padding-bottom: 5px;
+                    }
+                }
+                span{
+                    font-size: 17px;
+                    line-height: 22px;
+                    color: #777777;
+                    @include respond-to(media-xs) {
+                        font-size: 14px;
+                        line-height: 17px;
+                    }
+                }
+            }
+        }
+        .countdownTime {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            span{
+                width: 23.5%;
+                text-align: center;
+                background: #FAFAFA;
+                border: 1px solid #EAEAEA;
+                line-height: 110px;
+                font-size: 60px;
+                border-radius: 6px;
+                @include respond-to(media-sm) {
+                    font-size: 40px;
+                    line-height:60px;
+                }
+                @include respond-to(media-xs) {
+                    font-size: 32px;
+                    line-height:60px;
+                }
+            }
+        }
+        .countdownName {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-bottom: 25px;
+            span{
+                width: 23.5%;
+                text-align: center;
+                background: #FAFAFA;
+                border-radius: 6px;
+                display: block;
+                font-size: 16px;
+                line-height: 40px;
+                @include respond-to(media-xs) {
+                    font-size: 14px;
+                    line-height:30px;
+                }
+            }
+        }
+
+    }
+
+}
+/*---------Dark Mode---------*/
+.darkTheme{
+    .toknomicsOuter{
+        .toknomics_Left{
+            h2{
+                color: #fff;
+            }
+            button{
+                background: #fff;
+                color: #000;
+                &:hover{
+                    background: #CBCF2E;
+                }
+            }
+        }
+        .toknomics_Right{
+            background: #111111;
+            h2{
+                color: #fff;
+            }
+            .countdownTime{
+                span{
+                    background: #000;
+                    border-color:#2a2a2a ;
+                }
+            }
+            .countdownName{
+                span{
+                    background: #000;
+                    border-color:#2a2a2a ;
+                }
+            }
+           .tokenValue{
+               input {
+                    background: #000;
+                    border: 1px solid #363636;
+                    color: #fff;
+                }
+            }
+            .buytokenBtn{
+                button{
+                    background: #fff;
+                    color: #000;
+                    &:hover{
+                        background: #CBCF2E;
+                    }
+                }
+            }
+            .rangeslider{
+                .slider{
+                    .rangeslider-horizontal {
+                        background: #2A2A2A !important;
+                        
+                    }
+                    .value {
+                        color: #7c7c7c;
+                    }
+                    .fixvalue {
+                        color: #7c7c7c;
+                    }
+                }
+            }
+        }
+    }
+}
+/*---------Dark Mode---------*/

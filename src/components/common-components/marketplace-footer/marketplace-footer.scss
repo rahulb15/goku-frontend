@@ -1,0 +1,81 @@
+@import "../../../scss/mixin.scss";
+.footerNavOuter {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 40px;
+    @include respond-to(media-sm) {
+        display: block;
+        padding-bottom: 20px;
+    }
+    .footDisc {
+        width: 30%;
+        @include respond-to(media-sm) {
+            width: 100%;
+        }
+        strong {
+            display: block;
+            font-size: 20px;
+            padding-bottom: 10px;
+        }
+        p{
+            font-size: 16px;
+            line-height: 24px;
+            padding-right: 50px;
+        }
+    }
+    .footNav {
+        width: 14%;
+        @include respond-to(media-sm) {
+            width: 48%;
+            display: inline-block;
+            vertical-align: top;
+            padding-bottom: 20px;
+            padding-top: 20px;
+        }
+        strong {
+            display: block;
+            font-size: 20px;
+            padding-bottom: 10px;
+            @include respond-to(media-lg) {
+                font-size: 16px;       
+            }
+        }
+        ul{
+            li{
+                padding-bottom: 10px;
+                a{
+                    font-size: 15px;
+                    color: #3d3d3d;
+                    font-family: 'visby_cfregular' !important;
+                    &:hover{
+                        color: #D0652E;
+                    }
+                }
+            }
+        }
+    }
+    
+}
+
+/*---------Dark Theme----------------*/
+.darkTheme{
+    .footBotLeft{
+        color: #a7a7a7;
+    }
+        .footDisc p{
+            color: #a7a7a7;
+    }
+    .footNav {
+        ul{
+            li{
+                a{
+                   color: #a7a7a7;
+                   &:hover{
+                       color: #fff;
+                   }
+                }
+            }
+        }
+    }
+}

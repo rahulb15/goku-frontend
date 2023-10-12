@@ -1,0 +1,90 @@
+@import "../../../scss/mixin.scss";
+.faqOuter {
+    padding: 130px 0 100px 0;
+    @include respond-to(media-sm) {
+        padding: 100px 0 70px 0;
+    }
+    @include respond-to(media-xs) {
+        padding: 140px 0 50px 0;
+    }
+    .breatcrum{
+        color: #00B1FF;
+        font-size: 17px;
+        @include respond-to(media-xs) {
+            font-size: 15px;
+        }
+        a{
+            color: #00B1FF;
+            &:hover{
+                color: #000;
+            }
+        }
+    }
+    .faqHd{
+        padding: 40px 0;
+        @include respond-to(media-md) {
+            padding:20px 0;
+        }
+        @include respond-to(media-sm) {
+            padding:0px 0;
+        }
+        @include respond-to(media-xs) {
+            padding:20px 0 10px 0;
+        }
+        h2{
+            font-size: 70px;
+            line-height: 90px;
+            @include respond-to(media-lg) {
+                font-size: 60px;
+            }
+            @include respond-to(media-md) {
+                font-size: 50px;
+            }
+            @include respond-to(media-sm) {
+                font-size: 34px;
+            }
+            @include respond-to(media-xs) {
+                font-size: 20px;
+                line-height: 40px;
+            }
+        }
+    }
+    .faqList{
+        ul{
+            li{
+                padding: 27px 0;
+                border-bottom: #e1e1e1 solid 1px;
+                @include respond-to(media-md) {
+                    padding:20px 0;
+                }
+                @include respond-to(media-xs) {
+                    padding:10px 0;
+                }
+                &:last-child{
+                    border-bottom: 0;
+                }
+                a{
+                    font-size: 22px;
+                    line-height: 27px;
+                    display: block;
+                    color: #343434;
+                    &:hover{
+                        color: #00B1FF;
+                    }
+                    @include respond-to(media-md) {
+                        font-size: 20px;
+                    }
+                    @include respond-to(media-sm) {
+                        font-size: 18px;
+                        line-height: 28px;
+                    }
+                    @include respond-to(media-xs) {
+                        font-size: 16px;
+                        line-height: 26px;
+                    }
+                }
+            }
+        }
+    }
+
+}

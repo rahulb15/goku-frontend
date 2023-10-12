@@ -1,0 +1,260 @@
+@import "../../../../scss/mixin.scss";
+
+.colorBx {
+    padding-bottom: 20px;
+
+    span {
+        display: block;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    input {
+        width: 25px;
+        height: 25px;
+        margin-right: 5px;
+        box-shadow: none !important;
+        border-radius: 6px !important;
+
+    }
+
+    .blackClr {
+        background-color: #000000 !important;
+    }
+
+    .greenClr {
+        background-color: #A59500 !important;
+    }
+
+    .redClr {
+        background-color: #F22424 !important;
+    }
+
+    .yellowClr {
+        background-color: #F9BF37 !important;
+    }
+
+    .blueClr {
+        background-color: #7AAEF2 !important;
+    }
+
+    .whiteClr {
+        background-color: #fff !important;
+    }
+}
+
+.sizeBx {
+    padding-bottom: 20px;
+
+    span {
+        display: block;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    button {
+        width: 50px;
+        height: 30px;
+        background: #fff;
+        border: #d4d4d4 solid 1px;
+        border-radius: 6px;
+        color: #6e6e6e;
+        margin-right: 5px;
+        line-height: 28px;
+        font-size: 12px;
+
+        &.active {
+            border: #000000 solid 1px;
+            color: #000000;
+        }
+    }
+
+}
+
+.qtyBuyBx {
+    span {
+        display: block;
+        font-size: 16px;
+        font-weight: 600;
+        padding-bottom: 5px;
+    }
+
+    .mb-3 {
+        display: inline-block;
+        margin-bottom: 0 !important;
+        margin-right: 15px;
+
+        select {
+            width: 80px;
+            height: 51px;
+        }
+    }
+
+    .buyBtn {
+        width: 130px;
+        height: 51px;
+        background: #000;
+        margin-right: 15px;
+        font-size: 16px;
+    }
+
+    .cartBtn {
+        width: 51px;
+        height: 51px;
+        background: transparent;
+        color: #000;
+        font-size: 24px;
+    }
+}
+
+.merchAbout {
+    border: #e8e8e8 solid 1px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+
+    h3 {
+        font-size: 24px;
+        font-weight: 600;
+        padding-bottom: 15px;
+    }
+
+    p {
+        font-size: 17px;
+        line-height: 30px;
+    }
+}
+
+.keyfeatBx {
+    border: #e8e8e8 solid 1px;
+    padding: 20px 20px 0 20px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+
+    h3 {
+        font-size: 24px;
+        font-weight: 600;
+        padding-bottom: 15px !important;
+    }
+
+    ul {
+        li {
+            width: 35%;
+            padding-bottom: 50px;
+            display: inline-block;
+            padding-right: 100px;
+            vertical-align: top;
+
+            i {
+                display: block;
+                padding-bottom: 15px;
+                font-size: 40px;
+            }
+
+            strong {
+                display: block;
+                color: #000;
+                padding-bottom: 5px;
+            }
+
+            span {
+                color: #777777;
+                font-size: 15px;
+                line-height: 26px;
+            }
+        }
+    }
+}
+
+.careInstBx {
+    border: #e8e8e8 solid 1px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+
+    h3 {
+        font-size: 24px;
+        font-weight: 600;
+        padding-bottom: 15px !important;
+    }
+
+    span {
+        font-size: 17px;
+        line-height: 32px;
+    }
+
+    .table {
+        max-width: 855px;
+        background: #fafafa;
+        border-left: #e8e8e8 solid 1px;
+        border-top: #e8e8e8 solid 1px;
+
+        th {
+            border-right: #e8e8e8 solid 1px;
+            border-bottom: #e8e8e8 solid 1px;
+            text-align: center;
+            padding: 10px;
+        }
+
+        td {
+            border-right: #e8e8e8 solid 1px;
+            border-bottom: #e8e8e8 solid 1px;
+            text-align: center;
+            padding: 10px;
+
+            &:first-child {
+                text-align: left;
+            }
+        }
+
+    }
+}
+
+.overDet_Left {
+    .image-gallery.image-gallery-using-mouse {
+        .image-gallery-content.bottom {
+            position: relative;
+            padding-left: 93px;
+
+            nav.image-gallery-thumbnails-container {
+                button {
+                    border-radius: 6px;
+                    margin-bottom: 5px;
+                    border: 0;
+
+                    img {
+                        border-radius: 6px;
+                    }
+                }
+            }
+
+            .image-gallery-slide-wrapper.bottom {
+                position: relative;
+                overflow: hidden;
+
+                .image-gallery-slide {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                }
+
+                .image-gallery-slides {
+                    height: 443px;
+
+                    img.image-gallery-image {
+                        height: 493px;
+                        border-radius: 6px;
+                    }
+                }
+            }
+
+            .image-gallery-thumbnails-wrapper.bottom.thumbnails-swipe-horizontal {
+                width: 73px;
+                height: 73px;
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+        }
+    }
+}

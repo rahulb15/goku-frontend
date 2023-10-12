@@ -1,0 +1,25 @@
+@import "../../../../scss/mixin.scss";
+
+h2.accessoriesHd {
+    font-size: 32px;
+    font-weight: 800;
+    padding-bottom: 30px !important;
+}
+.catlogList{
+    ul{
+        li{
+            transition: all 0.5s ease-in-out;
+            a{
+                color: #000;
+                &:hover{
+                    color: #0099ff;
+                }
+            }
+            &:hover{
+                box-shadow: #efefef 0 0 0 4px;
+                top: -5px;
+                transition: all 0.5s ease-in-out;
+            }
+        }
+    }
+}

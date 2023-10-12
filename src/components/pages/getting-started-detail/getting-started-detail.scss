@@ -1,0 +1,128 @@
+@import "../../../scss/mixin.scss";
+.tabsOuter {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 50px 0 100px 0;
+    @include respond-to(media-xs) {
+        display: block;
+    }
+    .tabsNavLeft {
+        width: 220px;
+        border-right: #e1e1e1 solid 1px;
+        @include respond-to(media-sm) {
+            width: 140px;
+        }
+        @include respond-to(media-xs) {
+            width: 100%;
+            padding-bottom: 20px;
+        }
+        h4 {
+            font-size: 20px;
+            padding-bottom: 10px !important;
+            @include respond-to(media-md) {
+                font-size: 18px;
+            }
+            
+        }
+        .MuiTabs-flexContainer {
+            @include respond-to(media-xs) {
+                display: flex;
+                height: 300px;
+                overflow: auto;
+            }
+        }
+        .tabsNav{
+            .MuiTab-root{
+                width: 100%;
+                text-align: left;
+                padding: 15px 0;
+                line-height: 27px;
+                color: #777777;
+                text-transform: capitalize;
+                font-weight: 400;
+                font-size: 17px;
+                font-family: 'visby_cfregular';
+                letter-spacing: 0;
+                @include respond-to(media-md) {
+                    font-size: 15px;
+                    line-height: 23px;
+                    padding: 10px 0;
+                }
+                @include respond-to(media-sm) {
+                    font-size: 14px;
+                    line-height: 21px;
+                    padding: 5px 0 !important;
+                }
+                .MuiTab-wrapper{
+                    text-align: left;
+                    display: block;
+                    padding-right: 15px;
+                    
+                }
+                
+            }
+            .Mui-selected{
+                color: #000 !important;
+            }
+        }
+    }
+    .tabPanalRight {
+        width: calc(100% - 250px);
+        @include respond-to(media-sm) {
+            width: calc(100% - 150px);
+        }
+        @include respond-to(media-xs) {
+            width: 100%;
+        }
+        h2{
+            padding-bottom: 20px !important;
+            color: #000;
+            font-size: 40px;
+            @include respond-to(media-md) {
+                font-size: 26px;
+            }
+            @include respond-to(media-sm) {
+                font-size: 22px;
+            }
+        }
+        p{
+            font-size: 17px;
+            line-height: 30px;
+            color: #777777;
+            margin-bottom: 30px;
+            @include respond-to(media-sm) {
+                font-size: 15px;
+                line-height: 27px;
+            }
+        }
+    }
+}
+/*---------Dark Mode---------*/
+.darkTheme{
+    .tabsOuter{
+        .tabsNavLeft{
+            border-right: #424242 solid 1px;
+            h4{
+                color: #ffffff;
+            }
+            .tabsNav{
+                .MuiTab-root{
+                    color: #fff !important;
+                }
+                .Mui-selected{
+                    color: #fff !important;
+                }
+            }
+        }
+        .tabPanalRight{ 
+            h2{
+                color: #fff;
+            }
+            p{
+                color: #f5f5f5;
+            }
+        }
+    }
+}
+/*---------Dark Mode---------*/
