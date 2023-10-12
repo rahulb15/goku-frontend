@@ -54,6 +54,8 @@ const NftTabs1 = (props) => {
   const [minAmount, setMinAmount] = React.useState(0);
   const [maxAmount, setMaxAmount] = React.useState(0);
   const [options, setOptions] = React.useState([]);
+  const [selectedNft, setSelectedNft] = React.useState();
+
   
   
   
@@ -983,8 +985,8 @@ const NftTabs1 = (props) => {
                                           height: "50px",
                                           borderRadius: "10px",
                                         }}
-                                  onClick={() => setGiftModal(true)}
-                                >
+                                        onClick={() => {setGiftModal(true); setSelectedNft(data);}}
+                                        >
                                   Gift
                                 </Button>
                               </div>
@@ -1087,7 +1089,7 @@ const NftTabs1 = (props) => {
                             />
                             <Button
                               onClick={() =>
-                                loadingGift ? null : giftNft(data)
+                                loadingGift ? null : giftNft(selectedNft)
                               }
                               style={{
                                 marginTop: "15px",

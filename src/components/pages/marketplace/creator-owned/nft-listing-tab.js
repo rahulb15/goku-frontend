@@ -53,6 +53,8 @@ const HotCollectionsTab = (props) => {
   const [fee, setFee] = useState(0);
   const [fee1, setFee1] = useState(0);
   const navigate = useNavigate();
+  const [selectedNft, setSelectedNft] = React.useState();
+
 
   if (walletName == "Xwallet") {
     const getAccountInfo = async () => {
@@ -1002,7 +1004,8 @@ const HotCollectionsTab = (props) => {
                                         height: "50px",
                                         borderRadius: "10px",
                                       }}
-                                      onClick={() => setGiftModal(true)}
+                                      onClick={() => {setGiftModal(true); setSelectedNft(data);}}
+
                                     >
                                       Gift
                                     </Button>
@@ -1158,7 +1161,7 @@ const HotCollectionsTab = (props) => {
                             />
                             <Button
                               onClick={() =>
-                                loadingGift ? null : giftNft(data)
+                                loadingGift ? null : giftNft(selectedNft)
                               }
                               style={{
                                 marginTop: "15px",
