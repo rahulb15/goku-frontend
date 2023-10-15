@@ -38,13 +38,14 @@ export default function CommunityMarketplace() {
   }, []);
 
   const getCollection = () => {
-    Axios.get(`/collection/user-collection-by-id?id=${foo}`, {
+    Axios.get(`/collection/user-collection-by-id2?id=${foo}`, {
       headers: { authorization: localStorage.getItem("accessJWT") },
     })
       .then((response) => {
         
         if (response.data.status == "success") {
-          setCollectionName(response.data.data[0].collectionName);
+          console.log(response.data.data[0], "collection data");
+          // setCollectionName(response.data.data[0].collectionName);
           setCollectionData(response.data.data[0]);
         }
       })
@@ -132,7 +133,7 @@ export default function CommunityMarketplace() {
                   <strong
                     style={{ color: `${nightModeStatus ? "#fff" : "#000"}` }}
                   >
-                    {collectionData?.totalSupply}
+                    {collectionData?.collection_info[0]?.totalSupply}
                   </strong>
                 </div>
                 <div className="itemQtyBx">
@@ -140,7 +141,7 @@ export default function CommunityMarketplace() {
                   <strong
                     style={{ color: `${nightModeStatus ? "#fff" : "#000"}` }}
                   >
-                    404
+                    {collectionData?.totalNft}
                   </strong>
                 </div>
                 <div className="itemQtyBx">
@@ -148,7 +149,7 @@ export default function CommunityMarketplace() {
                   <strong
                     style={{ color: `${nightModeStatus ? "#fff" : "#000"}` }}
                   >
-                    K 2822.7
+                     {collectionData?.totalNftPrice} KDA
                   </strong>
                 </div>
                 <div className="itemQtyBx">
@@ -156,7 +157,7 @@ export default function CommunityMarketplace() {
                   <strong
                     style={{ color: `${nightModeStatus ? "#fff" : "#000"}` }}
                   >
-                    K 4
+                     {collectionData?.minNftPrice} KDA
                   </strong>
                 </div>
               </div>

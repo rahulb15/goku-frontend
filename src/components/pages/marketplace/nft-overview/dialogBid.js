@@ -134,7 +134,7 @@ const DialogBid = ({ dataUSer, setRefresh, refresh, setLoading, loading,setSelec
     
     
     const a = accountName;
-    const b = "marketplacefinalacc002";
+    const b = "00fd7ca27f0ab6cfb03e3316c23599890f7a82043cb73925dc080307b771528d";
     // id:string buyer:string amount:decimal bid_days:integer
     const pactCode = `(free.marketplacefinal002.bid ${JSON.stringify(
       tokenId

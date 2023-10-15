@@ -49,6 +49,10 @@ const OverviewDetail = () => {
   const [spinner, setSpinner] = useState(false);
   const [userId, setUserId] = useState("");
   const [fee, setFee] = useState(0);
+  const [royalityAddress, setRoyalityAddress] = React.useState("");
+  const [royalityRate, setRoyalityRate] = React.useState("");
+  console.log("royalityAddress", royalityAddress);
+  console.log("royalityRate", royalityRate);
   const search = window.location.search;
   const params = new URLSearchParams(search);
   let foo2 = params.get("for");
@@ -294,8 +298,118 @@ const OverviewDetail = () => {
     getFee();
   }, []);
 
+  const getRoyalityAddress = async (data) => {
+    const accountName = walletAddress;
+    const publicKey = accountName.slice(2, accountName.length);
+    console.log("publicKeycw", publicKey);
+    console.log("accountnamecw", accountName);
+    const guard = { keys: [publicKey], pred: "keys-all" };
+
+    const a = accountName;
+    const signCmd = {
+      pactCode: `(free.marketplacefinal002.get-royalty-account "${data.collectionName}")`,
+      caps: [
+        Pact.lang.mkCap(
+          "GAS",
+          "Capability to allow buying gas",
+          "coin.GAS",
+          []
+        ),
+      ],
+      meta: {
+        creationTime: creationTime(),
+        gasLimit: 150000,
+        chainId: CHAIN_ID,
+        ttl: 28800,
+        gasPrice: GAS_PRICE,
+        // IMPORTANT: the API requires this attribute even if it's an empty value like in this case
+        sender: "",
+      },
+    }; //alert to sign tx
+
+    const response = await Pact.fetch.local(signCmd, API_HOST);
+    console.log("response", response);
+    if (response.result.status == "success") {
+      const datum = response.result.data;
+      setRoyalityAddress(datum);
+      return datum;
+    } else {
+      setRoyalityAddress("");
+      toast.error("Transaction Failed", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return 0;
+    }
+  };
+
+  const getRoyalityRate = async (data) => {
+    const accountName = walletAddress;
+    const publicKey = accountName.slice(2, accountName.length);
+    console.log("publicKeycw", publicKey);
+    console.log("accountnamecw", accountName);
+    const guard = { keys: [publicKey], pred: "keys-all" };
+
+    const a = accountName;
+    const signCmd = {
+      pactCode: `(free.marketplacefinal002.get-royalty-rate "${data.collectionName}")`,
+      caps: [
+        Pact.lang.mkCap(
+          "GAS",
+          "Capability to allow buying gas",
+          "coin.GAS",
+          []
+        ),
+      ],
+      meta: {
+        creationTime: creationTime(),
+        gasLimit: 150000,
+        chainId: CHAIN_ID,
+        ttl: 28800,
+        gasPrice: GAS_PRICE,
+        // IMPORTANT: the API requires this attribute even if it's an empty value like in this case
+        sender: "",
+      },
+    }; //alert to sign tx
+
+    const response = await Pact.fetch.local(signCmd, API_HOST);
+    console.log("response", response);
+    if (response.result.status == "success") {
+      const datum = response.result.data;
+      console.log("datumxxxxxxxxxxxx", datum);
+      setRoyalityRate(datum);
+      return datum;
+    } else {
+      setRoyalityRate("");
+      toast.error("Transaction Failed", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return 0;
+    }
+  };
+
+
+
   const buyIdOnSale = async (data) => {
+    console.log("dataOverview", data);
     setLoading(true);
+    const royaltyA = await getRoyalityAddress(data);
+    const royaltyR = await getRoyalityRate(data);
+    console.log("royaltyA", royaltyA);
+    console.log("royaltyR", royaltyR);
+
+
     console.log("data", data);
     const MarketplaceCharges = fee * parseFloat(data.nftPrice);
     console.log("MarketplaceCharges", MarketplaceCharges);
@@ -305,8 +419,9 @@ const OverviewDetail = () => {
       "priceWithoutMarketplaceCharges",
       priceWithoutMarketplaceCharges
     );
-    const royaltyPayout =
-      data.collection_info[0].royaltyFee * priceWithoutMarketplaceCharges;
+    // const royaltyPayout =
+    //   data.collection_info[0].royaltyFee * priceWithoutMarketplaceCharges;
+    const royaltyPayout = royaltyR * priceWithoutMarketplaceCharges;
     console.log("royaltyPayout", royaltyPayout);
     const sellerPayout = priceWithoutMarketplaceCharges - royaltyPayout;
     console.log("sellerPayout", sellerPayout);
@@ -323,16 +438,17 @@ const OverviewDetail = () => {
     // const a = accountName;
     // // const b = "k:78a6d3d3ea9f2ad21a347d6715554de20b0ac9234057ed50ae8776fa96493826"
     // const b = data.creator;
-    // const c = "marketplacefinalacc002";
+    // const c = "00fd7ca27f0ab6cfb03e3316c23599890f7a82043cb73925dc080307b771528d";
     // console.log("b", b, "c", c, "a", a);
     const a = accountName;
     // account -> a = buyer account
     // account -> b = royalty account
     // account -> c = marketplace admin account
     //account -> d = seller account
-    const b = data.collection_info[0].royaltyAddress;
+    // const b = data.collection_info[0].royaltyAddress;
+    const b = royaltyA;
     const c =
-      "k:56609bf9d1983f0c13aaf3bd3537fe00db65eb15160463bb641530143d4e9bcf";
+      "00fd7ca27f0ab6cfb03e3316c23599890f7a82043cb73925dc080307b771528d";
     const d = data.creator;
 
     console.log("a", a, "b", b, "c", c, "d", d);
@@ -418,7 +534,7 @@ const OverviewDetail = () => {
                 sellingType: "",
                 creatorName: data.creatorName,
                 // nftPrice: nftPrice,
-                duration: "",
+                duration: "All",
                 history: {
                   owner: walletAddress,
                   price: data.nftPrice,
@@ -455,7 +571,7 @@ const OverviewDetail = () => {
               creator: walletAddress,
               clientId: data.clientId,
               onMarketplace: false,
-              sellingType: "",
+              sellingType: "All",
               creatorName: data.creatorName,
               passTokenId: data.passTokenId,
               // nftPrice: nftPrice,
@@ -504,7 +620,13 @@ const OverviewDetail = () => {
     }
 
     if (walletName == "Xwallet") {
+      console.log("XWalet");
+      console.log("MarketplaceCharges", MarketplaceCharges);
+      console.log("royaltyPayout", royaltyPayout);
+      console.log("sellerPayout", sellerPayout);
+      console.log("a", a, "b", b, "c", c, "d", d);
       const XWalletRequest = {
+        
         networkId: NETWORK_ID,
         signingCmd: {
           sender: a,
@@ -575,7 +697,7 @@ const OverviewDetail = () => {
               creator: walletAddress,
               clientId: data.clientId,
               onMarketplace: false,
-              sellingType: "",
+              sellingType: "All",
               creatorName: data.creatorName,
               // nftPrice: nftPrice,
               duration: "",
@@ -615,7 +737,7 @@ const OverviewDetail = () => {
             creator: walletAddress,
             clientId: data.clientId,
             onMarketplace: false,
-            sellingType: "",
+            sellingType: "All",
             creatorName: data.creatorName,
             passTokenId: data.passTokenId,
             // nftPrice: nftPrice,

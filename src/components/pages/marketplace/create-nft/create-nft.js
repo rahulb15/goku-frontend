@@ -22,6 +22,7 @@ const NETWORK_ID = process.env.REACT_APP_NETWORK_ID;
 const CHAIN_ID = process.env.REACT_APP_CHAIN_ID;
 const API_HOST = `https://api.testnet.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
 const creationTime = () => Math.round(new Date().getTime() / 1000) - 15;
+const GAS_PRICE = 0.01111;
 
 const CommunityMarketplace = () => {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ const CommunityMarketplace = () => {
   const [nft, setNft] = useState("");
   const [duration, setDuration] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [serviceFee, setServiceFee] = useState(1);
+  const [serviceFee, setServiceFee] = useState(0);
   const { walletStatus, walletName, walletAddress } = useSelector(
     (state) => state.walletStatus
   );
@@ -190,7 +191,7 @@ const CommunityMarketplace = () => {
     const guard = { keys: [publicKey], pred: "keys-all" };
 
     const a = accountName;
-    const b = "marketplacefinalacc002";
+    const b = "00fd7ca27f0ab6cfb03e3316c23599890f7a82043cb73925dc080307b771528d";
 
     const pactCode = `(free.marketplacefinal002.open-sale "pass" ${JSON.stringify(
       tokenId
@@ -455,7 +456,7 @@ const CommunityMarketplace = () => {
     const guard = { keys: [publicKey], pred: "keys-all" };
 
     const a = accountName;
-    const b = "marketplacefinalacc002";
+    const b = "00fd7ca27f0ab6cfb03e3316c23599890f7a82043cb73925dc080307b771528d";
 
     const pactCode = `(free.marketplacefinal002.open-sale "colone" ${JSON.stringify(
       tokenId
@@ -740,6 +741,52 @@ const CommunityMarketplace = () => {
       position: "top-right",
     });
   };
+
+  const getFee = async () => {
+    const accountName = walletAddress;
+    const signCmd = {
+      pactCode: `(free.marketplacefinal002.get-fee "marketplace")`,
+      caps: [
+        Pact.lang.mkCap(
+          "GAS",
+          "Capability to allow buying gas",
+          "coin.GAS",
+          []
+        ),
+      ],
+      meta: {
+        creationTime: creationTime(),
+        gasLimit: 150000,
+        chainId: CHAIN_ID,
+        ttl: 28800,
+        gasPrice: GAS_PRICE,
+        // IMPORTANT: the API requires this attribute even if it's an empty value like in this case
+        sender: "",
+      },
+    }; //alert to sign tx
+    const response = await Pact.fetch.local(signCmd, API_HOST);
+    if (response.result.status == "success") {
+      const datum = response.result.data;
+      console.log(datum,"feeeeeeeeee");
+      setServiceFee(datum * 100);
+    } else {
+      toast.error("Transaction Failed", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      setServiceFee(0);
+    }
+  };
+
+  useEffect(() => {
+    getFee();
+  }, []);
+  console.log(serviceFee, "serviceFee");
 
   // 
   return (
