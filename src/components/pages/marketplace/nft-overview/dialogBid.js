@@ -196,6 +196,11 @@ const DialogBid = ({ dataUSer, setRefresh, refresh, setLoading, loading,setSelec
               _id: dataUSer._id,
               bidPrice: bidAmount,
               bidder: walletAddress,
+              history: {
+                owner: walletAddress,
+                price: bidAmount,
+                category: "bid",
+              },
             };
             
             const accessJWT = localStorage.getItem("accessJWT");
@@ -204,8 +209,8 @@ const DialogBid = ({ dataUSer, setRefresh, refresh, setLoading, loading,setSelec
                 Authorization: accessJWT,
               },
             };
-            Axios.patch("/passDetails/bidding", obj, config)
-              .then((response) => {
+            Axios.patch(`/passDetails/${dataUSer?.passCost ? "bidding-pass" : "bidding"}`, obj, config)
+            .then((response) => {
                 
                 if (response.data.status == "success") {
                   toast.success("NFT Bidded");
@@ -307,8 +312,8 @@ const DialogBid = ({ dataUSer, setRefresh, refresh, setLoading, loading,setSelec
               Authorization: accessJWT,
             },
           };
-          Axios.patch("/passDetails/bidding", obj, config)
-            .then((response) => {
+          Axios.patch(`/passDetails/${dataUSer?.passCost ? "bidding-pass" : "bidding"}`, obj, config)
+          .then((response) => {
               
               if (response.data.status == "success") {
                 toast.success("NFT Bidded");

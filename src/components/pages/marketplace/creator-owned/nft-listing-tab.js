@@ -52,6 +52,7 @@ const HotCollectionsTab = (props) => {
   const [total, setTotal] = useState(0);
   const [fee, setFee] = useState(0);
   const [fee1, setFee1] = useState(0);
+  const [selectedData, setSelectedData] = useState();
   const navigate = useNavigate();
   const [selectedNft, setSelectedNft] = React.useState();
   const [royalityAddress, setRoyalityAddress] = React.useState("");
@@ -1039,24 +1040,24 @@ console.log("b", b, "c", c, "a", a, "d", d);
                                 </div>
                               </div>
                             </Link>
-                            {data._id == userId && loading ? (
-                              <>
-                                <div
-                                  className="loading"
-                                  style={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  <SpinnerCircular
-                                    size={80}
-                                    color="black"
-                                    secondaryColor="red"
-                                  />
-                                </div>
-                              </>
-                            ) : null}
+                            {data?._id == selectedData?._id && loading ? (
+                                <>
+                                  <div
+                                    className="loading"
+                                    style={{
+                                      display: "flex",
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <SpinnerCircular
+                                      size={80}
+                                      color="black"
+                                      secondaryColor="red"
+                                    />
+                                  </div>
+                                </>
+                              ) : null}
                             <br />
                             {data._id == userId &&
                             hover &&
@@ -1098,6 +1099,8 @@ console.log("b", b, "c", c, "a", a, "d", d);
                                               refresh={refresh}
                                               setLoading={setLoading}
                                               loading={loading}
+                                              setSelectedData={setSelectedData}
+                                              selectedData={selectedData}
                                             />
                                           )}
                                         </>
@@ -1248,7 +1251,7 @@ console.log("b", b, "c", c, "a", a, "d", d);
                                   <small>Highest Bid</small>
                                   <span className="bold">
                                     {data?.onAuction
-                                      ? data?.bidInfo.bidPrice
+                                      ? data?.bidInfo[0]?.bidPrice
                                       : "Not Revealed"}
                                   </span>
                                 </div>

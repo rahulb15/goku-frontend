@@ -1366,8 +1366,9 @@ const OverviewDetail = () => {
         if (signedtxx.result.status == "success") {
           const obj = {
             onSale: false,
-            sellingType: "",
+            sellingType: "All",
             onMarketplace: false,
+            imageIndex: data.imageIndex,
             _id: data._id,
             history: {
               owner: walletAddress,
@@ -1474,7 +1475,8 @@ const OverviewDetail = () => {
         if (txResult.result.status == "success") {
           const obj = {
             onSale: false,
-            sellingType: "",
+            sellingType: "All",
+            imageIndex: data.imageIndex,
             onMarketplace: false,
             _id: data._id,
             history: {
@@ -1602,9 +1604,10 @@ const OverviewDetail = () => {
           if (signedtxx.result.status == "success") {
             const obj = {
               onAuction: false,
-              sellingType: "",
+              sellingType: "All",
               onMarketplace: false,
               _id: data._id,
+              imageIndex: data.imageIndex,
               bidPrice: "",
               bidder: "",
               history: {

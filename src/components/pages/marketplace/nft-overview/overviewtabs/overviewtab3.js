@@ -14,11 +14,14 @@ export default function OverviewTab1() {
     const search = window.location.search
     const params = new URLSearchParams(search)
         let foo = params.get('id')
+        let foo2 = params.get("for");
+        console.log("foo2", foo2);
 
     const getAllAuction = () => {
         const body = {
             _id: foo,
             };
+            if (foo2 == "all") {
         Axios.post("/passDetails/all-nft-bids", body, {
           headers: { authorization: localStorage.getItem("accessJWT") },
         })
@@ -32,6 +35,23 @@ export default function OverviewTab1() {
           })
           .catch((error) => {
           });
+        }
+        else{
+            console.log("else");
+            Axios.post("/passDetails/all-nft-bids-pass", body, {
+                headers: { authorization: localStorage.getItem("accessJWT") },
+              })
+                .then((response) => {
+                  if (response.data.status == "success") {
+                      setBigs(response.data.data[0].bidInfo);
+                      setFloorPrice(response.data.data[0].nftPrice);
+                  } else {
+                    setBigs([]);
+                  }
+                })
+                .catch((error) => {
+                });
+        }
       };
     useEffect(() => {
         getAllAuction();

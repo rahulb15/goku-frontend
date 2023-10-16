@@ -193,7 +193,7 @@ const CommunityMarketplace = () => {
     const a = accountName;
     const b = "00fd7ca27f0ab6cfb03e3316c23599890f7a82043cb73925dc080307b771528d";
 
-    const pactCode = `(free.marketplacefinal002.open-sale "pass" ${JSON.stringify(
+    const pactCode = `(free.marketplacefinal002.open-sale "direct-sale" ${JSON.stringify(
       tokenId
     )}  ${JSON.stringify(a)} ${nftPrice} 0 ${parseInt(duration)} false)`;
 
@@ -458,7 +458,7 @@ const CommunityMarketplace = () => {
     const a = accountName;
     const b = "00fd7ca27f0ab6cfb03e3316c23599890f7a82043cb73925dc080307b771528d";
 
-    const pactCode = `(free.marketplacefinal002.open-sale "colone" ${JSON.stringify(
+    const pactCode = `(free.marketplacefinal002.open-sale "Auction" ${JSON.stringify(
       tokenId
     )}  ${JSON.stringify(a)} ${nftPrice} 0 ${parseInt(duration)} true)`;
 

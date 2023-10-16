@@ -119,6 +119,7 @@ const DialogBid = ({
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
     const guard = { keys: [publicKey], pred: "keys-all" };
+    console.log(dataUSer,"sdsdsdsdsdsdssd");
     const tokenId = dataUSer.tokenId;
     const a = accountName;
     const b = "00fd7ca27f0ab6cfb03e3316c23599890f7a82043cb73925dc080307b771528d";
@@ -197,8 +198,8 @@ const DialogBid = ({
                 Authorization: accessJWT,
               },
             };
-            Axios.patch("/passDetails/bidding", obj, config)
-              .then((response) => {
+            Axios.patch(`/passDetails/${dataUSer?.passCost ? "bidding-pass" : "bidding"}`, obj, config)
+            .then((response) => {
                 if (response.data.status == "success") {
                   toast.success("NFT Bidded");
                   setLoading(false);
@@ -279,6 +280,11 @@ const DialogBid = ({
             _id: dataUSer._id,
             bidPrice: bidAmount,
             bidder: walletAddress,
+            history: {
+              owner: walletAddress,
+              price: bidAmount,
+              category: "bid",
+            },
           };
           const accessJWT = localStorage.getItem("accessJWT");
           const config = {
@@ -286,8 +292,8 @@ const DialogBid = ({
               Authorization: accessJWT,
             },
           };
-          Axios.patch("/passDetails/bidding", obj, config)
-            .then((response) => {
+          Axios.patch(`/passDetails/${dataUSer?.passCost ? "bidding-pass" : "bidding"}`, obj, config)
+          .then((response) => {
               if (response.data.status == "success") {
                 toast.success("NFT Bidded");
                 setLoading(false);

@@ -679,9 +679,10 @@ const NftTabs1 = () => {
         if (signedtxx.result.status == "success") {
           const obj = {
             onSale: false,
-            sellingType: "",
+            sellingType: "All",
             onMarketplace: false,
             _id: data._id,
+            imageIndex: data.imageIndex,
             history: {
               owner: walletAddress,
               price: data.nftPrice,
@@ -772,8 +773,9 @@ const NftTabs1 = () => {
         if (txResult.result.status == "success") {
           const obj = {
             onSale: false,
-            sellingType: "",
+            sellingType: "All",
             onMarketplace: false,
+            imageIndex: data.imageIndex,
             _id: data._id,
             history: {
               owner: walletAddress,
@@ -885,8 +887,9 @@ const NftTabs1 = () => {
           if (signedtxx.result.status == "success") {
             const obj = {
               onAuction: false,
-              sellingType: "",
+              sellingType: "All",
               onMarketplace: false,
+              imageIndex: data.imageIndex,
               _id: data._id,
               bidPrice: "",
               bidder: "",
@@ -982,9 +985,10 @@ const NftTabs1 = () => {
         if (txResult.result.status == "success") {
           const obj = {
             onAuction: false,
-            sellingType: "",
+            sellingType: "All",
             onMarketplace: false,
             _id: data._id,
+            imageIndex: data.imageIndex,
             bidPrice: "",
             bidder: "",
             history: {

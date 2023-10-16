@@ -631,8 +631,9 @@ const HotCollectionsTab = (props) => {
         if (signedtxx.result.status == "success") {
           const obj = {
             onSale: false,
-            sellingType: "",
+            sellingType: "All",
             onMarketplace: false,
+            imageIndex: data.imageIndex,
             _id: data._id,
             history: {
               owner: walletAddress,
@@ -724,7 +725,8 @@ const HotCollectionsTab = (props) => {
         if (txResult.result.status == "success") {
           const obj = {
             onSale: false,
-            sellingType: "",
+            sellingType: "All",
+            imageIndex: data.imageIndex,
             onMarketplace: false,
             _id: data._id,
             history: {
@@ -830,8 +832,9 @@ const HotCollectionsTab = (props) => {
           if (signedtxx.result.status == "success") {
             const obj = {
               onAuction: false,
-              sellingType: "",
+              sellingType: "All",
               onMarketplace: false,
+              imageIndex: data.imageIndex,
               _id: data._id,
               bidPrice: "",
               bidder: "",
