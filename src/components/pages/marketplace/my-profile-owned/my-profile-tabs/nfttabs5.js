@@ -127,7 +127,7 @@ const NftTabs1 = () => {
                                 : item?.nftPrice + " KDA"
                               : item?.collectionName == "pass3" || item?.collectionName == "dbc"
                               ?   item?.passCost   :item?.nftPrice + " KDA"
-                               + " KDA"}
+                               }
                           </span>{" "}
                         </div>
                         <div className="featprice">

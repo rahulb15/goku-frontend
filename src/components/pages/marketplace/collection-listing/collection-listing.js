@@ -35,18 +35,20 @@ const CommunityMarketplace = () => {
   }, []);
 
   const getCollection = () => {
-    Axios.get(`/collection/user-collection-by-id?id=${foo}`, {
+    Axios.get(`/collection/user-collection-by-id2?id=${foo}`, {
       headers: { authorization: localStorage.getItem("accessJWT") },
     })
       .then((response) => {
+        
         if (response.data.status == "success") {
-          setCollectionName(response.data.data[0].collectionName);
+          console.log(response.data.data[0], "collection data");
+          // setCollectionName(response.data.data[0].collectionName);
           setCollectionData(response.data.data[0]);
         }
       })
       .catch((error) => {
         //   setUserRegistered(false)
-        console.log("error", error);
+        
       });
   };
 
@@ -113,7 +115,9 @@ const CommunityMarketplace = () => {
             <div className="creatorDet">
               <div className="creatorNameOuter">
                 <div className="creatorName">
-                  {collectionName} <HiCheckCircle />
+                {collectionData?.collection_info[0]?.collectionName}
+
+                  <HiCheckCircle />
                 </div>
                 <div className="wishlist">
                   <button>
@@ -149,7 +153,7 @@ const CommunityMarketplace = () => {
                       nightModeStatus ? { color: "#fff" } : { color: "#000" }
                     }
                   >
-                    {collectionData?.totalSupply}
+                    {collectionData?.collection_info[0]?.totalSupply}
                   </strong>
                 </div>
                 <div className="itemQtyBx">
@@ -159,7 +163,7 @@ const CommunityMarketplace = () => {
                       nightModeStatus ? { color: "#fff" } : { color: "#000" }
                     }
                   >
-                    {ownerCount}
+                    {collectionData?.totalNft}
                   </strong>
                 </div>
                 <div className="itemQtyBx">
@@ -169,7 +173,7 @@ const CommunityMarketplace = () => {
                       nightModeStatus ? { color: "#fff" } : { color: "#000" }
                     }
                   >
-                    K {totalNftPrice}
+                     {collectionData?.totalNftPrice} KDA
                   </strong>
                 </div>
                 <div className="itemQtyBx">
@@ -179,7 +183,7 @@ const CommunityMarketplace = () => {
                       nightModeStatus ? { color: "#fff" } : { color: "#000" }
                     }
                   >
-                    K {baseValue}
+                     {collectionData?.minNftPrice} KDA
                   </strong>
                 </div>
               </div>

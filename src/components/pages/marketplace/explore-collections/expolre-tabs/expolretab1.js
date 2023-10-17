@@ -102,11 +102,13 @@ const ExpolreTabs1 = ({ tabno }) => {
       setActive(false)
       const tab = collectionCategory[tabno].collectionName;
       const formdata = { tab };
-      Axios.post("/collection/user-collection-category", formdata)
+      console.log("formdata", formdata);
+      Axios.post("/collection/user-collection-category-1", formdata)
         .then((response) => {
           
           if (response.data.status == "success") {
             let filteredCollectionList = response.data.data;
+            console.log("filteredCollectionList", filteredCollectionList);
             // 
             // let filteredCollectionList=collectionList.filter(data=>data.category===collectionName )
             // 
@@ -155,15 +157,15 @@ const ExpolreTabs1 = ({ tabno }) => {
                         <div className="ownersValueOuter">
                           <div className="ownvalueInn">
                             <span>Owners</span>
-                            <strong>504</strong>
+                            <strong>{data?.totalNft}</strong>
                           </div>
                           <div className="ownvalueInn">
                             <span>Total Volume</span>
-                            <strong>843.8K</strong>
+                            <strong>{data?.totalNftPrice}</strong>
                           </div>
                           <div className="ownvalueInn">
                             <span>Floor</span>
-                            <strong>482</strong>
+                            <strong>{data?.minNftPrice}</strong>
                           </div>
                         </div>
                       </li>

@@ -613,7 +613,7 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
   console.log("mintPrice", parseFloat(mintPrice));
   console.log("totalSupply", parseInt(totalSupply));
   console.log("totalSupply", tokenList.length);
-
+  console.log("royaltyFee", royaltyFee);
   return (
     <div className="modalOuterBx">
       <Button
@@ -753,7 +753,7 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
             <div className="createFrmBx">
               <FormGroup>
                 <Label for="exampleEmail" style={{ color: "black" }}>
-                  Royality Fee
+                  Royality Fee in %
                 </Label>
                 <Input
                   type="number"

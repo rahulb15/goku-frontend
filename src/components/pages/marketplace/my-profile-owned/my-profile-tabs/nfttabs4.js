@@ -23,7 +23,7 @@ const NftTabs1 = () => {
   }, []);
 
   const getCollection = () => {
-    Axios.get("/collection/user-collection", {
+    Axios.get("/collection/user-collection-1", {
       headers: { authorization: localStorage.getItem("accessJWT") },
     })
       .then((response) => {
@@ -77,15 +77,15 @@ const NftTabs1 = () => {
                             <div className="ownersValueOuter">
                               <div className="ownvalueInn">
                                 <span>Owners</span>
-                                <strong>504</strong>
+                                <strong>{data.totalNft}</strong>
                               </div>
                               <div className="ownvalueInn">
                                 <span>Total Volume</span>
-                                <strong>843.8K</strong>
+                                <strong>{data.totalNftPrice}</strong>
                               </div>
                               <div className="ownvalueInn">
                                 <span>Floor</span>
-                                <strong>482</strong>
+                                <strong>{data.minNftPrice}</strong>
                               </div>
                             </div>
                           ) : (
@@ -113,15 +113,15 @@ const NftTabs1 = () => {
                           <div className="ownersValueOuter">
                             <div className="ownvalueInn">
                               <span>Owners</span>
-                              <strong>504</strong>
+                              <strong>{data.totalNft}</strong>
                             </div>
                             <div className="ownvalueInn">
                               <span>Total Volume</span>
-                              <strong>843.8K</strong>
+                              <strong>{data.totalNftPrice}</strong>
                             </div>
                             <div className="ownvalueInn">
                               <span>Floor</span>
-                              <strong>482</strong>
+                              <strong>{data.minNftPrice}</strong>
                             </div>
                           </div>
                         ) : (

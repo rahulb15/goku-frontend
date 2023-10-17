@@ -112,7 +112,7 @@ export default function CommunityMarketplace() {
             </div>
             <div className="creatorDet">
               <div className="creatorNameOuter">
-                <div className="creatorName">{collectionName}</div>
+                <div className="creatorName">{collectionData?.collection_info[0]?.collectionName}</div>
                 <div className="wishlist">
                   <button>
                     <BsFillShareFill />

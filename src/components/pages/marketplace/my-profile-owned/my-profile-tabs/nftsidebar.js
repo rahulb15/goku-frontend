@@ -15,7 +15,7 @@ export default function SimpleAccordion(props) {
   const [collectionList, setCollectionList] = useState([]);
 
   const getCollection = () => {
-    Axios.get("/collection/user-collection", {
+    Axios.get("/collection/user-collection-1", {
       headers: { authorization: localStorage.getItem("accessJWT") },
     })
       .then((response) => {

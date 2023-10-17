@@ -113,13 +113,13 @@ export default function HotCollectionsTab() {
                       </div>
                       <div className="collectListBx2">
                         <i>Day Volume</i>
-                        <strong>{item?.dayVolume || 0}</strong>{" "}
+                        <strong>{item?.totalNftPrice || 0}</strong>{" "}
                         <small>KDA</small>
                         <span>+{item?.dayVolumePercentage || 0}%</span>
                       </div>
                       <div className="collectListBx2">
                         <i>Floor</i>
-                        <strong>{item?.floorPrice || 0}</strong>{" "}
+                        <strong>{item?.minNftPrice || 0}</strong>{" "}
                         <small>KDA</small>
                       </div>
                       <div className="collectListBx3">

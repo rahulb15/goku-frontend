@@ -65,7 +65,6 @@ const SellingCrousal = () => {
 
   console.log(nfts, "nfts")
  
-
   return (
     <div>
       <div className="carousalOuter">
@@ -76,7 +75,7 @@ const SellingCrousal = () => {
                 <div className="featItemBx">
                   <div className="glow">
                     <div className="featImg">
-                      <img src={nft?.tokenImage || MrchendImg1} alt="" />
+                      <img src={ MrchendImg1} alt="" />
                       <div className="tshirtIcon">
                         <FaTshirt />
                       </div>
@@ -104,7 +103,7 @@ const SellingCrousal = () => {
 
 
 
-          {/* <div className="item" style={{ marginRight: "10px" }}>
+          <div className="item" style={{ marginRight: "10px" }}>
             <div className="featItemBx">
               <div className="glow">
                 <div className="featImg">
@@ -265,7 +264,7 @@ const SellingCrousal = () => {
                 </div>
               </div>
             </div>
-          </div> */}
+          </div>
         </OwlCarousel>
       </div>
     </div>

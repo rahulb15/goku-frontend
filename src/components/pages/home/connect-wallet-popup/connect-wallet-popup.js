@@ -388,6 +388,8 @@ const ConnectPopup = () => {
       localStorage.setItem("zelcorewalletadd", res2.data[0]);
       setModal(!modal);
       checkUserRegisteration();
+      window.location.reload();
+
       //
     } catch (e) {
       e.message.includes("Failed to fetch")
@@ -495,6 +497,7 @@ const ConnectPopup = () => {
             })
           );
           checkUserRegisteration();
+          window.location.reload();
         } else {
           toast.error("Please Reconnect Wallet", {
             position: "top-right",
@@ -739,6 +742,7 @@ const ConnectPopup = () => {
       localStorage.setItem("chainWeaverWalletAdd", walletAdd);
       setModal3(!modal3);
       checkUserRegisteration();
+      window.location.reload();
     } else {
       toast.error("Account not found in the preferred chain", {
         position: "top-right",

@@ -26,9 +26,9 @@ export default function OverviewTab1() {
           headers: { authorization: localStorage.getItem("accessJWT") },
         })
           .then((response) => {
-            if (response.data.status == "success") {
-                setBigs(response.data.data[0].bidInfo);
-                setFloorPrice(response.data.data[0].nftPrice);
+            if (response?.data?.status == "success") {
+                setBigs(response?.data?.data[0]?.bidInfo);
+                setFloorPrice(response?.data?.data[0]?.nftPrice);
             } else {
               setBigs([]);
             }
@@ -42,9 +42,9 @@ export default function OverviewTab1() {
                 headers: { authorization: localStorage.getItem("accessJWT") },
               })
                 .then((response) => {
-                  if (response.data.status == "success") {
-                      setBigs(response.data.data[0].bidInfo);
-                      setFloorPrice(response.data.data[0].nftPrice);
+                  if (response?.data?.status == "success") {
+                      setBigs(response?.data?.data[0]?.bidInfo);
+                      setFloorPrice(response?.data?.data[0]?.nftPrice);
                   } else {
                     setBigs([]);
                   }
@@ -67,11 +67,11 @@ export default function OverviewTab1() {
                     }
                     ).map((item, index) => {
                         return (
-                            <ul>
+                            <ul key={index}>
                                 <li>
                                     <div className='collectionLeft'>
                                         {/* <i><img src={CollectImg1} alt="" /></i> */}
-                                        <strong>{(item?.bidder).slice(0, 12)}...{(item?.bidder).slice(-5)}</strong>
+                                        <strong>{(item?.bidder)?.slice(0, 12)}...{(item?.bidder)?.slice(-5)}</strong>
                                         <small>Floor: {floorPrice} KDA <a href=''>Floor Bid</a></small>
                                     </div>
                                     <div className='collectionRight'>

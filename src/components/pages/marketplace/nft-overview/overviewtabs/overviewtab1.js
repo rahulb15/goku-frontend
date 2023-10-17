@@ -55,10 +55,11 @@ export default function OverviewTab1(props) {
         headers: { authorization: localStorage.getItem("accessJWT") },
       })
         .then((response) => {
-          if (response.data.status == "success") {
-            setFloorPrice(response.data.data[0]?.nftPrice);
-            setTokenId(response.data.data[0]?.tokenId);
-            setCollectionName(response.data.data[0]?.collectionName);
+          if (response?.data?.status == "success") {
+            setBigs(response?.data?.data[0]?.bidInfo);
+            setFloorPrice(response?.data?.data[0]?.nftPrice);
+            setTokenId(response?.data?.data[0]?.tokenId);
+            setCollectionName(response?.data?.data[0]?.collectionName);
           } else {
             setBigs([]);
             setTokenId("");
@@ -70,11 +71,11 @@ export default function OverviewTab1(props) {
     } else {
       Axios.post("/passDetails/getNftPassbyId", body)
         .then((response) => {
-          if (response.data.status == "success") {
-            setBigs(response.data.data[0].bidInfo);
-            setFloorPrice(response.data.data[0].passCost);
-            setTokenId(response.data.data[0].tokenId);
-            setCollectionName(response.data.data[0].collectionName);
+          if (response?.data?.status == "success") {
+            setBigs(response?.data?.data[0]?.bidInfo);
+            setFloorPrice(response?.data?.data[0]?.passCost);
+            setTokenId(response?.data?.data[0]?.tokenId);
+            setCollectionName(response?.data?.data[0]?.collectionName);
           } else {
             setBigs([]);
             setTokenId("");
@@ -101,15 +102,15 @@ export default function OverviewTab1(props) {
         <h3>Latest Bids</h3>
         {bigs
           ?.filter((item, index) => {
-            item.bidTime = new Date(item.bidTime)
-              .toISOString()
-              .slice(0, 19)
-              .replace("T", " ");
+            item.bidTime = new Date(item?.bidTime)
+              ?.toISOString()
+              ?.slice(0, 19)
+              ?.replace("T", " ");
             return index < 5;
           })
           .map((item, index) => {
             return (
-              <ul>
+              <ul key={index}>
                 <li>
                   <div
                     className="collectionLeft"
@@ -119,7 +120,7 @@ export default function OverviewTab1(props) {
                   >
                     {/* <i><img src={CollectImg1} alt="" /></i> */}
                     <strong>
-                      {(item?.bidder).slice(0, 12)}...{(item?.bidder).slice(-5)}
+                      {(item?.bidder)?.slice(0, 12)}...{(item?.bidder)?.slice(-5)}
                     </strong>
                     <small>
                       Floor: {floorPrice} KDA <a href="">Floor Bid</a>
@@ -235,7 +236,7 @@ export default function OverviewTab1(props) {
               >
                 {" "}
                 {foo2 == "all"
-                  ? tokenId.slice(0, 5) + "..." + tokenId.slice(-5)
+                  ? tokenId?.slice(0, 5) + "..." + tokenId?.slice(-5)
                   : tokenId}
               </a>
             </div>

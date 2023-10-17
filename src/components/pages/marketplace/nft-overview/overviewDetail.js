@@ -277,8 +277,8 @@ const OverviewDetail = () => {
 
     const response = await Pact.fetch.local(signCmd, API_HOST);
     console.log("response", response);
-    if (response.result.status == "success") {
-      const datum = response.result.data;
+    if (response?.result?.status == "success") {
+      const datum = response?.result?.data;
       setFee(datum);
     } else {
       toast.error("Transaction Failed", {

@@ -352,6 +352,7 @@ const NftTabs1 = (props) => {
     const royaltyR = await getRoyalityRate(data);
     console.log("royaltyA", royaltyA);
     console.log("royaltyR", royaltyR);
+    console.log("fee",fee);
     setSelectedData(data);
     const MarketplaceCharges = fee * parseFloat(data.nftPrice);
     console.log("MarketplaceCharges", MarketplaceCharges);

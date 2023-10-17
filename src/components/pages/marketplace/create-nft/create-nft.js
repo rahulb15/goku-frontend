@@ -46,6 +46,8 @@ const CommunityMarketplace = () => {
   const [duration, setDuration] = useState(0);
   const [loading, setLoading] = useState(false);
   const [serviceFee, setServiceFee] = useState(0);
+  const [royalityRate, setRoyalityRate] = React.useState("");
+  const [receive, setReceive] = React.useState(0);
   const { walletStatus, walletName, walletAddress } = useSelector(
     (state) => state.walletStatus
   );
@@ -94,7 +96,6 @@ const CommunityMarketplace = () => {
         })
         .catch((error) => {
           setNft([]);
-          
         });
     }
   };
@@ -148,10 +149,85 @@ const CommunityMarketplace = () => {
     }
   };
 
-  React.useEffect(() => {
+  const getRoyalityRate = async (data) => {
+    console.log("data", data?.collectionName);
+    const accountName = walletAddress;
+    const publicKey = accountName.slice(2, accountName.length);
+    console.log("publicKeycw", publicKey);
+    console.log("accountnamecw", accountName);
+    const guard = { keys: [publicKey], pred: "keys-all" };
+
+    const a = accountName;
+    const signCmd = {
+      pactCode: `(free.marketplacefinal002.get-royalty-rate "${data?.collectionName}")`,
+      caps: [
+        Pact.lang.mkCap(
+          "GAS",
+          "Capability to allow buying gas",
+          "coin.GAS",
+          []
+        ),
+      ],
+      meta: {
+        creationTime: creationTime(),
+        gasLimit: 150000,
+        chainId: CHAIN_ID,
+        ttl: 28800,
+        gasPrice: GAS_PRICE,
+        // IMPORTANT: the API requires this attribute even if it's an empty value like in this case
+        sender: "",
+      },
+    }; //alert to sign tx
+
+    const response = await Pact.fetch.local(signCmd, API_HOST);
+    console.log("response", response);
+    if (response.result.status == "success") {
+      const datum = response.result.data;
+      setRoyalityRate(datum);
+      return datum;
+    } else {
+      setRoyalityRate("");
+      toast.error("Transaction Failed", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return 0;
+    }
+  };
+
+  React.useEffect(async () => {
+    console.log(nft);
+    let royaltyR = 0;
+    if (nftPrice > 0) {
+      royaltyR = await getRoyalityRate(nft[0]);
+    }
+    console.log("royaltyR", royaltyR);
+    console.log("nftPrice", nftPrice, serviceFee / 100);
+    console.log("price", price);
+    console.log("parseFloat(nftPrice)", parseFloat(nftPrice));
+    const MarketplaceCharges = (serviceFee / 100) * parseFloat(nftPrice);
+    console.log("MarketplaceCharges", MarketplaceCharges);
+    const priceWithoutMarketplaceCharges =
+      parseFloat(nftPrice) - MarketplaceCharges;
+    console.log(
+      "priceWithoutMarketplaceCharges",
+      priceWithoutMarketplaceCharges
+    );
+
+    const royaltyPayout = royaltyR * priceWithoutMarketplaceCharges;
+    console.log("royaltyPayout", royaltyPayout);
+    const sellerPayout = priceWithoutMarketplaceCharges - royaltyPayout;
+    console.log("sellerPayout", sellerPayout);
+    setReceive(sellerPayout);
+  }, [nftPrice]);
+
+  React.useEffect(async () => {
     setNftPrice(parseFloat(price).toFixed(2));
-    // setServiceFee(parseFloat(amount * parseFloat(2) / 100));
-    // setTotalFee(parseFloat(amount) + parseFloat(amount * 2) / 100);
   }, [price]);
 
   const handleOnSubmit = () => {
@@ -191,7 +267,8 @@ const CommunityMarketplace = () => {
     const guard = { keys: [publicKey], pred: "keys-all" };
 
     const a = accountName;
-    const b = "00fd7ca27f0ab6cfb03e3316c23599890f7a82043cb73925dc080307b771528d";
+    const b =
+      "00fd7ca27f0ab6cfb03e3316c23599890f7a82043cb73925dc080307b771528d";
 
     const pactCode = `(free.marketplacefinal002.open-sale "direct-sale" ${JSON.stringify(
       tokenId
@@ -422,7 +499,6 @@ const CommunityMarketplace = () => {
                 }
               })
               .catch((error) => {
-                
                 toast.error("NFT not on sale", {
                   position: "top-right",
                 });
@@ -456,7 +532,8 @@ const CommunityMarketplace = () => {
     const guard = { keys: [publicKey], pred: "keys-all" };
 
     const a = accountName;
-    const b = "00fd7ca27f0ab6cfb03e3316c23599890f7a82043cb73925dc080307b771528d";
+    const b =
+      "00fd7ca27f0ab6cfb03e3316c23599890f7a82043cb73925dc080307b771528d";
 
     const pactCode = `(free.marketplacefinal002.open-sale "Auction" ${JSON.stringify(
       tokenId
@@ -566,7 +643,6 @@ const CommunityMarketplace = () => {
                   }
                 })
                 .catch((error) => {
-                  
                   toast.error("NFT not on sale", {
                     position: "top-right",
                   });
@@ -678,7 +754,6 @@ const CommunityMarketplace = () => {
                 }
               })
               .catch((error) => {
-                
                 toast.error("NFT not on sale", {
                   position: "top-right",
                 });
@@ -701,7 +776,6 @@ const CommunityMarketplace = () => {
                 }
               })
               .catch((error) => {
-                
                 toast.error("NFT not on sale", {
                   position: "top-right",
                 });
@@ -767,7 +841,7 @@ const CommunityMarketplace = () => {
     const response = await Pact.fetch.local(signCmd, API_HOST);
     if (response.result.status == "success") {
       const datum = response.result.data;
-      console.log(datum,"feeeeeeeeee");
+      console.log(datum, "feeeeeeeeee");
       setServiceFee(datum * 100);
     } else {
       toast.error("Transaction Failed", {
@@ -788,7 +862,7 @@ const CommunityMarketplace = () => {
   }, []);
   console.log(serviceFee, "serviceFee");
 
-  // 
+  //
   return (
     <div>
       <HeaderafterLogin />
@@ -890,7 +964,8 @@ const CommunityMarketplace = () => {
                 </li>
                 <li>
                   <span>You will receive</span>
-                  <strong>{price - (price * serviceFee) / 100} KDA</strong>
+                  {/* <strong>{price - (price * serviceFee) / 100} KDA</strong> */}
+                  <strong>{receive}</strong>
                 </li>
               </ul>
             </div>

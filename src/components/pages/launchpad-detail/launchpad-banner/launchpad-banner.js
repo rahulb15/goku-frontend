@@ -133,6 +133,10 @@ const LaunchpadDetails = () => {
   const [publicPass, setPublicPass] = useState(false);
   const [whiteList, setWhiteList] = useState(false);
   const [userRegistered, setUserRegistered] = useState(false);
+  const[passPrice,setPassPrice]=useState(0)
+  const[dbCooperPrice,setDbCooperPrice]=useState(0)
+  const[dbCooperPriceWl,setDbCooperPriceWl]=useState(0)
+
   // const dbCooperPrice=
   // useEffect(() => {
   //   checkUserRegisteration()
@@ -215,6 +219,7 @@ const LaunchpadDetails = () => {
   };
 
   let price;
+  console.log("pricePASSSSSSSS", price);
   const getPassPrice = async () => {
     // const accountName =
     //   "k:";
@@ -245,7 +250,77 @@ const LaunchpadDetails = () => {
     const response = await Pact.fetch.local(signCmd, API_HOST);
     if (response.result.status == "success") {
       // setPrice(response.result.data)
-      price = response.result.data;
+      // price = response.result.data;
+      setPassPrice(response.result.data);
+    }
+  };
+  const getDbCooperPrice = async () => {
+    // const accountName =
+    //   "k:";
+    // // const accountName = walletAddress;
+    // const publicKey = accountName.slice(2, accountName.length);
+
+    const signCmd = {
+      pactCode: `(free.dbcfinalpolicy002.get-nft-price)`,
+      caps: [
+        Pact.lang.mkCap(
+          "GAS",
+          "Capability to allow buying gas",
+          "coin.GAS",
+          []
+        ),
+      ],
+      meta: {
+        creationTime: creationTime(),
+        gasLimit: 100000,
+        chainId: CHAIN_ID,
+        ttl: 28800,
+        gasPrice: GAS_PRICE,
+        // IMPORTANT: the API requires this attribute even if it's an empty value like in this case
+        sender: "",
+      },
+    }; //alert to sign tx
+
+    const response = await Pact.fetch.local(signCmd, API_HOST);
+    if (response.result.status == "success") {
+      // setPrice(response.result.data)
+      // price = response.result.data;
+      setDbCooperPrice(response.result.data);
+    }
+  };
+
+  const getDbCooperPriceWl = async () => {
+    // const accountName =
+    //   "k:";
+    // // const accountName = walletAddress;
+    // const publicKey = accountName.slice(2, accountName.length);
+
+    const signCmd = {
+      pactCode: `(free.dbcfinalpolicy002.get-wl-price)`,
+      caps: [
+        Pact.lang.mkCap(
+          "GAS",
+          "Capability to allow buying gas",
+          "coin.GAS",
+          []
+        ),
+      ],
+      meta: {
+        creationTime: creationTime(),
+        gasLimit: 100000,
+        chainId: CHAIN_ID,
+        ttl: 28800,
+        gasPrice: GAS_PRICE,
+        // IMPORTANT: the API requires this attribute even if it's an empty value like in this case
+        sender: "",
+      },
+    }; //alert to sign tx
+
+    const response = await Pact.fetch.local(signCmd, API_HOST);
+    if (response.result.status == "success") {
+      // setPrice(response.result.data)
+      // price = response.result.data;
+      setDbCooperPriceWl(response.result.data);
     }
   };
 
@@ -791,7 +866,7 @@ const LaunchpadDetails = () => {
   };
 
   const mintPass2 = async () => {
-    await getPassPrice();
+
     Axios.get("/user/checkServer")
       .then(async (response) => {
         if (response.data.status == "success") {
@@ -858,7 +933,7 @@ const LaunchpadDetails = () => {
                     "Transfer",
                     "Capability to allow coin transfer",
                     "coin.TRANSFER",
-                    [a, b, price]
+                    [a, b, passPrice]
                   ),
                   Pact.lang.mkCap(
                     "",
@@ -1028,7 +1103,7 @@ const LaunchpadDetails = () => {
                   "Transfer",
                   "Capability to allow coin transfer",
                   "coin.TRANSFER",
-                  [a, b, price]
+                  [a, b, passPrice]
                 ),
                 Pact.lang.mkCap(
                   "MINT-PASS",
@@ -1266,7 +1341,7 @@ const LaunchpadDetails = () => {
                     "Transfer",
                     "Capability to allow coin transfer",
                     "coin.TRANSFER",
-                    [a, b, 2.0]
+                    [a, b, dbCooperPrice]
                   ),
                   Pact.lang.mkCap(
                     "MINT-COOPER",
@@ -1433,7 +1508,7 @@ const LaunchpadDetails = () => {
                   "Transfer",
                   "Capability to allow coin transfer",
                   "coin.TRANSFER",
-                  [a, b, 2.0]
+                  [a, b, dbCooperPrice]
                 ),
                 Pact.lang.mkCap(
                   "MINT-COOPER",
@@ -1593,6 +1668,10 @@ const LaunchpadDetails = () => {
   };
 
   useEffect(() => {
+    getPassPrice();
+    getDbCooperPrice();
+    getDbCooperPriceWl();
+
     const project = upcomingProjects.filter((data) => {
       return data.id == params.id;
     });
@@ -1601,6 +1680,9 @@ const LaunchpadDetails = () => {
     checkWhitelist();
     getPassAllDetails();
   }, []);
+
+  console.log("passPrice", passPrice);
+  console.log("dbCooperPrice", dbCooperPrice);
 
   // const toggle=()=> {
   //     setModal(!modal)
@@ -1812,10 +1894,10 @@ const LaunchpadDetails = () => {
 
                   {project.projectName == "Priority Pass" ? (
                     <strong>
-                      {project.WlMintPrice} KDA or 8.33 KDA per Mint
+                      {passPrice} KDA or 8.33 KDA per Mint
                     </strong>
                   ) : (
-                    <strong>{project.WlMintPrice} KDA</strong>
+                    <strong>{dbCooperPriceWl} KDA</strong>
                   )}
                 </li>
 
@@ -1833,7 +1915,7 @@ const LaunchpadDetails = () => {
                       >(1 Free mint for every collection that launches on Kryptomerch.io)</strong>
                     </div>
                   ) : (
-                    <strong>{project.totalMints} KDA</strong>
+                    <strong>{dbCooperPrice} KDA</strong>
                   )}
                 </li>
               </ul>
