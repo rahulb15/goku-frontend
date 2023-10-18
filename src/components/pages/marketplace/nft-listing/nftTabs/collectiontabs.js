@@ -166,7 +166,7 @@ export default function NftTabs1() {
                         <div className="ownersValueOuter">
                           <div className="ownvalueInn">
                             <span>Owners</span>
-                            <strong>{data?.totalNft}</strong>
+                            <strong>{data?.totalNftUser}</strong>
                           </div>
                           <div className="ownvalueInn">
                             <span>Total Volume</span>

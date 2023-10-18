@@ -141,7 +141,7 @@ export default function CommunityMarketplace() {
                   <strong
                     style={{ color: `${nightModeStatus ? "#fff" : "#000"}` }}
                   >
-                    {collectionData?.totalNft}
+                    {collectionData?.totalNftUser}
                   </strong>
                 </div>
                 <div className="itemQtyBx">

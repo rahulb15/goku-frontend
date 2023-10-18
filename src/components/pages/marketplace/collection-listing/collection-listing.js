@@ -163,7 +163,7 @@ const CommunityMarketplace = () => {
                       nightModeStatus ? { color: "#fff" } : { color: "#000" }
                     }
                   >
-                    {collectionData?.totalNft}
+                    {collectionData?.totalNftUser}
                   </strong>
                 </div>
                 <div className="itemQtyBx">
