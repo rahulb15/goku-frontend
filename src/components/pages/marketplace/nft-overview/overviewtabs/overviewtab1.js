@@ -69,6 +69,7 @@ export default function OverviewTab1(props) {
         })
         .catch((error) => {});
     } else {
+      console.log("pass");
       Axios.post("/passDetails/getNftPassbyId", body)
         .then((response) => {
           if (response?.data?.status == "success") {
@@ -91,7 +92,7 @@ export default function OverviewTab1(props) {
     getAllAuction();
     getAllCollectionById();
   }, []);
-
+console.log(bigs)
   return (
     <div>
       {/* <div className='descBx'>
@@ -100,7 +101,7 @@ export default function OverviewTab1(props) {
                         </div> */}
       <div className="latestBidBx">
         <h3>Latest Bids</h3>
-        {bigs
+        {bigs?.length > 0 && bigs
           ?.filter((item, index) => {
             item.bidTime = new Date(item?.bidTime)
               ?.toISOString()
@@ -108,7 +109,7 @@ export default function OverviewTab1(props) {
               ?.replace("T", " ");
             return index < 5;
           })
-          .map((item, index) => {
+          ?.map((item, index) => {
             return (
               <ul key={index}>
                 <li>
@@ -118,7 +119,6 @@ export default function OverviewTab1(props) {
                       nightModeStatus ? { color: "white" } : { color: "black" }
                     }
                   >
-                    {/* <i><img src={CollectImg1} alt="" /></i> */}
                     <strong>
                       {(item?.bidder)?.slice(0, 12)}...{(item?.bidder)?.slice(-5)}
                     </strong>
@@ -139,7 +139,7 @@ export default function OverviewTab1(props) {
               </ul>
             );
           })}
-        {bigs.length == 0 ? (
+        {bigs?.length == 0 ? (
           <a
             href="#"
             style={nightModeStatus ? { color: "white" } : { color: "black" }}

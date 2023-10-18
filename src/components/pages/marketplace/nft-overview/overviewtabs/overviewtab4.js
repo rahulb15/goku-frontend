@@ -69,7 +69,7 @@ export default function OverviewTab1() {
             <div>
                 <div className='latestBidBx'>
                     <h3>History</h3>
-                    {history.filter((item, index) => {
+                    {history?.length > 0 && history?.filter((item, index) => {
                         item.date = moment(item.date).utc().local().format('YYYY-MM-DD HH:mm');
                         //check if the date is less than 24 hours old then show it else dont and store hours ago in state
                         const newDate = moment(item.date).utc().local().format('YYYY-MM-DD HH:mm');
@@ -80,24 +80,24 @@ export default function OverviewTab1() {
                     
                         return index < 10;
                     }
-                    ).map((item, index) => {
+                    )?.map((item, index) => {
                         return (
-                            <ul>
+                            <ul key={index}>
                                 <li>
                                     <div className='collectionLeft'>
                                         {/* <i><img src={CollectImg1} alt="" /></i> */}
-                                        <strong>{(item?.owner).slice(0, 12)}...{(item?.owner).slice(-5)}<span>{" " +item.category}</span></strong>
+                                        <strong>{(item?.owner).slice(0, 12)}...{(item?.owner)?.slice(-5)}<span>{" " +item?.category}</span></strong>
                                         <small>{item?.hoursAgo ? item?.hoursAgo : ""}</small>
                                     </div>
                                     <div className='collectionRight'>
-                                        <strong>{item.price ? item.price : "0.00"} KDA</strong>
-                                        <small>{item.date}</small>
+                                        <strong>{item?.price ? item?.price : "0.00"} KDA</strong>
+                                        <small>{item?.date}</small>
                                     </div>
                                 </li>
                             </ul>
                         )
                     })}
-                    {history.length == 0 && <p>No History Found</p>}
+                    {history?.length == 0 && <p>No History Found</p>}
 
 
                     {/* <ul>

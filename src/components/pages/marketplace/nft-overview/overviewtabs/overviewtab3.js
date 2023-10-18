@@ -61,11 +61,11 @@ export default function OverviewTab1() {
             <div>
                 <div className='latestBidBx'>
                     <h3>Latest Bids</h3>
-                    {bigs.filter((item, index) => {
+                    {bigs?.length > 0 && bigs?.filter((item, index) => {
                         item.bidTime = new Date(item.bidTime).toISOString().slice(0, 19).replace('T', ' ');
                         return index < 10;
                     }
-                    ).map((item, index) => {
+                    )?.map((item, index) => {
                         return (
                             <ul key={index}>
                                 <li>
@@ -75,8 +75,8 @@ export default function OverviewTab1() {
                                         <small>Floor: {floorPrice} KDA <a href=''>Floor Bid</a></small>
                                     </div>
                                     <div className='collectionRight'>
-                                        <strong>{item.bidPrice} KDA</strong>
-                                        <small>{item.bidTime}</small>
+                                        <strong>{item?.bidPrice} KDA</strong>
+                                        <small>{item?.bidTime}</small>
                                     </div>
                                 </li>
                             </ul>
