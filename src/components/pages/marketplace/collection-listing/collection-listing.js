@@ -110,7 +110,7 @@ const CommunityMarketplace = () => {
         <div className="container">
           <div className="creatorDetBx">
             <div className="creatorImg">
-              <img src={CreatorImg} alt="" />
+              <img src={collectionData?.collection_info[0]?.imageUrl} alt="" />
             </div>
             <div className="creatorDet">
               <div className="creatorNameOuter">

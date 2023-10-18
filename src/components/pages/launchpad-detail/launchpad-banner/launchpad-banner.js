@@ -551,10 +551,10 @@ const LaunchpadDetails = () => {
       passRound: whiteList ? "Whitelist Round" : "Public Round",
       passCost:
         project.projectName == "Priority Pass"
-          ? 100.0
+          ? passPrice
           : whiteList
-          ? 25.0
-          : 30.0,
+          ? dbCooperPriceWl
+          : dbCooperPrice,
       revealed: "false",
       imageIndex: "",
       onMarketplace: "false",

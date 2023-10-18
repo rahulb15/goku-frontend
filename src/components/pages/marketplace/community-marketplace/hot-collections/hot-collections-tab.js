@@ -16,6 +16,8 @@ import {
 import KadenaImg from "../../../../../assets/kadena-komodos.png";
 import yellowCheck from "../../../../../assets/yellow-check.png";
 import CollectionSlider from "./collectionSlider";
+import { Link, useNavigate } from "react-router-dom";
+
 
 export default function HotCollectionsTab() {
   const [activeTab, setActiveTab] = React.useState("1");
@@ -83,11 +85,18 @@ export default function HotCollectionsTab() {
           <div className="collectListOuter">
             {hotCollections?.length > 0 &&
               hotCollections?.map((item, index) => {
+                console.log("item", item);
                 return (
                   <div className="colListOutBx" key={index}>
-                    <a href="">
+                    <Link
+                      to={{
+                        pathname: "/marketplace/collection-listing",
+                        search: `?id=${item._id}&for=all`,
+                      }}>
                       <div className="collectListBx1">
+                     
                         <i>
+                          
                           <img
                             src={item?.image}
                             alt=""
@@ -125,7 +134,7 @@ export default function HotCollectionsTab() {
                       <div className="collectListBx3">
                         <CollectionSlider item={item?.nft} />
                       </div>
-                    </a>
+                      </Link>
                   </div>
                 );
               })}
