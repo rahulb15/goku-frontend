@@ -19,13 +19,13 @@ export default class CommunityMarketplace extends Component {
                 <HeaderafterLogin />
                 <div className='midSectionBx'>
                     <div className='container'>
-                        <div className='featCollectHd bold'>Featured NFT Collections</div>
+                        <div className='featCollectHd bold'>{"Featured NFT Collections"}</div>
                         <NftProjectSlider1 />
                         <NftProjectSlider2 />
-                        <NftProjectSlider3 />
+                        {/* <NftProjectSlider3 />
                         <NftProjectSlider4 />
                         <NftProjectSlider5 />
-                        <NftProjectSlider6 />
+                        <NftProjectSlider6 /> */}
                     </div>
                 </div>
                 <MarketplaceFooter />

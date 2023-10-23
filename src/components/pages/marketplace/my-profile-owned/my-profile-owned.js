@@ -10,11 +10,35 @@ import CreatorImg from '../../../../assets/nft-img2.png'
 import "./my-profile-owned.scss"
 import Background from '../../../../assets/profile-banner.png'
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from "react-toastify";
 
 const CommunityMarketplace = () => {
     const { walletAddress, userName } = useSelector(
         (state) => state.walletStatus
     );
+
+    const copyToClipboard = () => {
+        navigator.clipboard.writeText(walletAddress)
+        toast.success("Copied to clipboard")
+    }
+
+    const shareToClipboard = () => {
+        navigator.clipboard.writeText(window.location.href)
+        toast.success("Copied to clipboard")
+    }
+
+    const shareToTwitter = () => {
+        window.open("https://twitter.com/intent/tweet?text=" + window.location.href)
+    }
+    const shareToInstagram = () => {
+        window.open("https://www.instagram.com/")
+    }
+    const shareToDiscord = () => {
+        window.open("https://discord.com/")
+    }
+
+    
+        
 
     return (
         <div>
@@ -31,24 +55,25 @@ const CommunityMarketplace = () => {
                                 <div className='creatorName'>{userName}</div>
                                 <div className='wishlist'>
                                     <span>
-                                        <a href='/'><BsGlobe /></a>
-                                        <a href='/'><BsTwitter /></a>
-                                        <a href='/'><BsInstagram /></a>
-                                        <a href='/'><FaDiscord /></a>
+                                        <BsGlobe style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }} onClick={()=>{window.open(window.location.href)}}/>
+                                        <BsTwitter style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }} onClick={shareToTwitter}/>
+                                        <BsInstagram style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }} onClick={shareToInstagram}/>
+                                        <FaDiscord style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }} onClick={shareToDiscord}/>
                                     </span>
-                                    <button><BsFillShareFill /></button>
+                                    <button onClick={shareToClipboard}
+                                    ><BsFillShareFill /></button>
                                 </div>
                             </div>
 
                             <div className='kryptoCont'>
                                 The collection name here is a collection of 10,000 unique Collection NFTs— unique digital collectibles living on the Kadena blockchain. Your Collection doubles as your Collection membership card, and grants access to... <a href="">Show more</a>
                             </div>
-                            <div className='editProf_Outer'>
+                            <div className='editProf_Outer' style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <Link to='/marketplace/profile-setting'>Edit Profile</Link>
                                 <span>
                                     <FaKickstarterK /> &nbsp;
-                                    {walletAddress.slice(0, 8)}...  &nbsp;
-                                    <MdOutlineContentCopy />
+                                    {walletAddress.slice(0, 8) + '...' + walletAddress.slice(34, 42)}  &nbsp;
+                                    <MdOutlineContentCopy onClick={copyToClipboard} style={{ cursor: 'pointer' }} />
                                 </span>
                             </div>
                         </div>

@@ -213,27 +213,27 @@ const DialogBid = ({ dataUSer, setRefresh, refresh, setLoading, loading,setSelec
             .then((response) => {
                 
                 if (response.data.status == "success") {
-                  toast.success("NFT Bidded");
+                  toast.success("Bid Successfull");
                   setLoading(false);
                   setRefresh(!refresh);
                 } else {
                   
                   setLoading(false);
-                  toast.error("NFT not Bidded");
+                  toast.error("Bid Unsuccessfull");
                 }
               })
               .catch((error) => {
                 
                 setLoading(false);
-                toast.error("NFT not Bidded");
+                toast.error("Bid Unsuccessfull");
               });
           } else {
             setLoading(false);
-            toast.error("NFT not Bidded");
+            toast.error("Bid Unsuccessfull");
           }
         }
       } else {
-        toast.error("NFT not Bidded");
+        toast.error("Bid Unsuccessfull");
         handleOpen();
         setLoading(false);
       }
@@ -316,23 +316,23 @@ const DialogBid = ({ dataUSer, setRefresh, refresh, setLoading, loading,setSelec
           .then((response) => {
               
               if (response.data.status == "success") {
-                toast.success("NFT Bidded");
+                toast.success("Bid Successfull");
                 setLoading(false);
                 setRefresh(!refresh);
               } else {
                 
                 setLoading(false);
-                toast.error("NFt not Bidded");
+                toast.error("Bid Unsuccessfull");
               }
             })
             .catch((error) => {
               
               setLoading(false);
-              toast.error("NFT not Bidded");
+              toast.error("Bid Unsuccessfull");
             });
         } else {
           setLoading(false);
-          toast.error("NFT not Bidded");
+          toast.error("Bid Unsuccessfull");
         }
       }
       else {

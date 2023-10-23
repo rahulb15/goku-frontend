@@ -179,7 +179,7 @@ const MarketplaceAccount = () => {
                 {/* <li><Link to="/marketplace/my-profile-owned"  className='bold'>Profile</Link></li> */}
                 <li>
                   <Link
-                    to="/marketplace/my-profile-owned?tab=Favorited"
+                    to="/marketplace/my-profile-owned?tab=Favorites"
                     className="bold"
                   >
                     Favorites

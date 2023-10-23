@@ -12,6 +12,7 @@ import { MarketplaceFooter } from "../../../common-components/marketplace-footer
 import HeaderafterLogin from "../../../common-components/marketplace-header-after-login/marketplace-header-after-login";
 import CollectionListingTab from "./collection-listing-tab";
 import "./collection-listing.scss";
+import { toast } from "react-toastify";
 
 const CommunityMarketplace = () => {
   const [collectionName, setCollectionName] = useState("");
@@ -39,7 +40,6 @@ const CommunityMarketplace = () => {
       headers: { authorization: localStorage.getItem("accessJWT") },
     })
       .then((response) => {
-        
         if (response.data.status == "success") {
           console.log(response.data.data[0], "collection data");
           // setCollectionName(response.data.data[0].collectionName);
@@ -48,7 +48,6 @@ const CommunityMarketplace = () => {
       })
       .catch((error) => {
         //   setUserRegistered(false)
-        
       });
   };
 
@@ -99,6 +98,19 @@ const CommunityMarketplace = () => {
   console.log("collectionData", collectionData);
   console.log("collectionName", collectionName);
 
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(walletAddress);
+    toast.success("Copied to clipboard");
+  };
+
+  const shareCollection = () => {
+    navigator.clipboard.writeText(
+      `${process.env.REACT_APP_URL}marketplace/collection-listing?id=${foo}&for=all`
+    );
+    toast.success("Copied to clipboard");
+  }
+
+
   return (
     <div>
       {/* <MarketplaceHeader /> */}
@@ -115,27 +127,32 @@ const CommunityMarketplace = () => {
             <div className="creatorDet">
               <div className="creatorNameOuter">
                 <div className="creatorName">
-                {collectionData?.collection_info[0]?.collectionName}
+                  {collectionData?.collection_info[0]?.collectionName}
 
                   <HiCheckCircle />
                 </div>
                 <div className="wishlist">
-                  <button>
+                  {/* <button>
                     <AiOutlineStar />
-                  </button>
+                  </button> */}
                   <button>
-                    <BsFillShareFill />
+                    <BsFillShareFill onClick={() => shareCollection()} />
                   </button>
                 </div>
               </div>
               <div className="kryptoId">
                 <div className="kryptoInn">
-                  {walletAddress.slice(0, 5)}...{walletAddress.slice(-5)}&nbsp;
-                  <MdOutlineContentCopy />
+                  {walletAddress.slice(0, 10)}...{walletAddress.slice(-5)}&nbsp;
+                  <MdOutlineContentCopy
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      copyToClipboard();
+                    }}
+                  />
                 </div>
                 <div className="kryptocreator">
                   Created By
-                  <strong>KDA Punk</strong>
+                  <strong>{collectionData?.user_info[0]?.name}</strong>
                 </div>
               </div>
               <div className="kryptoCont">
@@ -173,7 +190,7 @@ const CommunityMarketplace = () => {
                       nightModeStatus ? { color: "#fff" } : { color: "#000" }
                     }
                   >
-                     {collectionData?.totalNftPrice} KDA
+                    {collectionData?.totalNftPrice} KDA
                   </strong>
                 </div>
                 <div className="itemQtyBx">
@@ -183,7 +200,7 @@ const CommunityMarketplace = () => {
                       nightModeStatus ? { color: "#fff" } : { color: "#000" }
                     }
                   >
-                     {collectionData?.minNftPrice} KDA
+                    {collectionData?.minNftPrice} KDA
                   </strong>
                 </div>
               </div>

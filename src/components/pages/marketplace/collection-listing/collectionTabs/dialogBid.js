@@ -201,25 +201,25 @@ const DialogBid = ({
             Axios.patch(`/passDetails/${dataUSer?.passCost ? "bidding-pass" : "bidding"}`, obj, config)
             .then((response) => {
                 if (response.data.status == "success") {
-                  toast.success("NFT Bidded");
+                  toast.success("Bid Successfully");
                   setLoading(false);
                   setRefresh(!refresh);
                 } else {
                   setLoading(false);
-                  toast.error("NFT not Bidded");
+                  toast.error("Bid Unsuccessful");
                 }
               })
               .catch((error) => {
                 setLoading(false);
-                toast.error("NFT not Bidded");
+                toast.error("Bid Unsuccessful");
               });
           } else {
             setLoading(false);
-            toast.error("NFT not Bidded");
+            toast.error("Bid Unsuccessful");
           }
         }
       } else {
-        toast.error("NFT not Bidded");
+        toast.error("Bid Unsuccessful");
         handleOpen();
         setLoading(false);
       }
@@ -295,24 +295,24 @@ const DialogBid = ({
           Axios.patch(`/passDetails/${dataUSer?.passCost ? "bidding-pass" : "bidding"}`, obj, config)
           .then((response) => {
               if (response.data.status == "success") {
-                toast.success("NFT Bidded");
+                toast.success("Bid Successfully");
                 setLoading(false);
                 setRefresh(!refresh);
               } else {
                 setLoading(false);
-                toast.error("NFt not Bidded");
+                toast.error("Bid Unsuccessful");
               }
             })
             .catch((error) => {
               setLoading(false);
-              toast.error("NFT not Bidded");
+              toast.error("Bid Unsuccessful");
             });
         } else {
           setLoading(false);
-          toast.error("NFT not Bidded");
+          toast.error("Bid Unsuccessful");
         }
       } else {
-        toast.error("NFT not Bidded");
+        toast.error("Bid Unsuccessful");
         setLoading(false);
       }
     }

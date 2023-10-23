@@ -1092,25 +1092,50 @@ const HotCollectionsTab = (props) => {
                                     //     flex: 1,
                                     //   }}
                                     // >
-                                    <div className="featpriceOut">
+                                    <div className="featpriceOut" style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", flex: 1 }}>
                                       <Button
                                         className="btm-accept-bid"
+                                        style={{
+                                          backgroundColor: "#666",
+                                          color: "#fff",
+                                          width: "100%",
+                                          height: "50px",
+                                          borderRadius: "10px",
+                                        }}
                                         onClick={() => {
                                           acceptLastBid(data);
                                         }}
                                       >
                                         Accept Bid
                                       </Button>
+                                      &nbsp;
+                                      &nbsp;
                                       <Button
                                         className="btn-reject-bid"
+                                        style={{
+                                          backgroundColor: "#666",
+                                          color: "#fff",
+                                          width: "100%",
+                                          height: "50px",
+                                          borderRadius: "10px",
+                                        }}
                                         onClick={() => {
                                           declineBid(data);
                                         }}
                                       >
                                         Reject Bid
                                       </Button>
+                                       &nbsp;
+                                      &nbsp;
                                       <Button
                                         className="btn-cancel-bid"
+                                        style={{
+                                          backgroundColor: "#666",
+                                          color: "#fff",
+                                          width: "100%",
+                                          height: "50px",
+                                          borderRadius: "10px",
+                                        }}
                                         onClick={() => {
                                           cancelBid(data);
                                         }}

@@ -742,7 +742,7 @@ const ConnectPopup = () => {
       localStorage.setItem("chainWeaverWalletAdd", walletAdd);
       setModal3(!modal3);
       checkUserRegisteration();
-      window.location.reload();
+      // window.location.reload();
     } else {
       toast.error("Account not found in the preferred chain", {
         position: "top-right",
@@ -815,7 +815,7 @@ const ConnectPopup = () => {
                       </li>
                       <li>
                         <Link
-                          to="/marketplace/my-profile-owned?tab=Favorited"
+                          to="/marketplace/my-profile-owned?tab=Favorites"
                           className="bold"
                         >
                           Favorites

@@ -3,6 +3,7 @@ import HeaderafterLogin from "../../../common-components/marketplace-header-afte
 import { MarketplaceFooter } from "../../../common-components/marketplace-footer/marketplace-footer";
 import ProfileListingTab from "./profile-listing-tab";
 import { FaDiscord, FaKickstarterK } from "react-icons/fa";
+import { toast } from "react-toastify";
 import {
   BsFillShareFill,
   BsGlobe,
@@ -97,6 +98,10 @@ export default function CommunityMarketplace() {
   };
   //
   //
+  const shareToClipboard = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast.success("Link Copied");
+  }
   return (
     <div>
       {/* <MarketplaceHeader /> */}
@@ -115,7 +120,7 @@ export default function CommunityMarketplace() {
                 <div className="creatorName">{collectionData?.collection_info[0]?.collectionName}</div>
                 <div className="wishlist">
                   <button>
-                    <BsFillShareFill />
+                    <BsFillShareFill onClick={shareToClipboard} />
                   </button>
                 </div>
               </div>
@@ -162,7 +167,8 @@ export default function CommunityMarketplace() {
                 </div>
               </div>
               <div className="editProf_Outer">
-                <Link to="/marketplace/profile-setting">Edit Profile</Link>
+                <button> Add Token</button>
+                {/* <Link to="/marketplace/profile-setting">Edit Profile</Link> */}
               </div>
             </div>
           </div>

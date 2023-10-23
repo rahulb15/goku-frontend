@@ -40,6 +40,7 @@ const options = {
 };
 export default function CollectionSlider(props) {
   const { item } = props;
+  console.log(item, "item");
   
   // const [nfts, setNfts] = useState([]);
 
@@ -85,13 +86,14 @@ export default function CollectionSlider(props) {
                     <Link
                       to={{
                         pathname: "/marketplace/nft-overview",
-                        search: `?id=${item._id}&for=all`,
+                        // search: `?id=${item._id}&for=all`,
+                        search: item?.passName ? `?id=${item._id}` : `?id=${item._id}&for=all`,
                       }}
                     >
                   <div className="featItemBx">
                     <div className="glow">
                       <div className="collImg">
-                        <img src={CollImg1} alt="" />
+                        <img src={item?.tokenImage} alt="" />
                         <span>{item?.nftPrice} KDA</span>
                       </div>
                     </div>

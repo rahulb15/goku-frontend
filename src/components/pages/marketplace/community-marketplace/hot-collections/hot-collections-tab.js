@@ -15,12 +15,20 @@ import {
 } from "reactstrap";
 import KadenaImg from "../../../../../assets/kadena-komodos.png";
 import yellowCheck from "../../../../../assets/yellow-check.png";
+import dbCooperGif from "../../../../../assets/DBCooper.gif";
+
 import CollectionSlider from "./collectionSlider";
 import { Link, useNavigate } from "react-router-dom";
 
 
 export default function HotCollectionsTab() {
   const [activeTab, setActiveTab] = React.useState("1");
+  const [screenLoading, setScreenLoading] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
+  const [limit, setLimit] = useState(10);
+  const [filteredDbCooper, setFilteredDbCooper] = useState([]);
   const { nightModeStatus } = useSelector((state) => state.nightModeStatus);
   const [hotCollections, setHotCollections] = useState([]);
   const toggle = (tab) => {
@@ -41,8 +49,42 @@ export default function HotCollectionsTab() {
       .catch((error) => {});
   };
   useEffect(() => {
+    getDbCooper();
     getAllCollections();
   }, []);
+  const getDbCooper = () => {
+    setScreenLoading(true);
+    Axios.get(
+      "/passDetails/all-nft-on-marketplace-dbcooper?page=" +
+        page +
+        "&limit=" +
+        limit +
+        "&search=" +
+        searchInput,
+      {
+        headers: { authorization: localStorage.getItem("accessJWT") },
+      }
+    )
+      .then((response) => {
+        if (response.data.status == "success") {
+          let dbCopperList = response.data?.data ? response.data?.data : [];
+          setTotalPage(response.data?.count ? response.data?.count : 0);
+          const list = dbCopperList;
+
+          setFilteredDbCooper(list);
+        }
+      })
+      .catch((error) => {
+        
+      });
+  };
+
+
+  useEffect(() => {
+    getDbCooper();
+  }, [searchInput, page, limit]);
+
+  console.log("filteredDbCooper", filteredDbCooper, page, limit, searchInput);
 
   return (
     <div className="marketplace_tabsOuter">
@@ -83,6 +125,48 @@ export default function HotCollectionsTab() {
           </div>
 
           <div className="collectListOuter">
+              <div className="colListOutBx">
+              <Link
+                      to={{
+                        pathname: "/marketplace/create-owned",
+                        search: `?name=DBCooper`,
+                      }}>
+                  <div className="collectListBx1">
+                    <i>
+                      <img src={dbCooperGif} alt="" width="50px" height="50px" />
+                      <img className="yellowcheck" src={yellowCheck} alt="" />
+                    </i>
+                    {nightModeStatus ? (
+                      <strong>DB Cooper</strong>
+                    ) : (
+                      <strong style={{ color: "#000" }}>DB Cooper</strong>
+                    )}
+                    <span>
+                      <BsFillArrowRightCircleFill />
+                    </span>
+                  </div>
+                  <div className="collectListBx2">
+                    <i>Day Volume</i>
+                    <strong>2.2K</strong> <small>KDA</small>
+                    <span>+485.8%</span>
+                  </div>
+                  <div className="collectListBx2">
+                    <i>Floor</i>
+                    <strong>10.2</strong> <small>KDA</small>
+                  </div>
+                  <div className="collectListBx3">
+                    <CollectionSlider item={filteredDbCooper} />
+                  </div>
+                  </Link>
+              </div>
+              
+            
+             
+             
+             
+            
+
+
             {hotCollections?.length > 0 &&
               hotCollections?.map((item, index) => {
                 console.log("item", item);
@@ -140,7 +224,7 @@ export default function HotCollectionsTab() {
               })}
           </div>
 
-          {hotCollections?.length == 0 && (
+          {/* {hotCollections?.length == 0 && (
             <div className="collectListOuter">
               <div className="colListOutBx">
                 <a href="">
@@ -323,7 +407,7 @@ export default function HotCollectionsTab() {
                 </a>
               </div>
             </div>
-          )}
+          )} */}
         </TabPane>
         <TabPane tabId="2">
           <div className="collectionHd">
@@ -334,6 +418,42 @@ export default function HotCollectionsTab() {
           </div>
 
           <div className="collectListOuter">
+
+             <div className="colListOutBx">
+              <Link
+                      to={{
+                        pathname: "/marketplace/create-owned",
+                        search: `?name=DBCooper`,
+                      }}>
+                  <div className="collectListBx1">
+                    <i>
+                      <img src={dbCooperGif} alt="" width="50px" height="50px" />
+                      <img className="yellowcheck" src={yellowCheck} alt="" />
+                    </i>
+                    {nightModeStatus ? (
+                      <strong>DB Cooper</strong>
+                    ) : (
+                      <strong style={{ color: "#000" }}>DB Cooper</strong>
+                    )}
+                    <span>
+                      <BsFillArrowRightCircleFill />
+                    </span>
+                  </div>
+                  <div className="collectListBx2">
+                    <i>Day Volume</i>
+                    <strong>2.2K</strong> <small>KDA</small>
+                    <span>+485.8%</span>
+                  </div>
+                  <div className="collectListBx2">
+                    <i>Floor</i>
+                    <strong>10.2</strong> <small>KDA</small>
+                  </div>
+                  <div className="collectListBx3">
+                    <CollectionSlider item={filteredDbCooper} />
+                  </div>
+                  </Link>
+              </div>
+
             {hotCollections?.length > 0 &&
               hotCollections?.map((item, index) => {
                 return (

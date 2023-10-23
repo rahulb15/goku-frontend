@@ -37,7 +37,7 @@ const HotCollectionsTab = () => {
     if (foo === "Collections") {
       setActiveTab("4")
     }
-    if (foo === "Favorited") {
+    if (foo === "Favorites") {
       setActiveTab("5")
     }
     if (foo === "Activity") {
@@ -64,7 +64,7 @@ const HotCollectionsTab = () => {
         navigate("/marketplace/my-profile-owned?tab=Collections")
       }
       if (tab === "5") {
-        navigate("/marketplace/my-profile-owned?tab=Favorited")
+        navigate("/marketplace/my-profile-owned?tab=Favorites")
       }
       if (tab === "6") {
         navigate("/marketplace/my-profile-owned?tab=Activity")
@@ -113,7 +113,7 @@ const HotCollectionsTab = () => {
           <NavLink
             className={classnames({ active: activeTab === '5' })}
             onClick={() => { toggle('5'); }} style={{ cursor: "pointer" }}>
-            Favorited
+            Favorites
           </NavLink>
         </NavItem>
         <NavItem>

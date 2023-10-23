@@ -4,7 +4,7 @@ export default class NftTabs1 extends Component {
     render() {
         return (
             <>
-                <div className='accHd bold'>
+                {/* <div className='accHd bold'>
                     Notifications
                     <span>Add one or more wallets to showcase all your NFTs in one place. <a href="">Read more</a></span>
                 </div>
@@ -71,7 +71,19 @@ export default class NftTabs1 extends Component {
                             </div>
                         </li>
                     </ul>
-                </div>
+                </div> */}
+
+<div className="comingSoonPage">
+          <div className="comingSoonPageInner">
+            <div className="comingSoonPageHd">
+              <h2>Coming Soon</h2>
+              <p>
+                We are working on this feature. Please check back later.{" "}
+                <a href="#">Read more</a>
+              </p>
+            </div>
+          </div>
+        </div>
             </>
         )
     }

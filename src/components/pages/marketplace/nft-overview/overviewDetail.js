@@ -2,7 +2,14 @@ import React, { Component, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import overviewDetImg from "../../../../assets/overviewDet-img.png";
 import { WalletModal } from "../../../../components/common-components/walletModal/walletModal";
-import { FaTshirt, FaEarlybirds, FaRegHeart, FaHeart } from "react-icons/fa";
+import {
+  FaTshirt,
+  FaEarlybirds,
+  FaRegHeart,
+  FaHeart,
+  FaPause,
+  FaExclamationTriangle,
+} from "react-icons/fa";
 import {
   HiCheckCircle,
   HiEye,
@@ -172,7 +179,6 @@ const OverviewDetail = () => {
       let foo = params.get("id");
       const type = params.get("for") == "all" ? "nft" : "pass";
 
-
       const formdata = {
         nftLiked: foo,
         type: type,
@@ -230,7 +236,6 @@ const OverviewDetail = () => {
             let nftList = response.data.data;
             setFilteredNft(nftList);
             setUserId(nftList.creator);
-
 
             // setCollectionList(filteredCollectionList)
           } else {
@@ -399,8 +404,6 @@ const OverviewDetail = () => {
     }
   };
 
-
-
   const buyIdOnSale = async (data) => {
     console.log("dataOverview", data);
     setLoading(true);
@@ -408,7 +411,6 @@ const OverviewDetail = () => {
     const royaltyR = await getRoyalityRate(data);
     console.log("royaltyA", royaltyA);
     console.log("royaltyR", royaltyR);
-
 
     console.log("data", data);
     const MarketplaceCharges = fee * parseFloat(data.nftPrice);
@@ -525,7 +527,7 @@ const OverviewDetail = () => {
           );
           console.log(signedtxx, "xxxxxxxxxxxxxx");
           if (signedtxx.result.status == "success") {
-            if(foo2 == "all"){
+            if (foo2 == "all") {
               const obj = {
                 tokenId: data.tokenId,
                 creator: walletAddress,
@@ -543,11 +545,11 @@ const OverviewDetail = () => {
               };
               console.log("obj", obj);
               const accessJWT = localStorage.getItem("accessJWT");
-                const config = {
-                  headers: {
-                    Authorization: accessJWT,
-                  },
-                };
+              const config = {
+                headers: {
+                  Authorization: accessJWT,
+                },
+              };
               Axios.patch("/nft/update-nft-gift", obj, config)
                 .then((response) => {
                   if (response.data.status == "success") {
@@ -566,47 +568,47 @@ const OverviewDetail = () => {
                   toast.error("NFT not bought");
                 });
             } else {
-            const obj = {
-              tokenId: data.tokenId,
-              creator: walletAddress,
-              clientId: data.clientId,
-              onMarketplace: false,
-              sellingType: "All",
-              creatorName: data.creatorName,
-              passTokenId: data.passTokenId,
-              // nftPrice: nftPrice,
-              duration: "",
-              history: {
-                owner: walletAddress,
-                price: data.nftPrice,
-                category: "transfer",
-              },
-            };
-            console.log("obj", obj);
-            const accessJWT = localStorage.getItem("accessJWT");
-            const config = {
-              headers: {
-                Authorization: accessJWT,
-              },
-            };
-            Axios.patch("/passDetails/update-nft-pass-gift", obj, config)
-              .then((response) => {
-                console.log("Updatezzzzz", response.data.data);
-                if (response.data.status == "success") {
-                  toast.success("Successfully bought");
-                  setLoading(false);
-                  setRefresh(!refresh);
-                } else {
-                  console.log("hello");
+              const obj = {
+                tokenId: data.tokenId,
+                creator: walletAddress,
+                clientId: data.clientId,
+                onMarketplace: false,
+                sellingType: "All",
+                creatorName: data.creatorName,
+                passTokenId: data.passTokenId,
+                // nftPrice: nftPrice,
+                duration: "",
+                history: {
+                  owner: walletAddress,
+                  price: data.nftPrice,
+                  category: "transfer",
+                },
+              };
+              console.log("obj", obj);
+              const accessJWT = localStorage.getItem("accessJWT");
+              const config = {
+                headers: {
+                  Authorization: accessJWT,
+                },
+              };
+              Axios.patch("/passDetails/update-nft-pass-gift", obj, config)
+                .then((response) => {
+                  console.log("Updatezzzzz", response.data.data);
+                  if (response.data.status == "success") {
+                    toast.success("Successfully bought");
+                    setLoading(false);
+                    setRefresh(!refresh);
+                  } else {
+                    console.log("hello");
+                    setLoading(false);
+                    toast.error("NFT not bought");
+                  }
+                })
+                .catch((error) => {
+                  console.log("error", error);
                   setLoading(false);
                   toast.error("NFT not bought");
-                }
-              })
-              .catch((error) => {
-                console.log("error", error);
-                setLoading(false);
-                toast.error("NFT not bought");
-              });
+                });
             }
           } else {
             toast.error("NFT not bought");
@@ -626,7 +628,6 @@ const OverviewDetail = () => {
       console.log("sellerPayout", sellerPayout);
       console.log("a", a, "b", b, "c", c, "d", d);
       const XWalletRequest = {
-        
         networkId: NETWORK_ID,
         signingCmd: {
           sender: a,
@@ -691,7 +692,7 @@ const OverviewDetail = () => {
 
         console.log("Ssffs", txResult);
         if (txResult.result.status == "success") {
-          if(foo2 == "all"){
+          if (foo2 == "all") {
             const obj = {
               tokenId: data.tokenId,
               creator: walletAddress,
@@ -709,11 +710,11 @@ const OverviewDetail = () => {
             };
             console.log("obj", obj);
             const accessJWT = localStorage.getItem("accessJWT");
-              const config = {
-                headers: {
-                  Authorization: accessJWT,
-                },
-              };
+            const config = {
+              headers: {
+                Authorization: accessJWT,
+              },
+            };
             Axios.patch("/nft/update-nft-gift", obj, config)
               .then((response) => {
                 if (response.data.status == "success") {
@@ -732,47 +733,47 @@ const OverviewDetail = () => {
                 toast.error("NFT not bought");
               });
           } else {
-          const obj = {
-            tokenId: data.tokenId,
-            creator: walletAddress,
-            clientId: data.clientId,
-            onMarketplace: false,
-            sellingType: "All",
-            creatorName: data.creatorName,
-            passTokenId: data.passTokenId,
-            // nftPrice: nftPrice,
-            duration: "",
-            history: {
-              owner: walletAddress,
-              price: data.nftPrice,
-              category: "transfer",
-            },
-          };
-          console.log("obj", obj);
-          const accessJWT = localStorage.getItem("accessJWT");
-          const config = {
-            headers: {
-              Authorization: accessJWT,
-            },
-          };
-          Axios.patch("/passDetails/update-nft-pass-gift", obj, config)
-            .then((response) => {
-              console.log("Updatezzzzz", response.data.data);
-              if (response.data.status == "success") {
-                toast.success("Successfully bought");
-                setLoading(false);
-                setRefresh(!refresh);
-              } else {
-                console.log("hello");
+            const obj = {
+              tokenId: data.tokenId,
+              creator: walletAddress,
+              clientId: data.clientId,
+              onMarketplace: false,
+              sellingType: "All",
+              creatorName: data.creatorName,
+              passTokenId: data.passTokenId,
+              // nftPrice: nftPrice,
+              duration: "",
+              history: {
+                owner: walletAddress,
+                price: data.nftPrice,
+                category: "transfer",
+              },
+            };
+            console.log("obj", obj);
+            const accessJWT = localStorage.getItem("accessJWT");
+            const config = {
+              headers: {
+                Authorization: accessJWT,
+              },
+            };
+            Axios.patch("/passDetails/update-nft-pass-gift", obj, config)
+              .then((response) => {
+                console.log("Updatezzzzz", response.data.data);
+                if (response.data.status == "success") {
+                  toast.success("Successfully bought");
+                  setLoading(false);
+                  setRefresh(!refresh);
+                } else {
+                  console.log("hello");
+                  setLoading(false);
+                  toast.error("NFT not bought");
+                }
+              })
+              .catch((error) => {
+                console.log("error", error);
                 setLoading(false);
                 toast.error("NFT not bought");
-              }
-            })
-            .catch((error) => {
-              console.log("error", error);
-              setLoading(false);
-              toast.error("NFT not bought");
-            });
+              });
           }
         } else {
           toast.error("NFT not bought");
@@ -872,7 +873,7 @@ const OverviewDetail = () => {
                 Authorization: accessJWT,
               },
             };
-            if(foo2 == "all"){
+            if (foo2 == "all") {
               const obj = {
                 onAuction: false,
                 _id: data._id,
@@ -891,46 +892,45 @@ const OverviewDetail = () => {
                   category: "transfer",
                 },
               };
-  
+
               const accessJWT = localStorage.getItem("accessJWT");
               const config = {
                 headers: {
                   Authorization: accessJWT,
                 },
               };
-            Axios.patch("/nft/update-nft-gift", obj, config)
-              .then((response) => {
-                if (response.data.status == "success") {
-                  toast.success("NFT Bid Accepted");
-                  setRefresh(!refresh);
-                  setLoading(false);
-                } else {
+              Axios.patch("/nft/update-nft-gift", obj, config)
+                .then((response) => {
+                  if (response.data.status == "success") {
+                    toast.success("NFT Bid Accepted");
+                    setRefresh(!refresh);
+                    setLoading(false);
+                  } else {
+                    toast.error("NFt bid not accepted");
+                    setLoading(false);
+                  }
+                })
+                .catch((error) => {
                   toast.error("NFt bid not accepted");
                   setLoading(false);
-                }
-              })
-              .catch((error) => {
-                toast.error("NFt bid not accepted");
-                setLoading(false);
-              });
+                });
             } else {
               Axios.patch("/passDetails/update-nft-pass-gift", obj, config)
-              .then((response) => {
-                if (response.data.status == "success") {
-                  toast.success("NFT Bid Accepted");
-                  setRefresh(!refresh);
-                  setLoading(false);
-                } else {
+                .then((response) => {
+                  if (response.data.status == "success") {
+                    toast.success("NFT Bid Accepted");
+                    setRefresh(!refresh);
+                    setLoading(false);
+                  } else {
+                    toast.error("NFt bid not accepted");
+                    setLoading(false);
+                  }
+                })
+                .catch((error) => {
                   toast.error("NFt bid not accepted");
                   setLoading(false);
-                }
-              })
-              .catch((error) => {
-                toast.error("NFt bid not accepted");
-                setLoading(false);
-              });
+                });
             }
-
           } else {
             toast.error("NFt bid not accepted");
             setLoading(false);
@@ -1009,22 +1009,22 @@ const OverviewDetail = () => {
               Authorization: accessJWT,
             },
           };
-          if(foo2 == "all"){
-          Axios.patch("/nft/update-nft-gift", obj, config)
-            .then((response) => {
-              if (response.data.status == "success") {
-                toast.success("NFT Bid Accepted");
-                setRefresh(!refresh);
+          if (foo2 == "all") {
+            Axios.patch("/nft/update-nft-gift", obj, config)
+              .then((response) => {
+                if (response.data.status == "success") {
+                  toast.success("NFT Bid Accepted");
+                  setRefresh(!refresh);
+                  setLoading(false);
+                } else {
+                  toast.error("NFt bid not accepted");
+                  setLoading(false);
+                }
+              })
+              .catch((error) => {
+                toast.error("NFT bid not accepted");
                 setLoading(false);
-              } else {
-                toast.error("NFt bid not accepted");
-                setLoading(false);
-              }
-            })
-            .catch((error) => {
-              toast.error("NFT bid not accepted");
-              setLoading(false);
-            });
+              });
           } else {
             const obj = {
               onAuction: false,
@@ -1052,22 +1052,21 @@ const OverviewDetail = () => {
               },
             };
             Axios.patch("/passDetails/update-nft-pass-gift", obj, config)
-            .then((response) => {
-              if (response.data.status == "success") {
-                toast.success("NFT Bid Accepted");
-                setRefresh(!refresh);
+              .then((response) => {
+                if (response.data.status == "success") {
+                  toast.success("NFT Bid Accepted");
+                  setRefresh(!refresh);
+                  setLoading(false);
+                } else {
+                  toast.error("NFt bid not accepted");
+                  setLoading(false);
+                }
+              })
+              .catch((error) => {
+                toast.error("NFT bid not accepted");
                 setLoading(false);
-              } else {
-                toast.error("NFt bid not accepted");
-                setLoading(false);
-              }
-            })
-            .catch((error) => {
-              toast.error("NFT bid not accepted");
-              setLoading(false);
-            });
+              });
           }
-
         } else {
           toast.error("NFt bid not accepted");
           setLoading(false);
@@ -1154,41 +1153,39 @@ const OverviewDetail = () => {
               Authorization: accessJWT,
             },
           };
-          if(foo2 == "all"){
-          Axios.patch("/nft/update-nft", obj, config)
-            .then((response) => {
-              if (response.data.status == "success") {
-                toast.success("NFT Bid Declined");
-                setRefresh(!refresh);
-                setLoading(false);
-              } else {
+          if (foo2 == "all") {
+            Axios.patch("/nft/update-nft", obj, config)
+              .then((response) => {
+                if (response.data.status == "success") {
+                  toast.success("NFT Bid Declined");
+                  setRefresh(!refresh);
+                  setLoading(false);
+                } else {
+                  toast.error("NFt bid not declined");
+                  setLoading(false);
+                }
+              })
+              .catch((error) => {
                 toast.error("NFt bid not declined");
                 setLoading(false);
-              }
-            })
-            .catch((error) => {
-              toast.error("NFt bid not declined");
-              setLoading(false);
-            });
-          }
-          else{
+              });
+          } else {
             Axios.patch("/passDetails/updatePass", obj, config)
-            .then((response) => {
-              if (response.data.status == "success") {
-                toast.success("NFT Bid Declined");
-                setRefresh(!refresh);
-                setLoading(false);
-              } else {
+              .then((response) => {
+                if (response.data.status == "success") {
+                  toast.success("NFT Bid Declined");
+                  setRefresh(!refresh);
+                  setLoading(false);
+                } else {
+                  toast.error("NFt bid not declined");
+                  setLoading(false);
+                }
+              })
+              .catch((error) => {
                 toast.error("NFt bid not declined");
                 setLoading(false);
-              }
-            })
-            .catch((error) => {
-              toast.error("NFt bid not declined");
-              setLoading(false);
-            });
+              });
           }
-
         } else {
           toast.error("NFt bid not declined");
           setLoading(false);
@@ -1255,41 +1252,39 @@ const OverviewDetail = () => {
               Authorization: accessJWT,
             },
           };
-          if(foo2 == "all"){
-          Axios.patch("/nft/update-nft", obj, config)
-            .then((response) => {
-              if (response.data.status == "success") {
-                toast.success("NFT Bid Declined");
-                setRefresh(!refresh);
+          if (foo2 == "all") {
+            Axios.patch("/nft/update-nft", obj, config)
+              .then((response) => {
+                if (response.data.status == "success") {
+                  toast.success("NFT Bid Declined");
+                  setRefresh(!refresh);
+                  setLoading(false);
+                } else {
+                  toast.error("NFt bid not declined");
+                  setLoading(false);
+                }
+              })
+              .catch((error) => {
+                toast.error("NFT bid not declined");
                 setLoading(false);
-              } else {
-                toast.error("NFt bid not declined");
-                setLoading(false);
-              }
-            })
-            .catch((error) => {
-              toast.error("NFT bid not declined");
-              setLoading(false);
-            });
-          } else{
+              });
+          } else {
             Axios.patch("/passDetails/updatePass", obj, config)
-            .then((response) => {
-              if (response.data.status == "success") {
-                toast.success("NFT Bid Declined");
-                setRefresh(!refresh);
+              .then((response) => {
+                if (response.data.status == "success") {
+                  toast.success("NFT Bid Declined");
+                  setRefresh(!refresh);
+                  setLoading(false);
+                } else {
+                  toast.error("NFt bid not declined");
+                  setLoading(false);
+                }
+              })
+              .catch((error) => {
+                toast.error("NFT bid not declined");
                 setLoading(false);
-              } else {
-                toast.error("NFt bid not declined");
-                setLoading(false);
-              }
-            })
-            .catch((error) => {
-              toast.error("NFT bid not declined");
-              setLoading(false);
-            });
+              });
           }
-
-
         } else {
           toast.error("NFt bid not declined");
           setLoading(false);
@@ -1383,41 +1378,39 @@ const OverviewDetail = () => {
               Authorization: accessJWT,
             },
           };
-          if(foo2 == "all"){
-          Axios.patch("/nft/update-nft", obj, config)
-            .then((response) => {
-              if (response.data.status == "success") {
-                toast.success("NFT Sale Closed");
-                setRefresh(!refresh);
-                setLoading(false);
-              } else {
+          if (foo2 == "all") {
+            Axios.patch("/nft/update-nft", obj, config)
+              .then((response) => {
+                if (response.data.status == "success") {
+                  toast.success("NFT Sale Closed");
+                  setRefresh(!refresh);
+                  setLoading(false);
+                } else {
+                  toast.error("NFt Sale not closed");
+                  setLoading(false);
+                }
+              })
+              .catch((error) => {
                 toast.error("NFt Sale not closed");
                 setLoading(false);
-              }
-            })
-            .catch((error) => {
-              toast.error("NFt Sale not closed");
-              setLoading(false);
-            });
-          } else{
+              });
+          } else {
             Axios.patch("/passDetails/updatePass", obj, config)
-            .then((response) => {
-              if (response.data.status == "success") {
-                toast.success("NFT Sale Closed");
-                setRefresh(!refresh);
-                setLoading(false);
-              } else {
+              .then((response) => {
+                if (response.data.status == "success") {
+                  toast.success("NFT Sale Closed");
+                  setRefresh(!refresh);
+                  setLoading(false);
+                } else {
+                  toast.error("NFt Sale not closed");
+                  setLoading(false);
+                }
+              })
+              .catch((error) => {
                 toast.error("NFt Sale not closed");
                 setLoading(false);
-              }
-            })
-            .catch((error) => {
-              toast.error("NFt Sale not closed");
-              setLoading(false);
-            });
+              });
           }
-
-
         } else {
           toast.error("NFt Sale not closed");
           setLoading(false);
@@ -1492,41 +1485,39 @@ const OverviewDetail = () => {
               Authorization: accessJWT,
             },
           };
-          if(foo2 == "all"){
-          Axios.patch("/nft/update-nft", obj, config)
-            .then((response) => {
-              if (response.data.status == "success") {
-                toast.success("NFT Sale Closed");
-                setRefresh(!refresh);
+          if (foo2 == "all") {
+            Axios.patch("/nft/update-nft", obj, config)
+              .then((response) => {
+                if (response.data.status == "success") {
+                  toast.success("NFT Sale Closed");
+                  setRefresh(!refresh);
+                  setLoading(false);
+                } else {
+                  toast.error("NFt Sale not closed");
+                  setLoading(false);
+                }
+              })
+              .catch((error) => {
+                toast.error("NFT Sale not closed");
                 setLoading(false);
-              } else {
-                toast.error("NFt Sale not closed");
-                setLoading(false);
-              }
-            })
-            .catch((error) => {
-              toast.error("NFT Sale not closed");
-              setLoading(false);
-            });
-          }
-          else{
+              });
+          } else {
             Axios.patch("/passDetails/updatePass", obj, config)
-            .then((response) => {
-              if (response.data.status == "success") {
-                toast.success("NFT Sale Closed");
-                setRefresh(!refresh);
+              .then((response) => {
+                if (response.data.status == "success") {
+                  toast.success("NFT Sale Closed");
+                  setRefresh(!refresh);
+                  setLoading(false);
+                } else {
+                  toast.error("NFt Sale not closed");
+                  setLoading(false);
+                }
+              })
+              .catch((error) => {
+                toast.error("NFT Sale not closed");
                 setLoading(false);
-              } else {
-                toast.error("NFt Sale not closed");
-                setLoading(false);
-              }
-            })
-            .catch((error) => {
-              toast.error("NFT Sale not closed");
-              setLoading(false);
-            });
+              });
           }
-
         } else {
           toast.error("NFt Sale not closed");
           setLoading(false);
@@ -1623,25 +1614,24 @@ const OverviewDetail = () => {
                 Authorization: accessJWT,
               },
             };
-            if(foo2 == "all"){
-            Axios.patch("/nft/update-nft", obj, config)
-              .then((response) => {
-                if (response.data.status == "success") {
-                  toast.success("NFT Sale Closed");
-                  setRefresh(!refresh);
-                  setLoading(false);
-                } else {
+            if (foo2 == "all") {
+              Axios.patch("/nft/update-nft", obj, config)
+                .then((response) => {
+                  if (response.data.status == "success") {
+                    toast.success("NFT Sale Closed");
+                    setRefresh(!refresh);
+                    setLoading(false);
+                  } else {
+                    toast.error("NFt Sale not closed");
+                    setLoading(false);
+                  }
+                })
+                .catch((error) => {
                   toast.error("NFt Sale not closed");
                   setLoading(false);
-                }
-              })
-              .catch((error) => {
-                toast.error("NFt Sale not closed");
-                setLoading(false);
-              });
-            }
-              else{
-                Axios.patch("/passDetails/updatePass", obj, config)
+                });
+            } else {
+              Axios.patch("/passDetails/updatePass", obj, config)
                 .then((response) => {
                   if (response.data.status == "success") {
                     toast.success("NFT Sale Closed");
@@ -1656,8 +1646,7 @@ const OverviewDetail = () => {
                   toast.error("NFT Sale not closed");
                   setLoading(false);
                 });
-              }
-
+            }
           } else {
             toast.error("NFt Sale not closed");
             setLoading(false);
@@ -1736,37 +1725,37 @@ const OverviewDetail = () => {
             },
           };
           if (foo2 == "all") {
-          Axios.patch("/nft/update-nft", obj, config)
-            .then((response) => {
-              if (response.data.status == "success") {
-                toast.success("NFT Sale Closed");
-                setRefresh(!refresh);
+            Axios.patch("/nft/update-nft", obj, config)
+              .then((response) => {
+                if (response.data.status == "success") {
+                  toast.success("NFT Sale Closed");
+                  setRefresh(!refresh);
+                  setLoading(false);
+                } else {
+                  toast.error("NFt Sale not closed");
+                  setLoading(false);
+                }
+              })
+              .catch((error) => {
+                toast.error("NFT Sale not closed");
                 setLoading(false);
-              } else {
-                toast.error("NFt Sale not closed");
-                setLoading(false);
-              }
-            })
-            .catch((error) => {
-              toast.error("NFT Sale not closed");
-              setLoading(false);
-            });
-          }else{
+              });
+          } else {
             Axios.patch("/passDetails/updatePass", obj, config)
-            .then((response) => {
-              if (response.data.status == "success") {
-                toast.success("NFT Sale Closed");
-                setRefresh(!refresh);
+              .then((response) => {
+                if (response.data.status == "success") {
+                  toast.success("NFT Sale Closed");
+                  setRefresh(!refresh);
+                  setLoading(false);
+                } else {
+                  toast.error("NFt Sale not closed");
+                  setLoading(false);
+                }
+              })
+              .catch((error) => {
+                toast.error("NFT Sale not closed");
                 setLoading(false);
-              } else {
-                toast.error("NFt Sale not closed");
-                setLoading(false);
-              }
-            })
-            .catch((error) => {
-              toast.error("NFT Sale not closed");
-              setLoading(false);
-            });
+              });
           }
         } else {
           toast.error("NFt Sale not closed");
@@ -1878,27 +1867,27 @@ const OverviewDetail = () => {
             };
             if (foo2 == "all") {
               Axios.patch("/nft/update-nft-gift", obj, config)
-              .then((response) => {
-                if (response.data.status == "success") {
-                  setLoadingGift(false);
-                  toast.success("NFT gifted successfully");
-                  setRefresh(!refresh);
-                  setGiftModal(false);
-                  setLoading(false);
-                } else {
+                .then((response) => {
+                  if (response.data.status == "success") {
+                    setLoadingGift(false);
+                    toast.success("NFT gifted successfully");
+                    setRefresh(!refresh);
+                    setGiftModal(false);
+                    setLoading(false);
+                  } else {
+                    toast.error("NFT not gifted");
+                    setGiftModal(false);
+                    setLoadingGift(false);
+                    setLoading(false);
+                  }
+                })
+                .catch((error) => {
                   toast.error("NFT not gifted");
                   setGiftModal(false);
                   setLoadingGift(false);
                   setLoading(false);
-                }
-              })
-              .catch((error) => {
-                toast.error("NFT not gifted");
-                setGiftModal(false);
-                setLoadingGift(false);
-                setLoading(false);
-              });
-            }else{
+                });
+            } else {
               const obj = {
                 passTokenId: tokenId,
                 creator: receiver,
@@ -1937,7 +1926,7 @@ const OverviewDetail = () => {
                   setGiftModal(false);
                   setLoadingGift(false);
                 });
-              }
+            }
           } else {
             toast.error("NFT not gifted");
             setGiftModal(false);
@@ -2023,28 +2012,28 @@ const OverviewDetail = () => {
           },
         };
         if (foo2 == "all") {
-        Axios.patch("/nft/update-nft-gift", obj, config)
-          .then((response) => {
-            if (response.data.status == "success") {
-              setLoadingGift(false);
-              toast.success("NFT gifted successfully");
-              setRefresh(!refresh);
-              setGiftModal(false);
-              setLoading(false);
-            } else {
+          Axios.patch("/nft/update-nft-gift", obj, config)
+            .then((response) => {
+              if (response.data.status == "success") {
+                setLoadingGift(false);
+                toast.success("NFT gifted successfully");
+                setRefresh(!refresh);
+                setGiftModal(false);
+                setLoading(false);
+              } else {
+                toast.error("NFT not gifted");
+                setGiftModal(false);
+                setLoadingGift(false);
+                setLoading(false);
+              }
+            })
+            .catch((error) => {
               toast.error("NFT not gifted");
               setGiftModal(false);
               setLoadingGift(false);
               setLoading(false);
-            }
-          })
-          .catch((error) => {
-            toast.error("NFT not gifted");
-            setGiftModal(false);
-            setLoadingGift(false);
-            setLoading(false);
-          });
-        }else{
+            });
+        } else {
           const obj = {
             passTokenId: tokenId,
             creator: receiver,
@@ -2083,8 +2072,7 @@ const OverviewDetail = () => {
               setGiftModal(false);
               setLoadingGift(false);
             });
-          }
-
+        }
       } else {
         toast.error("NFT not gifted");
         setGiftModal(false);
@@ -2103,21 +2091,14 @@ const OverviewDetail = () => {
     toast.success("Link copied to clipboard", {
       position: "top-right",
     });
-
-
-
-
-
-    
   };
-
-
 
   // filteredNft.duration is in string number format like 3 or 4 or 5 etc convert it to number and add it to current time to get the end time
   const endTime = new Date(
     new Date().getTime() + filteredNft.duration * 24 * 60 * 60 * 1000
   ).toLocaleString();
   console.log("isAuth", walletAddress, userId);
+  console.log("filteredNft", filteredNft);
   return (
     <div>
       <div className="overDet_Outer">
@@ -2144,8 +2125,16 @@ const OverviewDetail = () => {
           <div className="overviewTitl bold">
             <span>
               {/* <FaEarlybirds /> */}
-              <img src={filteredNft?.collection_info
-                  ? filteredNft?.collection_info[0]?.imageUrl : <FaEarlybirds />} alt="" />
+              <img
+                src={
+                  filteredNft?.collection_info ? (
+                    filteredNft?.collection_info[0]?.imageUrl
+                  ) : (
+                    <FaEarlybirds />
+                  )
+                }
+                alt=""
+              />
             </span>
             &nbsp;
             {filteredNft?.collectionName
@@ -2167,7 +2156,9 @@ const OverviewDetail = () => {
                 <span>Creator</span>
                 <strong>
                   {" "}
-                  {filteredNft?.creatorName ? filteredNft?.creatorName : "kryptomerch"}
+                  {filteredNft?.creatorName
+                    ? filteredNft?.creatorName
+                    : "kryptomerch"}
                 </strong>
               </a>
             </div>
@@ -2179,7 +2170,7 @@ const OverviewDetail = () => {
                 {" "}
                 {filteredNft?.collection_info
                   ? filteredNft?.collection_info[0]?.royaltyFee * 100 + "%"
-                  : 0 }
+                  : 0}
               </strong>
               {/* </a> */}
             </div>
@@ -2224,9 +2215,6 @@ const OverviewDetail = () => {
               <i style={{ cursor: "pointer" }}>
                 <HiShare onClick={onShare} />
               </i>
-
-
-              
             </div>
             <div className="view">
               <a href="">
@@ -2302,174 +2290,167 @@ const OverviewDetail = () => {
                     </span>
                   </div>
                 </div>
-                {
-                  isAuth ? (
-                    <>
-                      {userId == walletAddress ? (
-                        <div
+                {isAuth ? (
+                  <>
+                    {userId == walletAddress ? (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
+                        <button
+                          className="placebidBtn"
                           style={{
+                            backgroundColor: nightModeStatus ? "#fff" : "#000",
+                            color: nightModeStatus ? "#000" : "#fff",
+                            width: "100%",
                             display: "flex",
-                            flexDirection: "row",
-                            justifyContent: "space-between",
+                            justifyContent: "center",
                             alignItems: "center",
+                            outline: "none",
+                            boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
+                            height: "76px",
+                            borderRadius: "10px",
+                            cursor: "pointer",
+                            fontWeight: "bold",
+                            fontSize: "15px",
+                            marginTop: "10px",
+                            marginBottom: "10px",
+                            marginRight: "10px",
+                          }}
+                          disabled={loading}
+                          onClick={() => {
+                            acceptLastBid(filteredNft);
                           }}
                         >
-                          <button
-                            className="placebidBtn"
-                            style={{
-                              backgroundColor: nightModeStatus
-                                ? "#fff"
-                                : "#000",
-                              color: nightModeStatus ? "#000" : "#fff",
-                              width: "100%",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              outline: "none",
-                              boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
-                              height: "76px",
-                              borderRadius: "10px",
-                              cursor: "pointer",
-                              fontWeight: "bold",
-                              fontSize: "15px",
-                              marginTop: "10px",
-                              marginBottom: "10px",
-                              marginRight: "10px",
-                            }}
-                            disabled={loading}
-                            onClick={() => {
-                              acceptLastBid(filteredNft);
-                            }}
-                          >
-                            {loading ? (
-                              <SpinnerCircular
-                                style={{ color: "#fff", width: "20px" }}
-                              />
-                            ) : (
+                          {loading ? (
+                            <SpinnerCircular
+                              style={{ color: "#fff", width: "20px" }}
+                            />
+                          ) : (
+                            <span
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                color: nightModeStatus ? "#000" : "#fff",
+                              }}
+                            >
                               <span
                                 style={{
-                                  display: "flex",
-                                  alignItems: "center",
+                                  marginLeft: "10px",
                                   color: nightModeStatus ? "#000" : "#fff",
                                 }}
                               >
-                                <span
-                                  style={{
-                                    marginLeft: "10px",
-                                    color: nightModeStatus ? "#000" : "#fff",
-                                  }}
-                                >
-                                  Accept Bid
-                                </span>
+                                Accept Bid
                               </span>
-                            )}
-                          </button>
+                            </span>
+                          )}
+                        </button>
 
-                          <button
-                            className="placebidBtn"
-                            style={{
-                              backgroundColor: nightModeStatus
-                                ? "#fff"
-                                : "#000",
-                              color: nightModeStatus ? "#000" : "#fff",
-                              width: "100%",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              outline: "none",
-                              boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
-                              height: "76px",
-                              borderRadius: "10px",
-                              cursor: "pointer",
-                              fontWeight: "bold",
-                              fontSize: "15px",
-                              marginTop: "10px",
-                              marginBottom: "10px",
-                              marginRight: "10px",
-                            }}
-                            disabled={loading}
-                            onClick={() => {
-                              declineBid(filteredNft);
-                            }}
-                          >
-                            {loading ? (
-                              <SpinnerCircular
-                                style={{ color: "#fff", width: "20px" }}
-                              />
-                            ) : (
+                        <button
+                          className="placebidBtn"
+                          style={{
+                            backgroundColor: nightModeStatus ? "#fff" : "#000",
+                            color: nightModeStatus ? "#000" : "#fff",
+                            width: "100%",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            outline: "none",
+                            boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
+                            height: "76px",
+                            borderRadius: "10px",
+                            cursor: "pointer",
+                            fontWeight: "bold",
+                            fontSize: "15px",
+                            marginTop: "10px",
+                            marginBottom: "10px",
+                            marginRight: "10px",
+                          }}
+                          disabled={loading}
+                          onClick={() => {
+                            declineBid(filteredNft);
+                          }}
+                        >
+                          {loading ? (
+                            <SpinnerCircular
+                              style={{ color: "#fff", width: "20px" }}
+                            />
+                          ) : (
+                            <span
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                color: nightModeStatus ? "#000" : "#fff",
+                              }}
+                            >
                               <span
                                 style={{
-                                  display: "flex",
-                                  alignItems: "center",
+                                  marginLeft: "10px",
                                   color: nightModeStatus ? "#000" : "#fff",
                                 }}
                               >
-                                <span
-                                  style={{
-                                    marginLeft: "10px",
-                                    color: nightModeStatus ? "#000" : "#fff",
-                                  }}
-                                >
-                                  Reject Bid
-                                </span>
+                                Reject Bid
                               </span>
-                            )}
-                          </button>
+                            </span>
+                          )}
+                        </button>
 
-                          <button
-                            className="placebidBtn"
-                            style={{
-                              backgroundColor: nightModeStatus
-                                ? "#fff"
-                                : "#000",
-                              color: nightModeStatus ? "#000" : "#fff",
-                              width: "100%",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              outline: "none",
-                              boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
-                              height: "76px",
-                              borderRadius: "10px",
-                              cursor: "pointer",
-                              fontWeight: "bold",
-                              fontSize: "15px",
-                              marginTop: "10px",
-                              marginBottom: "10px",
-                            }}
-                            disabled={loading}
-                            onClick={() => {
-                              cancelBid(filteredNft);
-                            }}
-                          >
-                            {loading ? (
-                              <SpinnerCircular
-                                style={{ color: "#fff", width: "20px" }}
-                              />
-                            ) : (
+                        <button
+                          className="placebidBtn"
+                          style={{
+                            backgroundColor: nightModeStatus ? "#fff" : "#000",
+                            color: nightModeStatus ? "#000" : "#fff",
+                            width: "100%",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            outline: "none",
+                            boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
+                            height: "76px",
+                            borderRadius: "10px",
+                            cursor: "pointer",
+                            fontWeight: "bold",
+                            fontSize: "15px",
+                            marginTop: "10px",
+                            marginBottom: "10px",
+                          }}
+                          disabled={loading}
+                          onClick={() => {
+                            cancelBid(filteredNft);
+                          }}
+                        >
+                          {loading ? (
+                            <SpinnerCircular
+                              style={{ color: "#fff", width: "20px" }}
+                            />
+                          ) : (
+                            <span
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                color: nightModeStatus ? "#000" : "#fff",
+                              }}
+                            >
                               <span
                                 style={{
-                                  display: "flex",
-                                  alignItems: "center",
+                                  marginLeft: "10px",
                                   color: nightModeStatus ? "#000" : "#fff",
                                 }}
                               >
-                                <span
-                                  style={{
-                                    marginLeft: "10px",
-                                    color: nightModeStatus ? "#000" : "#fff",
-                                  }}
-                                >
-                                  Cancel Auction
-                                </span>
+                                Cancel Auction
                               </span>
-                            )}
-                          </button>
-                        </div>
-                      ) : (
-                        <div className="buynowOuter">
-                          {/* <NftCheckout /> */}
-                          {/* <button
+                            </span>
+                          )}
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="buynowOuter">
+                        {/* <NftCheckout /> */}
+                        {/* <button
                         className="placebidBtn"
                         style={{
                           backgroundColor: nightModeStatus ? "#fff" : "#000",
@@ -2478,17 +2459,17 @@ const OverviewDetail = () => {
                       >
                         Place a Bid
                       </button> */}
-                          <DialogBid
-                            dataUSer={filteredNft}
-                            setRefresh={setRefresh}
-                            refresh={refresh}
-                            setLoading={setLoading}
-                            loading={loading}
-                            setSelectedData={setSelectedData}
-                            selectedData={selectedData}
-                          />
+                        <DialogBid
+                          dataUSer={filteredNft}
+                          setRefresh={setRefresh}
+                          refresh={refresh}
+                          setLoading={setLoading}
+                          loading={loading}
+                          setSelectedData={setSelectedData}
+                          selectedData={selectedData}
+                        />
 
-                          {/* <button
+                        {/* <button
                         className="cartBtn"
                         style={{
                           backgroundColor: nightModeStatus ? "#fff" : "#000",
@@ -2498,58 +2479,58 @@ const OverviewDetail = () => {
                       >
                         <HiOutlineShoppingCart />
                       </button> */}
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    <div className="buynowOuter">
-                      {/* <NftCheckout /> */}
-                      <button
-                        className="placebidBtn"
-                        style={{
-                          backgroundColor: nightModeStatus ? "#fff" : "#000",
-                          color: nightModeStatus ? "#000" : "#fff",
-                          width: "100%",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          outline: "none",
-                          boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
-                          height: "76px",
-                          borderRadius: "10px",
-                          cursor: "pointer",
-                          fontWeight: "bold",
-                          fontSize: "15px",
-                          marginTop: "10px",
-                          marginBottom: "10px",
-                        }}
-                        disabled={loading}
-                        onClick={toggle}
-                      >
-                        {loading ? (
-                          <SpinnerCircular
-                            style={{ color: "#fff", width: "20px" }}
-                          />
-                        ) : (
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <div className="buynowOuter">
+                    {/* <NftCheckout /> */}
+                    <button
+                      className="placebidBtn"
+                      style={{
+                        backgroundColor: nightModeStatus ? "#fff" : "#000",
+                        color: nightModeStatus ? "#000" : "#fff",
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        outline: "none",
+                        boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
+                        height: "76px",
+                        borderRadius: "10px",
+                        cursor: "pointer",
+                        fontWeight: "bold",
+                        fontSize: "15px",
+                        marginTop: "10px",
+                        marginBottom: "10px",
+                      }}
+                      disabled={loading}
+                      onClick={toggle}
+                    >
+                      {loading ? (
+                        <SpinnerCircular
+                          style={{ color: "#fff", width: "20px" }}
+                        />
+                      ) : (
+                        <span
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            color: nightModeStatus ? "#000" : "#fff",
+                          }}
+                        >
                           <span
                             style={{
-                              display: "flex",
-                              alignItems: "center",
+                              marginLeft: "10px",
                               color: nightModeStatus ? "#000" : "#fff",
                             }}
                           >
-                            <span
-                              style={{
-                                marginLeft: "10px",
-                                color: nightModeStatus ? "#000" : "#fff",
-                              }}
-                            >
-                              Place a Bid
-                            </span>
+                            Place a Bid
                           </span>
-                        )}
-                      </button>
-                      {/* <button
+                        </span>
+                      )}
+                    </button>
+                    {/* <button
                         className="cartBtn"
                         style={{
                           backgroundColor: nightModeStatus ? "#fff" : "#000",
@@ -2559,9 +2540,8 @@ const OverviewDetail = () => {
                       >
                         <HiOutlineShoppingCart />
                       </button> */}
-                    </div>
-                  )
-                }
+                  </div>
+                )}
               </div>
             ) : filteredNft?.onSale == true ? (
               <div className="saleendOuter">
@@ -2600,10 +2580,60 @@ const OverviewDetail = () => {
                     </span>
                   </div>
                 </div>
-                
-                  {isAuth ? (
-                    <>
-                      {userId == walletAddress ? (
+
+                {isAuth ? (
+                  <>
+                    {userId == walletAddress ? (
+                      <button
+                        className="placebidBtn"
+                        style={{
+                          backgroundColor: nightModeStatus ? "#fff" : "#000",
+                          color: nightModeStatus ? "#000" : "#fff",
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          outline: "none",
+                          boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
+                          height: "76px",
+                          borderRadius: "10px",
+                          cursor: "pointer",
+                          fontWeight: "bold",
+                          fontSize: "15px",
+                          marginTop: "10px",
+                          marginBottom: "10px",
+                        }}
+                        disabled={loading}
+                        onClick={() => {
+                          closeSale(filteredNft);
+                        }}
+                      >
+                        {loading ? (
+                          <SpinnerCircular
+                            style={{ color: "#fff", width: "20px" }}
+                          />
+                        ) : (
+                          <span
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              color: nightModeStatus ? "#000" : "#fff",
+                            }}
+                          >
+                            <span
+                              style={{
+                                marginLeft: "10px",
+                                color: nightModeStatus ? "#000" : "#fff",
+                              }}
+                            >
+                              Close Sale
+                            </span>
+                          </span>
+                        )}
+                      </button>
+                    ) : (
+                      <div className="buynowOuter">
+                        {/* <NftCheckout /> */}
                         <button
                           className="placebidBtn"
                           style={{
@@ -2624,9 +2654,7 @@ const OverviewDetail = () => {
                             marginBottom: "10px",
                           }}
                           disabled={loading}
-                          onClick={() => {
-                            closeSale(filteredNft);
-                          }}
+                          onClick={() => buyIdOnSale(filteredNft)}
                         >
                           {loading ? (
                             <SpinnerCircular
@@ -2640,210 +2668,173 @@ const OverviewDetail = () => {
                                 color: nightModeStatus ? "#000" : "#fff",
                               }}
                             >
+                              <HiOutlineShoppingCart />
                               <span
                                 style={{
                                   marginLeft: "10px",
                                   color: nightModeStatus ? "#000" : "#fff",
                                 }}
                               >
-                                Close Sale
+                                Buy Now
                               </span>
                             </span>
                           )}
                         </button>
-                      ) : (
-                        <div className="buynowOuter">
-                          {/* <NftCheckout /> */}
-                          <button
-                            className="placebidBtn"
-                            style={{
-                              backgroundColor: nightModeStatus
-                                ? "#fff"
-                                : "#000",
-                              color: nightModeStatus ? "#000" : "#fff",
-                              width: "100%",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              outline: "none",
-                              boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
-                              height: "76px",
-                              borderRadius: "10px",
-                              cursor: "pointer",
-                              fontWeight: "bold",
-                              fontSize: "15px",
-                              marginTop: "10px",
-                              marginBottom: "10px",
-                            }}
-                            disabled={loading}
-                            onClick={() => buyIdOnSale(filteredNft)}
-                          >
-                            {loading ? (
-                              <SpinnerCircular
-                                style={{ color: "#fff", width: "20px" }}
-                              />
-                            ) : (
-                              <span
-                                style={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  color: nightModeStatus ? "#000" : "#fff",
-                                }}
-                              >
-                                <HiOutlineShoppingCart />
-                                <span
-                                  style={{
-                                    marginLeft: "10px",
-                                    color: nightModeStatus ? "#000" : "#fff",
-                                  }}
-                                >
-                                  Buy Now
-                                </span>
-                              </span>
-                            )}
-                          </button>
 
-                          {/* <button className="cartBtn">
+                        {/* <button className="cartBtn">
                         <HiOutlineShoppingCart />
                       </button> */}
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    <div className="buynowOuter">
-                      {/* <NftCheckout /> */}
-                      <button
-                        className="placebidBtn"
-                        onClick={toggle}
-                        style={{
-                          backgroundColor: nightModeStatus ? "#fff" : "#000",
-                          color: nightModeStatus ? "#000" : "#fff",
-                          width: "100%",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          outline: "none",
-                          boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
-                          height: "76px",
-                          borderRadius: "10px",
-                          cursor: "pointer",
-                          fontWeight: "bold",
-                          fontSize: "15px",
-                          marginTop: "10px",
-                          marginBottom: "10px",
-                        }}
-                      >
-                        Buy Now
-                      </button>
-                      {/* <button className="cartBtn" onClick={toggle}>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <div className="buynowOuter">
+                    {/* <NftCheckout /> */}
+                    <button
+                      className="placebidBtn"
+                      onClick={toggle}
+                      style={{
+                        backgroundColor: nightModeStatus ? "#fff" : "#000",
+                        color: nightModeStatus ? "#000" : "#fff",
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        outline: "none",
+                        boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
+                        height: "76px",
+                        borderRadius: "10px",
+                        cursor: "pointer",
+                        fontWeight: "bold",
+                        fontSize: "15px",
+                        marginTop: "10px",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      Buy Now
+                    </button>
+                    {/* <button className="cartBtn" onClick={toggle}>
                         <HiOutlineShoppingCart />
                       </button> */}
-                    </div>
-                  )
-                    }
+                  </div>
+                )}
               </div>
             ) : (
               <>
-                <div className="saleendOuter">
-                  <div className="saleendDate">
-                    Nft is not on sale or auction. Please click on the button
-                    below to make it on sale or auction.
-                  </div>
-                  <div className="saleendTimer"></div>
-                  <div className="bidBxOuter">
-                    <div className="bidBx">
-                      {/* <small>From</small> */}
-                      <button
-                        style={{
-                          backgroundColor: "white",
-                          border: "none",
-                          color: "black",
-                          padding: "10px",
-                          borderRadius: "10px",
-                          cursor: "pointer",
-                          fontWeight: "bold",
-                          fontSize: "15px",
-                          marginTop: "10px",
-                          marginBottom: "10px",
-                          width: "100%",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          outline: "2px solid #000",
-                          boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
-                          height: "76px",
-                        }}
-                        onClick={() => {
-                          foo2 == "all" ?
-                          navigate(
-                            "/marketplace/create-nft?nftId=" + filteredNft._id
-                          )
-                          : navigate(
-                            "/marketplace/create-nft?nftId=" +
-                            filteredNft._id +
-                            "&type=pass"
-                          )
-
-                        }}
-                      >
-                        <span
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            color: "black",
-                          }}
-                        >
-                          <HiOutlineShoppingCart />
-                          <span style={{ marginLeft: "10px", color: "black" }}>
-                            Sale or Auction
-                          </span>
-                        </span>
-                      </button>
-                      {/* <strong>21.58 KDA</strong> */}
-                      {/* <span>$1,063</span> */}
-                    </div>
-                    <div className="bidBx">
-                      {/* <small>From</small> */}
-                      <button
-                        style={{
-                          backgroundColor: "white",
-                          border: "none",
-                          color: "black",
-                          padding: "10px",
-                          borderRadius: "10px",
-                          cursor: "pointer",
-                          fontWeight: "bold",
-                          fontSize: "15px",
-                          marginTop: "10px",
-                          marginBottom: "10px",
-                          width: "100%",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          outline: "2px solid #000",
-                          boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
-                          height: "76px",
-                        }}
-                        onClick={toggleGift}
-                      >
-                        <span
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            color: "black",
-                          }}
-                        >
-                          <HiOutlineShoppingCart />
-                          <span style={{ marginLeft: "10px", color: "black" }}>
-                            Gift
-                          </span>
-                        </span>
-                      </button>
-                      {/* <strong>21.58 KDA</strong> */}
-                      {/* <span>$1,063</span> */}
-                    </div>
-                  </div>
-                  {/* {forAll == true ? (
+                {filteredNft?.passName ? (
+                  <>
+                    {filteredNft?.passName != "Priority Pass" ? (
+                      <>
+                        <div className="saleendOuter">
+                          <div className="saleendDate">
+                            Nft is not on sale or auction. Please click on the
+                            button below to make it on sale or auction.
+                          </div>
+                          <div className="saleendTimer"></div>
+                          <div className="bidBxOuter">
+                            <div className="bidBx">
+                              {/* <small>From</small> */}
+                              <button
+                                style={{
+                                  backgroundColor: "white",
+                                  border: "none",
+                                  color: "black",
+                                  padding: "10px",
+                                  borderRadius: "10px",
+                                  cursor: "pointer",
+                                  fontWeight: "bold",
+                                  fontSize: "15px",
+                                  marginTop: "10px",
+                                  marginBottom: "10px",
+                                  width: "100%",
+                                  display: "flex",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                  outline: "2px solid #000",
+                                  boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
+                                  height: "76px",
+                                }}
+                                onClick={() => {
+                                  foo2 == "all"
+                                    ? navigate(
+                                        "/marketplace/create-nft?nftId=" +
+                                          filteredNft._id
+                                      )
+                                    : navigate(
+                                        "/marketplace/create-nft?nftId=" +
+                                          filteredNft._id +
+                                          "&type=pass"
+                                      );
+                                }}
+                              >
+                                <span
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    color: "black",
+                                  }}
+                                >
+                                  <HiOutlineShoppingCart />
+                                  <span
+                                    style={{
+                                      marginLeft: "10px",
+                                      color: "black",
+                                    }}
+                                  >
+                                    Sale or Auction
+                                  </span>
+                                </span>
+                              </button>
+                              {/* <strong>21.58 KDA</strong> */}
+                              {/* <span>$1,063</span> */}
+                            </div>
+                            <div className="bidBx">
+                              {/* <small>From</small> */}
+                              <button
+                                style={{
+                                  backgroundColor: "white",
+                                  border: "none",
+                                  color: "black",
+                                  padding: "10px",
+                                  borderRadius: "10px",
+                                  cursor: "pointer",
+                                  fontWeight: "bold",
+                                  fontSize: "15px",
+                                  marginTop: "10px",
+                                  marginBottom: "10px",
+                                  width: "100%",
+                                  display: "flex",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                  outline: "2px solid #000",
+                                  boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
+                                  height: "76px",
+                                }}
+                                onClick={toggleGift}
+                              >
+                                <span
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    color: "black",
+                                  }}
+                                >
+                                  <HiOutlineShoppingCart />
+                                  <span
+                                    style={{
+                                      marginLeft: "10px",
+                                      color: "black",
+                                    }}
+                                  >
+                                    Gift
+                                  </span>
+                                </span>
+                              </button>
+                              {/* <strong>21.58 KDA</strong> */}
+                              {/* <span>$1,063</span> */}
+                            </div>
+                          </div>
+                          {/* {forAll == true ? (
                     isAuth ? (
                       <div className="buynowOuter">
                         <NftCheckout />
@@ -2864,75 +2855,310 @@ const OverviewDetail = () => {
                       </div>
                     )
                   ) : null} */}
-                </div>
-                {giftModal && (
-                  <Modal
-                    isOpen={giftModal}
-                    toggle={() => setGiftModal(false)}
-                    className="giftModal"
-                    //mid of the screen
-                    style={{ width: "500px", top: "30%" }}
-                  >
-                    <ModalHeader
-                      toggle={() => setGiftModal(false)}
-                      style={{ borderBottom: "none" }}
-                    >
-                      <span
-                        style={{
-                          color: "#000",
-                          fontSize: "18px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        Gift NFT
-                      </span>
-                    </ModalHeader>
-                    <ModalBody>
-                      <input
-                        style={{
-                          width: "100%",
-                          height: "40px",
-                          borderRadius: "5px",
-                          border: "1px solid #ccc",
-                          padding: "0 10px",
-                        }}
-                        type="text"
-                        placeholder="Enter Recipient Address"
-                        value={recipientAddress}
-                        onChange={(e) => setRecipientAddress(e.target.value)}
-                      />
-                      <Button
-                        onClick={() =>
-                          loadingGift ? null : giftNft(filteredNft)
-                        }
-                        style={{
-                          marginTop: "15px",
-                          // marginLeft: " 116px",
-                          width: "100%",
-                          height: "40px",
-                        }}
-                      >
-                        {loadingGift ? (
-                          <div
+                        </div>
+                        {giftModal && (
+                          <Modal
+                            isOpen={giftModal}
+                            toggle={() => setGiftModal(false)}
+                            className="giftModal"
+                            //mid of the screen
+                            style={{ width: "500px", top: "30%" }}
+                          >
+                            <ModalHeader
+                              toggle={() => setGiftModal(false)}
+                              style={{ borderBottom: "none" }}
+                            >
+                              <span
+                                style={{
+                                  color: "#000",
+                                  fontSize: "18px",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                Gift NFT
+                              </span>
+                            </ModalHeader>
+                            <ModalBody>
+                              <input
+                                style={{
+                                  width: "100%",
+                                  height: "40px",
+                                  borderRadius: "5px",
+                                  border: "1px solid #ccc",
+                                  padding: "0 10px",
+                                }}
+                                type="text"
+                                placeholder="Enter Recipient Address"
+                                value={recipientAddress}
+                                onChange={(e) =>
+                                  setRecipientAddress(e.target.value)
+                                }
+                              />
+                              <Button
+                                onClick={() =>
+                                  loadingGift ? null : giftNft(filteredNft)
+                                }
+                                style={{
+                                  marginTop: "15px",
+                                  // marginLeft: " 116px",
+                                  width: "100%",
+                                  height: "40px",
+                                }}
+                              >
+                                {loadingGift ? (
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      alignItems: "center",
+                                      justifyContent: "center",
+                                    }}
+                                  >
+                                    <SpinnerCircular
+                                      size={15}
+                                      thickness={100}
+                                      speed={100}
+                                      color="white"
+                                    />
+                                  </div>
+                                ) : (
+                                  "Gift"
+                                )}
+                              </Button>
+                            </ModalBody>
+                          </Modal>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <div className="maintenanceOuter">
+                          <div className="maintenanceInner">
+                            <div
+                              className="maintenanceIcon"
+                              style={{
+                                color: "red",
+                                fontSize: "50px",
+                                marginBottom: "20px",
+                                marginTop: "20px",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
+                              {/* <img src={} alt="" /> */}
+
+                              <FaExclamationTriangle />
+                            </div>
+                            <div className="maintenanceText">
+                              <h3>Coming Soon</h3>
+                              <p>
+                                This feature is currently under development and
+                                will be available soon.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    )}{" "}
+                  </>
+                ) : (
+                  <>
+                    <div className="saleendOuter">
+                      <div className="saleendDate">
+                        Nft is not on sale or auction. Please click on the
+                        button below to make it on sale or auction.
+                      </div>
+                      <div className="saleendTimer"></div>
+                      <div className="bidBxOuter">
+                        <div className="bidBx">
+                          {/* <small>From</small> */}
+                          <button
                             style={{
+                              backgroundColor: "white",
+                              border: "none",
+                              color: "black",
+                              padding: "10px",
+                              borderRadius: "10px",
+                              cursor: "pointer",
+                              fontWeight: "bold",
+                              fontSize: "15px",
+                              marginTop: "10px",
+                              marginBottom: "10px",
+                              width: "100%",
                               display: "flex",
-                              alignItems: "center",
                               justifyContent: "center",
+                              alignItems: "center",
+                              outline: "2px solid #000",
+                              boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
+                              height: "76px",
+                            }}
+                            onClick={() => {
+                              foo2 == "all"
+                                ? navigate(
+                                    "/marketplace/create-nft?nftId=" +
+                                      filteredNft._id
+                                  )
+                                : navigate(
+                                    "/marketplace/create-nft?nftId=" +
+                                      filteredNft._id +
+                                      "&type=pass"
+                                  );
                             }}
                           >
-                            <SpinnerCircular
-                              size={15}
-                              thickness={100}
-                              speed={100}
-                              color="white"
-                            />
-                          </div>
-                        ) : (
-                          "Gift"
-                        )}
-                      </Button>
-                    </ModalBody>
-                  </Modal>
+                            <span
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                color: "black",
+                              }}
+                            >
+                              <HiOutlineShoppingCart />
+                              <span
+                                style={{ marginLeft: "10px", color: "black" }}
+                              >
+                                Sale or Auction
+                              </span>
+                            </span>
+                          </button>
+                          {/* <strong>21.58 KDA</strong> */}
+                          {/* <span>$1,063</span> */}
+                        </div>
+                        <div className="bidBx">
+                          {/* <small>From</small> */}
+                          <button
+                            style={{
+                              backgroundColor: "white",
+                              border: "none",
+                              color: "black",
+                              padding: "10px",
+                              borderRadius: "10px",
+                              cursor: "pointer",
+                              fontWeight: "bold",
+                              fontSize: "15px",
+                              marginTop: "10px",
+                              marginBottom: "10px",
+                              width: "100%",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              outline: "2px solid #000",
+                              boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
+                              height: "76px",
+                            }}
+                            onClick={toggleGift}
+                          >
+                            <span
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                color: "black",
+                              }}
+                            >
+                              <HiOutlineShoppingCart />
+                              <span
+                                style={{ marginLeft: "10px", color: "black" }}
+                              >
+                                Gift
+                              </span>
+                            </span>
+                          </button>
+                          {/* <strong>21.58 KDA</strong> */}
+                          {/* <span>$1,063</span> */}
+                        </div>
+                      </div>
+                      {/* {forAll == true ? (
+                    isAuth ? (
+                      <div className="buynowOuter">
+                        <NftCheckout />
+                        <button className="placebidBtn">Place a Bid</button>
+                        <button className="cartBtn">
+                          <HiOutlineShoppingCart />
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="buynowOuter">
+                        <NftCheckout />
+                        <button className="placebidBtn" onClick={toggle}>
+                          Place a Bid
+                        </button>
+                        <button className="cartBtn" onClick={toggle}>
+                          <HiOutlineShoppingCart />
+                        </button>
+                      </div>
+                    )
+                  ) : null} */}
+                    </div>
+                    {giftModal && (
+                      <Modal
+                        isOpen={giftModal}
+                        toggle={() => setGiftModal(false)}
+                        className="giftModal"
+                        //mid of the screen
+                        style={{ width: "500px", top: "30%" }}
+                      >
+                        <ModalHeader
+                          toggle={() => setGiftModal(false)}
+                          style={{ borderBottom: "none" }}
+                        >
+                          <span
+                            style={{
+                              color: "#000",
+                              fontSize: "18px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Gift NFT
+                          </span>
+                        </ModalHeader>
+                        <ModalBody>
+                          <input
+                            style={{
+                              width: "100%",
+                              height: "40px",
+                              borderRadius: "5px",
+                              border: "1px solid #ccc",
+                              padding: "0 10px",
+                            }}
+                            type="text"
+                            placeholder="Enter Recipient Address"
+                            value={recipientAddress}
+                            onChange={(e) =>
+                              setRecipientAddress(e.target.value)
+                            }
+                          />
+                          <Button
+                            onClick={() =>
+                              loadingGift ? null : giftNft(filteredNft)
+                            }
+                            style={{
+                              marginTop: "15px",
+                              // marginLeft: " 116px",
+                              width: "100%",
+                              height: "40px",
+                            }}
+                          >
+                            {loadingGift ? (
+                              <div
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                }}
+                              >
+                                <SpinnerCircular
+                                  size={15}
+                                  thickness={100}
+                                  speed={100}
+                                  color="white"
+                                />
+                              </div>
+                            ) : (
+                              "Gift"
+                            )}
+                          </Button>
+                        </ModalBody>
+                      </Modal>
+                    )}
+                  </>
                 )}
               </>
             )

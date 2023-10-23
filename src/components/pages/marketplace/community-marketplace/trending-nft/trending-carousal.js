@@ -7,11 +7,12 @@ import MrchendImg2 from "../../../../../assets/nft-img2.png";
 import MrchendImg3 from "../../../../../assets/nft-img3.png";
 import MrchendImg4 from "../../../../../assets/nft-img4.png";
 //import { Link } from "react-router-dom";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 //Owl Carousel Libraries and Module
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import OwlCarousel from "react-owl-carousel";
+import { Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
 //Owl Carousel Settings
 const options = {
@@ -39,71 +40,61 @@ const options = {
     },
   },
 };
-const SellingCrousal = () => {
-  const [nfts, setNfts] = useState([]);
+const SellingCrousal = (props) => {
+  const { items } = props;
 
-  useEffect(() => {
-    Axios.get("/nft/all-users-nft-views", {
-      headers: { authorization: localStorage.getItem("accessJWT") },
-    })
-      .then((response) => {
-        console.log(response.data.data, "response");
-        if (response.data.status == "success") {
-          let nfts = response.data.data;
-          setNfts(nfts);
-         
-
-          // setCollectionList(filteredCollectionList)
-        } else {
-          setNfts([]);
-        }
-      })
-      .catch((error) => {
-        setNfts([]);
-      });
-  } , []);
-
-  console.log(nfts, "nfts")
- 
   return (
     <div>
       <div className="carousalOuter">
         <OwlCarousel className="slider-items owl-carousel" {...options}>
-          {nfts?.map((nft, index) => {
-            return (
-              <div className="item" style={{ marginRight: "10px" }} key={index}>
-                <div className="featItemBx">
-                  <div className="glow">
-                    <div className="featImg">
-                      <img src={ MrchendImg1} alt="" />
-                      <div className="tshirtIcon">
-                        <FaTshirt />
+          {items &&
+            items?.length > 0 &&
+            items?.map((nft, index) => {
+              console.log(nft, "nftTrending");
+              return (
+                <div
+                  className="item"
+                  style={{ marginRight: "10px" }}
+                  key={index}
+                >
+                  <Link
+                      to={{
+                        pathname: "/marketplace/nft-overview",
+                        search: `?id=${nft._id}&for=all`,
+                      }}>
+                  <div className="featItemBx">
+                    <div className="glow">
+                      <div className="featImg">
+                      
+                        <img src={nft?.tokenImage} alt="" />
+                        <div className="tshirtIcon">
+                          <FaTshirt />
+                        </div>
+                        
                       </div>
-                    </div>
-                    <div className="feattitle">
-                      <small>
-                        {nft?.collectionName} <HiCheckCircle />
-                      </small>
-                    </div>
-                    <div className="featpriceOut">
-                      <div className="featprice">
-                        <small>Price</small>
-                        <span className="bold">{nft?.nftPrice}</span>
+                      <div className="feattitle">
+                        <small>
+                          {nft?.collectionName} <HiCheckCircle />
+                        </small>
                       </div>
-                      <div className="featprice">
-                        <small>Creator</small>
-                        <span className="bold">{nft?.collectionName}</span>
+                      <div className="featpriceOut">
+                        <div className="featprice">
+                          <small>Price</small>
+                          <span className="bold">{nft?.nftPrice}</span>
+                        </div>
+                        <div className="featprice">
+                          <small>Creator</small>
+                          <span className="bold">{nft?.collectionName}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
+                  </Link>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
 
-
-
-          <div className="item" style={{ marginRight: "10px" }}>
+          {/* <div className="item" style={{ marginRight: "10px" }}>
             <div className="featItemBx">
               <div className="glow">
                 <div className="featImg">
@@ -264,7 +255,7 @@ const SellingCrousal = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </OwlCarousel>
       </div>
     </div>

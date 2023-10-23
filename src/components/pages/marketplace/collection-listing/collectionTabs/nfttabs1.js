@@ -1193,7 +1193,7 @@ const NftTabs1 = (props) => {
                     } else if (activeTab == "3") {
                       return data.onSale == true;
                     } else if (activeTab == "4") {
-                      return data.onSale == false;
+                      return data.onSale == false && data.onAuction == false;
                     }
                   })
                   .map((data, index) => {

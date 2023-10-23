@@ -1110,9 +1110,9 @@ console.log("b", b, "c", c, "a", a, "d", d);
                               </>
                             ) : (
                               <>
-                                {data._id == userId &&
+                                {data?._id == userId &&
                                 hover &&
-                                data.revealed === "true" ? (
+                                data?.revealed === "true" && data?.passName != "Priority Pass" ? (
                                   <div className="featpriceOut" style={{display: 'flex', flexDirection: 'row'}}>
                                     <Button
                                       className="btn-sell"
@@ -1155,7 +1155,7 @@ console.log("b", b, "c", c, "a", a, "d", d);
                                       marginLeft: " 116px",
                                     }}
                                   />
-                                ) : data._id == userId ? (
+                                ) : data._id == userId && data?.passName != "Priority Pass" ? (
                                   <Button
                                     onClick={() => revealPass(data)}
                                     style={{
