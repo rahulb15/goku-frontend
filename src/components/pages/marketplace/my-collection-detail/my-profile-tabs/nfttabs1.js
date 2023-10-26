@@ -55,6 +55,7 @@ const NftTabs1 = (props) => {
   const [maxAmount, setMaxAmount] = React.useState(0);
   const [options, setOptions] = React.useState([]);
   const [selectedNft, setSelectedNft] = React.useState();
+  // const [nftPrice, setNftPrice] = useState(0);
 
   
   
@@ -503,7 +504,44 @@ const NftTabs1 = (props) => {
     // nftSubmit();
   };
 
+  const getNftPrice = async () => {
+    const accountName1 = walletAddress;
+    const publicKey1 = accountName1.slice(2, accountName1.length);
+    const guard1 = { keys: [publicKey1], pred: "keys-all" };
+    const a = accountName1;
+    const pactCode = `(free.merchfinalpolicy001.get-nft-price "${collectionName}")`;
+    const signCmd = {
+      pactCode: pactCode,
+      caps: [
+        Pact.lang.mkCap(
+          "GAS",
+          "Capability to allow buying gas",
+          "coin.GAS",
+          []
+        ),
+      ],
+      meta: {
+        creationTime: creationTime(),
+        gasLimit: 100000,
+        chainId: CHAIN_ID,
+        ttl: 28800,
+        gasPrice: GAS_PRICE,
+        // IMPORTANT: the API requires this attribute even if it's an empty value like in this case
+        sender: "",
+      },
+    }; //alert to sign tx
+    const response = await Pact.fetch.local(signCmd, API_HOST);
+    if (response.result.status === "success") {
+      console.log("nftPricexcxc", response.result.data);
+      // setCollectionPrice(response.result.data);
+      // nftPrice = response.result.data;
+      // setNftPrice(response.result.data);
+      return response.result.data;
+    }
+  };
+
   const revealPass = async (data) => {
+    const nftPrice = await getNftPrice();
     const tokenId = data.tokenId;
     
     
@@ -552,11 +590,12 @@ const NftTabs1 = (props) => {
         creator: walletAddress,
         tokenImage: datum["imageUrl"],
         revealed: true,
+        nftPrice: nftPrice,
         hash: datum["hash"],
         imageIndex: datum.imageIndex.int,
         history: {
           owner: walletAddress,
-          price: data.nftPrice,
+          price: nftPrice,
           category: "mint",
         },
       };

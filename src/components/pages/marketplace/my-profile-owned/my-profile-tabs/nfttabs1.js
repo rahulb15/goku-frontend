@@ -47,6 +47,8 @@ const NftTabs1 = () => {
   const [maxAmount, setMaxAmount] = React.useState(0);
   const [options, setOptions] = React.useState([]);
   const [selectedNft, setSelectedNft] = React.useState();
+  const[userNft,setUserNft]=useState([]);
+  const [nftPrice, setNftPrice] = useState(0);
 
   const { walletStatus, walletName, walletAddress } = useSelector(
     (state) => state.walletStatus
@@ -60,9 +62,12 @@ const NftTabs1 = () => {
   let foo = params.get("id");
 
   useEffect(() => {
-    //getUserNft();
+    getUserNft();
     getNft();
   }, [refresh, search, limit, selected]);
+  useEffect(() => {
+    getNftPrice();
+  }, [userNft]);
 
   const getUserNft = () => {
     setScreenLoading(true);
@@ -71,16 +76,14 @@ const NftTabs1 = () => {
     })
       .then((response) => {
         if (response.data.status == "success") {
+          console.log("userNft", response.data.data);
           let nfts = response.data.data;
-          let filteredNftList = nfts.filter(
-            (data) => data.onMarketplace == false
-          );
-          setNftList(filteredNftList);
+          setUserNft(nfts);
           setScreenLoading(false);
 
           // setCollectionList(filteredCollectionList)
         } else {
-          setNftList([]);
+          setUserNft([]);
           setScreenLoading(false);
         }
       })
@@ -130,6 +133,42 @@ const NftTabs1 = () => {
       });
   };
 
+  const getNftPrice = async () => {
+    console.log("nftPrice", userNft);
+    const accountName1 = walletAddress;
+    const publicKey1 = accountName1.slice(2, accountName1.length);
+    const guard1 = { keys: [publicKey1], pred: "keys-all" };
+    const a = accountName1;
+    const pactCode = `(free.merchfinalpolicy001.get-nft-price "${userNft.collectionName}")`;
+    const signCmd = {
+      pactCode: pactCode,
+      caps: [
+        Pact.lang.mkCap(
+          "GAS",
+          "Capability to allow buying gas",
+          "coin.GAS",
+          []
+        ),
+      ],
+      meta: {
+        creationTime: creationTime(),
+        gasLimit: 100000,
+        chainId: CHAIN_ID,
+        ttl: 28800,
+        gasPrice: GAS_PRICE,
+        // IMPORTANT: the API requires this attribute even if it's an empty value like in this case
+        sender: "",
+      },
+    }; //alert to sign tx
+    const response = await Pact.fetch.local(signCmd, API_HOST);
+    if (response.result.status === "success") {
+      console.log("nftPricexcxc", response.result.data);
+      // setCollectionPrice(response.result.data);
+      // nftPrice = response.result.data;
+      setNftPrice(response.result.data);
+    }
+  };
+
   const revealPass = async (data) => {
     const tokenId = data.tokenId;
 
@@ -175,11 +214,12 @@ const NftTabs1 = () => {
         creator: walletAddress,
         tokenImage: datum["imageUrl"],
         revealed: true,
+        nftPrice: nftPrice,
         hash: datum["hash"],
         imageIndex: datum.imageIndex.int,
         history: {
           owner: walletAddress,
-          price: data.nftPrice,
+          price: nftPrice,
           category: "mint",
         },
       };

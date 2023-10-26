@@ -46,7 +46,6 @@ const CommunityMarketplace = () => {
   const { isAuth } = useSelector((state) => state.loginStatus);
   const { nightModeStatus } = useSelector((state) => state.nightModeStatus);
   const [loading, setLoading] = useState(false);
-  
 
   const { walletStatus, walletName, walletAddress } = useSelector(
     (state) => state.walletStatus
@@ -56,8 +55,8 @@ const CommunityMarketplace = () => {
   const params = new URLSearchParams(search);
   let foo = params.get("id");
 
-  useEffect(() => {
-    getCollection();
+  useEffect( () => {
+   getCollection();
   }, []);
 
   const getCollection = () => {
@@ -174,6 +173,7 @@ const CommunityMarketplace = () => {
       collectionPrice = response.result.data;
     }
   };
+
   const getCollectionCreator = async () => {
     setLoading(true);
     const accountName1 = walletAddress;
