@@ -31,6 +31,8 @@ export default function HotCollectionsTab() {
   const [filteredDbCooper, setFilteredDbCooper] = useState([]);
   const { nightModeStatus } = useSelector((state) => state.nightModeStatus);
   const [hotCollections, setHotCollections] = useState([]);
+  const [dbVolume, setDbVolume] = useState(0);
+  const [dbFloor, setDbFloor] = useState(0);
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
@@ -69,6 +71,8 @@ export default function HotCollectionsTab() {
         if (response.data.status == "success") {
           let dbCopperList = response.data?.data ? response.data?.data : [];
           setTotalPage(response.data?.count ? response.data?.count : 0);
+          setDbVolume(response.data?.nftPriceSum ? response.data?.nftPriceSum : 0);
+          setDbFloor(response.data?.passCostSum ? response.data?.passCostSum : 0);
           const list = dbCopperList;
 
           setFilteredDbCooper(list);
@@ -147,12 +151,13 @@ export default function HotCollectionsTab() {
                   </div>
                   <div className="collectListBx2">
                     <i>Day Volume</i>
-                    <strong>2.2K</strong> <small>KDA</small>
-                    <span>+485.8%</span>
+                    <strong>{dbVolume || 0}</strong> <small>KDA</small>
+                    <span>+0%</span>
                   </div>
                   <div className="collectListBx2">
                     <i>Floor</i>
-                    <strong>10.2</strong> <small>KDA</small>
+                    <strong>{dbFloor || 0}</strong> <small>KDA</small>
+                
                   </div>
                   <div className="collectListBx3">
                     <CollectionSlider item={filteredDbCooper} />
@@ -441,12 +446,13 @@ export default function HotCollectionsTab() {
                   </div>
                   <div className="collectListBx2">
                     <i>Day Volume</i>
-                    <strong>2.2K</strong> <small>KDA</small>
-                    <span>+485.8%</span>
+                    <strong>{dbVolume || 0}</strong> <small>KDA</small>
+                    <span>+0%</span>
                   </div>
                   <div className="collectListBx2">
                     <i>Floor</i>
-                    <strong>10.2</strong> <small>KDA</small>
+                    <strong>{dbFloor || 0}</strong> <small>KDA</small>
+                
                   </div>
                   <div className="collectListBx3">
                     <CollectionSlider item={filteredDbCooper} />
@@ -486,13 +492,13 @@ export default function HotCollectionsTab() {
                       </div>
                       <div className="collectListBx2">
                         <i>Day Volume</i>
-                        <strong>{item?.dayVolume || 0}</strong>{" "}
+                        <strong>{item?.totalNftPrice || 0}</strong>{" "}
                         <small>KDA</small>
                         <span>+{item?.dayVolumePercentage || 0}%</span>
                       </div>
                       <div className="collectListBx2">
                         <i>Floor</i>
-                        <strong>{item?.floorPrice || 0}</strong>{" "}
+                        <strong>{item?.minNftPrice || 0}</strong>{" "}
                         <small>KDA</small>
                       </div>
                       <div className="collectListBx3">

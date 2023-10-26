@@ -4,6 +4,7 @@ import { MarketplaceFooter } from "../../../common-components/marketplace-footer
 import ProfileListingTab from "./profile-listing-tab";
 import { FaDiscord, FaKickstarterK } from "react-icons/fa";
 import { toast } from "react-toastify";
+import TagsInput from "react-tagsinput";
 import {
   BsFillShareFill,
   BsGlobe,
@@ -17,12 +18,23 @@ import { useDispatch, useSelector } from "react-redux";
 import Axios from "axios";
 import "./my-collection-detail.scss";
 import Background from "../../../../assets/profile-banner.png";
+import {
+  Button,
+  FormGroup,
+  Input,
+  Label,
+  Modal,
+  ModalBody,
+  ModalFooter,
+} from "reactstrap";
 
 export default function CommunityMarketplace() {
   const [collectionName, setCollectionName] = useState("");
   const [collectionData, setCollectionData] = useState();
   const [filteredNft, setFilteredNft] = useState([]);
+  const [modal, setModal] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const [tokenList, setTokenList] = useState([]);
   const { walletStatus, walletName, walletAddress } = useSelector(
     (state) => state.walletStatus
   );
@@ -52,6 +64,7 @@ export default function CommunityMarketplace() {
       })
       .catch((error) => {
         //   setUserRegistered(false)
+        console.log(error);
         
       });
   };
@@ -91,6 +104,7 @@ export default function CommunityMarketplace() {
       })
       .catch((error) => {
         setFilteredNft([]);
+        console.log(error);
         //   setCollectionList([])
         //   setUserRegistered(false)
         
@@ -102,6 +116,46 @@ export default function CommunityMarketplace() {
     navigator.clipboard.writeText(window.location.href);
     toast.success("Link Copied");
   }
+
+  const toggle = () => {
+    setModal(!modal);
+  };
+
+
+  const handleTokenList = (e) => {
+    if (e.length == 0) {
+      setTokenList([]);
+    }
+    const arr = e.map((item) => {
+      if (item.split(",").length > 1) {
+        //regular expression to remove all special characters except comma
+        const regex = /[^a-zA-Z0-9,]/g;
+        const str = item.replace(regex, "");
+        setTokenList(str.split(","));
+      } else {
+        setTokenList(e);
+      }
+    });
+  };
+
+  const handleOnSubmit = () => {
+    if (tokenList.length == 0) {
+      toast.error("Please enter token list to add" , {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      //add function here
+      console.log(tokenList, "tokenList");
+      setModal(!modal);
+    }
+  };
+
   return (
     <div>
       {/* <MarketplaceHeader /> */}
@@ -126,11 +180,12 @@ export default function CommunityMarketplace() {
               </div>
 
               <div className="kryptoCont">
-                The collection name here is a collection of 10,000 unique
-                Collection NFTs— unique digital collectibles living on the
+                {/* The collection name here is a collection of 10,000 unique
+                Collection NFTsd— unique digital collectibles living on the
                 Kadena blockchain. Your Collection doubles as your Collection
-                membership card, and grants access to...{" "}
-                <a href="">Show more</a>
+                membership card, and grants access to...{" "} */}
+                {/* <a href="">Show more</a> */}
+                {collectionData?.collection_info[0] ? collectionData?.collection_info[0]?.collectionInfo : "The collection name here is a collection of 10,000 unique Collection NFTsd— unique digital collectibles living on the Kadena blockchain. Your Collection doubles as your Collection membership card, and grants access to..."}
               </div>
               <div className="items_qty">
                 <div className="itemQtyBx">
@@ -167,12 +222,57 @@ export default function CommunityMarketplace() {
                 </div>
               </div>
               <div className="editProf_Outer">
-                <button> Add Token</button>
+                <button className="editProf" onClick={toggle}>
+                   Add Token</button>
                 {/* <Link to="/marketplace/profile-setting">Edit Profile</Link> */}
               </div>
             </div>
           </div>
         </div>
+        <Modal isOpen={modal} toggle={toggle} style={{ marginTop: "300px" }}>
+        <ModalBody>
+          <div className="modalContent">
+          <div className="createFrmBx">
+              <FormGroup>
+                <Label for="exampleEmail" style={{ color: "black" }}>
+                  Token List
+                </Label>
+                <br />
+                <span style={{ color: "black" }}>
+                  Enter multiple tokens by separating them with a comma (,).
+                </span>
+                {/* <Input
+                  type="email"
+                  name="tokenList"
+                  onChange={handleOnChange}
+                  value={tokenList}
+                  id="exampleEmail"
+                  placeholder="Enter token list"
+                /> */}
+                <TagsInput
+                  value={tokenList}
+                  onlyUnique={true}
+                  onChange={handleTokenList}
+                  inputProps={{
+                    placeholder: "Enter token list",
+                  }}
+                />
+                <span style={{ color: "black" }}>
+                  {tokenList.length} tokens added
+                </span>
+              </FormGroup>
+            </div>
+            <div className="collectionFrmBtn">
+              <Button onClick={handleOnSubmit}>Add Token</Button>
+            </div>
+          </div>
+        </ModalBody>
+        <ModalFooter className="collectionFooter">
+          <Button className="closeModal" onClick={toggle}>
+            x
+          </Button>
+        </ModalFooter>
+      </Modal>
         <div className="creatortabOuter">
           <div className="container">
             <ProfileListingTab

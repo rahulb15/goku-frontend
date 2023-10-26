@@ -836,7 +836,7 @@ const ConnectPopup = () => {
                         </Link>
                       </li>
                       <li>
-                        <Link to="" className="bold">
+                        <Link to="/marketplace/profile-setting" className="bold">
                           Settings
                         </Link>
                       </li>

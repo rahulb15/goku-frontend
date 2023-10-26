@@ -90,7 +90,6 @@ const ModalExample = () => {
       case "displayName":
         setDisplayName(value);
         break;
-
       case "symbol":
         setSymbol(value);
         break;
@@ -660,6 +659,21 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
                   onChange={handleOnChange}
                   id="exampleEmail"
                   placeholder="Enter collection name"
+                />
+              </FormGroup>
+            </div>
+            <div className="createFrmBx">
+              <FormGroup>
+                <Label for="exampleEmail" style={{ color: "black" }}>
+                  Short Description*
+                </Label>
+                <Input
+                  type="name"
+                  name="description"
+                  value={description}
+                  onChange={handleOnChange}
+                  id="exampleEmail"
+                  placeholder="Enter short description"
                 />
               </FormGroup>
             </div>

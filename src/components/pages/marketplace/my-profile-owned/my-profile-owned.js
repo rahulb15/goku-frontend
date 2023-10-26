@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect,useState } from 'react'
 import HeaderafterLogin from '../../../common-components/marketplace-header-after-login/marketplace-header-after-login'
 import { MarketplaceFooter } from '../../../common-components/marketplace-footer/marketplace-footer'
 import ProfileListingTab from './profile-listing-tab'
@@ -11,11 +11,30 @@ import "./my-profile-owned.scss"
 import Background from '../../../../assets/profile-banner.png'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from "react-toastify";
+import Axios from "axios";
 
 const CommunityMarketplace = () => {
     const { walletAddress, userName } = useSelector(
         (state) => state.walletStatus
     );
+    const [userDetails, setUserDetails] = useState([])
+
+
+    useEffect(() => {
+        Axios.get("user/userInfo", {
+            headers: { authorization: localStorage.getItem("accessJWT") },
+          })
+            .then((response) => {
+                setUserDetails(response.data.userInfo[0])
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }, [])
+
+    console.log(userDetails, "userDetails")
+    
+
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(walletAddress)
@@ -44,11 +63,11 @@ const CommunityMarketplace = () => {
         <div>
             {/* <MarketplaceHeader /> */}
             <HeaderafterLogin />
-            <div className='creatorOuterBx' style={{ background: `url(${Background})`, }}>
+            <div className='creatorOuterBx' style={{ background: `url(${userDetails?.coverPhoto ? userDetails?.coverPhoto : Background})`, }}>
                 <div className='container'>
                     <div className='creatorDetBx'>
                         <div className='creatorImg'>
-                            <img src={CreatorImg} alt="" />
+                            <img src={userDetails?.profilePicture ? userDetails?.profilePicture : CreatorImg} alt="" />
                         </div>
                         <div className='creatorDet'>
                             <div className='creatorNameOuter'>
@@ -66,7 +85,8 @@ const CommunityMarketplace = () => {
                             </div>
 
                             <div className='kryptoCont'>
-                                The collection name here is a collection of 10,000 unique Collection NFTs— unique digital collectibles living on the Kadena blockchain. Your Collection doubles as your Collection membership card, and grants access to... <a href="">Show more</a>
+                                {/* {userDetails?.shortBio}  if length is > 100 word then show read more button */}
+                                {userDetails?.shortBio && userDetails?.shortBio.length > 500 ? userDetails?.shortBio.slice(0, 100) + '...' : userDetails?.shortBio}
                             </div>
                             <div className='editProf_Outer' style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <Link to='/marketplace/profile-setting'>Edit Profile</Link>
