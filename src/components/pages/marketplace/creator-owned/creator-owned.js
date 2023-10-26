@@ -202,7 +202,7 @@ const CommunityMarketplace = () => {
                                     The collection name here is a collection of 10,000 unique Collection NFTs— unique digital collectibles living on the Kadena blockchain. Your Collection doubles as your Collection membership card, and grants access to... <a href="">Show more</a>
                                 </div> */}
 
-              {/* <div className="items_qty">
+              <div className="items_qty">
                 <div className="itemQtyBx">
                   <small>Items</small>
                   <strong
@@ -235,7 +235,7 @@ const CommunityMarketplace = () => {
                     {collectionData?.minNftPrice} KDA
                   </strong>
                 </div>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
