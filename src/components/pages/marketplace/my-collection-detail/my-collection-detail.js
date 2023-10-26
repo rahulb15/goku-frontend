@@ -27,6 +27,18 @@ import {
   ModalBody,
   ModalFooter,
 } from "reactstrap";
+import {
+  EmailShareButton,
+  EmailIcon,
+  FacebookShareButton,
+  FacebookIcon,
+  TelegramShareButton,
+  TelegramIcon,
+  WhatsappShareButton,
+  WhatsappIcon,
+  TwitterShareButton,
+  TwitterIcon,
+} from "react-share";
 
 export default function CommunityMarketplace() {
   const [collectionName, setCollectionName] = useState("");
@@ -155,6 +167,7 @@ export default function CommunityMarketplace() {
       setModal(!modal);
     }
   };
+  
 
   return (
     <div>
@@ -173,8 +186,75 @@ export default function CommunityMarketplace() {
               <div className="creatorNameOuter">
                 <div className="creatorName">{collectionData?.collection_info[0]?.collectionName}</div>
                 <div className="wishlist">
-                  <button>
-                    <BsFillShareFill onClick={shareToClipboard} />
+                  <span>
+                    <EmailShareButton url={window.location.href}>
+                      <EmailIcon
+                        style={{
+                          width: "40px",
+                          height: "40px",
+                          marginRight: "10px",
+                          cursor: "pointer",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    </EmailShareButton>
+                    <FacebookShareButton url={window.location.href}>
+                      <FacebookIcon
+                        style={{
+                          width: "40px",
+                          height: "40px",
+                          marginRight: "10px",
+                          cursor: "pointer",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    </FacebookShareButton>
+                    <TwitterShareButton url={window.location.href}>
+                      <TwitterIcon
+                        style={{
+                          width: "40px",
+                          height: "40px",
+                          marginRight: "10px",
+                          cursor: "pointer",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    </TwitterShareButton>
+                    <WhatsappShareButton url={window.location.href}>
+                      <WhatsappIcon
+                        style={{
+                          width: "40px",
+                          height: "40px",
+                          marginRight: "10px",
+                          cursor: "pointer",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    </WhatsappShareButton>
+                    <TelegramShareButton url={window.location.href}>
+                      <TelegramIcon
+                        style={{
+                          width: "40px",
+                          height: "40px",
+                          marginRight: "10px",
+                          cursor: "pointer",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    </TelegramShareButton>
+                    {/* <BsGlobe style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }} onClick={()=>{window.open(window.location.href)}}/> */}
+                    {/* <BsTwitter style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }} onClick={shareToTwitter}/> */}
+                    {/* <BsInstagram style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }} onClick={shareToInstagram}/> */}
+                    {/* <span style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }}> */}
+                    {/* <InstapaperShareButton url={window.location.href}>
+                                                <BsInstagram style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }}/>
+                                            </InstapaperShareButton> */}
+
+                    {/* </span> */}
+                    {/* <FaDiscord style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }} onClick={shareToDiscord}/> */}
+                  </span>
+                  <button onClick={shareToClipboard}>
+                    <BsFillShareFill />
                   </button>
                 </div>
               </div>
