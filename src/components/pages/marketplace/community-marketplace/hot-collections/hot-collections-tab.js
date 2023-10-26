@@ -127,7 +127,7 @@ export default function HotCollectionsTab() {
             <div className="colBx2">Floor price</div>
             <div className="colBx3"></div>
           </div>
-
+          <div class="border-container">
           <div className="collectListOuter">
               <div className="colListOutBx">
               <Link
@@ -227,6 +227,7 @@ export default function HotCollectionsTab() {
                   </div>
                 );
               })}
+          </div>
           </div>
 
           {/* {hotCollections?.length == 0 && (

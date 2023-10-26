@@ -786,10 +786,26 @@
         }
     }
 
+    .border-container {
+        border-radius: 5px; /* Apply the border radius to the container */
+        overflow: hidden; /* Clip the inner element to the border radius */
+    }
+    @keyframes rotateColors {
+        0% {
+            border-image-source: linear-gradient(45deg, #D8D8D8, #FF0000, #00FF00);
+        }
+        100% {
+            border-image-source: linear-gradient(45deg, #00FF00, #D8D8D8, #FF0000);
+        }
+    }
+
     .collectListOuter {
-        border: 1px solid #D8D8D8;
-        border-radius: 6px;
+        border: 3px solid transparent;
+    border-image: linear-gradient(45deg, #D8D8D8, #FF0000, #00FF00) 1;
+    border-image-slice: 30;
+        border-radius: 10px;
         padding: 15px 15px 0 15px;
+        animation: rotateColors 10s linear infinite; /* Rotate colors over 10 seconds */
 
         @include respond-to(media-md) {
             padding: 0;
@@ -1051,7 +1067,7 @@
 
         .colListOutBx {
             a {
-                border: #222528 solid 1px;
+                // border: #222528 solid 1px;
 
                 .collectListBx2 {
                     strong {
