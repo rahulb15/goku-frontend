@@ -7,6 +7,8 @@ import { BsFillShareFill } from "react-icons/bs";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { HiCheckCircle } from "react-icons/hi";
 import CreatorImg from "../../../../assets/proj-img2.png";
+import DbImg from "../../../../assets/about-bannerImg.png";
+import PassImg from "../../../../assets/banPriority.png";
 import { useDispatch, useSelector } from "react-redux";
 import { Header } from "../../../common-components/header/header";
 import "./creator-owned.scss";
@@ -72,7 +74,7 @@ const CommunityMarketplace = () => {
       <Header />
       <div
         className="creatorOuterBx"
-        style={{ background: `url(${CreatorImg})` }}
+        style={{ background: `url(${foo ? foo === "PriorityPass" ? PassImg : DbImg : CreatorImg})` }}
       >
         <div className="container">
           <div className="creatorDetBx">
@@ -200,7 +202,7 @@ const CommunityMarketplace = () => {
                                     The collection name here is a collection of 10,000 unique Collection NFTs— unique digital collectibles living on the Kadena blockchain. Your Collection doubles as your Collection membership card, and grants access to... <a href="">Show more</a>
                                 </div> */}
 
-              <div className="items_qty">
+              {/* <div className="items_qty">
                 <div className="itemQtyBx">
                   <small>Items</small>
                   <strong
@@ -233,7 +235,7 @@ const CommunityMarketplace = () => {
                     {collectionData?.minNftPrice} KDA
                   </strong>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -8,6 +8,7 @@ import Axios from "axios";
 import { HiCheckCircle } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 import UpcomingProjects from "./project";
+import { useDispatch, useSelector } from "react-redux";
 
 const ExpolreTabs1 = ({ tabno }) => {
   const [collectionName, setCollectionName] = useState("");
@@ -16,6 +17,7 @@ const ExpolreTabs1 = ({ tabno }) => {
   const search = window.location.search;
   const params = new URLSearchParams(search);
   let foo = params.get("tab");
+  const { nightModeStatus } = useSelector((state) => state.nightModeStatus);
   
 
   const [collectionList, setCollectionList] = useState([]);
@@ -152,7 +154,8 @@ const ExpolreTabs1 = ({ tabno }) => {
                           </i>
                         </div>
                         <div className="collectionHd bold">
-                          {data.collectionName} <HiCheckCircle />
+                          <span style={{ color: nightModeStatus ? "#fff" : "#000" }}
+                          >{data.collectionName}</span> <HiCheckCircle />
                         </div>
                         <div className="ownersValueOuter">
                           <div className="ownvalueInn">
