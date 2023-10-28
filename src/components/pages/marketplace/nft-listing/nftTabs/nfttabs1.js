@@ -139,7 +139,7 @@ export default function NftTabs1() {
         <div className="nftFlt_Right">
           <div className="nftList listingList">
             <ul>
-                {allNfts.map((item, index) => {
+                {allNfts?.map((item, index) => {
                     return (
                         <li key={index}>
                             <div className="featItemBx">
@@ -147,13 +147,13 @@ export default function NftTabs1() {
                             <Link
                               to={{
                                 pathname: "/marketplace/nft-overview",
-                                search: `?id=${item._id}&for=all`,
+                                search: `?id=${item?._id}&for=all`,
                               }}
                             >
                               <div className="featImg">
                                 <img
                                   src={
-                                    item.tokenImage
+                                    item?.tokenImage
                                   }
                                   // style={data._id == userId && hover ? { opacity: 0.5 } : { opacity: 1 }}
                                 />
@@ -167,30 +167,30 @@ export default function NftTabs1() {
                             <Link
                               to={{
                                 pathname: "/marketplace/nft-overview",
-                                search: `?id=${item._id}&for=all`,
+                                search: `?id=${item?._id}&for=all`,
                               }}
                             >
                               <div className="feattitle">
                                 <small>
-                                  {item.collectionName}
+                                  {item?.collectionName}
                                   <HiCheckCircle />
                                 </small>
                                 <span className="bold">
-                                  {item.collectionName
-                                    ? item.collectionName
+                                  {item?.collectionName
+                                    ? item?.collectionName
                                     : "Not Revealed"}{" "}
-                                  #{item.imageIndex}
+                                  #{item?.imageIndex}
                                 </span>
                               </div>
                               <div className="featpriceOut">
                                 <div className="featprice">
                                   <small>From</small>
                                   <span className="bold">
-                                    {item.onAuction
-                                      ? item.onAuction
+                                    {item?.onAuction
+                                      ? item?.onAuction
                                         ? "Open For Bids"
-                                        : item.nftPrice + " KDA"
-                                      : item.nftPrice + " KDA"}
+                                        : item?.nftPrice + " KDA"
+                                      : item?.nftPrice + " KDA"}
                                   </span>{" "}
                                 </div>
                                 <div className="featprice">

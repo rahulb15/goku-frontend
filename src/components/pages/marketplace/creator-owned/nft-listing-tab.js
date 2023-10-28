@@ -1226,15 +1226,15 @@ console.log("b", b, "c", c, "a", a, "d", d);
                             <Link
                               to={{
                                 pathname: "/marketplace/nft-overview",
-                                search: `?id=${data._id}`,
+                                search: `?id=${data?._id}`,
                               }}
                             >
                               <div className="feattitle">
                                 <small>
-                                  {data.passName} <HiCheckCircle />
+                                  {data?.passName} <HiCheckCircle />
                                 </small>
                                 <span className="bold">
-                                  {data.collectionName} #
+                                  {data?.collectionName} #
                                   {data?.imageIndex
                                     ? data?.imageIndex
                                     : "Not Revealed"}

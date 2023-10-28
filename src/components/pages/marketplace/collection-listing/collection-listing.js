@@ -15,6 +15,7 @@ import "./collection-listing.scss";
 import { toast } from "react-toastify";
 import { WalletModal } from "../../../common-components/walletModal/walletModal";
 import { SpinnerCircular } from "spinners-react";
+import Pact from "pact-lang-api";
 import {
   EmailShareButton,
   EmailIcon,

@@ -139,7 +139,7 @@ const NftTabs1 = () => {
     const publicKey1 = accountName1.slice(2, accountName1.length);
     const guard1 = { keys: [publicKey1], pred: "keys-all" };
     const a = accountName1;
-    const pactCode = `(free.merchfinalpolicy001.get-nft-price "${userNft.collectionName}")`;
+    const pactCode = `(free.merchfinalpolicy001.get-nft-price "${userNft?.collectionName || ""}")`;
     const signCmd = {
       pactCode: pactCode,
       caps: [

@@ -41,8 +41,8 @@ const NftTabs1 = (props) => {
         setWebUrl(response.data.userInfo[0].websiteUrl);
         setTwitterUrl(response.data.userInfo[0].twitterUrl);
         setInstaUrl(response.data.userInfo[0].InstagramUrl);
-        setProfileImg(response.data.userInfo[0].profilePicture);
-        setCoverImg(response.data.userInfo[0].coverPhoto);
+        setProfileImg(response.data.userInfo[0]?.profilePicture);
+        setCoverImg(response.data.userInfo[0]?.coverPhoto);
         setProfileImg1(response.data.userInfo[0].profilePicture);
         setCoverImg1(response.data.userInfo[0].coverPhoto);
 
@@ -156,7 +156,7 @@ const NftTabs1 = (props) => {
     //   coverImg,
     // };
 
-    Axios.patch("/user/updateUser", formData, {
+    Axios.patch("/user/updateUser-profile", formData, {
       headers: {
         authorization: localStorage.getItem("accessJWT"),
         "Content-Type": "multipart/form-data",

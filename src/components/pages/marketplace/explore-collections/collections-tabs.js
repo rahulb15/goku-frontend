@@ -90,11 +90,11 @@ const HotCollectionsTab = () => {
   return (
     <div className='listing_TabOuter'>
       <Nav tabs style={{ cursor: "pointer" }}>
-        {collectionCategory.map((data) => {
+        {collectionCategory?.map((data) => {
           return <NavItem>
             <NavLink className={classnames({ active: activeTab === data.id })}
               onClick={() => { toggle(data.id); }}>
-              {data.collectionName}
+              {data?.collectionName}
             </NavLink>
 
           </NavItem>

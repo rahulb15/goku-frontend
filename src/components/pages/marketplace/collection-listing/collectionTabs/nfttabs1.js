@@ -259,7 +259,7 @@ const NftTabs1 = (props) => {
 
     const a = accountName;
     const signCmd = {
-      pactCode: `(free.marketplacefinal002.get-royalty-account "${data.collectionName}")`,
+      pactCode: `(free.marketplacefinal002.get-royalty-account "${data?.collectionName}")`,
       caps: [
         Pact.lang.mkCap(
           "GAS",
@@ -309,7 +309,7 @@ const NftTabs1 = (props) => {
 
     const a = accountName;
     const signCmd = {
-      pactCode: `(free.marketplacefinal002.get-royalty-rate "${data.collectionName}")`,
+      pactCode: `(free.marketplacefinal002.get-royalty-rate "${data?.collectionName}")`,
       caps: [
         Pact.lang.mkCap(
           "GAS",
@@ -1358,22 +1358,22 @@ const NftTabs1 = (props) => {
                                   forAll
                                     ? {
                                         pathname: "/marketplace/nft-overview",
-                                        search: `?id=${data._id}&for=all`,
+                                        search: `?id=${data?._id}&for=all`,
                                       }
                                     : {
                                         pathname: "/marketplace/nft-overview",
-                                        search: `?id=${data._id}&for=user`,
+                                        search: `?id=${data?._id}&for=user`,
                                       }
                                 }
                               >
                                 <div className="feattitle">
                                   <small>
-                                    {data.collectionName}
+                                    {data?.collectionName}
                                     <HiCheckCircle />
                                   </small>
                                   <span className="bold">
-                                    {data.collectionName
-                                      ? data.collectionName
+                                    {data?.collectionName
+                                      ? data?.collectionName
                                       : "Not Revealed"}{" "}
                                     #
                                     {data?.imageIndex
@@ -1385,9 +1385,9 @@ const NftTabs1 = (props) => {
                                   <div className="featprice">
                                     <small>From</small>
                                     <span className="bold">
-                                      {data.onAuction
+                                      {data?.onAuction
                                         ? "Open For Bids"
-                                        : data.nftPrice + " KDA"}
+                                        : data?.nftPrice + " KDA"}
                                     </span>
                                   </div>
                                   <div className="featprice">

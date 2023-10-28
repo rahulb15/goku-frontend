@@ -93,7 +93,7 @@ const NftTabs1 = (props) => {
       .then((response) => {
         
         if (response.data.status == "success") {
-          setCollectionName(response.data.data[0].collectionName);
+          setCollectionName(response.data.data[0]?.collectionName);
           setCollectionData(response.data.data[0]);
         }
       })
@@ -1054,15 +1054,15 @@ const NftTabs1 = (props) => {
                             <Link
                               to={{
                                 pathname: "/marketplace/nft-overview",
-                                search: `?id=${data._id}`,
+                                search: `?id=${data?._id}`,
                               }}
                             >
                               <div className="feattitle">
                                 <small>
-                                  {data.collectionName} <HiCheckCircle />
+                                  {data?.collectionName} <HiCheckCircle />
                                 </small>
                                 <span className="bold">
-                                  {data.collectionName} #
+                                  {data?.collectionName} #
                                   {data?.imageIndex
                                     ? data?.imageIndex
                                     : "Not Revealed"}
