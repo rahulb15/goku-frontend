@@ -7,6 +7,7 @@ import { BsFillShareFill } from "react-icons/bs";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { HiCheckCircle } from "react-icons/hi";
 import CreatorImg from "../../../../assets/proj-img2.png";
+import DBCOOPER from "../../../../assets/DBCooper.gif";
 import DbImg from "../../../../assets/about-bannerImg.png";
 import PassImg from "../../../../assets/banPriority.png";
 import { useDispatch, useSelector } from "react-redux";
@@ -79,7 +80,7 @@ const CommunityMarketplace = () => {
         <div className="container">
           <div className="creatorDetBx">
             <div className="creatorImg">
-              <img src={profileImg} alt="" />
+              <img src={profileImg ? profileImg : DBCOOPER} alt="" />
             </div>
             <div className="creatorDet">
               <div className="creatorNameOuter">

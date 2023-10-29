@@ -40,6 +40,7 @@ const ModalExample = () => {
   const [price, setPrice] = useState(0);
   const [price1, setPrice1] = useState(0);
   const [royaltyAddress, setRoyaltyAddress] = useState("");
+  const [bannerUrl, setBannerUrl] = useState("");
   // const [screenLoading , setScreenLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -134,6 +135,10 @@ const ModalExample = () => {
       case "shortUrl":
         setShortUrl(value);
         break;
+      
+      case "bannerUrl":
+        setBannerUrl(value);
+        break;
 
       default:
         break;
@@ -157,6 +162,7 @@ const ModalExample = () => {
   console.log("royaltyAddress", royaltyAddress);
   console.log("price", price);
   console.log("price1", price1);
+  console.log("bannerUrl", bannerUrl);
 
   const create_col_one = async () => {
     console.log("walletName", walletName);
@@ -473,6 +479,7 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
       description,
       category,
       shortUrl,
+      bannerUrl,
       image,
       totalSupply,
       mintPrice,
@@ -486,6 +493,7 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
     formData.append("collectionInfo", description);
     formData.append("category", category);
     formData.append("collectionUrl", shortUrl);
+    formData.append("bannerUrl", bannerUrl);
     formData.append("avatar", image);
     formData.append("totalSupply", totalSupply);
     formData.append("mintPrice", mintPrice);
@@ -553,6 +561,14 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
+      });
+    } else if (bannerUrl === "") {
+      toast.error("Please enter banner url", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
       });
     } else if (image === "") {
       toast.error("Please upload collection image", {
@@ -829,6 +845,21 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
                   value={shortUrl}
                   id="exampleEmail"
                   placeholder="kyrptomerch.io/ Enter short url"
+                />
+              </FormGroup>
+            </div>
+            <div className="createFrmBx">
+              <FormGroup>
+                <Label for="exampleEmail" style={{ color: "black" }}>
+                  Banner Url
+                </Label>
+                <Input
+                  type="email"
+                  name="bannerUrl"
+                  onChange={handleOnChange}
+                  value={bannerUrl}
+                  id="exampleEmail"
+                  placeholder="kyrptomerch.io/ Enter banner url"
                 />
               </FormGroup>
             </div>

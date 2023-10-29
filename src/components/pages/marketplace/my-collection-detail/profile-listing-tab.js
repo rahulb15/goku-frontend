@@ -18,13 +18,13 @@ const CollectionListingTab = (props) => {
   return (
     <div className='listing_TabOuter'>
       <Nav tabs>
-        <NavItem>
+        <NavItem style={{ cursor: 'pointer' }}>
           <NavLink className={classnames({ active: activeTab === '1' })}
             onClick={() => { toggle('1'); }}>
             Items
           </NavLink>
         </NavItem>
-        <NavItem>
+        <NavItem style={{ cursor: 'pointer' }}>
           <NavLink
             className={classnames({ active: activeTab === '2' })}
             onClick={() => { toggle('2'); }}>

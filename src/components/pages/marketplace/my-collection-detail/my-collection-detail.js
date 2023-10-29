@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Axios from "axios";
 import "./my-collection-detail.scss";
 import Background from "../../../../assets/profile-banner.png";
+import Pact from "pact-lang-api";
 import {
   Button,
   FormGroup,
@@ -40,6 +41,12 @@ import {
   TwitterIcon,
 } from "react-share";
 
+const NETWORK_ID = process.env.REACT_APP_NETWORK_ID;
+const CHAIN_ID = process.env.REACT_APP_CHAIN_ID;
+const API_HOST = `https://api.testnet.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
+const creationTime = () => Math.round(new Date().getTime() / 1000) - 15;
+const GAS_PRICE = 0.01111;
+
 export default function CommunityMarketplace() {
   const [collectionName, setCollectionName] = useState("");
   const [collectionData, setCollectionData] = useState();
@@ -52,11 +59,10 @@ export default function CommunityMarketplace() {
   );
   const { nightModeStatus } = useSelector((state) => state.nightModeStatus);
   //   const navigate = useNavigate();
-  
+
   const search = window.location.search;
   const params = new URLSearchParams(search);
   let foo = params.get("id");
-  
 
   useEffect(() => {
     getCollection();
@@ -67,17 +73,36 @@ export default function CommunityMarketplace() {
       headers: { authorization: localStorage.getItem("accessJWT") },
     })
       .then((response) => {
-        
         if (response.data.status == "success") {
           console.log(response.data.data[0], "collection data");
+          if (response.data.data[0]) {
+            setCollectionData(response.data.data[0]);
+          } else {
+            console.log("no data");
+            Axios.get(`/collection/user-collection-by-id?id=${foo}`, {
+              headers: { authorization: localStorage.getItem("accessJWT") },
+            })
+              .then((response) => {
+                if (response.data.status == "success") {
+                  console.log(response.data.data[0], "collection data");
+                  setCollectionData({
+                    collection_info: [response.data.data[0]],
+                  });
+                  // if (response.data.data[0]) {
+                  // }
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
           // setCollectionName(response.data.data[0].collectionName);
-          setCollectionData(response.data.data[0]);
+          // setCollectionData(response.data.data[0]);
         }
       })
       .catch((error) => {
         //   setUserRegistered(false)
         console.log(error);
-        
       });
   };
 
@@ -90,7 +115,6 @@ export default function CommunityMarketplace() {
       headers: { authorization: localStorage.getItem("accessJWT") },
     })
       .then((response) => {
-        
         if (response.data.status == "success") {
           let nftList = response.data.data;
           const search = window.location.search;
@@ -100,7 +124,7 @@ export default function CommunityMarketplace() {
           let filteredNftList = nftList.filter(
             (data) => data.collectionId === foo
           );
-          
+
           const list = filteredNftList.filter((item) => {
             if (item.onMarketplace == false) {
               return item;
@@ -111,7 +135,6 @@ export default function CommunityMarketplace() {
         } else {
           // setCollectionList([])
           setFilteredNft([]);
-          
         }
       })
       .catch((error) => {
@@ -119,7 +142,6 @@ export default function CommunityMarketplace() {
         console.log(error);
         //   setCollectionList([])
         //   setUserRegistered(false)
-        
       });
   };
   //
@@ -127,12 +149,11 @@ export default function CommunityMarketplace() {
   const shareToClipboard = () => {
     navigator.clipboard.writeText(window.location.href);
     toast.success("Link Copied");
-  }
+  };
 
   const toggle = () => {
     setModal(!modal);
   };
-
 
   const handleTokenList = (e) => {
     if (e.length == 0) {
@@ -150,9 +171,62 @@ export default function CommunityMarketplace() {
     });
   };
 
+  const updateTokenList = async (tokenLit) => {
+    const accountName = walletAddress;
+    const publicKey = accountName.slice(2, accountName.length);
+    const guard = { keys: [publicKey], pred: "keys-all" };
+
+    const a = accountName;
+
+    const pactCode = `(free.merch001.updatetokenlist [${tokenList}] "${collectionData?.collection_info[0]?.collectionName}")`;
+    const signCmd = {
+      pactCode: pactCode,
+      caps: [
+        Pact.lang.mkCap(
+          "GAS",
+          "Capability to allow buying gas",
+          "coin.GAS",
+          []
+        ),
+      ],
+      sender: a,
+      gasLimit: 150000,
+      chainId: CHAIN_ID,
+      ttl: 28800,
+      envData: {
+        guard: guard,
+      },
+    }; //alert to sign tx
+    console.log(signCmd, "signcmd");
+    const cmd = await Pact.wallet.sign(signCmd);
+    console.log("cmjj", cmd);
+
+    const localRes = await fetch(`${API_HOST}/api/v1/local`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(cmd),
+    });
+    console.log(localRes, "localrp");
+    const rawRes = await localRes;
+    const resJSON = await rawRes.json();
+    console.log("rawraw", resJSON);
+    if (resJSON.result.status === "success") {
+      const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
+
+      console.log(reqKey, "Reqkey");
+      const signedtxx = await Pact.fetch.listen(
+        { listen: reqKey.requestKeys[0] },
+        API_HOST
+      );
+      console.log(signedtxx, "xxxxxxxxxxxxxx");
+    }
+  };
+
   const handleOnSubmit = () => {
     if (tokenList.length == 0) {
-      toast.error("Please enter token list to add" , {
+      toast.error("Please enter token list to add", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -164,11 +238,12 @@ export default function CommunityMarketplace() {
     } else {
       //add function here
       console.log(tokenList, "tokenList");
+      updateTokenList(tokenList);
       setModal(!modal);
     }
   };
-  
 
+  console.log(collectionData, "collectionData");
   return (
     <div>
       {/* <MarketplaceHeader /> */}
@@ -184,7 +259,9 @@ export default function CommunityMarketplace() {
             </div>
             <div className="creatorDet">
               <div className="creatorNameOuter">
-                <div className="creatorName">{collectionData?.collection_info[0]?.collectionName}</div>
+                <div className="creatorName">
+                  {collectionData?.collection_info[0]?.collectionName}
+                </div>
                 <div className="wishlist">
                   <span>
                     <EmailShareButton url={window.location.href}>
@@ -265,7 +342,9 @@ export default function CommunityMarketplace() {
                 Kadena blockchain. Your Collection doubles as your Collection
                 membership card, and grants access to...{" "} */}
                 {/* <a href="">Show more</a> */}
-                {collectionData?.collection_info[0] ? collectionData?.collection_info[0]?.collectionInfo : "The collection name here is a collection of 10,000 unique Collection NFTsd— unique digital collectibles living on the Kadena blockchain. Your Collection doubles as your Collection membership card, and grants access to..."}
+                {collectionData?.collection_info[0]
+                  ? collectionData?.collection_info[0]?.collectionInfo
+                  : "The collection name here is a collection of 10,000 unique Collection NFTsd— unique digital collectibles living on the Kadena blockchain. Your Collection doubles as your Collection membership card, and grants access to..."}
               </div>
               <div className="items_qty">
                 <div className="itemQtyBx">
@@ -281,7 +360,9 @@ export default function CommunityMarketplace() {
                   <strong
                     style={{ color: `${nightModeStatus ? "#fff" : "#000"}` }}
                   >
-                    {collectionData?.totalNftUser}
+                    {collectionData?.totalNftUser
+                      ? collectionData?.totalNftUser
+                      : 0}
                   </strong>
                 </div>
                 <div className="itemQtyBx">
@@ -289,7 +370,10 @@ export default function CommunityMarketplace() {
                   <strong
                     style={{ color: `${nightModeStatus ? "#fff" : "#000"}` }}
                   >
-                     {collectionData?.totalNftPrice} KDA
+                    {collectionData?.totalNftPrice
+                      ? collectionData?.totalNftPrice
+                      : 0}{" "}
+                    KDA
                   </strong>
                 </div>
                 <div className="itemQtyBx">
@@ -297,31 +381,35 @@ export default function CommunityMarketplace() {
                   <strong
                     style={{ color: `${nightModeStatus ? "#fff" : "#000"}` }}
                   >
-                     {collectionData?.minNftPrice} KDA
+                    {collectionData?.minNftPrice
+                      ? collectionData?.minNftPrice
+                      : 0}{" "}
+                    KDA
                   </strong>
                 </div>
               </div>
               <div className="editProf_Outer">
                 <button className="editProf" onClick={toggle}>
-                   Add Token</button>
+                  Add Token
+                </button>
                 {/* <Link to="/marketplace/profile-setting">Edit Profile</Link> */}
               </div>
             </div>
           </div>
         </div>
         <Modal isOpen={modal} toggle={toggle} style={{ marginTop: "300px" }}>
-        <ModalBody>
-          <div className="modalContent">
-          <div className="createFrmBx">
-              <FormGroup>
-                <Label for="exampleEmail" style={{ color: "black" }}>
-                  Token List
-                </Label>
-                <br />
-                <span style={{ color: "black" }}>
-                  Enter multiple tokens by separating them with a comma (,).
-                </span>
-                {/* <Input
+          <ModalBody>
+            <div className="modalContent">
+              <div className="createFrmBx">
+                <FormGroup>
+                  <Label for="exampleEmail" style={{ color: "black" }}>
+                    Token List
+                  </Label>
+                  <br />
+                  <span style={{ color: "black" }}>
+                    Enter multiple tokens by separating them with a comma (,).
+                  </span>
+                  {/* <Input
                   type="email"
                   name="tokenList"
                   onChange={handleOnChange}
@@ -329,30 +417,30 @@ export default function CommunityMarketplace() {
                   id="exampleEmail"
                   placeholder="Enter token list"
                 /> */}
-                <TagsInput
-                  value={tokenList}
-                  onlyUnique={true}
-                  onChange={handleTokenList}
-                  inputProps={{
-                    placeholder: "Enter token list",
-                  }}
-                />
-                <span style={{ color: "black" }}>
-                  {tokenList.length} tokens added
-                </span>
-              </FormGroup>
+                  <TagsInput
+                    value={tokenList}
+                    onlyUnique={true}
+                    onChange={handleTokenList}
+                    inputProps={{
+                      placeholder: "Enter token list",
+                    }}
+                  />
+                  <span style={{ color: "black" }}>
+                    {tokenList.length} tokens added
+                  </span>
+                </FormGroup>
+              </div>
+              <div className="collectionFrmBtn">
+                <Button onClick={handleOnSubmit}>Add Token</Button>
+              </div>
             </div>
-            <div className="collectionFrmBtn">
-              <Button onClick={handleOnSubmit}>Add Token</Button>
-            </div>
-          </div>
-        </ModalBody>
-        <ModalFooter className="collectionFooter">
-          <Button className="closeModal" onClick={toggle}>
-            x
-          </Button>
-        </ModalFooter>
-      </Modal>
+          </ModalBody>
+          <ModalFooter className="collectionFooter">
+            <Button className="closeModal" onClick={toggle}>
+              x
+            </Button>
+          </ModalFooter>
+        </Modal>
         <div className="creatortabOuter">
           <div className="container">
             <ProfileListingTab

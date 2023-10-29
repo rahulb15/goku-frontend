@@ -62,15 +62,21 @@ const CommunityMarketplace = () => {
 
   const shareToTwitter = () => {
     window.open(
-      "https://twitter.com/intent/tweet?text=" + window.location.href
+      // "https://twitter.com/intent/tweet?text=" + window.location.href
+      userDetails?.twitterUrl ? userDetails?.twitterUrl : "https://twitter.com/"
     );
   };
   const shareToInstagram = () => {
-    window.open("https://www.instagram.com/");
+    window.open( userDetails?.InstagramUrl ? userDetails?.InstagramUrl : "https://www.instagram.com/");
   };
   const shareToDiscord = () => {
-    window.open("https://discord.com/");
+    window.open( userDetails?.discordUrl ? userDetails?.discordUrl : "https://discord.com/");
   };
+
+  const shareToWebsite = () => {
+    window.open( userDetails?.websiteUrl ? userDetails?.websiteUrl : "https://www.google.com/");
+  }
+
 
   return (
     <div>
@@ -101,7 +107,7 @@ const CommunityMarketplace = () => {
                 <div className="creatorName">{userName}</div>
                 <div className="wishlist">
                   <span>
-                    <EmailShareButton url={window.location.href}>
+                    {/* <EmailShareButton url={window.location.href}>
                       <EmailIcon
                         style={{
                           width: "40px",
@@ -155,17 +161,18 @@ const CommunityMarketplace = () => {
                           borderRadius: "50%",
                         }}
                       />
-                    </TelegramShareButton>
-                    {/* <BsGlobe style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }} onClick={()=>{window.open(window.location.href)}}/> */}
-                    {/* <BsTwitter style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }} onClick={shareToTwitter}/> */}
-                    {/* <BsInstagram style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }} onClick={shareToInstagram}/> */}
+                    </TelegramShareButton> */}
+                    
+                    <BsGlobe style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }} onClick={shareToWebsite}/>
+                    <BsTwitter style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }} onClick={shareToTwitter}/>
+                    <BsInstagram style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }} onClick={shareToInstagram}/>
                     {/* <span style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }}> */}
                     {/* <InstapaperShareButton url={window.location.href}>
                                                 <BsInstagram style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }}/>
                                             </InstapaperShareButton> */}
 
                     {/* </span> */}
-                    {/* <FaDiscord style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }} onClick={shareToDiscord}/> */}
+                    <FaDiscord style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }} onClick={shareToDiscord}/>
                   </span>
                   <button onClick={shareToClipboard}>
                     <BsFillShareFill />

@@ -748,8 +748,33 @@ console.log("b", b, "c", c, "a", a, "d", d);
       setLoading(false);
       return;
     }
+
     setLoadingGift(true);
-    console.log("data", data);
+
+
+    if (recipientAddress == walletAddress) {
+      toast.error("You can't gift to yourself");
+      setLoadingGift(false);
+      return;
+    }
+
+    if (recipientAddress.length > 0) {
+      const accessJWT = localStorage.getItem("accessJWT");
+      const config = {
+        headers: {
+          Authorization: accessJWT,
+        },
+      };
+      Axios.post("/user/checkUserByWallet", { recipientAddress }, config)
+        .then(async(response) => {
+          console.log("response", response);
+          if(response.data.status == 'error'){
+            toast.error("User not found");
+            setLoadingGift(false);
+            return;
+          }
+          else{
+            console.log("data", data);
     const tokenId = data.tokenId;
     console.log("tokenid", tokenId);
     console.log("walletAddress", walletAddress);
@@ -976,6 +1001,18 @@ console.log("b", b, "c", c, "a", a, "d", d);
         setLoadingGift(false);
       }
     }
+
+          }
+        
+        })
+        .catch((error) => {
+          console.log("error", error);
+          
+        });
+    }
+
+
+    
   };
 
  
@@ -1155,7 +1192,7 @@ console.log("b", b, "c", c, "a", a, "d", d);
                                       marginLeft: " 116px",
                                     }}
                                   />
-                                ) : data._id == userId && data?.passName != "Priority Pass" ? (
+                                ) : data._id == userId &&  data?.revealed === "false" && (
                                   <Button
                                     onClick={() => revealPass(data)}
                                     style={{
@@ -1169,7 +1206,7 @@ console.log("b", b, "c", c, "a", a, "d", d);
                                   >
                                     Reveal
                                   </Button>
-                                ) : null}
+                                ) }
                               </>
                             )}
                             {/* {data._id == userId && loading == false && hover && (

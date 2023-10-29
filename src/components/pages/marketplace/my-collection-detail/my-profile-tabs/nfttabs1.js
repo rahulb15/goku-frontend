@@ -630,7 +630,31 @@ const NftTabs1 = (props) => {
       return;
     }
     setLoadingGift(true);
-    
+
+    if (recipientAddress == walletAddress) {
+      toast.error("You can't gift to yourself");
+      setLoadingGift(false);
+      return;
+    }
+
+    if (recipientAddress.length > 0) {
+      const accessJWT = localStorage.getItem("accessJWT");
+      const config = {
+        headers: {
+          Authorization: accessJWT,
+        },
+      };
+      Axios.post("/user/checkUserByWallet", { recipientAddress }, config)
+        .then(async(response) => {
+          console.log("response", response);
+          if(response.data.status == 'error'){
+            toast.error("User not found");
+            setLoadingGift(false);
+            return;
+          }
+          else{
+
+             
     const tokenId = data.tokenId;
     
     
@@ -859,6 +883,21 @@ const NftTabs1 = (props) => {
         setLoadingGift(false);
       }
     }
+
+          }
+        
+        })
+        .catch((error) => {
+          console.log("error", error);
+          
+        });
+    }
+
+
+
+
+
+   
   };
 
   
@@ -975,7 +1014,7 @@ const NftTabs1 = (props) => {
                             <Link
                               to={{
                                 pathname: "/marketplace/nft-overview",
-                                search: `?id=${data._id}`,
+                                search: `?id=${data._id}&for=all`,
                               }}
                             >
                               <div

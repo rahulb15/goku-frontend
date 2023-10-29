@@ -67,8 +67,37 @@ const CommunityMarketplace = () => {
       .then((response) => {
         if (response.data.status == "success") {
           console.log(response.data.data[0], "collection data");
+          if (response.data.data[0]) {
+            setCollectionData(response.data.data[0]);
+          } else {
+            console.log("no data");
+            Axios.get(`/collection/user-collection-by-id?id=${foo}`, {
+              headers: { authorization: localStorage.getItem("accessJWT") },
+            })
+              .then((response) => {
+                if (response.data.status == "success") {
+                  console.log(response.data.data[0], "collection data");
+                  if (response.data.data[0]) {
+                    console.log("collection found");
+                    setCollectionData({ collection_info: [response.data.data[0]] });
+                  }
+                  else{
+                    toast.error("Collection not found");
+                  }
+
+                  // setCollectionData({
+                  //   collection_info: [response.data.data[0]],
+                  // });
+                  // if (response.data.data[0]) {
+                  // }
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
           // setCollectionName(response.data.data[0].collectionName);
-          setCollectionData(response.data.data[0]);
+          // setCollectionData(response.data.data[0]);
         }
       })
       .catch((error) => {
@@ -539,7 +568,8 @@ const CommunityMarketplace = () => {
                 </div>
                 <div className="kryptocreator">
                   Created By
-                  <strong>{collectionData?.user_info[0]?.name}</strong>
+                  <strong>{collectionData?.user_info ? collectionData?.user_info[0]?.name : collectionData?.collection_info[0]?.clientId?.name}</strong>   
+                  
                 </div>
               </div>
               <div className="kryptoCont">
@@ -569,7 +599,7 @@ const CommunityMarketplace = () => {
                       nightModeStatus ? { color: "#fff" } : { color: "#000" }
                     }
                   >
-                    {collectionData?.totalNftUser}
+                    {collectionData?.totalNftUser ? collectionData?.totalNftUser : 0}
                   </strong>
                 </div>
                 <div className="itemQtyBx">
@@ -579,7 +609,7 @@ const CommunityMarketplace = () => {
                       nightModeStatus ? { color: "#fff" } : { color: "#000" }
                     }
                   >
-                    {collectionData?.totalNftPrice} KDA
+                    {collectionData?.totalNftPrice ? collectionData?.totalNftPrice : 0} KDA
                   </strong>
                 </div>
                 <div className="itemQtyBx">
@@ -589,14 +619,14 @@ const CommunityMarketplace = () => {
                       nightModeStatus ? { color: "#fff" } : { color: "#000" }
                     }
                   >
-                    {collectionData?.minNftPrice} KDA
+                    {collectionData?.minNftPrice ? collectionData?.minNftPrice : 0} KDA
                   </strong>
                 </div>
               </div>
-              <div className="editProf_Outer1">
+              <div className="editProf_Outer">
             
                  
-                  {isAuth ? (
+                  {/* {isAuth ? (
                     <button onClick={() => (loading ? null : submitData())}>
                       {loading ? <SpinnerCircular /> : <span>Mint <span style={{color:'#FFC300',fontWeight:'bold'}}
                       >NFT</span></span>}
@@ -605,7 +635,18 @@ const CommunityMarketplace = () => {
                     <button style={{width:'20%'}} onClick={() => toggle() }>
                       <span>Connect <span style={{color:'#FFC300',fontWeight:'bold'}} >Wallet</span></span>
                     </button>
+                  )} */}
+
+                  {isAuth ? (
+                    <button onClick={() => (loading ? null : submitData())}>
+                      {loading ? <SpinnerCircular /> : "Mint NFT"}
+                    </button>
+                  ) : (
+                    <button style={{width:'20%'}} onClick={() => toggle() }>
+                      <span>Connect Wallet</span>
+                    </button>
                   )}
+                    
                 
                 {/* <button onClick={submitData}>
                    Mint NFT

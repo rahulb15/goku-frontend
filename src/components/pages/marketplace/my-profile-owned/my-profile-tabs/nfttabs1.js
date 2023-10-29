@@ -247,6 +247,30 @@ const NftTabs1 = () => {
     console.log(data, "data");
     setLoadingGift(true);
 
+    if (recipientAddress == walletAddress) {
+      toast.error("You can't gift to yourself");
+      setLoadingGift(false);
+      return;
+    }
+
+    if (recipientAddress.length > 0) {
+      const accessJWT = localStorage.getItem("accessJWT");
+      const config = {
+        headers: {
+          Authorization: accessJWT,
+        },
+      };
+      Axios.post("/user/checkUserByWallet", { recipientAddress }, config)
+        .then(async(response) => {
+          console.log("response", response);
+          if(response.data.status == 'error'){
+            toast.error("User not found");
+            setLoadingGift(false);
+            return;
+          }
+          else{
+
+
     const tokenId = data.tokenId;
 
     // const accountName = "k:a9ca12cafb238d8789899de1b2303783435f201b1dfb9e2fdca28fa3b7077fcf"//owner
@@ -457,6 +481,19 @@ const NftTabs1 = () => {
         setLoadingGift(false);
       }
     }
+
+          }
+        
+        })
+        .catch((error) => {
+          
+          
+        });
+    }
+
+
+
+
   };
   return (
     <>

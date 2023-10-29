@@ -1772,6 +1772,29 @@ const OverviewDetail = () => {
     setLoading(true);
     setLoadingGift(true);
 
+    if (recipientAddress == walletAddress) {
+      toast.error("You can't gift to yourself");
+      setLoadingGift(false);
+      return;
+    }
+
+    if (recipientAddress.length > 0) {
+      const accessJWT = localStorage.getItem("accessJWT");
+      const config = {
+        headers: {
+          Authorization: accessJWT,
+        },
+      };
+      Axios.post("/user/checkUserByWallet", { recipientAddress }, config)
+        .then(async (response) => {
+          console.log("response", response);
+          if(response.data.status == 'error'){
+            toast.error("User not found");
+            setLoadingGift(false);
+            return;
+          }
+          else {
+
     const tokenId = data.tokenId;
 
     // const accountName = "k:a9ca12cafb238d8789899de1b2303783435f201b1dfb9e2fdca28fa3b7077fcf"//owner
@@ -2080,6 +2103,16 @@ const OverviewDetail = () => {
         setLoading(false);
       }
     }
+
+          }
+        
+        })
+        .catch((error) => {
+          
+          
+        });
+    }
+
   };
 
   const onShare = async (e) => {
@@ -2931,7 +2964,7 @@ const OverviewDetail = () => {
                     ) : (
                       <>
                         <div className="maintenanceOuter">
-                          <div className="maintenanceInner">
+                          {/* <div className="maintenanceInner">
                             <div
                               className="maintenanceIcon"
                               style={{
@@ -2944,7 +2977,6 @@ const OverviewDetail = () => {
                                 alignItems: "center",
                               }}
                             >
-                              {/* <img src={} alt="" /> */}
 
                               <FaExclamationTriangle />
                             </div>
@@ -2955,7 +2987,7 @@ const OverviewDetail = () => {
                                 will be available soon.
                               </p>
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                       </>
                     )}{" "}
