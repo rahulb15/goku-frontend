@@ -304,7 +304,7 @@ const ConnectPopup = () => {
         setUpdatedMessage(response.data.message);
         checkUserRegisteration();
         dispatch(userRegisterSuccess({ firstName, email }));
-        window.location.href = `${process.env.REACT_APP_URL}marketplace/create-owned`;
+        window.location.href = `${process.env.REACT_APP_URL}marketplace/profile-setting`;
         // navigate("/marketplace/create-owned");
         // toast.success("We have received your Enquiry and will get get back to you in next 24 hours", {
         //     position: "top-right"

@@ -31,7 +31,7 @@ const CommunityMarketplace = () => {
   const [fixedPrice, setFixedPrice] = useState("");
   const [timedAuction, setTimedAuction] = useState("");
   const [nftPrice, setNftPrice] = useState(0);
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState();
   const [digitalCode, setDigitalCode] = useState("");
   const [collectionId, setCollectionId] = useState("");
   const [description, setDescription] = useState("");
@@ -231,6 +231,7 @@ const CommunityMarketplace = () => {
   }, [price]);
 
   const handleOnSubmit = () => {
+    console.log(nftPrice, "nftPrice");
     if (timedAuction == "") {
       toast.error("Please select selling type");
       return;
@@ -239,7 +240,7 @@ const CommunityMarketplace = () => {
       toast.error("Please enable marketplace");
       return;
     }
-    if (nftPrice == 0) {
+    if (nftPrice == 0 || nftPrice == 'NaN') {
       toast.error("Please enter price");
       return;
     }
@@ -965,7 +966,8 @@ const CommunityMarketplace = () => {
                 <li>
                   <span>You will receive</span>
                   {/* <strong>{price - (price * serviceFee) / 100} KDA</strong> */}
-                  <strong>{receive}</strong>
+                  <strong>{receive ? receive.toFixed(2)
+                   : 0} KDA</strong>
                 </li>
               </ul>
             </div>

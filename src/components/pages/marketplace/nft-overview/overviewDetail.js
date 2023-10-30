@@ -1789,7 +1789,7 @@ const OverviewDetail = () => {
         .then(async (response) => {
           console.log("response", response);
           if(response.data.status == 'error'){
-            toast.error("User not found");
+            toast.error("The user you are trying to gift the nft is not registered with Kryptomerch");
             setLoadingGift(false);
             return;
           }

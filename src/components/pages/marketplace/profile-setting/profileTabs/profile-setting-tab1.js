@@ -96,15 +96,21 @@ const NftTabs1 = (props) => {
   const handleOnSubmit = () => {
     //valida url
     console.log(webUrl, "webUrl");
-    try {
-      const url = new URL(webUrl);
-      console.log(url, "url");
-    } catch (_) {
+    if (webUrl && !webUrl.startsWith("http")) {
       toast.error("Invalid URL", {
         position: "top-right",
       });
       return;
     }
+    // try {
+    //   const url = new URL(webUrl);
+    //   console.log(url, "url");
+    // } catch (_) {
+    //   toast.error("Invalid URL", {
+    //     position: "top-right",
+    //   });
+    //   return;
+    // }
 
     // Validate the twitterUrl
     const twitterUrlPattern =
@@ -328,6 +334,7 @@ const NftTabs1 = (props) => {
             id="exampleEmail"
             value={userName}
             onChange={handleOnChange}
+            placeholder="Enter your username"
           />
         </FormGroup>
         <span>Your profile will be available on rarible.com/[username]</span>
@@ -341,6 +348,7 @@ const NftTabs1 = (props) => {
             value={shortBio}
             onChange={handleOnChange}
             id="exampleText"
+            placeholder="Enter your short bio"
           />
         </FormGroup>
       </div>
