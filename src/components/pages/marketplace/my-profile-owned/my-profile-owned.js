@@ -30,6 +30,7 @@ import {
   TwitterIcon,
 } from "react-share";
 
+
 const CommunityMarketplace = () => {
   const { walletAddress, userName } = useSelector(
     (state) => state.walletStatus

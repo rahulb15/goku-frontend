@@ -620,7 +620,37 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
         draggable: true,
         progress: undefined,
       });
-    } else {
+    } else if (
+      royaltyFee == 0 ||
+      royaltyFee == "" ||
+      royaltyFee == null ||
+      royaltyFee == undefined
+    ) {
+      toast.error("Please enter royalty fee in %", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+    else if (
+      royaltyAddress == "" ||
+      royaltyAddress == null ||
+      royaltyAddress == undefined
+    ) {
+      toast.error("Please enter royalty address", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+      });
+    }
+     
+    
+    else {
       create_col_one();
     }
   };
@@ -723,7 +753,7 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
                   type="number"
                   name="totalSupply"
                   onChange={handleOnChange}
-                  value={totalSupply}
+                  // value={totalSupply}
                   id="exampleEmail"
                   placeholder="Enter total supply"
                 />
@@ -774,7 +804,7 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
                   required
                   step="0.01"
                   onChange={handleOnChange}
-                  value={amount}
+                  // value={amount}
                   id="exampleEmail"
                   placeholder="Enter mint price"
                 />
@@ -793,7 +823,7 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
                   required
                   step="0.01"
                   onChange={handleOnChange}
-                  value={fee}
+                  // value={fee}
                   id="exampleEmail"
                   placeholder="Enter Royality Fee"
                 />

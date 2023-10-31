@@ -1788,331 +1788,332 @@ const OverviewDetail = () => {
       Axios.post("/user/checkUserByWallet", { recipientAddress }, config)
         .then(async (response) => {
           console.log("response", response);
-          if(response.data.status == 'error'){
-            toast.error("The user you are trying to gift the nft is not registered with Kryptomerch");
+          if (response.data.status == "error") {
+            toast.error(
+              "The user you are trying to gift the nft is not registered with Kryptomerch"
+            );
             setLoadingGift(false);
             return;
-          }
-          else {
-
-    const tokenId = data.tokenId;
-
-    // const accountName = "k:a9ca12cafb238d8789899de1b2303783435f201b1dfb9e2fdca28fa3b7077fcf"//owner
-    const accountName = walletAddress;
-    //   const receiver="k:78a6d3d3ea9f2ad21a347d6715554de20b0ac9234057ed50ae8776fa96493826"
-    const receiver = recipientAddress;
-
-    const publicKey = accountName.slice(2, accountName.length);
-
-    const guard = { keys: [publicKey], pred: "keys-all" };
-
-    const a = accountName;
-    const b = receiver;
-
-    const pactCode = `(free.marketplacefinal002.gift-nft ${JSON.stringify(
-      tokenId
-    )} ${JSON.stringify(a)} ${JSON.stringify(b)})`;
-
-    if (walletName == "Zelcore" || walletName == "Chainweaver") {
-      const signCmd = {
-        pactCode: pactCode,
-        caps: [
-          Pact.lang.mkCap(
-            "GAS",
-            "Capability to allow buying gas",
-            "coin.GAS",
-            []
-          ),
-          Pact.lang.mkCap(
-            "TRANSFER",
-            "Capability to allow buying gas",
-            "free.marketplacefinal002.TRANSFER",
-            []
-          ),
-        ],
-        sender: a,
-        gasLimit: 150000,
-        chainId: CHAIN_ID,
-        ttl: 28800,
-        envData: {
-          "demothreeaccount-keyset": guard,
-        },
-      };
-
-      const cmd = await Pact.wallet.sign(signCmd);
-      if (cmd === undefined) {
-        toast.error("User cancelled request", {
-          position: "top-right",
-        });
-        setLoading(false);
-        return;
-      }
-
-      if (cmd) {
-        const localRes = await fetch(`${API_HOST}/api/v1/local`, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-          body: JSON.stringify(cmd),
-        });
-
-        const rawRes = await localRes;
-        const resJSON = await rawRes.json();
-
-        if (resJSON.result.status === "success") {
-          const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
-
-          const signedtxx = await Pact.fetch.listen(
-            { listen: reqKey.requestKeys[0] },
-            API_HOST
-          );
-
-          if (signedtxx.result.status == "success") {
-            const obj = {
-              tokenId: tokenId,
-              creator: receiver,
-              clientId: data.clientId,
-              imageIndex: data.imageIndex,
-              sellingType: "All",
-              history: {
-                owner: walletAddress,
-                price: data.nftPrice,
-                category: "transfer",
-              },
-            };
-
-            const accessJWT = localStorage.getItem("accessJWT");
-            const config = {
-              headers: {
-                Authorization: accessJWT,
-              },
-            };
-            if (foo2 == "all") {
-              Axios.patch("/nft/update-nft-gift", obj, config)
-                .then((response) => {
-                  if (response.data.status == "success") {
-                    setLoadingGift(false);
-                    toast.success("NFT gifted successfully");
-                    setRefresh(!refresh);
-                    setGiftModal(false);
-                    setLoading(false);
-                  } else {
-                    toast.error("NFT not gifted");
-                    setGiftModal(false);
-                    setLoadingGift(false);
-                    setLoading(false);
-                  }
-                })
-                .catch((error) => {
-                  toast.error("NFT not gifted");
-                  setGiftModal(false);
-                  setLoadingGift(false);
-                  setLoading(false);
-                });
-            } else {
-              const obj = {
-                passTokenId: tokenId,
-                creator: receiver,
-                clientId: data.clientId,
-                history: {
-                  owner: walletAddress,
-                  price: data.nftPrice,
-                  category: "transfer",
-                },
-              };
-              console.log("obj", obj);
-              const accessJWT = localStorage.getItem("accessJWT");
-              const config = {
-                headers: {
-                  Authorization: accessJWT,
-                },
-              };
-              Axios.patch("/passDetails/update-nft-pass-gift", obj, config)
-                .then((response) => {
-                  console.log("Updatezzzzz", response.data.data);
-                  if (response.data.status == "success") {
-                    setLoadingGift(false);
-                    toast.success("NFT gifted successfully");
-                    setRefresh(!refresh);
-                    setGiftModal(false);
-                  } else {
-                    console.log("hello");
-                    toast.error("NFT not gifted");
-                    setGiftModal(false);
-                    setLoadingGift(false);
-                  }
-                })
-                .catch((error) => {
-                  console.log("error", error);
-                  toast.error("NFT not gifted");
-                  setGiftModal(false);
-                  setLoadingGift(false);
-                });
-            }
           } else {
-            toast.error("NFT not gifted");
-            setGiftModal(false);
-            setLoadingGift(false);
-            setLoading(false);
-          }
-        }
-      } else {
-        toast.error("NFT not gifted");
-        setGiftModal(false);
-        setLoadingGift(false);
-        setLoading(false);
-      }
-    }
-    if (walletName == "Xwallet") {
-      const XWalletRequest = {
-        networkId: NETWORK_ID,
-        signingCmd: {
-          sender: a,
-          chainId: CHAIN_ID,
-          gasPrice: 0.0000001,
-          gasLimit: 150000,
-          ttl: 28000,
+            const tokenId = data.tokenId;
 
-          caps: [
-            Pact.lang.mkCap(
-              "GAS",
-              "Capability to allow buying gas",
-              "coin.GAS",
-              []
-            ),
-            Pact.lang.mkCap(
-              "TRANSFER",
-              "Capability to allow buying gas",
-              "free.marketplacefinal002.TRANSFER",
-              []
-            ),
-          ],
-          envData: {
-            guard: guard,
-          },
-          pactCode: pactCode,
-          networkId: NETWORK_ID,
-          signingPubKey: publicKey,
-          creationTime: creationTime(),
-        }, //alert to sign tx
-      };
+            // const accountName = "k:a9ca12cafb238d8789899de1b2303783435f201b1dfb9e2fdca28fa3b7077fcf"//owner
+            const accountName = walletAddress;
+            //   const receiver="k:78a6d3d3ea9f2ad21a347d6715554de20b0ac9234057ed50ae8776fa96493826"
+            const receiver = recipientAddress;
 
-      // 18.87350
+            const publicKey = accountName.slice(2, accountName.length);
 
-      const cmd = await window.kadena.request({
-        method: "kda_requestSign",
-        networkId: NETWORK_ID,
-        data: XWalletRequest,
-      });
+            const guard = { keys: [publicKey], pred: "keys-all" };
 
-      const gore2 = await Pact.wallet.sendSigned(cmd.signedCmd, API_HOST);
-      setSpinner("true");
+            const a = accountName;
+            const b = receiver;
 
-      const txResult = await Pact.fetch.listen(
-        { listen: `${gore2.requestKeys[0]}` },
-        API_HOST
-      );
+            const pactCode = `(free.marketplacefinal002.gift-nft ${JSON.stringify(
+              tokenId
+            )} ${JSON.stringify(a)} ${JSON.stringify(b)})`;
 
-      if (txResult.result.status == "success") {
-        const obj = {
-          tokenId: tokenId,
-          creator: receiver,
-          clientId: data.clientId,
-          imageIndex: data.imageIndex,
-          sellingType: "All",
-          history: {
-            owner: walletAddress,
-            price: data.nftPrice,
-            category: "transfer",
-          },
-        };
+            if (walletName == "Zelcore" || walletName == "Chainweaver") {
+              const signCmd = {
+                pactCode: pactCode,
+                caps: [
+                  Pact.lang.mkCap(
+                    "GAS",
+                    "Capability to allow buying gas",
+                    "coin.GAS",
+                    []
+                  ),
+                  Pact.lang.mkCap(
+                    "TRANSFER",
+                    "Capability to allow buying gas",
+                    "free.marketplacefinal002.TRANSFER",
+                    []
+                  ),
+                ],
+                sender: a,
+                gasLimit: 150000,
+                chainId: CHAIN_ID,
+                ttl: 28800,
+                envData: {
+                  "demothreeaccount-keyset": guard,
+                },
+              };
 
-        const accessJWT = localStorage.getItem("accessJWT");
-        const config = {
-          headers: {
-            Authorization: accessJWT,
-          },
-        };
-        if (foo2 == "all") {
-          Axios.patch("/nft/update-nft-gift", obj, config)
-            .then((response) => {
-              if (response.data.status == "success") {
-                setLoadingGift(false);
-                toast.success("NFT gifted successfully");
-                setRefresh(!refresh);
-                setGiftModal(false);
+              const cmd = await Pact.wallet.sign(signCmd);
+              if (cmd === undefined) {
+                toast.error("User cancelled request", {
+                  position: "top-right",
+                });
                 setLoading(false);
+                return;
+              }
+
+              if (cmd) {
+                const localRes = await fetch(`${API_HOST}/api/v1/local`, {
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  method: "POST",
+                  body: JSON.stringify(cmd),
+                });
+
+                const rawRes = await localRes;
+                const resJSON = await rawRes.json();
+
+                if (resJSON.result.status === "success") {
+                  const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
+
+                  const signedtxx = await Pact.fetch.listen(
+                    { listen: reqKey.requestKeys[0] },
+                    API_HOST
+                  );
+
+                  if (signedtxx.result.status == "success") {
+                    const obj = {
+                      tokenId: tokenId,
+                      creator: receiver,
+                      clientId: data.clientId,
+                      imageIndex: data.imageIndex,
+                      sellingType: "All",
+                      history: {
+                        owner: walletAddress,
+                        price: data.nftPrice,
+                        category: "transfer",
+                      },
+                    };
+
+                    const accessJWT = localStorage.getItem("accessJWT");
+                    const config = {
+                      headers: {
+                        Authorization: accessJWT,
+                      },
+                    };
+                    if (foo2 == "all") {
+                      Axios.patch("/nft/update-nft-gift", obj, config)
+                        .then((response) => {
+                          if (response.data.status == "success") {
+                            setLoadingGift(false);
+                            toast.success("NFT gifted successfully");
+                            setRefresh(!refresh);
+                            setGiftModal(false);
+                            setLoading(false);
+                          } else {
+                            toast.error("NFT not gifted");
+                            setGiftModal(false);
+                            setLoadingGift(false);
+                            setLoading(false);
+                          }
+                        })
+                        .catch((error) => {
+                          toast.error("NFT not gifted");
+                          setGiftModal(false);
+                          setLoadingGift(false);
+                          setLoading(false);
+                        });
+                    } else {
+                      const obj = {
+                        passTokenId: tokenId,
+                        creator: receiver,
+                        clientId: data.clientId,
+                        history: {
+                          owner: walletAddress,
+                          price: data.nftPrice,
+                          category: "transfer",
+                        },
+                      };
+                      console.log("obj", obj);
+                      const accessJWT = localStorage.getItem("accessJWT");
+                      const config = {
+                        headers: {
+                          Authorization: accessJWT,
+                        },
+                      };
+                      Axios.patch(
+                        "/passDetails/update-nft-pass-gift",
+                        obj,
+                        config
+                      )
+                        .then((response) => {
+                          console.log("Updatezzzzz", response.data.data);
+                          if (response.data.status == "success") {
+                            setLoadingGift(false);
+                            toast.success("NFT gifted successfully");
+                            setRefresh(!refresh);
+                            setGiftModal(false);
+                          } else {
+                            console.log("hello");
+                            toast.error("NFT not gifted");
+                            setGiftModal(false);
+                            setLoadingGift(false);
+                          }
+                        })
+                        .catch((error) => {
+                          console.log("error", error);
+                          toast.error("NFT not gifted");
+                          setGiftModal(false);
+                          setLoadingGift(false);
+                        });
+                    }
+                  } else {
+                    toast.error("NFT not gifted");
+                    setGiftModal(false);
+                    setLoadingGift(false);
+                    setLoading(false);
+                  }
+                }
               } else {
                 toast.error("NFT not gifted");
                 setGiftModal(false);
                 setLoadingGift(false);
                 setLoading(false);
               }
-            })
-            .catch((error) => {
-              toast.error("NFT not gifted");
-              setGiftModal(false);
-              setLoadingGift(false);
-              setLoading(false);
-            });
-        } else {
-          const obj = {
-            passTokenId: tokenId,
-            creator: receiver,
-            clientId: data.clientId,
-            history: {
-              owner: walletAddress,
-              price: data.nftPrice,
-              category: "transfer",
-            },
-          };
-          console.log("obj", obj);
-          const accessJWT = localStorage.getItem("accessJWT");
-          const config = {
-            headers: {
-              Authorization: accessJWT,
-            },
-          };
-          Axios.patch("/passDetails/update-nft-pass-gift", obj, config)
-            .then((response) => {
-              console.log("Updatezzzzz", response.data.data);
-              if (response.data.status == "success") {
-                setLoadingGift(false);
-                toast.success("NFT gifted successfully");
-                setRefresh(!refresh);
-                setGiftModal(false);
+            }
+            if (walletName == "Xwallet") {
+              const XWalletRequest = {
+                networkId: NETWORK_ID,
+                signingCmd: {
+                  sender: a,
+                  chainId: CHAIN_ID,
+                  gasPrice: 0.0000001,
+                  gasLimit: 150000,
+                  ttl: 28000,
+
+                  caps: [
+                    Pact.lang.mkCap(
+                      "GAS",
+                      "Capability to allow buying gas",
+                      "coin.GAS",
+                      []
+                    ),
+                    Pact.lang.mkCap(
+                      "TRANSFER",
+                      "Capability to allow buying gas",
+                      "free.marketplacefinal002.TRANSFER",
+                      []
+                    ),
+                  ],
+                  envData: {
+                    guard: guard,
+                  },
+                  pactCode: pactCode,
+                  networkId: NETWORK_ID,
+                  signingPubKey: publicKey,
+                  creationTime: creationTime(),
+                }, //alert to sign tx
+              };
+
+              // 18.87350
+
+              const cmd = await window.kadena.request({
+                method: "kda_requestSign",
+                networkId: NETWORK_ID,
+                data: XWalletRequest,
+              });
+
+              const gore2 = await Pact.wallet.sendSigned(
+                cmd.signedCmd,
+                API_HOST
+              );
+              setSpinner("true");
+
+              const txResult = await Pact.fetch.listen(
+                { listen: `${gore2.requestKeys[0]}` },
+                API_HOST
+              );
+
+              if (txResult.result.status == "success") {
+                const obj = {
+                  tokenId: tokenId,
+                  creator: receiver,
+                  clientId: data.clientId,
+                  imageIndex: data.imageIndex,
+                  sellingType: "All",
+                  history: {
+                    owner: walletAddress,
+                    price: data.nftPrice,
+                    category: "transfer",
+                  },
+                };
+
+                const accessJWT = localStorage.getItem("accessJWT");
+                const config = {
+                  headers: {
+                    Authorization: accessJWT,
+                  },
+                };
+                if (foo2 == "all") {
+                  Axios.patch("/nft/update-nft-gift", obj, config)
+                    .then((response) => {
+                      if (response.data.status == "success") {
+                        setLoadingGift(false);
+                        toast.success("NFT gifted successfully");
+                        setRefresh(!refresh);
+                        setGiftModal(false);
+                        setLoading(false);
+                      } else {
+                        toast.error("NFT not gifted");
+                        setGiftModal(false);
+                        setLoadingGift(false);
+                        setLoading(false);
+                      }
+                    })
+                    .catch((error) => {
+                      toast.error("NFT not gifted");
+                      setGiftModal(false);
+                      setLoadingGift(false);
+                      setLoading(false);
+                    });
+                } else {
+                  const obj = {
+                    passTokenId: tokenId,
+                    creator: receiver,
+                    clientId: data.clientId,
+                    history: {
+                      owner: walletAddress,
+                      price: data.nftPrice,
+                      category: "transfer",
+                    },
+                  };
+                  console.log("obj", obj);
+                  const accessJWT = localStorage.getItem("accessJWT");
+                  const config = {
+                    headers: {
+                      Authorization: accessJWT,
+                    },
+                  };
+                  Axios.patch("/passDetails/update-nft-pass-gift", obj, config)
+                    .then((response) => {
+                      console.log("Updatezzzzz", response.data.data);
+                      if (response.data.status == "success") {
+                        setLoadingGift(false);
+                        toast.success("NFT gifted successfully");
+                        setRefresh(!refresh);
+                        setGiftModal(false);
+                      } else {
+                        console.log("hello");
+                        toast.error("NFT not gifted");
+                        setGiftModal(false);
+                        setLoadingGift(false);
+                      }
+                    })
+                    .catch((error) => {
+                      console.log("error", error);
+                      toast.error("NFT not gifted");
+                      setGiftModal(false);
+                      setLoadingGift(false);
+                    });
+                }
               } else {
-                console.log("hello");
                 toast.error("NFT not gifted");
                 setGiftModal(false);
                 setLoadingGift(false);
+                setLoading(false);
               }
-            })
-            .catch((error) => {
-              console.log("error", error);
-              toast.error("NFT not gifted");
-              setGiftModal(false);
-              setLoadingGift(false);
-            });
-        }
-      } else {
-        toast.error("NFT not gifted");
-        setGiftModal(false);
-        setLoadingGift(false);
-        setLoading(false);
-      }
-    }
-
+            }
           }
-        
         })
-        .catch((error) => {
-          
-          
-        });
+        .catch((error) => {});
     }
-
   };
 
   const onShare = async (e) => {
@@ -2964,6 +2965,64 @@ const OverviewDetail = () => {
                     ) : (
                       <>
                         <div className="maintenanceOuter">
+                          <div className="saleendOuter">
+                            {/* <div className="saleendDate">
+                        Nft is not on sale or auction. Please click on the
+                        button below to make it on sale or auction.
+                      </div> */}
+                            <div className="saleendTimer">
+                              <span
+                                style={{
+                                  fontSize: "20px",
+                                  fontWeight: "bold",
+                                  display: "flex",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                  marginBottom: "10px",
+                                }}
+                              >
+                                Introducing priority pass
+                              </span>
+                              <span
+                                style={{
+                                  fontSize: "15px",
+                                  display: "flex",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                  marginBottom: "10px",
+                                }}
+                              >
+                                A one-of-a-kind VIP pass that grants you access
+                                to mint 12 free NFTs You will have first
+                                priority to mint one free NFT per collection for
+                                any NFTS projects you choose from our launchpad.
+                              </span>
+
+                              {/* >Introducing priority pass A one-of-a-kind VIP pass that grants you access to mint 12 free NFTs You will have first priority to mint one free NFT per collection for any NFTS projects you choose from our launchpad.</span> */}
+                            </div>
+
+                            {/* {forAll == true ? (
+                    isAuth ? (
+                      <div className="buynowOuter">
+                        <NftCheckout />
+                        <button className="placebidBtn">Place a Bid</button>
+                        <button className="cartBtn">
+                          <HiOutlineShoppingCart />
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="buynowOuter">
+                        <NftCheckout />
+                        <button className="placebidBtn" onClick={toggle}>
+                          Place a Bid
+                        </button>
+                        <button className="cartBtn" onClick={toggle}>
+                          <HiOutlineShoppingCart />
+                        </button>
+                      </div>
+                    )
+                  ) : null} */}
+                          </div>
                           {/* <div className="maintenanceInner">
                             <div
                               className="maintenanceIcon"

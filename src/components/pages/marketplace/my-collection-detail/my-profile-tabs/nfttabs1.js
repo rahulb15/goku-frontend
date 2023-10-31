@@ -108,6 +108,10 @@ const NftTabs1 = (props) => {
   useEffect(() => {
     getNft();
   }, [refresh, search, limit, selected]);
+  useEffect(() => {
+    setLoading(props.loading);
+    setRefresh(props.refresh);
+  }, [props.loading, props.refresh]);
 
   const getNft = () => {
     setScreenLoading(true);
@@ -981,11 +985,11 @@ const NftTabs1 = (props) => {
         <div className="nftFlt_Right">
           <div className="nftList">
             <ul>
-              <div className="loadmoreBtn">
+              {/* <div className="loadmoreBtn">
                 <button onClick={() => (loading ? null : submitData())}>
                   {loading ? <SpinnerCircular /> : "Mint"}
                 </button>
-              </div>
+              </div> */}
               <br />
               <br />
               {filteredNft.length ? (
