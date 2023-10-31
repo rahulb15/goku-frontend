@@ -43,8 +43,6 @@ import {
   TwitterIcon,
 } from "react-share";
 
-
-
 const NETWORK_ID = process.env.REACT_APP_NETWORK_ID;
 const CHAIN_ID = process.env.REACT_APP_CHAIN_ID;
 const API_HOST = `https://api.testnet.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
@@ -187,10 +185,14 @@ export default function CommunityMarketplace() {
     const guard = { keys: [publicKey], pred: "keys-all" };
 
     const a = accountName;
-    
+
     console.log(tokenList, "tokenList");
 
-    const pactCode = `(free.merch001.updatetokenlist ${tokenList} "${collectionData?.collection_info[0]?.collectionName}")`;
+    const pactCode = `(free.merch001.updatetokenlist ${
+      tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"
+    } 
+    "${collectionData?.collection_info[0]?.collectionName}")`;
+    if (walletName == "Zelcore" || walletName == "Chainweaver") {
     const signCmd = {
       pactCode: pactCode,
       caps: [
@@ -234,6 +236,111 @@ export default function CommunityMarketplace() {
       );
       console.log(signedtxx, "xxxxxxxxxxxxxx");
     }
+  }
+  if (walletName == "Xwallet") {
+    const creationTime = () => Math.round(new Date().getTime() / 1000) - 15;
+    const XWalletRequest = {
+      networkId: NETWORK_ID,
+      signingCmd: {
+        sender: a,
+        chainId: CHAIN_ID,
+        gasPrice: 0.0000001,
+        gasLimit: 150000,
+        ttl: 28800,
+        caps: [
+          Pact.lang.mkCap(
+            "GAS",
+            "Capability to allow buying gas",
+            "coin.GAS",
+            []
+          ),
+        ],
+        envData: {
+          guards: guard,
+        },
+        pactCode: pactCode,
+        networkId: NETWORK_ID,
+        signingPubKey: publicKey,
+        creationTime: creationTime(),
+      },
+    };
+
+    try {
+      const cmd = await window.kadena.request({
+        method: "kda_requestSign",
+        networkId: NETWORK_ID,
+        data: XWalletRequest,
+      });
+      console.log("cmd", cmd);
+      if (cmd.status === "success") {
+        toast.success("Token List Added Successfully", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setModal(false);
+        setLoading(true);
+        const gore2 = await Pact.wallet.sendSigned(cmd.signedCmd, API_HOST);
+        console.log("sdsf", gore2);
+
+        const txResult = await Pact.fetch.listen(
+          { listen: `${gore2.requestKeys[0]}` },
+          API_HOST
+        );
+        console.log("txn result", txResult);
+
+        // const txResult1 = await Pact.fetch.listen({ listen: `${gore2}` }, API_HOST);
+        // console.log("txn result", txResult1.result);
+        console.log("Ssffs", txResult);
+        if (txResult.result.status === "success") {
+          setModal(false);
+          setLoading(true);
+        } else {
+          toast.error("Token List Not Added", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+
+          setLoading(false);
+          setModal(true);
+        }
+      } else {
+        toast.error("Token List Not Added", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setLoading(false);
+        setModal(true);
+      }
+    } catch (err) {
+      toast.error(err, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      setLoading(false);
+      setModal(true);
+      console.error(err);
+    }
+  }
   };
 
   const handleOnSubmit = () => {
@@ -255,7 +362,7 @@ export default function CommunityMarketplace() {
     }
   };
 
-const shareToTwitter = () => {
+  const shareToTwitter = () => {
     // window.open(`https://twitter.com/intent/tweet?text=${window.location.href}`);
     toast.error("Coming Soon", {
       position: "top-right",
@@ -277,7 +384,6 @@ const shareToTwitter = () => {
       pauseOnHover: true,
       draggable: true,
     });
-
   };
 
   const shareToDiscord = () => {
@@ -382,7 +488,9 @@ const shareToTwitter = () => {
     if (walletName == "Zelcore" || walletName == "Chainweaver") {
       const pactCode = `(free.merchfinal001.mint ${JSON.stringify(
         a
-      )} (read-keyset "guard") 1.0 "${collectionData?.collection_info[0]?.collectionName}" 1)`;
+      )} (read-keyset "guard") 1.0 "${
+        collectionData?.collection_info[0]?.collectionName
+      }" 1)`;
       let signCmd;
       if (a === b) {
         signCmd = {
@@ -483,7 +591,9 @@ const shareToTwitter = () => {
     if (walletName == "Xwallet") {
       const pactCode = `(free.merchfinal001.mint ${JSON.stringify(
         a
-      )} (read-keyset "guard") 1.0 "${collectionData?.collection_info[0]?.collectionName}" 1)`;
+      )} (read-keyset "guard") 1.0 "${
+        collectionData?.collection_info[0]?.collectionName
+      }" 1)`;
       const XWalletRequest = {
         networkId: NETWORK_ID,
         signingCmd: {
@@ -583,7 +693,6 @@ const shareToTwitter = () => {
         }
       })
       .catch((error) => {
-        
         setLoading(false);
       });
   };
@@ -595,11 +704,6 @@ const shareToTwitter = () => {
     // nftSubmit();
   };
 
-  
-
-
-
-
   console.log(collectionData, "collectionData");
   return (
     <div>
@@ -607,7 +711,13 @@ const shareToTwitter = () => {
       <HeaderafterLogin />
       <div
         className="creatorOuterBx"
-        style={{ background: `url(${collectionData?.collection_info[0]?.bannerUrl ? collectionData?.collection_info[0]?.bannerUrl : Background})` }}
+        style={{
+          background: `url(${
+            collectionData?.collection_info[0]?.bannerUrl
+              ? collectionData?.collection_info[0]?.bannerUrl
+              : Background
+          })`,
+        }}
       >
         <div className="container">
           <div className="creatorDetBx">
@@ -676,16 +786,48 @@ const shareToTwitter = () => {
                         }}
                       />
                     </TelegramShareButton> */}
-                    <BsGlobe style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }} onClick={shareToWebsite}/>
-                    <BsTwitter style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }} onClick={shareToTwitter}/>
-                    <BsInstagram style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }} onClick={shareToInstagram}/>
+                    <BsGlobe
+                      style={{
+                        width: "20px",
+                        height: "20px",
+                        marginRight: "10px",
+                        cursor: "pointer",
+                      }}
+                      onClick={shareToWebsite}
+                    />
+                    <BsTwitter
+                      style={{
+                        width: "20px",
+                        height: "20px",
+                        marginRight: "10px",
+                        cursor: "pointer",
+                      }}
+                      onClick={shareToTwitter}
+                    />
+                    <BsInstagram
+                      style={{
+                        width: "20px",
+                        height: "20px",
+                        marginRight: "10px",
+                        cursor: "pointer",
+                      }}
+                      onClick={shareToInstagram}
+                    />
                     {/* <span style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }}> */}
                     {/* <InstapaperShareButton url={window.location.href}>
                                                 <BsInstagram style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }}/>
                                             </InstapaperShareButton> */}
 
                     {/* </span> */}
-                    <FaDiscord style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }} onClick={shareToDiscord}/>
+                    <FaDiscord
+                      style={{
+                        width: "20px",
+                        height: "20px",
+                        marginRight: "10px",
+                        cursor: "pointer",
+                      }}
+                      onClick={shareToDiscord}
+                    />
                   </span>
                   <button onClick={shareToClipboard}>
                     <BsFillShareFill />
@@ -751,14 +893,14 @@ const shareToTwitter = () => {
                 </button>
                 {/* <Link to="/marketplace/profile-setting">Edit Profile</Link> */}
                 {isAuth ? (
-                    <button onClick={() => (loading ? null : submitData())}>
-                      {loading ? <SpinnerCircular /> : "Mint NFT"}
-                    </button>
-                  ) : (
-                    <button style={{width:'20%'}} onClick={() => authToggle() }>
-                      <span>Connect Wallet</span>
-                    </button>
-                  )}
+                  <button onClick={() => (loading ? null : submitData())}>
+                    {loading ? <SpinnerCircular /> : "Mint NFT"}
+                  </button>
+                ) : (
+                  <button style={{ width: "20%" }} onClick={() => authToggle()}>
+                    <span>Connect Wallet</span>
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -807,7 +949,11 @@ const shareToTwitter = () => {
             </Button>
           </ModalFooter>
         </Modal>
-        <WalletModal toggle={authToggle} modal={authModal} setModal={setAuthModal} />
+        <WalletModal
+          toggle={authToggle}
+          modal={authModal}
+          setModal={setAuthModal}
+        />
         <div className="creatortabOuter">
           <div className="container">
             <ProfileListingTab

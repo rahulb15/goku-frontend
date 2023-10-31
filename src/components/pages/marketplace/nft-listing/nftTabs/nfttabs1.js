@@ -15,6 +15,8 @@ import NFTSideBar from "../../my-profile-owned/my-profile-tabs/nftsidebar";
 import { useEffect, useState } from "react";
 import Axios from "axios";
 import { Link } from "react-router-dom";
+import { TabContent, TabPane, Nav, NavItem, NavLink, Card,  CardTitle, CardText, Row, Col } from 'reactstrap';
+import classnames from "classnames";
 
 
 
@@ -29,9 +31,14 @@ export default function NftTabs1() {
   const [maxAmount, setMaxAmount] = React.useState(0);
   const [options, setOptions] = React.useState([]);
   const [refresh, setRefresh] = useState(false);
+  const [activeTab, setActiveTab] = React.useState("1");
 
   
-  
+  const toggle = (tab) => {
+    if (activeTab !== tab) {
+      setActiveTab(tab);
+    }
+  };
   
   
 
@@ -60,9 +67,42 @@ export default function NftTabs1() {
       })
       .catch((error) => {});
   };
+
+  const getAllDbCooper = () => {
+    const dataFinal = {
+      search: search ? search : "",
+      minAmount: minAmount ? minAmount : 0,
+      maxAmount: maxAmount ? maxAmount : 10000000,
+      selected: selected,
+    };
+    Axios.post(
+      "/passDetails/user-dbcooper-all?page=" + page + "&limit=" + limit,
+      dataFinal,
+      {
+        headers: { authorization: localStorage.getItem("accessJWT") },
+      }
+    )
+      .then((response) => {
+        if (response.data.status == "success") {
+          let nftList = response.data.data.paginatedResults;
+          setTotal(response.data.data.totalCount);
+          setAllNfts(nftList);
+        } else {
+          setAllNfts([]);
+        }
+      })
+      .catch((error) => {});
+  };
+
   useEffect(() => {
+
+    if(activeTab === '1'){
     getAllNfts();
-  }, [refresh, search, limit, selected]);
+    }
+    else{
+      getAllDbCooper();
+    }
+  }, [refresh, search, limit, selected,activeTab]);
 
   
   return (
@@ -136,8 +176,28 @@ export default function NftTabs1() {
             refresh={refresh}
           />{" "}        
           </div>
+
+
         <div className="nftFlt_Right">
-          <div className="nftList listingList">
+        <Nav tabs>
+        <NavItem style={{ cursor: 'pointer' }}>
+          <NavLink className={classnames({ active: activeTab === '1' })}
+            onClick={() => { toggle('1'); }}>
+            Marketplace
+          </NavLink>
+        </NavItem>
+        <NavItem style={{ cursor: 'pointer' }}>
+          <NavLink
+            className={classnames({ active: activeTab === '2' })}
+            onClick={() => { toggle('2'); }}>
+            Launchpad
+          </NavLink>
+        </NavItem>
+      </Nav>
+
+      <TabContent activeTab={activeTab}>
+        <TabPane tabId="1">
+        <div className="nftList listingList">
             <ul>
                 {allNfts?.map((item, index) => {
                     return (
@@ -211,362 +271,9 @@ export default function NftTabs1() {
                     }
                 )}
 
-
-
-
-
-
-              {/* <li>
-                <a href="/marketplace/nft-overview">
-                  <div className="featItemBx">
-                    <div className="glow">
-                      <div className="featImg">
-                        <img src={MrchendImg1} alt="" />
-                        <div className="tshirtIcon">
-                          <FaTshirt />
-                        </div>
-                      </div>
-                      <div className="feattitle">
-                        <small>
-                          NFT name here <HiCheckCircle />
-                        </small>
-                        <span className="bold">Merchandise Title</span>
-                      </div>
-                      <div className="featpriceOut">
-                        <div className="featprice">
-                          <small>Price</small>
-                          <span className="bold">$25.69</span>
-                        </div>
-                        <div className="featprice">
-                          <small>Creator</small>
-                          <span className="bold">John deo</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="/marketplace/nft-overview">
-                  <div className="featItemBx">
-                    <div className="glow">
-                      <div className="featImg">
-                        <img src={MrchendImg2} alt="" />
-                        <div className="tshirtIcon">
-                          <FaTshirt />
-                        </div>
-                      </div>
-                      <div className="feattitle">
-                        <small>
-                          NFT name here <HiCheckCircle />
-                        </small>
-                        <span className="bold">Merchandise Title</span>
-                      </div>
-                      <div className="featpriceOut">
-                        <div className="featprice">
-                          <small>Price</small>
-                          <span className="bold">$25.69</span>
-                        </div>
-                        <div className="featprice">
-                          <small>Creator</small>
-                          <span className="bold">John deo</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="/marketplace/nft-overview">
-                  <div className="featItemBx">
-                    <div className="glow">
-                      <div className="featImg">
-                        <img src={MrchendImg3} alt="" />
-                        <div className="tshirtIcon">
-                          <FaTshirt />
-                        </div>
-                      </div>
-                      <div className="feattitle">
-                        <small>
-                          NFT name here <HiCheckCircle />
-                        </small>
-                        <span className="bold">Merchandise Title</span>
-                      </div>
-                      <div className="featpriceOut">
-                        <div className="featprice">
-                          <small>Price</small>
-                          <span className="bold">$25.69</span>
-                        </div>
-                        <div className="featprice">
-                          <small>Creator</small>
-                          <span className="bold">John deo</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="/marketplace/nft-overview">
-                  <div className="featItemBx">
-                    <div className="glow">
-                      <div className="featImg">
-                        <img src={MrchendImg4} alt="" />
-                        <div className="tshirtIcon">
-                          <FaTshirt />
-                        </div>
-                      </div>
-                      <div className="feattitle">
-                        <small>
-                          NFT name here <HiCheckCircle />
-                        </small>
-                        <span className="bold">Merchandise Title</span>
-                      </div>
-                      <div className="featpriceOut">
-                        <div className="featprice">
-                          <small>Price</small>
-                          <span className="bold">$25.69</span>
-                        </div>
-                        <div className="featprice">
-                          <small>Creator</small>
-                          <span className="bold">John deo</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="/marketplace/nft-overview">
-                  <div className="featItemBx">
-                    <div className="glow">
-                      <div className="featImg">
-                        <img src={MrchendImg1} alt="" />
-                        <div className="tshirtIcon">
-                          <FaTshirt />
-                        </div>
-                      </div>
-                      <div className="feattitle">
-                        <small>
-                          NFT name here <HiCheckCircle />
-                        </small>
-                        <span className="bold">Merchandise Title</span>
-                      </div>
-                      <div className="featpriceOut">
-                        <div className="featprice">
-                          <small>Price</small>
-                          <span className="bold">$25.69</span>
-                        </div>
-                        <div className="featprice">
-                          <small>Creator</small>
-                          <span className="bold">John deo</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="/marketplace/nft-overview">
-                  <div className="featItemBx">
-                    <div className="glow">
-                      <div className="featImg">
-                        <img src={MrchendImg2} alt="" />
-                        <div className="tshirtIcon">
-                          <FaTshirt />
-                        </div>
-                      </div>
-                      <div className="feattitle">
-                        <small>
-                          NFT name here <HiCheckCircle />
-                        </small>
-                        <span className="bold">Merchandise Title</span>
-                      </div>
-                      <div className="featpriceOut">
-                        <div className="featprice">
-                          <small>Price</small>
-                          <span className="bold">$25.69</span>
-                        </div>
-                        <div className="featprice">
-                          <small>Creator</small>
-                          <span className="bold">John deo</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <div className="featItemBx">
-                  <div className="glow">
-                    <div className="featImg">
-                      <img src={MrchendImg3} alt="" />
-                      <div className="tshirtIcon">
-                        <FaTshirt />
-                      </div>
-                    </div>
-                    <div className="feattitle">
-                      <small>
-                        NFT name here <HiCheckCircle />
-                      </small>
-                      <span className="bold">Merchandise Title</span>
-                    </div>
-                    <div className="featpriceOut">
-                      <div className="featprice">
-                        <small>Price</small>
-                        <span className="bold">$25.69</span>
-                      </div>
-                      <div className="featprice">
-                        <small>Creator</small>
-                        <span className="bold">John deo</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div className="featItemBx">
-                  <div className="glow">
-                    <div className="featImg">
-                      <img src={MrchendImg4} alt="" />
-                      <div className="tshirtIcon">
-                        <FaTshirt />
-                      </div>
-                    </div>
-                    <div className="feattitle">
-                      <small>
-                        NFT name here <HiCheckCircle />
-                      </small>
-                      <span className="bold">Merchandise Title</span>
-                    </div>
-                    <div className="featpriceOut">
-                      <div className="featprice">
-                        <small>Price</small>
-                        <span className="bold">$25.69</span>
-                      </div>
-                      <div className="featprice">
-                        <small>Creator</small>
-                        <span className="bold">John deo</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div className="featItemBx">
-                  <div className="glow">
-                    <div className="featImg">
-                      <img src={MrchendImg1} alt="" />
-                      <div className="tshirtIcon">
-                        <FaTshirt />
-                      </div>
-                    </div>
-                    <div className="feattitle">
-                      <small>
-                        NFT name here <HiCheckCircle />
-                      </small>
-                      <span className="bold">Merchandise Title</span>
-                    </div>
-                    <div className="featpriceOut">
-                      <div className="featprice">
-                        <small>Price</small>
-                        <span className="bold">$25.69</span>
-                      </div>
-                      <div className="featprice">
-                        <small>Creator</small>
-                        <span className="bold">John deo</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div className="featItemBx">
-                  <div className="glow">
-                    <div className="featImg">
-                      <img src={MrchendImg2} alt="" />
-                      <div className="tshirtIcon">
-                        <FaTshirt />
-                      </div>
-                    </div>
-                    <div className="feattitle">
-                      <small>
-                        NFT name here <HiCheckCircle />
-                      </small>
-                      <span className="bold">Merchandise Title</span>
-                    </div>
-                    <div className="featpriceOut">
-                      <div className="featprice">
-                        <small>Price</small>
-                        <span className="bold">$25.69</span>
-                      </div>
-                      <div className="featprice">
-                        <small>Creator</small>
-                        <span className="bold">John deo</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div className="featItemBx">
-                  <div className="glow">
-                    <div className="featImg">
-                      <img src={MrchendImg3} alt="" />
-                      <div className="tshirtIcon">
-                        <FaTshirt />
-                      </div>
-                    </div>
-                    <div className="feattitle">
-                      <small>
-                        NFT name here <HiCheckCircle />
-                      </small>
-                      <span className="bold">Merchandise Title</span>
-                    </div>
-                    <div className="featpriceOut">
-                      <div className="featprice">
-                        <small>Price</small>
-                        <span className="bold">$25.69</span>
-                      </div>
-                      <div className="featprice">
-                        <small>Creator</small>
-                        <span className="bold">John deo</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div className="featItemBx">
-                  <div className="glow">
-                    <div className="featImg">
-                      <img src={MrchendImg4} alt="" />
-                      <div className="tshirtIcon">
-                        <FaTshirt />
-                      </div>
-                    </div>
-                    <div className="feattitle">
-                      <small>
-                        NFT name here <HiCheckCircle />
-                      </small>
-                      <span className="bold">Merchandise Title</span>
-                    </div>
-                    <div className="featpriceOut">
-                      <div className="featprice">
-                        <small>Price</small>
-                        <span className="bold">$25.69</span>
-                      </div>
-                      <div className="featprice">
-                        <small>Creator</small>
-                        <span className="bold">John deo</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>*/}
+              
             </ul> 
-          </div>
-          {limit > total ? null : (
+            {limit > total ? null : (
             <>
               {limit >= 10 ? (
                 <div className="loadmoreBtn">
@@ -580,6 +287,106 @@ export default function NftTabs1() {
               ) : null}
             </>
           )}
+          </div>
+        </TabPane>
+        <TabPane tabId="2">
+        <div className="nftList listingList">
+            <ul>
+                {allNfts?.map((item, index) => {
+                    return (
+                        <li key={index}>
+                            <div className="featItemBx">
+                            <div className="glow">
+                            <Link
+                              to={{
+                                pathname: "/marketplace/nft-overview",
+                                search: `?id=${item?._id}`,
+                              }}
+                            >
+                              <div className="featImg">
+                                <img
+                                  src={
+                                    item?.tokenImage
+                                  }
+                                  // style={data._id == userId && hover ? { opacity: 0.5 } : { opacity: 1 }}
+                                />
+                                <div className="tshirtIcon">
+                                  <FaTshirt />
+                                </div>
+                              </div>
+                            </Link>
+
+                          
+                            <Link
+                              to={{
+                                pathname: "/marketplace/nft-overview",
+                                search: `?id=${item?._id}&for=all`,
+                              }}
+                            >
+                              <div className="feattitle">
+                                <small>
+                                  {item?.collectionName}
+                                  <HiCheckCircle />
+                                </small>
+                                <span className="bold">
+                                  {item?.collectionName
+                                    ? item?.collectionName
+                                    : "Not Revealed"}{" "}
+                                  #{item?.imageIndex}
+                                </span>
+                              </div>
+                              <div className="featpriceOut">
+                                <div className="featprice">
+                                  <small>From</small>
+                                  <span className="bold">
+                                    {item?.onAuction
+                                      ? item?.onAuction
+                                        ? "Open For Bids"
+                                        : item?.nftPrice + " KDA"
+                                      : item?.nftPrice + " KDA"}
+                                  </span>{" "}
+                                </div>
+                                <div className="featprice">
+                                  <small>Highest Bid</small>
+                                  <span className="bold">
+                                    {item?.bidInfo?.bidPrice
+                                      ? item?.bidInfo?.bidPrice
+                                      : "Not Bids"}
+                                  </span>{" "}
+                                </div>
+                              </div>
+                            </Link>
+                            </div>
+                            </div>
+                        
+                        </li>
+                    );
+                    }
+                )}
+
+              
+            </ul> 
+            {limit > total ? null : (
+            <>
+              {limit >= 10 ? (
+                <div className="loadmoreBtn">
+                  <button
+                    onClick={() => setLimit(limit + 10)}
+                    style={{ width: "100%" }}
+                  >
+                    Load More
+                  </button>
+                </div>
+              ) : null}
+            </>
+          )}
+          </div>
+        </TabPane>
+      </TabContent>
+
+
+          
+          
         </div>
       </div>
     </>

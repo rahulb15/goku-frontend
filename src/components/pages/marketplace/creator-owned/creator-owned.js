@@ -234,11 +234,12 @@ const CommunityMarketplace = () => {
                 </div>
               </div>
               <div className="kryptoCont">
-                The collection name here is a collection of 10,000 unique
-                Collection NFTs— unique digital collectibles living on the
-                Kadena blockchain. Your Collection doubles as your Collection
-                membership card, and grants access to...{" "}
-                <a href="">Show more</a>
+              {foo
+                    ? foo === "PriorityPass"
+                      ? "Introducing priority pass A one-of-a-kind VIP pass that grants you access to mint 12 free NFTs You will have first priority to mint one free NFT per collection for any NFTS projects you choose from our launchpad"
+                      : "DB COOPER is a Token, NFT, and Gaming project proudly bulding on Kadena, Join our TELEGRAM the greatest global Kadena community of all time"
+                    : " The collection name here is a collection of 10,000 unique Collection NFTs— unique digital collectibles living on the Kadena blockchain. Your Collection doubles as your Collection membership card, and grants access to..."}
+                    
               </div>
 
               <div className="kryptoId">

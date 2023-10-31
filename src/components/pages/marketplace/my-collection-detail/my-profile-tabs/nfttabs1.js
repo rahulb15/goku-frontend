@@ -39,6 +39,7 @@ const NftTabs1 = (props) => {
   const [loading, setLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [spinner, setSpinner] = useState(false);
+  const [spinnedId, setSpinnedId] = useState("");
   const [giftModal, setGiftModal] = useState(false);
   const [recipientAddress, setRecipientAddress] = useState("");
   const [loadingGift, setLoadingGift] = useState(false);
@@ -111,6 +112,7 @@ const NftTabs1 = (props) => {
   useEffect(() => {
     setLoading(props.loading);
     setRefresh(props.refresh);
+    setSpinner(props.loading);
   }, [props.loading, props.refresh]);
 
   const getNft = () => {
@@ -1038,7 +1040,8 @@ const NftTabs1 = (props) => {
                               </div>
                             </Link>
                             <br />
-                            {data._id == userId && hover && data.isRevealed ? (
+                            
+                            {!spinner && data._id == userId && hover && data.isRevealed ? (
                               <div className="featpriceOut" style={{display:"flex",justifyContent:"space-between"}}>
                                 <Button
                                   className="btn-sell"
@@ -1072,14 +1075,7 @@ const NftTabs1 = (props) => {
                                   Gift
                                 </Button>
                               </div>
-                            ) : spinner == data._id ? (
-                              <SpinnerCircular
-                                style={{
-                                  marginTop: "15px",
-                                  marginLeft: " 116px",
-                                }}
-                              />
-                            ) : data._id == userId ? (
+                            ) :  !spinner && data._id == userId && (
                               <Button
                                 onClick={() => revealPass(data)}
                                 className="btn-reveal"
@@ -1093,7 +1089,10 @@ const NftTabs1 = (props) => {
                               >
                                 Reveal
                               </Button>
-                            ) : null}
+                            ) }
+                            
+                           
+                            
                             <Link
                               to={{
                                 pathname: "/marketplace/nft-overview",

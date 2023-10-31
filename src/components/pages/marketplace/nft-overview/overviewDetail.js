@@ -58,6 +58,7 @@ const OverviewDetail = () => {
   const [fee, setFee] = useState(0);
   const [royalityAddress, setRoyalityAddress] = React.useState("");
   const [royalityRate, setRoyalityRate] = React.useState("");
+  const [kadenaConversionRate, setKadenaConversionRate] = React.useState(0);
   console.log("royalityAddress", royalityAddress);
   console.log("royalityRate", royalityRate);
   const search = window.location.search;
@@ -250,6 +251,25 @@ const OverviewDetail = () => {
         });
     }
   };
+
+  //useEffect for getting kadena conversion rate by calling api
+  useEffect(() => {
+    Axios.get("https://api.coingecko.com/api/v3/simple/price?ids=kadena&vs_currencies=usd")
+      .then((response) => {
+        if (response.data.kadena.usd) {
+          setKadenaConversionRate(response.data.kadena.usd);
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }, [filteredNft]);
+
+  console.log("kadenaConversionRate", kadenaConversionRate);
+
+
+
+
 
   const getFee = async () => {
     const accountName = walletAddress;
@@ -2304,7 +2324,7 @@ const OverviewDetail = () => {
                     <strong>
                       {filteredNft?.nftPrice ? filteredNft?.nftPrice : "--"} KDA
                     </strong>
-                    <span>$1,063</span>
+                    <span>${filteredNft?.nftPrice ? (filteredNft?.nftPrice * kadenaConversionRate).toFixed(2) : "--"} USD</span>
                   </div>
                   <div className="bidBx">
                     <small>Highest Floor bid</small>
@@ -2596,7 +2616,7 @@ const OverviewDetail = () => {
                     <strong>
                       {filteredNft?.nftPrice ? filteredNft?.nftPrice : "--"} KDA
                     </strong>
-                    <span>$1,063</span>
+                    <span>${filteredNft?.nftPrice ? (filteredNft?.nftPrice * kadenaConversionRate).toFixed(2) : "--"} USD</span>
                   </div>
                   <div className="bidBx">
                     <small>Sale is live</small>
