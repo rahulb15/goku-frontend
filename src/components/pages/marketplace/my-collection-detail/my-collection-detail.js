@@ -180,6 +180,10 @@ export default function CommunityMarketplace() {
   };
 
   const updateTokenList = async () => {
+    setLoading(true);
+    console.log(tokenList,"tokenListsss");
+    console.log(collectionData?.collection_info[0]?._id,"collectionData?.collection_info[0]?._id");
+
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
     const guard = { keys: [publicKey], pred: "keys-all" };
@@ -188,7 +192,7 @@ export default function CommunityMarketplace() {
 
     console.log(tokenList, "tokenList");
 
-    const pactCode = `(free.merch001.updatetokenlist ${
+    const pactCode = `(free.merchfinal001.updatetokenlist ${
       tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"
     } 
     "${collectionData?.collection_info[0]?.collectionName}")`;
@@ -235,6 +239,43 @@ export default function CommunityMarketplace() {
         API_HOST
       );
       console.log(signedtxx, "xxxxxxxxxxxxxx");
+      if (signedtxx.result.status === "success") {
+        Axios.put(
+          "/collection/update-token-list",
+          {
+            tokenList: tokenList,
+            collectionId: collectionData?.collection_info[0]?._id,
+            totalSupply: collectionData?.collection_info[0]?.totalSupply + tokenList.length,
+          },
+          {
+            headers: { authorization: localStorage.getItem("accessJWT") },
+          }
+        )
+          .then((response) => {
+            if (response.data.status == "success") {
+              toast.success("Token List Added Successfully", {
+                position: "top-right",
+              });
+              setModal(false);
+              setLoading(false);
+            } else {
+              toast.error("Token List Not Added", {
+                position: "top-right",
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+
+        
+      }
+      else{
+        toast.error("Token List Not Added", {
+          position: "top-right",
+        });
+      }
     }
   }
   if (walletName == "Xwallet") {
@@ -297,8 +338,35 @@ export default function CommunityMarketplace() {
         // console.log("txn result", txResult1.result);
         console.log("Ssffs", txResult);
         if (txResult.result.status === "success") {
-          setModal(false);
-          setLoading(true);
+
+          Axios.put(
+            "/collection/update-token-list",
+            {
+              tokenList: tokenList,
+              collectionId: collectionData?.collection_info[0]?._id,
+              totalSupply: collectionData?.collection_info[0]?.totalSupply + tokenList.length,
+            },
+            {
+              headers: { authorization: localStorage.getItem("accessJWT") },
+            }
+          )
+            .then((response) => {
+              if (response.data.status == "success") {
+                toast.success("Token List Added Successfully", {
+                  position: "top-right",
+                });
+                setModal(false);
+                setLoading(false);
+              } else {
+                toast.error("Token List Not Added", {
+                  position: "top-right",
+                });
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+
         } else {
           toast.error("Token List Not Added", {
             position: "top-right",
@@ -342,6 +410,8 @@ export default function CommunityMarketplace() {
     }
   }
   };
+
+
 
   const handleOnSubmit = () => {
     if (tokenList.length == 0) {
@@ -888,14 +958,19 @@ export default function CommunityMarketplace() {
                 </div>
               </div>
               <div className="editProf_Outer">
-                <button className="editProf" onClick={toggle}>
+                {/* <button className="editProf" onClick={toggle}>
                   Add Token
-                </button>
+                </button> */}
                 {/* <Link to="/marketplace/profile-setting">Edit Profile</Link> */}
                 {isAuth ? (
+                  <>
+                   <button className="editProf" onClick={() => (loading ? null : toggle())}>
+                   {loading ? <SpinnerCircular /> : "Add Token"}
+                 </button>
                   <button onClick={() => (loading ? null : submitData())}>
                     {loading ? <SpinnerCircular /> : "Mint NFT"}
                   </button>
+                  </>
                 ) : (
                   <button style={{ width: "20%" }} onClick={() => authToggle()}>
                     <span>Connect Wallet</span>
