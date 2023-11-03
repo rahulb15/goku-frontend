@@ -197,7 +197,7 @@ const HotCollectionsTab = (props) => {
         console.log("success");
         setReload(!reload);
         setSpinner("");
-        toast.success("Pass Revealed Successfully");
+        toast.success("NFT revealed successfully");
         // setPasses(res.data.data)
       } else {
         console.log("error");
