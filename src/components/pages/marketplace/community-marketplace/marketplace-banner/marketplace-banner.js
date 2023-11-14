@@ -8,12 +8,17 @@ import SearchIcon from "@mui/icons-material/Search";
 // import CollectiblesLight from '../../../../../assets/collectibles-light.png'
 // import BarLight from '../../../../../assets/bar-light.png'
 // import textureImg from '../../../../../assets/texture.png'
+import Grid from "./marketplace-grid/grid";
 
 export const MarketplaceBanner = () => {
   return (
     <div>
       <div className="mpBannerOuter">
         <div className="container">
+        {/* <div className="background-grid">
+        <Grid /> 
+      </div> */}
+        {/* <div className="content"> */}
           <div className="mpBannerImg">
             <div className="mp-banner_Left">
               <div className="banserchBx">
@@ -65,6 +70,7 @@ export const MarketplaceBanner = () => {
                                 */}
             </div>
           </div>
+          {/* </div> */}
         </div>
       </div>
     </div>

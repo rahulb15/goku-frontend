@@ -198,6 +198,18 @@ const HotCollectionsTab = (props) => {
         setReload(!reload);
         setSpinner("");
         toast.success("NFT revealed successfully");
+        // const obj2 = {
+        //   clientId: data.clientId,
+        //   activityType:"mint",
+        //   activityInfo:"Nft is Mint",
+        //   collectionName:passName,
+        //   collectionId:datum["collection-name"],
+        //   activityStatus:"Mint",
+        //   activityImageUrl:datum["image-url"],
+        // }
+        // const res2 = await axios.post("/activity/insertActivity" , obj2 , config)
+        // console.log("res2", res2)
+
         // setPasses(res.data.data)
       } else {
         console.log("error");

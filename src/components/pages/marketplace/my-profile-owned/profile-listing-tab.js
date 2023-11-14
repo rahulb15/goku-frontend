@@ -46,6 +46,9 @@ const HotCollectionsTab = () => {
     if (foo === "Merchandise") {
       setActiveTab("7")
     }
+    if (foo === "Launchpad") {
+      setActiveTab("8")
+    }
   }
 
   const toggle = (tab) => {

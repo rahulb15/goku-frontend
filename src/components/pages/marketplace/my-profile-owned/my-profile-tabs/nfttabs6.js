@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useState, useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { BiTransfer } from "react-icons/bi";
 import { FaTags, FaKickstarterK, FaBolt, FaFireAlt, FaHeart } from "react-icons/fa";
@@ -7,16 +7,92 @@ import activityImg1 from '../../../../../assets/nft-img2.png'
 import activityImg2 from '../../../../../assets/nft-img1.png'
 import activityImg3 from '../../../../../assets/nft-img3.png'
 import activityImg4 from '../../../../../assets/nft-img4.png'
+import moment from "moment";
+import Axios from "axios";
 
-export default class NftTabs1 extends Component {
-    render() {
+export default function NftTabs1()  {
+    const [selected, setSelected] = useState([]);
+    const [screenLoading, setScreenLoading] = useState(false);
+    const [activityList, setActivityList] = useState([]);
+    console.log("selected", selected);
+
+    const handleSelect = (e) => {
+        if (selected.includes(e.target.value)) {
+            setSelected(selected.filter((item) => item !== e.target.value));
+        } else {
+            setSelected([...selected, e.target.value]);
+        }
+    };
+
+
+    useEffect(() => {
+        getActivity();
+      }, [selected]);
+
+      const getActivity = () => {
+        setScreenLoading(true);
+        Axios.post("/activity/getActivityByUser",  { activityType: selected },
+        {
+          headers: { authorization: localStorage.getItem("accessJWT") },
+        })
+          .then((response) => {
+            console.log("response", response);
+            if (response.data) {
+              console.log("useractivity", response.data);
+                setActivityList(response.data);
+              setScreenLoading(false);
+    
+            } else {
+                setActivityList([]);
+              setScreenLoading(false);
+            }
+          })
+          .catch((error) => {
+            setActivityList([]);
+            setScreenLoading(false);
+          });
+      };
+
+      console.log("activityList", activityList);
+   
         return (
             <>
                 <div className='activityOuter'>
                     <div className='activity_Left'>
                         <div className='activityList'>
                             <ul>
-                                <li>
+                                {activityList?.map((item, index) => {
+                                    console.log("item", item);
+                                    return (
+                                        <li key={index}>
+                                            <div className='tagIcon'>
+                                                {item?.activityType === "sale" ? (
+                                                    <FaBolt />
+                                                ) : item?.activityType === "listing" ? (
+                                                    <FaTags />
+                                                ) : item?.activityType === "purchase" ? (
+                                                    <FaKickstarterK />
+                                                ) : item?.activityType === "transfer" ? (
+                                                    <BiTransfer />
+                                                )  : item?.activityType === "like" ? (
+                                                    <FaHeart />
+                                                ) : (
+                                                    <FaBolt />
+                                                )}
+
+                                            </div>
+                                            <div className='activityCont'>
+                                                <i><img src={item?.activityImageUrl} alt='' /></i>
+                                                <h4>{item?.collectionName}</h4>
+                                                <span>{item?.activityType} by <i><HiCheckCircle /></i> <strong>{item?.clientId.name}</strong></span>
+                                                <small>{moment(item?.createdAt).format("MM/DD/YYYY, h:mm A")}</small>
+                                            </div>
+                                        </li>
+                                    )
+                                }
+                                )}
+
+                                {/* <li>
                                     <div className='tagIcon'>
                                         <FaTags />
                                     </div>
@@ -81,7 +157,7 @@ export default class NftTabs1 extends Component {
                                         <span>1 edition minted by <i><HiCheckCircle /></i> <strong>Johndeo</strong></span>
                                         <small>9/20/2022, 12:16 AM</small>
                                     </div>
-                                </li>
+                                </li> */}
                             </ul>
                         </div>
                     </div>
@@ -93,7 +169,7 @@ export default class NftTabs1 extends Component {
                                     <FormGroup check>
                                         <Label check>
                                             All
-                                            <Input type="checkbox" />
+                                            <Input type="checkbox" onChange={handleSelect} value="all" />
                                         </Label>
                                     </FormGroup>
                                 </li>
@@ -102,7 +178,7 @@ export default class NftTabs1 extends Component {
                                         <Label check>
                                             <FaBolt />
                                             Sales
-                                            <Input type="checkbox" />
+                                            <Input type="checkbox" onChange={handleSelect} value="sale" />
                                         </Label>
                                     </FormGroup>
                                 </li>
@@ -111,7 +187,7 @@ export default class NftTabs1 extends Component {
                                         <Label check>
                                             <FaTags />
                                             Listings
-                                            <Input type="checkbox" />
+                                            <Input type="checkbox" onChange={handleSelect} value="listing" />
                                         </Label>
                                     </FormGroup>
                                 </li>
@@ -120,7 +196,7 @@ export default class NftTabs1 extends Component {
                                         <Label check>
                                             <FaKickstarterK />
                                             Purchase
-                                            <Input type="checkbox" />
+                                            <Input type="checkbox" onChange={handleSelect} value="purchase" />
                                         </Label>
                                     </FormGroup>
                                 </li>
@@ -129,25 +205,17 @@ export default class NftTabs1 extends Component {
                                         <Label check>
                                             <BiTransfer />
                                             Transfer
-                                            <Input type="checkbox" />
+                                            <Input type="checkbox" onChange={handleSelect} value="transfer" />
                                         </Label>
                                     </FormGroup>
                                 </li>
-                                <li>
-                                    <FormGroup check>
-                                        <Label check>
-                                            <FaFireAlt />
-                                            Burns
-                                            <Input type="checkbox" />
-                                        </Label>
-                                    </FormGroup>
-                                </li>
+                                
                                 <li>
                                     <FormGroup check>
                                         <Label check>
                                             <FaHeart />
                                             Likes
-                                            <Input type="checkbox" />
+                                            <Input type="checkbox" onChange={handleSelect} value="like" />
                                         </Label>
                                     </FormGroup>
                                 </li>
@@ -157,5 +225,4 @@ export default class NftTabs1 extends Component {
                 </div>
             </>
         )
-    }
 }
