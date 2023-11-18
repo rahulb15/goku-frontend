@@ -28,11 +28,11 @@ RUN npm install
 COPY . .
 
 # Set environment variables
-ENV REACT_APP_URL=http://localhost:3000/
+ENV REACT_APP_URL=https://kdafrontned.onrender.com
 ENV REACT_APP_API_KEY=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
 ENV REACT_APP_NETWORK_ID=testnet04
 ENV REACT_APP_CHAIN_ID=1
-ENV REACT_APP_NODE_URL=http://localhost:3001/
+ENV REACT_APP_NODE_URL=https://goku-backend-production.up.railway.app/
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 
 # Build the React app
