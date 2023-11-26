@@ -1,12 +1,122 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from "react";
+import Axios from "axios";
 
-export default class OverviewTab1 extends Component {
-    render() {
+
+export default function OverviewTab1() {
+    const [filteredNft, setFilteredNft] = useState([]);
+    const [forAll, setForAll] = useState(false);
+    const [userId, setUserId] = useState("");
+    const [propertyData, setPropertyData] = useState();
+
+
+    useEffect(() => {
+        getNft();
+      }, []);
+    const getNft = () => {
+        const search = window.location.search;
+        const params = new URLSearchParams(search);
+        let foo = params.get("id");
+        let foo2 = params.get("for");
+        const formdta = {
+          _id: foo,
+        };
+        if (foo2 == "all") {
+          setForAll(true);
+          Axios.post("/nft/getNftbyId2", formdta)
+            .then((response) => {
+              if (response.data.status == "success") {
+                let nftList = response.data.data;
+                setFilteredNft(nftList);
+                setUserId(nftList.creator);
+    
+                // setCollectionList(filteredCollectionList)
+              } else {
+                // setCollectionList([])
+                setFilteredNft([]);
+              }
+            })
+            .catch((error) => {
+              setFilteredNft([]);
+              //   setCollectionList([])
+              //   setUserRegistered(false)
+            });
+        } else {
+          setForAll(false);
+          Axios.post("/passDetails/getNftPassbyId2", formdta)
+            .then((response) => {
+              if (response.data.status == "success") {
+                console.log("response.data.dataProperty", response.data.data);
+                let nftList = response.data.data;
+                setFilteredNft(nftList);
+                setUserId(nftList.creator);
+    
+                // setCollectionList(filteredCollectionList)
+              } else {
+                // setCollectionList([])
+                setFilteredNft([]);
+              }
+            })
+            .catch((error) => {
+              setFilteredNft([]);
+              //   setCollectionList([])
+              //   setUserRegistered(false)
+            });
+        }
+      };
+
+      useEffect(() => {
+        console.log("filteredNftUSEEFFECT", filteredNft);
+        const fakeTokenId = "dbc:yHxNRKzSUSGEN2VaE6gLzqjqWXF47uTz0Xw-t565Q0E"
+        //http://localhost:3001/properties/getPropertyByToken?token=dbc:yHxNRKzSUSGEN2VaE6gLzqjqWXF47uTz0Xw-t565Q0E
+        if (filteredNft) {
+          Axios.get(
+            `/properties/getPropertyByToken?token=${filteredNft.tokenId}`
+            // `/properties/getPropertyByToken?token=${fakeTokenId}`
+
+          )
+            .then((response) => {
+              if (response.data.status == "success") {
+                let propertyList = response.data.data;
+                // setFilteredNft(nftList);
+                // setUserId(nftList.creator);
+                console.log("propertyList", propertyList);
+                setPropertyData(propertyList[0]);
+                // setCollectionList(filteredCollectionList)
+              } else {
+                // setCollectionList([])
+                // setFilteredNft([]);
+              }
+            })
+            .catch((error) => {
+              // setFilteredNft([]);
+              //   setCollectionList([])
+              //   setUserRegistered(false)
+            });
+        }
+        
+
+      }, [filteredNft]);
+
         return (
             <div className='propertiesList'>
                 <h3>Properties</h3>
                 <ul>
-                    <li>
+                    {propertyData && propertyData.attributes.map((item, index) => {
+                        return (
+                            <li key={index}>
+                                <span>{item?.trait_type}</span>
+                                <strong>{item?.value}</strong>
+                            </li>
+                        )
+                    }
+                    )}
+
+                    {!propertyData && <li>
+                        <span>No Properties</span>
+                    </li>}
+
+
+                    {/* <li>
                         <span>BACKGROUND</span>
                         <strong>Dusty Pink</strong>
                         <small>3% have this trait</small>
@@ -35,9 +145,8 @@ export default class OverviewTab1 extends Component {
                         <span>Mouth</span>
                         <strong>Dusty Pink</strong>
                         <small>3% have this trait</small>
-                    </li>
+                    </li> */}
                 </ul>
             </div>
         )
-    }
-}
+    };
