@@ -41,6 +41,7 @@ const ModalExample = () => {
   const [price1, setPrice1] = useState(0);
   const [royaltyAddress, setRoyaltyAddress] = useState("");
   const [bannerUrl, setBannerUrl] = useState("");
+  const [propertyFile, setPropertyFile] = useState("");
   // const [screenLoading , setScreenLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -135,7 +136,7 @@ const ModalExample = () => {
       case "shortUrl":
         setShortUrl(value);
         break;
-      
+
       case "bannerUrl":
         setBannerUrl(value);
         break;
@@ -634,8 +635,7 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
         draggable: true,
         progress: undefined,
       });
-    }
-    else if (
+    } else if (
       royaltyAddress == "" ||
       royaltyAddress == null ||
       royaltyAddress == undefined
@@ -647,10 +647,7 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
         closeOnClick: true,
         draggable: true,
       });
-    }
-     
-    
-    else {
+    } else {
       create_col_one();
     }
   };
@@ -659,6 +656,44 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
   console.log("totalSupply", parseInt(totalSupply));
   console.log("totalSupply", tokenList.length);
   console.log("royaltyFee", royaltyFee);
+
+const uploadProperty = async () => {
+  console.log("propertyFile", propertyFile);
+  const formData = new FormData();
+  formData.append("propertyFile", propertyFile);
+  Axios.post("/properties/insertProperty", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      authorization: localStorage.getItem("accessJWT"),
+    },
+  })
+    .then((response) => {
+      console.log("heyllo2", response);
+      if (response.data.status == "success") {
+        toast.success("Property Uploaded", {
+          position: "top-right",
+        });
+      } else {
+        toast.error("Property Upload Failed", {
+          position: "top-right",
+        });
+      }
+    })
+    .catch((error) => {
+      console.log("error", error);
+      toast.error("Property Upload Failed or Already Exists", {
+        position: "top-right",
+      });
+    });
+};
+
+
+  useEffect(() => {
+    if (propertyFile){
+    uploadProperty();
+    }
+  }, [propertyFile]);
+
   return (
     <div className="modalOuterBx">
       <Button
@@ -687,9 +722,18 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
               <button>
                 Choose File
                 <input
+                   type="file"
+                   name="file"
+                  onChange={(e) => setImage(e.target.files[0])}
+                />
+              </button>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <button>
+                Upload Property
+                <input
                   type="file"
                   name="file"
-                  onChange={(e) => setImage(e.target.files[0])}
+                  onChange={(e) => setPropertyFile(e.target.files[0])}
                 />
               </button>
             </div>

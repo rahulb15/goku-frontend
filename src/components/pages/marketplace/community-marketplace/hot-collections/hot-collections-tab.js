@@ -511,7 +511,7 @@ export default function HotCollectionsTab() {
               })}
           </div>
 
-          {hotCollections?.length == 0 && (
+          {/* {hotCollections?.length == 0 && (
             <div className="collectListOuter">
               <div className="colListOutBx">
                 <a href="">
@@ -694,7 +694,7 @@ export default function HotCollectionsTab() {
                 </a>
               </div>
             </div>
-          )}
+          )} */}
         </TabPane>
       </TabContent>
     </div>
