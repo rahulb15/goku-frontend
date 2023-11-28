@@ -69,8 +69,18 @@ export default function OverviewTab1() {
         const fakeTokenId = "dbc:yHxNRKzSUSGEN2VaE6gLzqjqWXF47uTz0Xw-t565Q0E"
         //http://localhost:3001/properties/getPropertyByToken?token=dbc:yHxNRKzSUSGEN2VaE6gLzqjqWXF47uTz0Xw-t565Q0E
         if (filteredNft) {
+          let token = filteredNft.tokenId;
+          if(filteredNft.tokenId.split(":")[0] != "dbc"){
+            //add collection name to token
+            token = filteredNft.tokenId.split(":")[1]
+          }
+          else{
+            token = filteredNft.tokenId
+          }
+          console.log("token", token);
+
           Axios.get(
-            `/properties/getPropertyByToken?token=${filteredNft.tokenId}`
+            `/properties/getPropertyByToken?token=${token}`
             // `/properties/getPropertyByToken?token=${fakeTokenId}`
 
           )
