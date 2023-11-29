@@ -69,15 +69,19 @@ export default function OverviewTab1() {
         const fakeTokenId = "dbc:yHxNRKzSUSGEN2VaE6gLzqjqWXF47uTz0Xw-t565Q0E"
         //http://localhost:3001/properties/getPropertyByToken?token=dbc:yHxNRKzSUSGEN2VaE6gLzqjqWXF47uTz0Xw-t565Q0E
         if (filteredNft) {
-          let token = filteredNft.tokenId;
-          if(filteredNft.tokenId.split(":")[0] != "dbc"){
-            //add collection name to token
+          console.log("filteredNft", filteredNft.tokenId ? filteredNft.tokenId.split(":")[1] : fakeTokenId);
+          let token;
+          if(filteredNft.tokenId && filteredNft.tokenId.split(":")[1]){
             token = filteredNft.tokenId.split(":")[1]
+          //   console.log("filteredNft", filteredNft.tokenId.split(":")[1]);
+
+          // //   //add collection name to token
+          //   token = filteredNft.tokenId.split(":")[1]
           }
           else{
             token = filteredNft.tokenId
           }
-          console.log("token", token);
+          // // console.log("token", token);
 
           Axios.get(
             `/properties/getPropertyByToken?token=${token}`
@@ -111,7 +115,7 @@ export default function OverviewTab1() {
             <div className='propertiesList'>
                 <h3>Properties</h3>
                 <ul>
-                    {propertyData && propertyData.attributes.map((item, index) => {
+                    {propertyData && propertyData?.attributes?.map((item, index) => {
                         return (
                             <li key={index}>
                                 <span>{item?.trait_type}</span>
