@@ -150,7 +150,7 @@ const NftTabs1 = () => {
               have any
             </small>
             <CreateCollection />
-            <button className="importExistBtn">Import an existing</button>
+            {/* <button className="importExistBtn">Import an existing</button> */}
           </div>
         </div>
       )}

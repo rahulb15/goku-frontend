@@ -719,6 +719,7 @@ const uploadProperty = async () => {
                 We recommend an image of at least 300x300. Gifs work too. Max
                 5mb.
               </span>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
               <button>
                 Choose File
                 <input
@@ -727,15 +728,16 @@ const uploadProperty = async () => {
                   onChange={(e) => setImage(e.target.files[0])}
                 />
               </button>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              {/* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}
               <button>
-                Upload Property
+                Upload Metadata
                 <input
                   type="file"
                   name="file"
                   onChange={(e) => setPropertyFile(e.target.files[0])}
                 />
               </button>
+              </div>
             </div>
             <div className="createFrmBx">
               <FormGroup>
