@@ -71,16 +71,19 @@ export default function OverviewTab1() {
         if (filteredNft) {
           console.log("filteredNft", filteredNft.tokenId ? filteredNft.tokenId.split(":")[1] : fakeTokenId);
           let token;
-          if(filteredNft.tokenId && filteredNft.tokenId.split(":")[1]){
-            token = filteredNft.tokenId.split(":")[1]
+          if(filteredNft.tokenId && filteredNft.tokenId.split(":")[0] === "dbc"){
+            // token = filteredNft.tokenId.split(":")[1]
+            token = filteredNft.tokenId
           //   console.log("filteredNft", filteredNft.tokenId.split(":")[1]);
 
           // //   //add collection name to token
           //   token = filteredNft.tokenId.split(":")[1]
           }
           else{
-            token = filteredNft.tokenId
+            console.log(filteredNft,"filteredNft1234 ")
+            token = filteredNft.hash;
           }
+          console.log(token,"tokenxdxdxdxd");
           // // console.log("token", token);
 
           Axios.get(

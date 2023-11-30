@@ -57,9 +57,11 @@ export default function CommunityMarketplace() {
   const [authModal, setAuthModal] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [tokenList, setTokenList] = useState([]);
+  const [propertyFile, setPropertyFile] = useState("");
   const { walletStatus, walletName, walletAddress } = useSelector(
     (state) => state.walletStatus
   );
+  const [modal2, setModal2] = useState(false);
   const { isAuth } = useSelector((state) => state.loginStatus);
   const [loading, setLoading] = useState(false);
   const { nightModeStatus } = useSelector((state) => state.nightModeStatus);
@@ -72,6 +74,43 @@ export default function CommunityMarketplace() {
   useEffect(() => {
     getCollection();
   }, []);
+
+  const uploadProperty = async () => {
+    console.log("propertyFile", propertyFile);
+    const formData = new FormData();
+    formData.append("propertyFile", propertyFile);
+    Axios.post("/properties/insertProperty", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        authorization: localStorage.getItem("accessJWT"),
+      },
+    })
+      .then((response) => {
+        console.log("heyllo2", response);
+        if (response.data.status == "success") {
+          toast.success("Property Uploaded", {
+            position: "top-right",
+          });
+        } else {
+          toast.error("Property Upload Failed", {
+            position: "top-right",
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+        toast.error("Property Upload Failed or Already Exists", {
+          position: "top-right",
+        });
+      });
+  };
+  
+  
+    useEffect(() => {
+      if (propertyFile){
+      uploadProperty();
+      }
+    }, [propertyFile]);
 
   const getCollection = () => {
     Axios.get(`/collection/user-collection-by-id2?id=${foo}`, {
@@ -158,6 +197,11 @@ export default function CommunityMarketplace() {
 
   const toggle = () => {
     setModal(!modal);
+  };
+
+  const toggle2 = () => {
+    console.log("toggle2");
+    setModal2(!modal2);
   };
   const authToggle = () => {
     setAuthModal(!authModal);
@@ -970,6 +1014,9 @@ export default function CommunityMarketplace() {
                   <button onClick={() => (loading ? null : submitData())}>
                     {loading ? <SpinnerCircular /> : "Mint NFT"}
                   </button>
+                  <button onClick={() => (loading ? null : toggle2())} style={{ width: "20%" }}>
+                    {loading ? <SpinnerCircular /> : "Update Metadata"}
+                  </button>
                   </>
                 ) : (
                   <button style={{ width: "20%" }} onClick={() => authToggle()}>
@@ -1020,6 +1067,41 @@ export default function CommunityMarketplace() {
           </ModalBody>
           <ModalFooter className="collectionFooter">
             <Button className="closeModal" onClick={toggle}>
+              x
+            </Button>
+          </ModalFooter>
+        </Modal>
+
+        <Modal isOpen={modal2} toggle={toggle2} style={{ marginTop: "300px" }}>
+          <ModalBody>
+            <div className="modalContent">
+              <div className="createFrmBx">
+                <FormGroup>
+                  <Label for="exampleEmail" style={{ color: "black" }}>
+                    Update Metadata
+                  </Label>
+                  <br />
+                  <span style={{ color: "black" }}>
+                    Upload Metadata JSON file by specific format.
+                  </span>
+                  
+                  <button>
+                Upload Metadata
+                <input
+                  type="file"
+                  name="file"
+                  onChange={(e) => setPropertyFile(e.target.files[0])}
+                />
+              </button>
+                </FormGroup>
+              </div>
+              <div className="collectionFrmBtn">
+                <Button onClick={handleOnSubmit}>Add Token</Button>
+              </div>
+            </div>
+          </ModalBody>
+          <ModalFooter className="collectionFooter">
+            <Button className="closeModal" onClick={toggle2}>
               x
             </Button>
           </ModalFooter>
