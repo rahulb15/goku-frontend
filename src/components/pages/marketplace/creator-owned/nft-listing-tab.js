@@ -152,68 +152,148 @@ const HotCollectionsTab = (props) => {
     if (response.result.status == "success") {
       const datum = response.result.data.data[0].datum;
       console.log("datum", datum);
+      console.log("dataxcvbnm",data);
+      const filteredNft = data;
+      let fileImageUrl;
+      let fileName;
+      let obj;
+      if (filteredNft) {
+        let token;
+        if(filteredNft.tokenId && filteredNft.tokenId.split(":")[0] === "dbc"){
+          // token = filteredNft.tokenId.split(":")[1]
+          token = filteredNft.tokenId
+        //   console.log("filteredNft", filteredNft.tokenId.split(":")[1]);
 
-      const obj = {
-        _id: data._id,
-        collectionName: datum["collectionName"],
-        creator: walletAddress,
-        tokenImage: datum["imageUrl"],
-        revealed: true,
-        hash: datum["hash"],
-        imageIndex: datum.imageIndex.int,
-        nftPrice: data.passCost,
-        history: {
-          owner: walletAddress,
-          price: data.passCost,
-          category: "mint",
-        },
-      };
-      console.log("obj", obj);
-      const accessJWT = localStorage.getItem("accessJWT");
-      const config = {
-        headers: {
-          Authorization: accessJWT,
-        },
-      };
+        // //   //add collection name to token
+        //   token = filteredNft.tokenId.split(":")[1]
+        }
+        else{
+          console.log(filteredNft,"filteredNft1234 ")
+          token = filteredNft.hash;
+        }
+        console.log(token,"tokenxdxdxdxd");
+        // // console.log("token", token);
 
-      // const findHashImage = await axios
-      //   .post(`/hashPass/getMetaData`, obj, config)
-      //   .then(async (response) => {
-      //     console.log("resHASHG", response.data.data[0].image);
+        Axios.get(
+          `/properties/getPropertyByToken?token=${token}`
+          // `/properties/getPropertyByToken?token=${fakeTokenId}`
 
-      //     const obj2 = {
-      //       _id: data._id,
-      //       tokenId: datum["token-id"],
-      //       collectionName: datum["collection-name"],
-      //       creator: datum.creator,
-      //       tokenImage: datum["image-url"],
-      //       hashImage: response.data.data[0].image,
-      //       revealed: true,
-      //     };
-
-      const res = await axios.patch("/passDetails/updatePass", obj, config);
-      console.log("res", res);
-      if (res.status == 200) {
-        console.log("success");
-        setReload(!reload);
-        setSpinner("");
-        toast.success("NFT revealed successfully");
-        // const obj2 = {
-        //   clientId: data.clientId,
-        //   activityType:"mint",
-        //   activityInfo:"Nft is Mint",
-        //   collectionName:passName,
-        //   collectionId:datum["collection-name"],
-        //   activityStatus:"Mint",
-        //   activityImageUrl:datum["image-url"],
-        // }
-        // const res2 = await axios.post("/activity/insertActivity" , obj2 , config)
-        // console.log("res2", res2)
-
-        // setPasses(res.data.data)
-      } else {
-        console.log("error");
+        )
+          .then(async (response) => {
+            if (response.data.status == "success") {
+              let propertyList = response.data.data;
+              // setFilteredNft(nftList);
+              // setUserId(nftList.creator);
+              console.log("propertyList", propertyList);
+              fileImageUrl = propertyList[0].image;
+              fileName = propertyList[0].name;
+              obj = {
+                _id: data._id,
+                collectionName: datum["collectionName"],
+                creator: walletAddress,
+                tokenImage: datum["imageUrl"],
+                revealed: true,
+                hash: datum["hash"],
+                imageIndex: datum.imageIndex.int,
+                nftPrice: data.passCost,
+                history: {
+                  owner: walletAddress,
+                  price: data.passCost,
+                  category: "mint",
+                },
+                fileImageUrl: fileImageUrl,
+                fileName: fileName,
+              };
+              console.log("obj", obj);
+              const accessJWT = localStorage.getItem("accessJWT");
+              const config = {
+                headers: {
+                  Authorization: accessJWT,
+                },
+              };
+              const res = await axios.patch("/passDetails/updatePass", obj, config);
+              console.log("res", res);
+              if (res.status == 200) {
+                console.log("success");
+                setReload(!reload);
+                setSpinner("");
+                toast.success("NFT revealed successfully");
+                // const obj2 = {
+                //   clientId: data.clientId,
+                //   activityType:"mint",
+                //   activityInfo:"Nft is Mint",
+                //   collectionName:passName,
+                //   collectionId:datum["collection-name"],
+                //   activityStatus:"Mint",
+                //   activityImageUrl:datum["image-url"],
+                // }
+                // const res2 = await axios.post("/activity/insertActivity" , obj2 , config)
+                // console.log("res2", res2)
+        
+                // setPasses(res.data.data)
+              } else {
+                console.log("error");
+              }
+              // setCollectionList(filteredCollectionList)
+            } else {
+              obj = {
+                _id: data._id,
+                collectionName: datum["collectionName"],
+                creator: walletAddress,
+                tokenImage: datum["imageUrl"],
+                revealed: true,
+                hash: datum["hash"],
+                imageIndex: datum.imageIndex.int,
+                nftPrice: data.passCost,
+                history: {
+                  owner: walletAddress,
+                  price: data.passCost,
+                  category: "mint",
+                },
+              };
+              console.log("obj", obj);
+              const accessJWT = localStorage.getItem("accessJWT");
+              const config = {
+                headers: {
+                  Authorization: accessJWT,
+                },
+              };
+              const res = await axios.patch("/passDetails/updatePass", obj, config);
+              console.log("res", res);
+              if (res.status == 200) {
+                console.log("success");
+                setReload(!reload);
+                setSpinner("");
+                toast.success("NFT revealed successfully");
+                // const obj2 = {
+                //   clientId: data.clientId,
+                //   activityType:"mint",
+                //   activityInfo:"Nft is Mint",
+                //   collectionName:passName,
+                //   collectionId:datum["collection-name"],
+                //   activityStatus:"Mint",
+                //   activityImageUrl:datum["image-url"],
+                // }
+                // const res2 = await axios.post("/activity/insertActivity" , obj2 , config)
+                // console.log("res2", res2)
+        
+                // setPasses(res.data.data)
+              } else {
+                console.log("error");
+              }
+              // setCollectionList([])
+              // setFilteredNft([]);
+            }
+          })
+          .catch((error) => {
+            // setFilteredNft([]);
+            //   setCollectionList([])
+            //   setUserRegistered(false)
+          });
       }
+
+ 
+    
 
       // setHashImageUrl(response.data.data);
       // })
@@ -1079,9 +1159,8 @@ console.log("b", b, "c", c, "a", a, "d", d);
                               >
                                 <img
                                   src={
-                                    data.tokenImage
-                                      ? data.tokenImage
-                                      : questionMark
+                                   
+                                    data?.fileImageUrl ? data?.fileImageUrl : data?.tokenImage ? data?.tokenImage : questionMark
                                   }
                                 />
                                 <div className="tshirtIcon">
@@ -1283,10 +1362,11 @@ console.log("b", b, "c", c, "a", a, "d", d);
                                   {data?.passName} <HiCheckCircle />
                                 </small>
                                 <span className="bold">
-                                  {data?.collectionName} #
+                                  {/* {data?.collectionName} #
                                   {data?.imageIndex
                                     ? data?.imageIndex
-                                    : "Not Revealed"}
+                                    : "Not Revealed"} */}
+                               {data.fileName  ? data.fileName : data?.collectionName} {data?.fileName ? "" : "#" + data?.imageIndex}
                                 </span>
                               </div>
                               <div className="featpriceOut">

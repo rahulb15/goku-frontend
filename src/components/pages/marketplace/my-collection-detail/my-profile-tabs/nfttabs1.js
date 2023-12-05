@@ -587,45 +587,138 @@ const NftTabs1 = (props) => {
     
     if (response.result.status == "success") {
       const datum = response.result.data.data[0].datum;
-      
 
-      const obj = {
-        _id: data._id,
-        tokenId: `${datum["collectionName"]}:${datum["tokenId"]}`,
-        collectionName: datum["collectionName"],
-        creator: walletAddress,
-        tokenImage: datum["imageUrl"],
-        revealed: true,
-        nftPrice: nftPrice,
-        hash: datum["hash"],
-        imageIndex: datum.imageIndex.int,
-        history: {
-          owner: walletAddress,
-          price: nftPrice,
-          category: "mint",
-        },
-      };
+      const filteredNft = data;
+      let fileImageUrl;
+      let fileName;
+      let obj;
+      if (filteredNft) {
+        let token;
+        if(filteredNft.tokenId && filteredNft.tokenId.split(":")[0] === "dbc"){
+          // token = filteredNft.tokenId.split(":")[1]
+          token = filteredNft.tokenId
+        //   console.log("filteredNft", filteredNft.tokenId.split(":")[1]);
+
+        // //   //add collection name to token
+        //   token = filteredNft.tokenId.split(":")[1]
+        }
+        else{
+          console.log(filteredNft,"filteredNft1234 ")
+          token = filteredNft.hash;
+        }
+        console.log(token,"tokenxdxdxdxd");
+        // // console.log("token", token);
+
+        Axios.get(
+          `/properties/getPropertyByToken?token=${token}`
+          // `/properties/getPropertyByToken?token=${fakeTokenId}`
+
+        )
+          .then(async (response) => {
+            if (response.data.status == "success") {
+              let propertyList = response.data.data;
+              // setFilteredNft(nftList);
+              // setUserId(nftList.creator);
+              console.log("propertyList", propertyList);
+              fileImageUrl = propertyList[0].image;
+              fileName = propertyList[0].name;
+              obj = {
+                _id: data._id,
+                tokenId: `${datum["collectionName"]}:${datum["tokenId"]}`,
+                collectionName: datum["collectionName"],
+                creator: walletAddress,
+                tokenImage: datum["imageUrl"],
+                revealed: true,
+                nftPrice: nftPrice,
+                hash: datum["hash"],
+                imageIndex: datum.imageIndex.int,
+                history: {
+                  owner: walletAddress,
+                  price: nftPrice,
+                  category: "mint",
+                },
+                fileImageUrl: fileImageUrl,
+                fileName: fileName,
+              };
+              console.log("obj", obj);
+              const accessJWT = localStorage.getItem("accessJWT");
+              const config = {
+                headers: {
+                  Authorization: accessJWT,
+                },
+              };
+              Axios.patch("/nft/update-nft", obj, config)
+                .then((response) => {
+                  
+                  if (response.data.status == "success") {
+                    toast.success("NFT revealed successfully");
+                    setRefresh(!refresh);
+                  } else {
+                    
+                    toast.error("NFT not revealed");
+                  }
+                })
+                .catch((error) => {
+                  
+                });
+              // setCollectionList(filteredCollectionList)
+            } else {
+              obj = {
+                _id: data._id,
+                tokenId: `${datum["collectionName"]}:${datum["tokenId"]}`,
+                collectionName: datum["collectionName"],
+                creator: walletAddress,
+                tokenImage: datum["imageUrl"],
+                revealed: true,
+                nftPrice: nftPrice,
+                hash: datum["hash"],
+                imageIndex: datum.imageIndex.int,
+                history: {
+                  owner: walletAddress,
+                  price: nftPrice,
+                  category: "mint",
+                },
+              };
+              console.log("obj", obj);
+              const accessJWT = localStorage.getItem("accessJWT");
+              const config = {
+                headers: {
+                  Authorization: accessJWT,
+                },
+              };
+              Axios.patch("/nft/update-nft", obj, config)
+                .then((response) => {
+                  
+                  if (response.data.status == "success") {
+                    toast.success("NFT revealed successfully");
+                    setRefresh(!refresh);
+                  } else {
+                    
+                    toast.error("NFT not revealed");
+                  }
+                })
+                .catch((error) => {
+                  
+                });
+              // setCollectionList([])
+              // setFilteredNft([]);
+            }
+          })
+          .catch((error) => {
+            // setFilteredNft([]);
+            //   setCollectionList([])
+            //   setUserRegistered(false)
+          });
+      }
+
+
+
+
+
       
-      const accessJWT = localStorage.getItem("accessJWT");
-      const config = {
-        headers: {
-          Authorization: accessJWT,
-        },
-      };
-      Axios.patch("/nft/update-nft", obj, config)
-        .then((response) => {
-          
-          if (response.data.status == "success") {
-            toast.success("NFT revealed successfully");
-            setRefresh(!refresh);
-          } else {
-            
-            toast.error("NFT not revealed");
-          }
-        })
-        .catch((error) => {
-          
-        });
+   
+      
+    
     }
   };
 
