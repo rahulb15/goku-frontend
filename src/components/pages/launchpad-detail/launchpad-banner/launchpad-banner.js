@@ -1287,7 +1287,7 @@ const LaunchpadDetails = () => {
             // const pactCode = `(free.dbcontracttest8.mint-bulk-cooper  ${JSON.stringify(a)} (read-keyset "demothreeaccount-keyset") 1.0 "mcol3" 1)`
             const pactCode = `(free.dbcfinal002.mint-cooper ${JSON.stringify(
               a
-            )} (read-keyset "guard") 1.0 "dbc4" 1)`;
+            )} (read-keyset "guard") 1.0 "dbc" 1)`;
             const XWalletRequest = {
               networkId: NETWORK_ID,
               signingCmd: {
@@ -1461,7 +1461,7 @@ const LaunchpadDetails = () => {
               //  pactCode:`(free.dbcontracttest8.mint-bulk-cooper  ${JSON.stringify(a)} (read-keyset "demothreeaccount-keyset") 1.0 "mcol3" 1)`,
               pactCode: `(free.dbcfinal002.mint-cooper ${JSON.stringify(
                 a
-              )} (read-keyset "guard") 1.0 "dbc4" 1)`,
+              )} (read-keyset "guard") 1.0 "dbc" 1)`,
 
               // caps:[
               //   Pact.lang.mkCap(

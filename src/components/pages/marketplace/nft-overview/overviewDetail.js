@@ -2162,9 +2162,9 @@ const OverviewDetail = () => {
               <div className="featImg">
                 <img
                   src={
-                    filteredNft?.tokenImage
-                      ? filteredNft?.tokenImage
-                      : overviewDetImg
+                   
+                    filteredNft?.fileImageUrl ? filteredNft?.fileImageUrl : filteredNft?.tokenImage ? filteredNft?.tokenImage : overviewDetImg
+
                   }
                   alt=""
                 />
@@ -2200,8 +2200,10 @@ const OverviewDetail = () => {
             </i>
           </div>
           <div className="overviewName bold">
-            {filteredNft?.collectionName ? filteredNft?.collectionName : "--"}#
-            {filteredNft?.imageIndex ? filteredNft?.imageIndex : "--"}
+            {/* {filteredNft?.collectionName ? filteredNft?.collectionName : "--"}#
+            {filteredNft?.imageIndex ? filteredNft?.imageIndex : "--"} */}
+          {filteredNft?.fileName  ? filteredNft?.fileName : `${filteredNft?.collectionName ? filteredNft?.collectionName : "--"}#${filteredNft?.imageIndex ? filteredNft?.imageIndex : "--"}`}
+
           </div>
           <div className="overviewOwnerOuter">
             <div className="overwOwner">
