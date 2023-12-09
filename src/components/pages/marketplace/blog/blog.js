@@ -8,8 +8,10 @@ import blogerIcon from "../../../../assets/prodOwner2.png";
 import { MarketplaceFooter } from "../../../common-components/marketplace-footer/marketplace-footer";
 import HeaderafterLogin from "../../../common-components/marketplace-header-after-login/marketplace-header-after-login";
 import "./blog.scss";
+import { useSelector } from "react-redux";
 
 const Blog = () => {
+  const { nightModeStatus } = useSelector((state) => state.nightModeStatus);
   return (
     <div>
       {/* <MarketplaceHeader /> */}
@@ -36,7 +38,8 @@ const Blog = () => {
                 future of web3 is multi-chain, and we’re excited to welcome
                 Solana to OpenSea – starting today, with our beta!
               </p>
-              <Button>Read More</Button>
+              <Button style= {{backgroundColor: nightModeStatus ? "#fff" : "#000", color: nightModeStatus ? "#000" : "#fff"}}
+              >Read More</Button>
             </div>
           </div>
           <div className="blogList">

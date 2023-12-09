@@ -3,8 +3,11 @@ import { FormGroup, Input, Label } from "reactstrap";
 import { MarketplaceFooter } from "../../common-components/marketplace-footer/marketplace-footer";
 import HeaderafterLogin from "../../common-components/marketplace-header-after-login/marketplace-header-after-login";
 import "./bug-bounty.scss";
+import { useSelector } from "react-redux";
 
 const BugBounty = () => {
+  const { nightModeStatus } = useSelector((state) => state.nightModeStatus);
+
   return (
     <div>
       {/* <MarketplaceHeader /> */}
@@ -22,7 +25,8 @@ const BugBounty = () => {
             <div className="submission_Right">
               <div className="subffmBx">
                 <FormGroup>
-                  <Label for="exampleEmail">Submission title</Label>
+                  <Label for="exampleEmail" style={ {color: nightModeStatus ? "#fff" : "#000"} } >
+                  Submission title</Label>
                   <Input
                     type="email"
                     name="email"
@@ -44,7 +48,8 @@ const BugBounty = () => {
             <div className="submission_Right">
               <div className="subffmBx">
                 <FormGroup>
-                  <Label for="exampleEmail">Target</Label>
+                  <Label for="exampleEmail" style={ {color: nightModeStatus ? "#fff" : "#000"} }
+                  >Target</Label>
                   <Input type="select" name="select" id="exampleSelect">
                     <option>Select Target</option>
                   </Input>
@@ -63,7 +68,8 @@ const BugBounty = () => {
             <div className="submission_Right">
               <div className="subffmBx">
                 <FormGroup>
-                  <Label for="exampleEmail">VRT Category</Label>
+                  <Label for="exampleEmail" style={ {color: nightModeStatus ? "#fff" : "#000"} }
+                  >VRT Category</Label>
                   <Input type="select" name="select" id="exampleSelect">
                     <option>Select or search for a vulnerability type</option>
                   </Input>
@@ -71,7 +77,8 @@ const BugBounty = () => {
               </div>
               <div className="subffmBx">
                 <FormGroup>
-                  <Label for="exampleEmail">VRT Subcategory (optional)</Label>
+                  <Label for="exampleEmail" style={ {color: nightModeStatus ? "#fff" : "#000"} }
+                  >VRT Subcategory (optional)</Label>
                   <Input
                     type="select"
                     name="select"
@@ -84,7 +91,8 @@ const BugBounty = () => {
               </div>
               <div className="subffmBx">
                 <FormGroup>
-                  <Label for="exampleEmail">VRT Variant (optional)</Label>
+                  <Label for="exampleEmail" style={ {color: nightModeStatus ? "#fff" : "#000"} }
+                  >VRT Variant (optional)</Label>
                   <Input
                     type="select"
                     name="select"
@@ -103,21 +111,24 @@ const BugBounty = () => {
             </div>
             <div className="submission_Right">
               <div className="urlCont">
-                <strong>URL / Location of vulnerability (optional)</strong>
+                <strong style={ {color: nightModeStatus ? "#fff" : "#000"} }
+                >URL / Location of vulnerability (optional)</strong>
                 <span>
                   For example: https://secure.server.com/some/path/file.php
                 </span>
               </div>
               <div className="subffmBx">
                 <FormGroup>
-                  <Label for="exampleEmail">Target</Label>
+                  <Label for="exampleEmail" style={ {color: nightModeStatus ? "#fff" : "#000"} }
+                  >Target</Label>
                   <Input type="select" name="select" id="exampleSelect">
                     <option>Enter your display name</option>
                   </Input>
                 </FormGroup>
               </div>
               <div className="urlCont">
-                <strong>Description</strong>
+                <strong style={ {color: nightModeStatus ? "#fff" : "#000"} }
+                >Description</strong>
                 <span>
                   Describe the vulnerability and its impact.
                   <br /> Provide a proof of concept or replication steps.
@@ -166,7 +177,8 @@ const BugBounty = () => {
             </div>
             <div className="submission_Right">
               <FormGroup>
-                <Label for="exampleEmail">Researcher email (optional)</Label>
+                <Label for="exampleEmail" style={ {color: nightModeStatus ? "#fff" : "#000"} }
+                >Researcher email (optional)</Label>
                 <Input
                   type="email"
                   name="email"
@@ -187,7 +199,7 @@ const BugBounty = () => {
             <div className="submission_Right">
               <div className="termsBx">
                 <FormGroup check>
-                  <Label check>
+                  <Label check style={ {color: nightModeStatus ? "#fff" : "#000"} } >
                     <Input type="checkbox" />I agree to Bugcrowd’s terms &
                     conditions as well as any additional rules and instructions
                     provided by the organization hosting this program
