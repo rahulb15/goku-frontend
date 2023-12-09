@@ -7,6 +7,7 @@ import { Header } from "../../common-components/header/header";
 import "./jobs.scss";
 
 const Jobs = () => {
+
   return (
     <div>
       <Header />
@@ -47,7 +48,7 @@ const Jobs = () => {
               </div>
               <div className="jobpostTime">10 days ago</div>
             </div>
-            <p>
+            <p> 
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris

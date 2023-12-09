@@ -12,12 +12,14 @@ import HistGraph from '../../../../assets/history-graph.png'
 import Chart from "react-apexcharts";
 import Axios from "axios";
 import moment from 'moment';
+import { useSelector } from 'react-redux';
 
 
 export default function SimpleAccordion() {
+  const { nightModeStatus } = useSelector((state) => state.nightModeStatus);
   const [history, setHistory] = useState([]);
   const [hoursAgos, setHoursAgos] = useState("");
-  const [candlestickData, setCandlestickData] = useState([]);
+  const [lineChartData, setLineChartkData] = useState([]);
   const search = window.location.search
   const params = new URLSearchParams(search)
       let foo = params.get('id')
@@ -68,73 +70,22 @@ export default function SimpleAccordion() {
         y: [parseFloat(item.price), parseFloat(item.price), parseFloat(item.price), parseFloat(item.price)],
       }));
       console.log(data,"data");
-      setCandlestickData(data);
+      setLineChartkData(data);
     }
   }, [history]);
 
   console.log(history,"history");
 
-  //candlestick chart for price history
 
-  const series = [{
-    data: [{
-      x: new Date(1538778600000),
-      y: [6629.81, 6650.5, 6623.04, 6633.33] //y: [open, close, low, high]
-    },
-    // {
-    //   x: new Date(1538780400000),
-    //   y: [6632.01, 6643.59, 6620, 6630.11]
-    // },
-    // {
-    //   x: new Date(1538782200000),
-    //   y: [6630.71, 6648.95, 6623.34, 6635.65]
-    // },
-    // {
-    //   x: new Date(1538784000000),
-    //   y: [6635.65, 6651, 6629.67, 6638.24]
-    // },
-    // {
-    //   x: new Date(1538785800000),
-    //   y: [6638.24, 6640, 6620, 6624.47]
-    // },
-    // {
-    //   x: new Date(1538787600000),
-    //   y: [6624.53, 6636.03, 6621.68, 6624.31]
-    // },
-    // {
-    //   x: new Date(1538789400000),
-    //   y: [6624.61, 6632.2, 6617, 6626.02]
-    // },
-    // {
-    //   x: new Date(1538791200000),
-    //   y: [6627, 6627.62, 6584.22, 6603.02]
-    // },
-    // {
-    //   x: new Date(1538793000000),
-    //   y: [6605, 6608.03, 6598.95, 6604.01]
-    // },
-    // {
-    //   x: new Date(1538794800000),
-    //   y: [6604.5, 6614.4, 6602.26, 6608.02]
-    // },
-    // {
-    //   x: new Date(1538796600000),
-    //   y: [6608.02, 6610.68, 6601.99, 6608.91]
-    // },
-    // {
-    //   x: new Date(1538798400000),
-    //   y: [6608.91, 6618.99, 6608.01, 6612]
-    // }
-    ]
-  }];
+ 
 
   const options = {
     chart: {
-      type: 'candlestick',
+      type: 'line',
       height: 350
     },
     title: {
-      text: 'CandleStick Chart',
+      text: 'Price History',
       align: 'left'
     },
     xaxis: {
@@ -144,79 +95,41 @@ export default function SimpleAccordion() {
       tooltip: {
         enabled: true
       }
-    }
-  };
-  const seriesBar = [
-    {
-      name: "series-1",
-      data: [30, 40, 45, 50],
     },
-  ];
-  const optionsBar = {
-    chart: {
-      height: 350,
-      type: "bar",
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 4,
-        horizontal: true,
+    //change color of graph
+    colors: ['#FF1654'],
+    // stroke: {
+    //   curve: 'smooth',
+    // },
+    //change color of graph
+    // fill: {
+    //   type: 'gradient',
+    //   gradient: {
+    //     shadeIntensity: 1,
+    //     opacityFrom: 0.7,
+    //     opacityTo: 0.9,
+    //     stops: [0, 90, 100]
+    //   }
+    // },
+   
+    //tooltip customization style
+    tooltip: {
+      theme: nightModeStatus ? 'light' : 'dark',
+      x: {
+        format: 'dd/MM/yy HH:mm'
       },
     },
-    dataLabels: {
-      enabled: false,
-    },
-    xaxis: {
-      categories: ["Buy", "Sell", "Auction", "Bid"],
-    },
+
+
+
   };
 
-  
+  //line chart for price history
+  const series = [{
+    name: 'Price',
+    data: lineChartData
+  }];
 
-  // const options = {
-  //   chart: {
-  //     type: 'candlestick',
-  //     height: 350,
-  //   },
-  //   title: {
-  //     text: 'Candlestick Chart',
-  //     align: 'left',
-  //   },
-  //   xaxis: {
-  //     type: 'datetime',
-  //   },
-  //   yaxis: {
-  //     tooltip: {
-  //       enabled: true,
-  //     },
-  //   },
-  // };
-
-  // const series = [
-  //   {
-  //     data: candlestickData,
-  //   },
-  // ];
-
-  // const series = [
-  //   {
-  //     data: [
-  //       { x: new Date("2016-12-01").getTime(), y: [ 5, 9, 5, 9 ] }, //y: [open, close, low, high]
-  //       { x: new Date("2016-12-02").getTime(), y: [ 5, 6, 2, 5 ] },
-  //       { x: new Date("2016-12-03").getTime(), y: [ 5, 6, 2, 5 ] },
-  //       { x: new Date("2016-12-04").getTime(), y: [ 5, 6, 2, 5 ] },
-  //       { x: new Date("2016-12-05").getTime(), y: [ 5, 6, 2, 5 ] },
-  //       { x: new Date("2016-12-06").getTime(), y: [ 5, 6, 2, 5 ] },
-  //       { x: new Date("2016-12-07").getTime(), y: [ 5, 6, 2, 5 ] },
-  //       { x: new Date("2016-12-08").getTime(), y: [ 5, 6, 2, 5 ] },
-        
-      
-  //     ]
-  //   }
-  // ];
-
-
-  console.log(series,"series");
 
 
   
@@ -235,11 +148,11 @@ export default function SimpleAccordion() {
           <Typography>
             <div className='graphImg'>
             <div id="chart-candlestick">
-            <Chart options={options} series={series} type="candlestick" />
+            <Chart options={options}  series={series} type="line" height={350} />
             </div>
-            <div id="chart-bar">
+            {/* <div id="chart-bar">
              <Chart options={optionsBar} series={seriesBar} type="bar" height={350} />
-            </div>
+            </div> */}
             </div>
           </Typography>
         </AccordionDetails>
