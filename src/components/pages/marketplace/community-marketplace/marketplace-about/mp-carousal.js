@@ -98,7 +98,8 @@ export default function MpCrousal() {
                       }}
                     >
                       <div className="featImg">
-                        <img src={item?.tokenImage} alt="" />
+                        {/* <img src={item?.tokenImage} alt="" /> */}
+                        <img src={item?.fileImageUrl ? item?.fileImageUrl : item?.tokenImage ? item?.tokenImage : ""} alt="" />
                         <div
                           className="tshirtIcon"
                           style={{ marginRight: "25px" }}

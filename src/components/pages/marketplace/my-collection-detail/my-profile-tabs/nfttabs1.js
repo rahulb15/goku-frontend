@@ -547,6 +547,7 @@ const NftTabs1 = (props) => {
   };
 
   const revealPass = async (data) => {
+    console.log("data", data);
     const nftPrice = await getNftPrice();
     const tokenId = data.tokenId;
     
@@ -604,9 +605,9 @@ const NftTabs1 = (props) => {
         }
         else{
           console.log(filteredNft,"filteredNft1234 ")
-          token = filteredNft.hash;
+          token = datum["hash"];
         }
-        console.log(token,"tokenxdxdxdxd");
+        console.log(token,"tokenxdxdxdxd",filteredNft);
         // // console.log("token", token);
 
         Axios.get(
@@ -615,7 +616,7 @@ const NftTabs1 = (props) => {
 
         )
           .then(async (response) => {
-            if (response.data.status == "success") {
+            if (response.data.status == "success" && response.data.data.length > 0) {
               let propertyList = response.data.data;
               // setFilteredNft(nftList);
               // setUserId(nftList.creator);
@@ -1122,9 +1123,11 @@ const NftTabs1 = (props) => {
                               >
                                 <img
                                   src={
-                                    data.tokenImage
-                                      ? data.tokenImage
-                                      : questionMark
+                                    // data.tokenImage
+                                    //   ? data.tokenImage
+                                    //   : questionMark
+                                    data?.fileImageUrl ? data?.fileImageUrl : data?.tokenImage ? data?.tokenImage : questionMark
+
                                   }
                                 />
                                 <div className="tshirtIcon">
@@ -1197,10 +1200,12 @@ const NftTabs1 = (props) => {
                                   {data?.collectionName} <HiCheckCircle />
                                 </small>
                                 <span className="bold">
-                                  {data?.collectionName} #
+                                  {/* {data?.collectionName} #
                                   {data?.imageIndex
                                     ? data?.imageIndex
-                                    : "Not Revealed"}
+                                    : "Not Revealed"} */}
+                {data.fileName  ? data.fileName : data?.collectionName} {data?.fileName ? "" : "#" + data?.imageIndex}
+
                                 </span>
                               </div>
                               <div className="featpriceOut">

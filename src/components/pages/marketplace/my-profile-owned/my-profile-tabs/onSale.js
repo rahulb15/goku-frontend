@@ -1053,7 +1053,7 @@ const HotCollectionsTab = (props) => {
                                 // }
                               >
                                 <img
-                                  src={data.tokenImage ? data.tokenImage : null}
+                                  src={data?.fileImageUrl ? data?.fileImageUrl : data?.tokenImage ? data?.tokenImage : ""}
                                 />
                                 <div className="tshirtIcon">
                                   <FaTshirt />
@@ -1175,10 +1175,12 @@ const HotCollectionsTab = (props) => {
                                   {data.passName} <HiCheckCircle />
                                 </small>
                                 <span className="bold">
-                                  {data.collectionName} #
+                                  {/* {data.collectionName} #
                                   {data?.imageIndex
                                     ? data?.imageIndex
-                                    : "Not Revealed"}
+                                    : "Not Revealed"} */}
+         {data.fileName  ? data.fileName : data?.collectionName} {data?.fileName ? "" : "#" + data?.imageIndex}
+
                                 </span>
                               </div>
                               <div className="featpriceOut">

@@ -87,7 +87,7 @@ export default function NftProjectSlider() {
                           <div className="featItemBx">
                             <div className="glow">
                               <div className="">
-                                <img src={item?.tokenImage} alt="" />
+                                <img src={item?.fileImageUrl ? item?.fileImageUrl : item?.tokenImage ? item?.tokenImage : ""} alt="" />
                               </div>
                             </div>
                           </div>

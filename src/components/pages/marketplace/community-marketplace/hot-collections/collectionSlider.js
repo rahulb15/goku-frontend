@@ -93,8 +93,10 @@ export default function CollectionSlider(props) {
                   <div className="featItemBx">
                     <div className="glow">
                       <div className="collImg">
-                        <img src={item?.tokenImage} alt="" />
-                        <span>{item?.nftPrice} KDA</span>
+
+                        {/* <img src={item?.tokenImage} alt="" /> */}
+                        <img src={item?.fileImageUrl ? item?.fileImageUrl : item?.tokenImage ? item?.tokenImage : ""} alt="" />
+                        {/* <span>{item?.nftPrice} KDA</span> */}
                       </div>
                     </div>
                   </div>
@@ -117,7 +119,7 @@ export default function CollectionSlider(props) {
                 <div className="glow">
                   <div className="collImg">
                     <img src={CollImg1} alt="" />
-                    <span>2.5 KDA</span>
+                    {/* <span>2.5 KDA</span> */}
                   </div>
                 </div>
               </div>
@@ -127,7 +129,7 @@ export default function CollectionSlider(props) {
                 <div className="glow">
                   <div className="collImg">
                     <img src={CollImg2} alt="" />
-                    <span>2.5 KDA</span>
+                    {/* <span>2.5 KDA</span> */}
                   </div>
                 </div>
               </div>
@@ -137,7 +139,7 @@ export default function CollectionSlider(props) {
                 <div className="glow">
                   <div className="collImg">
                     <img src={CollImg3} alt="" />
-                    <span>2.5 KDA</span>
+                    {/* <span>2.5 KDA</span> */}
                   </div>
                 </div>
               </div>
@@ -147,7 +149,7 @@ export default function CollectionSlider(props) {
                 <div className="glow">
                   <div className="collImg">
                     <img src={CollImg4} alt="" />
-                    <span>2.5 KDA</span>
+                    {/* <span>2.5 KDA</span> */}
                   </div>
                 </div>
               </div>
@@ -157,7 +159,7 @@ export default function CollectionSlider(props) {
                 <div className="glow">
                   <div className="collImg">
                     <img src={CollImg5} alt="" />
-                    <span>2.5 KDA</span>
+                    {/* <span>2.5 KDA</span> */}
                   </div>
                 </div>
               </div>
@@ -167,7 +169,7 @@ export default function CollectionSlider(props) {
                 <div className="glow">
                   <div className="collImg">
                     <img src={CollImg6} alt="" />
-                    <span>2.5 KDA</span>
+                    {/* <span>2.5 KDA</span> */}
                   </div>
                 </div>
               </div>
