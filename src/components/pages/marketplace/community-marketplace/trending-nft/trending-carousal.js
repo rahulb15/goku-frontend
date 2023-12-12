@@ -66,7 +66,8 @@ const SellingCrousal = (props) => {
                     <div className="glow">
                       <div className="featImg">
                       
-                        <img src={nft?.tokenImage} alt="" />
+                        {/* <img src={nft?.tokenImage} alt="" /> */}
+                        <img src={nft?.fileImageUrl ? nft?.fileImageUrl : nft?.tokenImage ? nft?.tokenImage : ""} alt="" />
                         <div className="tshirtIcon">
                           <FaTshirt />
                         </div>
@@ -84,7 +85,10 @@ const SellingCrousal = (props) => {
                         </div>
                         <div className="featprice">
                           <small>Creator</small>
-                          <span className="bold">{nft?.collectionName}</span>
+                          <span className="bold">
+                            {/* {nft?.collectionName} */}
+                            {nft.fileName  ? nft.fileName : nft?.collectionName}
+                            </span>
                         </div>
                       </div>
                     </div>

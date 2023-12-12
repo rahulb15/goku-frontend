@@ -94,7 +94,7 @@ const NftTabs1 = () => {
                       <div className="featImg">
                         <img
                           src={
-                            item?.tokenImage
+                            item?.fileImageUrl ? item?.fileImageUrl : item?.tokenImage ? item?.tokenImage : ""
                           }
                           // style={data._id == userId && hover ? { opacity: 0.5 } : { opacity: 1 }}
                         />
@@ -107,14 +107,16 @@ const NftTabs1 = () => {
                    
                       <div className="feattitle">
                         <small>
-                          {item?.collectionName}
+                        {data.fileName  ? data.fileName : data?.collectionName}
                           <HiCheckCircle />
                         </small>
                         <span className="bold">
-                          {item?.collectionName
+                          {/* {item?.collectionName
                             ? item?.collectionName
                             : "Not Revealed"}{" "}
-                          #{item?.imageIndex}
+                          #{item?.imageIndex} */}
+                    {data.fileName  ? data.fileName : data?.collectionName} {data?.fileName ? "" : "#" + data?.imageIndex}
+
                         </span>
                       </div>
                       <div className="featpriceOut">

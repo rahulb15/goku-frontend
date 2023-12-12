@@ -213,7 +213,7 @@ export default function NftTabs1() {
                               <div className="featImg">
                                 <img
                                   src={
-                                    item?.tokenImage
+                                    item?.fileImageUrl ? item?.fileImageUrl : item?.tokenImage ? item?.tokenImage : ""
                                   }
                                   // style={data._id == userId && hover ? { opacity: 0.5 } : { opacity: 1 }}
                                 />
@@ -232,14 +232,16 @@ export default function NftTabs1() {
                             >
                               <div className="feattitle">
                                 <small>
-                                  {item?.collectionName}
+                                {item.fileName  ? item.fileName : item?.collectionName}
                                   <HiCheckCircle />
                                 </small>
                                 <span className="bold">
-                                  {item?.collectionName
+                                  {/* {item?.collectionName
                                     ? item?.collectionName
                                     : "Not Revealed"}{" "}
-                                  #{item?.imageIndex}
+                                  #{item?.imageIndex} */}
+                                 {item.fileName  ? item.fileName : item?.collectionName} {item?.fileName ? "" : "#" + item?.imageIndex}
+
                                 </span>
                               </div>
                               <div className="featpriceOut">
@@ -306,7 +308,7 @@ export default function NftTabs1() {
                               <div className="featImg">
                                 <img
                                   src={
-                                    item?.tokenImage
+                                    item?.fileImageUrl ? item?.fileImageUrl : item?.tokenImage ? item?.tokenImage : ""
                                   }
                                   // style={data._id == userId && hover ? { opacity: 0.5 } : { opacity: 1 }}
                                 />
@@ -325,14 +327,17 @@ export default function NftTabs1() {
                             >
                               <div className="feattitle">
                                 <small>
-                                  {item?.collectionName}
+                                  {/* {item?.collectionName} */}
+                                  {item.fileName  ? item.fileName : item?.collectionName}
                                   <HiCheckCircle />
                                 </small>
                                 <span className="bold">
-                                  {item?.collectionName
+                                  {/* {item?.collectionName
                                     ? item?.collectionName
                                     : "Not Revealed"}{" "}
-                                  #{item?.imageIndex}
+                                  #{item?.imageIndex} */}
+                 {item.fileName  ? item.fileName : item?.collectionName} {item?.fileName ? "" : "#" + item?.imageIndex}
+
                                 </span>
                               </div>
                               <div className="featpriceOut">

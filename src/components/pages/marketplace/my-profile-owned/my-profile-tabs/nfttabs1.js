@@ -226,7 +226,7 @@ const NftTabs1 = () => {
           //   token = filteredNft.tokenId.split(":")[1]
         } else {
           console.log(filteredNft, "filteredNft1234 ");
-          token = filteredNft.hash;
+          token = datum["hash"];
         }
         console.log(token, "tokenxdxdxdxd");
         // // console.log("token", token);
@@ -236,7 +236,7 @@ const NftTabs1 = () => {
           // `/properties/getPropertyByToken?token=${fakeTokenId}`
         )
           .then(async (response) => {
-            if (response.data.status == "success") {
+            if (response.data.status == "success" && response.data.data.length > 0) {
               let propertyList = response.data.data;
               // setFilteredNft(nftList);
               // setUserId(nftList.creator);

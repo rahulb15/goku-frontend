@@ -49,6 +49,7 @@ const ConnectPopup = () => {
   const [refresh, setRefresh] = useState(false);
   const [emailError, setEmailError] = useState("");
   const dispatch = useDispatch();
+  const [tooltipOpen, setTooltipOpen] = React.useState(false); 
 
   const { walletStatus, walletAddress, walletName } = useSelector(
     (state) => state.walletStatus
@@ -875,16 +876,18 @@ const ConnectPopup = () => {
                   <strong>eckoWALLET</strong>
                 </button>
               </span>
-              <span>
-                <button onClick={connectWallet}>
-                  <img src={Zeclore} alt="" />
-                  <strong>Zelcore</strong>
+              <span className="walletConnectDisable" onMouseOver={() => setTooltipOpen(true)} onMouseLeave={() => setTooltipOpen(false)}>
+                <button onClick={connectWallet} disabled={true}>
+                  <img src={Zeclore} alt="" style={{ opacity: "0.5" }} />
+                  {/* <strong>Zelcore</strong> */}
+                  {tooltipOpen ? ( <strong style={{color: "black"}}>Coming Soon</strong>) : ( <strong>Zelcore</strong>)}
                 </button>
               </span>
-              <span>
-                <button onClick={connectWalletConnect}>
-                  <img src={Walletconnect} alt="" />
-                  <strong>Wallet Connect</strong>
+              <span className="walletConnectDisable" onMouseOver={() => setTooltipOpen(true)} onMouseLeave={() => setTooltipOpen(false)}>
+                <button onClick={connectWalletConnect} disabled={true}>
+                  <img src={Walletconnect} alt="" style={{ opacity: "0.5" }} />
+                  {/* <strong>Wallet Connect</strong> */}
+                    {tooltipOpen ? ( <strong style={{color: "black"}}>Coming Soon</strong>) : ( <strong>Wallet Connect</strong>)}
                 </button>
               </span>
 

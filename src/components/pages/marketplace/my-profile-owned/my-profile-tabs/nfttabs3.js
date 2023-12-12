@@ -119,17 +119,17 @@ const NftTabs1 = () => {
                           <div className="glow">
 
                             <div className="featImg">
-                              <img src={data.tokenImage} alt="" />
+                              <img src={data?.fileImageUrl ? data?.fileImageUrl : data?.tokenImage ? data?.tokenImage : ""} alt="" />
                               <div className="tshirtIcon">
                                 <FaTshirt />
                               </div>
                             </div>
                             <div className="feattitle">
                               <small>
-                                {data.collectionName} <HiCheckCircle />
+                              {data.fileName  ? data.fileName : data?.collectionName} <HiCheckCircle />
                               </small>
                               <span className="bold">
-                                {data.collectionName} #584
+                              {data.fileName  ? data.fileName : data?.collectionName} #584
                               </span>
                             </div>
                             <div className="featpriceOut">

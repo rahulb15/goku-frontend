@@ -1233,9 +1233,11 @@ const NftTabs1 = (props) => {
                                 <div className="featImg">
                                   <img
                                     src={
-                                      data.tokenImage
-                                        ? data.tokenImage
-                                        : questionMark
+                                      // data.tokenImage
+                                      //   ? data.tokenImage
+                                      //   : questionMark
+                                      data?.fileImageUrl ? data?.fileImageUrl : data?.tokenImage ? data?.tokenImage : questionMark
+
                                     }
                                     alt=""
                                     // style={
@@ -1372,13 +1374,15 @@ const NftTabs1 = (props) => {
                                     <HiCheckCircle />
                                   </small>
                                   <span className="bold">
-                                    {data?.collectionName
+                                    {/* {data?.collectionName
                                       ? data?.collectionName
                                       : "Not Revealed"}{" "}
                                     #
                                     {data?.imageIndex
                                       ? data?.imageIndex
-                                      : "Not Revealed"}{" "}
+                                      : "Not Revealed"}{" "} */}
+         {data.fileName  ? data.fileName : data?.collectionName} {data?.fileName ? "" : "#" + data?.imageIndex}
+
                                   </span>
                                 </div>
                                 <div className="featpriceOut">

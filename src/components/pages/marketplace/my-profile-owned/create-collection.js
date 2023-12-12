@@ -41,7 +41,8 @@ const ModalExample = () => {
   const [price1, setPrice1] = useState(0);
   const [royaltyAddress, setRoyaltyAddress] = useState("");
   const [bannerUrl, setBannerUrl] = useState("");
-  const [propertyFile, setPropertyFile] = useState("");
+  const [propertyFile, setPropertyFile] = useState();
+  const [uploadFileBool, setUploadFileBool] = useState(false);
   // const [screenLoading , setScreenLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -520,9 +521,14 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
         console.log("error", error);
       });
   };
+  useEffect(() => {
+    if(shortUrl != ""){
+      setUploadFileBool(true);
+    }
+  }, [shortUrl]);
 
   const handleOnSubmit = () => {
-    console.log("formdatas", displayName, symbol, description, category);
+    console.log("formdatas", displayName, symbol, description, category,uploadFileBool,shortUrl);
     if (displayName === "") {
       toast.error("Please enter collection name", {
         position: "top-right",
@@ -553,8 +559,8 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
         draggable: true,
         progress: undefined,
       });
-    } else if (shortUrl === "") {
-      toast.error("Please enter collection url", {
+    } else if ( uploadFileBool === false) {
+      toast.error("Please enter collection url or upload metadata", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -670,6 +676,7 @@ const uploadProperty = async () => {
     .then((response) => {
       console.log("heyllo2", response);
       if (response.data.status == "success") {
+        setUploadFileBool(true);
         toast.success("Property Uploaded", {
           position: "top-right",
         });
