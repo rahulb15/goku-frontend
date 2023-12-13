@@ -180,8 +180,9 @@ const HotCollectionsTab = (props) => {
 
         )
           .then(async (response) => {
-            if (response.data.status == "success") {
+            if (response.data.status == "success" && response.data.data.length > 0) {
               let propertyList = response.data.data;
+              console.log("propertyListDBCooper", propertyList);
               // setFilteredNft(nftList);
               // setUserId(nftList.creator);
               console.log("propertyList", propertyList);

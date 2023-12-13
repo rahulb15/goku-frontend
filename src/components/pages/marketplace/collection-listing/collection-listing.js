@@ -432,13 +432,13 @@ const CommunityMarketplace = () => {
       // clientId: props.collectionData.clientId,
       collectionId: collectionData?.collection_info[0]?._id,
       onMarketplace: false,
-      history: [
-        {
-          owner: walletAddress,
-          price: "0.00",
-          category: "mint",
-        },
-      ],
+      // history: [
+      //   {
+      //     owner: walletAddress,
+      //     price: "0.00",
+      //     category: "mint",
+      //   },
+      // ],
     };
     Axios.post("/nft/add-nft-marketplace", obj, {
       headers: { authorization: localStorage.getItem("accessJWT") },
