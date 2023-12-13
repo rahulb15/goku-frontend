@@ -104,13 +104,12 @@ export default function CommunityMarketplace() {
         });
       });
   };
-  
-  
-    useEffect(() => {
-      if (propertyFile){
+
+  useEffect(() => {
+    if (propertyFile) {
       uploadProperty();
-      }
-    }, [propertyFile]);
+    }
+  }, [propertyFile]);
 
   const getCollection = () => {
     Axios.get(`/collection/user-collection-by-id2?id=${foo}`, {
@@ -225,8 +224,11 @@ export default function CommunityMarketplace() {
 
   const updateTokenList = async () => {
     setLoading(true);
-    console.log(tokenList,"tokenListsss");
-    console.log(collectionData?.collection_info[0]?._id,"collectionData?.collection_info[0]?._id");
+    console.log(tokenList, "tokenListsss");
+    console.log(
+      collectionData?.collection_info[0]?._id,
+      "collectionData?.collection_info[0]?._id"
+    );
 
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
@@ -241,97 +243,8 @@ export default function CommunityMarketplace() {
     } 
     "${collectionData?.collection_info[0]?.collectionName}")`;
     if (walletName == "Zelcore" || walletName == "Chainweaver") {
-    const signCmd = {
-      pactCode: pactCode,
-      caps: [
-        Pact.lang.mkCap(
-          "GAS",
-          "Capability to allow buying gas",
-          "coin.GAS",
-          []
-        ),
-      ],
-      sender: a,
-      gasLimit: 150000,
-      chainId: CHAIN_ID,
-      ttl: 28800,
-      envData: {
-        guard: guard,
-      },
-    }; //alert to sign tx
-    console.log(signCmd, "signcmd");
-    const cmd = await Pact.wallet.sign(signCmd);
-    console.log("cmjj", cmd);
-
-    const localRes = await fetch(`${API_HOST}/api/v1/local`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify(cmd),
-    });
-    console.log(localRes, "localrp");
-    const rawRes = await localRes;
-    const resJSON = await rawRes.json();
-    console.log("rawraw", resJSON);
-    if (resJSON.result.status === "success") {
-      const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
-
-      console.log(reqKey, "Reqkey");
-      const signedtxx = await Pact.fetch.listen(
-        { listen: reqKey.requestKeys[0] },
-        API_HOST
-      );
-      console.log(signedtxx, "xxxxxxxxxxxxxx");
-      if (signedtxx.result.status === "success") {
-        Axios.put(
-          "/collection/update-token-list",
-          {
-            tokenList: tokenList,
-            collectionId: collectionData?.collection_info[0]?._id,
-            totalSupply: collectionData?.collection_info[0]?.totalSupply + tokenList.length,
-          },
-          {
-            headers: { authorization: localStorage.getItem("accessJWT") },
-          }
-        )
-          .then((response) => {
-            if (response.data.status == "success") {
-              toast.success("Token List Added Successfully", {
-                position: "top-right",
-              });
-              setModal(false);
-              setLoading(false);
-            } else {
-              toast.error("Token List Not Added", {
-                position: "top-right",
-              });
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-
-
-        
-      }
-      else{
-        toast.error("Token List Not Added", {
-          position: "top-right",
-        });
-      }
-    }
-  }
-  if (walletName == "Xwallet") {
-    const creationTime = () => Math.round(new Date().getTime() / 1000) - 15;
-    const XWalletRequest = {
-      networkId: NETWORK_ID,
-      signingCmd: {
-        sender: a,
-        chainId: CHAIN_ID,
-        gasPrice: 0.0000001,
-        gasLimit: 150000,
-        ttl: 28800,
+      const signCmd = {
+        pactCode: pactCode,
         caps: [
           Pact.lang.mkCap(
             "GAS",
@@ -340,55 +253,47 @@ export default function CommunityMarketplace() {
             []
           ),
         ],
+        sender: a,
+        gasLimit: 150000,
+        chainId: CHAIN_ID,
+        ttl: 28800,
         envData: {
-          guards: guard,
+          guard: guard,
         },
-        pactCode: pactCode,
-        networkId: NETWORK_ID,
-        signingPubKey: publicKey,
-        creationTime: creationTime(),
-      },
-    };
+      }; //alert to sign tx
+      console.log(signCmd, "signcmd");
+      const cmd = await Pact.wallet.sign(signCmd);
+      console.log("cmjj", cmd);
 
-    try {
-      const cmd = await window.kadena.request({
-        method: "kda_requestSign",
-        networkId: NETWORK_ID,
-        data: XWalletRequest,
+      const localRes = await fetch(`${API_HOST}/api/v1/local`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(cmd),
       });
-      console.log("cmd", cmd);
-      if (cmd.status === "success") {
-        toast.success("Token List Added Successfully", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-        setModal(false);
-        setLoading(true);
-        const gore2 = await Pact.wallet.sendSigned(cmd.signedCmd, API_HOST);
-        console.log("sdsf", gore2);
+      console.log(localRes, "localrp");
+      const rawRes = await localRes;
+      const resJSON = await rawRes.json();
+      console.log("rawraw", resJSON);
+      if (resJSON.result.status === "success") {
+        const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
 
-        const txResult = await Pact.fetch.listen(
-          { listen: `${gore2.requestKeys[0]}` },
+        console.log(reqKey, "Reqkey");
+        const signedtxx = await Pact.fetch.listen(
+          { listen: reqKey.requestKeys[0] },
           API_HOST
         );
-        console.log("txn result", txResult);
-
-        // const txResult1 = await Pact.fetch.listen({ listen: `${gore2}` }, API_HOST);
-        // console.log("txn result", txResult1.result);
-        console.log("Ssffs", txResult);
-        if (txResult.result.status === "success") {
-
+        console.log(signedtxx, "xxxxxxxxxxxxxx");
+        if (signedtxx.result.status === "success") {
           Axios.put(
             "/collection/update-token-list",
             {
               tokenList: tokenList,
               collectionId: collectionData?.collection_info[0]?._id,
-              totalSupply: collectionData?.collection_info[0]?.totalSupply + tokenList.length,
+              totalSupply:
+                collectionData?.collection_info[0]?.totalSupply +
+                tokenList.length,
             },
             {
               headers: { authorization: localStorage.getItem("accessJWT") },
@@ -410,7 +315,116 @@ export default function CommunityMarketplace() {
             .catch((error) => {
               console.log(error);
             });
+        } else {
+          toast.error("Token List Not Added", {
+            position: "top-right",
+          });
+        }
+      }
+    }
+    if (walletName == "Xwallet") {
+      const creationTime = () => Math.round(new Date().getTime() / 1000) - 15;
+      const XWalletRequest = {
+        networkId: NETWORK_ID,
+        signingCmd: {
+          sender: a,
+          chainId: CHAIN_ID,
+          gasPrice: 0.0000001,
+          gasLimit: 150000,
+          ttl: 28800,
+          caps: [
+            Pact.lang.mkCap(
+              "GAS",
+              "Capability to allow buying gas",
+              "coin.GAS",
+              []
+            ),
+          ],
+          envData: {
+            guards: guard,
+          },
+          pactCode: pactCode,
+          networkId: NETWORK_ID,
+          signingPubKey: publicKey,
+          creationTime: creationTime(),
+        },
+      };
 
+      try {
+        const cmd = await window.kadena.request({
+          method: "kda_requestSign",
+          networkId: NETWORK_ID,
+          data: XWalletRequest,
+        });
+        console.log("cmd", cmd);
+        if (cmd.status === "success") {
+          toast.success("Token List Added Successfully", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          setModal(false);
+          setLoading(true);
+          const gore2 = await Pact.wallet.sendSigned(cmd.signedCmd, API_HOST);
+          console.log("sdsf", gore2);
+
+          const txResult = await Pact.fetch.listen(
+            { listen: `${gore2.requestKeys[0]}` },
+            API_HOST
+          );
+          console.log("txn result", txResult);
+
+          // const txResult1 = await Pact.fetch.listen({ listen: `${gore2}` }, API_HOST);
+          // console.log("txn result", txResult1.result);
+          console.log("Ssffs", txResult);
+          if (txResult.result.status === "success") {
+            Axios.put(
+              "/collection/update-token-list",
+              {
+                tokenList: tokenList,
+                collectionId: collectionData?.collection_info[0]?._id,
+                totalSupply:
+                  collectionData?.collection_info[0]?.totalSupply +
+                  tokenList.length,
+              },
+              {
+                headers: { authorization: localStorage.getItem("accessJWT") },
+              }
+            )
+              .then((response) => {
+                if (response.data.status == "success") {
+                  toast.success("Token List Added Successfully", {
+                    position: "top-right",
+                  });
+                  setModal(false);
+                  setLoading(false);
+                } else {
+                  toast.error("Token List Not Added", {
+                    position: "top-right",
+                  });
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          } else {
+            toast.error("Token List Not Added", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+
+            setLoading(false);
+            setModal(true);
+          }
         } else {
           toast.error("Token List Not Added", {
             position: "top-right",
@@ -421,12 +435,11 @@ export default function CommunityMarketplace() {
             draggable: true,
             progress: undefined,
           });
-
           setLoading(false);
           setModal(true);
         }
-      } else {
-        toast.error("Token List Not Added", {
+      } catch (err) {
+        toast.error(err, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -437,25 +450,10 @@ export default function CommunityMarketplace() {
         });
         setLoading(false);
         setModal(true);
+        console.error(err);
       }
-    } catch (err) {
-      toast.error(err, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      setLoading(false);
-      setModal(true);
-      console.error(err);
     }
-  }
   };
-
-
 
   const handleOnSubmit = () => {
     if (tokenList.length == 0) {
@@ -785,13 +783,13 @@ export default function CommunityMarketplace() {
       // clientId: props.collectionData.clientId,
       collectionId: collectionData?.collection_info[0]?._id,
       onMarketplace: false,
-      history: [
-        {
-          owner: walletAddress,
-          price: "0.00",
-          category: "mint",
-        },
-      ],
+      // history: [
+      //   {
+      //     owner: walletAddress,
+      //     price: "0.00",
+      //     category: "mint",
+      //   },
+      // ],
     };
     Axios.post("/nft/add-nft-marketplace", obj, {
       headers: { authorization: localStorage.getItem("accessJWT") },
@@ -1008,15 +1006,21 @@ export default function CommunityMarketplace() {
                 {/* <Link to="/marketplace/profile-setting">Edit Profile</Link> */}
                 {isAuth ? (
                   <>
-                   <button className="editProf" onClick={() => (loading ? null : toggle())}>
-                   {loading ? <SpinnerCircular /> : "Add Token"}
-                 </button>
-                  <button onClick={() => (loading ? null : submitData())}>
-                    {loading ? <SpinnerCircular /> : "Mint NFT"}
-                  </button>
-                  <button onClick={() => (loading ? null : toggle2())} style={{ width: "20%" }}>
-                    {loading ? <SpinnerCircular /> : "Update Metadata"}
-                  </button>
+                    <button
+                      className="editProf"
+                      onClick={() => (loading ? null : toggle())}
+                    >
+                      {loading ? <SpinnerCircular /> : "Add Token"}
+                    </button>
+                    <button onClick={() => (loading ? null : submitData())}>
+                      {loading ? <SpinnerCircular /> : "Mint NFT"}
+                    </button>
+                    <button
+                      onClick={() => (loading ? null : toggle2())}
+                      style={{ width: "20%" }}
+                    >
+                      {loading ? <SpinnerCircular /> : "Update Metadata"}
+                    </button>
                   </>
                 ) : (
                   <button style={{ width: "20%" }} onClick={() => authToggle()}>
@@ -1081,18 +1085,26 @@ export default function CommunityMarketplace() {
                     Update Metadata
                   </Label>
                   <br />
-                  <span style={{ color: "black" }}>
+                  <span style={{ color: "black", fontSize: "15px",justifyContent:'center',display:'flex' }}>
                     Upload Metadata JSON file by specific format.
                   </span>
-                  
-                  <button>
+
+                  {/* <button>
                 Upload Metadata
                 <input
                   type="file"
                   name="file"
                   onChange={(e) => setPropertyFile(e.target.files[0])}
                 />
-              </button>
+              </button> */}
+                  <div class="file file--upload" style={{ marginTop: "10px" }}>
+                    <label for="input-file">Upload Metadata</label>
+                    <input
+                      id="input-file"
+                      type="file"
+                      onChange={(e) => setPropertyFile(e.target.files[0])}
+                    />
+                  </div>
                 </FormGroup>
               </div>
               <div className="collectionFrmBtn">
