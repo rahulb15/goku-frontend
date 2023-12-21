@@ -32,7 +32,7 @@ const HotCollectionsTab = (props) => {
   // const TTL = 28000;
 
   const creationTime = () => Math.round(new Date().getTime() / 1000) - 15;
-  const API_HOST = `https://api.testnet.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
+  const API_HOST = `https://api.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
   const { walletStatus, walletName, walletAddress } = useSelector(
     (state) => state.walletStatus
   );
@@ -71,14 +71,14 @@ const HotCollectionsTab = (props) => {
       if (checkNetwork.name == "Testnet") {
         walletInfo = await window.kadena.request({
           method: "kda_requestAccount",
-          networkId: "testnet04",
+          networkId: NETWORK_ID,
         });
       }
 
       if (checkNetwork.name == "Mainnet") {
         walletInfo = await window.kadena.request({
           method: "kda_requestAccount",
-          networkId: "mainnet01",
+          networkId: NETWORK_ID,
         });
       }
 
@@ -392,7 +392,7 @@ const HotCollectionsTab = (props) => {
 
     const a = accountName;
     const signCmd = {
-      pactCode: `(free.marketplacefinal002.get-fee "marketplace")`,
+      pactCode: `(free.km-marketplace.get-fee "marketplace")`,
       caps: [
         Pact.lang.mkCap(
           "GAS",
@@ -441,7 +441,7 @@ const HotCollectionsTab = (props) => {
 
     const a = accountName;
     const signCmd = {
-      pactCode: `(free.marketplacefinal002.get-royalty-account "${data.collectionName}")`,
+      pactCode: `(free.km-marketplace.get-royalty-account "${data.collectionName}")`,
       caps: [
         Pact.lang.mkCap(
           "GAS",
@@ -491,7 +491,7 @@ const HotCollectionsTab = (props) => {
 
     const a = accountName;
     const signCmd = {
-      pactCode: `(free.marketplacefinal002.get-royalty-rate "${data.collectionName}")`, 
+      pactCode: `(free.km-marketplace.get-royalty-rate "${data.collectionName}")`, 
       caps: [
         Pact.lang.mkCap(
           "GAS",
@@ -592,10 +592,10 @@ const HotCollectionsTab = (props) => {
     // const b = data.collection_info[0].royaltyAddress;
     const b = royaltyA;
     const c =
-      "00fd7ca27f0ab6cfb03e3316c23599890f7a82043cb73925dc080307b771528d";
+      "kryptomerch-bank";
     const d = data.creator;
 console.log("b", b, "c", c, "a", a, "d", d);
-    const pactCode = `(free.marketplacefinal002.buy ${JSON.stringify(
+    const pactCode = `(free.km-marketplace.buy ${JSON.stringify(
       data.tokenId
     )} ${JSON.stringify(a)})`;
     if (walletName == "Zelcore" || walletName == "Chainweaver") {
@@ -885,7 +885,7 @@ console.log("b", b, "c", c, "a", a, "d", d);
     const a = accountName;
     const b = receiver;
 
-    const pactCode = `(free.marketplacefinal002.gift-nft ${JSON.stringify(
+    const pactCode = `(free.km-marketplace.gift-nft ${JSON.stringify(
       tokenId
     )} ${JSON.stringify(a)} ${JSON.stringify(b)})`;
 
@@ -902,7 +902,7 @@ console.log("b", b, "c", c, "a", a, "d", d);
           Pact.lang.mkCap(
             "TRANSFER",
             "Capability to allow buying gas",
-            "free.marketplacefinal002.TRANSFER",
+            "free.km-marketplace.TRANSFER",
             []
           ),
         ],
@@ -1010,7 +1010,7 @@ console.log("b", b, "c", c, "a", a, "d", d);
             Pact.lang.mkCap(
               "TRANSFER",
               "Capability to allow buying gas",
-              "free.marketplacefinal002.TRANSFER",
+              "free.km-marketplace.TRANSFER",
               []
             ),
           ],

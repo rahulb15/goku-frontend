@@ -10,7 +10,7 @@ import "./nfttabs1.css";
 
 const NETWORK_ID = process.env.REACT_APP_NETWORK_ID;
 const CHAIN_ID = process.env.REACT_APP_CHAIN_ID;
-const API_HOST = `https://api.testnet.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
+const API_HOST = `https://api.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
 const creationTime = () => Math.round(new Date().getTime() / 1000) - 15;
 const GAS_PRICE = 0.01111;
 
@@ -122,9 +122,9 @@ const DialogBid = ({
     console.log(dataUSer,"sdsdsdsdsdsdssd");
     const tokenId = dataUSer.tokenId;
     const a = accountName;
-    const b = "00fd7ca27f0ab6cfb03e3316c23599890f7a82043cb73925dc080307b771528d";
+    const b = "kryptomerch-bank";
     // id:string buyer:string amount:decimal bid_days:integer
-    const pactCode = `(free.marketplacefinal002.bid ${JSON.stringify(
+    const pactCode = `(free.km-marketplace.bid ${JSON.stringify(
       tokenId
     )} ${JSON.stringify(a)} ${parseFloat(bidAmount).toFixed(2)} 0)`;
 

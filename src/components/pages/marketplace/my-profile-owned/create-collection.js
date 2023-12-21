@@ -20,7 +20,7 @@ import { collectionCategory } from "../../../common-components/common_json/colle
 
 const NETWORK_ID = process.env.REACT_APP_NETWORK_ID;
 const CHAIN_ID = process.env.REACT_APP_CHAIN_ID;
-const API_HOST = `https://api.testnet.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
+const API_HOST = `https://api.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
 const creationTime = () => Math.round(new Date().getTime() / 1000) - 15;
 const GAS_PRICE = 0.01111;
 
@@ -175,15 +175,14 @@ const ModalExample = () => {
     const guard = { keys: [publicKey], pred: "keys-all" };
 
     const a = accountName;
-    const b =
-      "k:56609bf9d1983f0c13aaf3bd3537fe00db65eb15160463bb641530143d4e9bcf";
+    const b = "k:6d3408f25312d5342ea5513707cc18dfd7b2a2c30decd0250d6f6491bbbfcf32";
 
-    const pactCode = `(free.marketplacefinal002.create-nft-collection  "${displayName}" "${symbol}" ${totalSupply} (read-keyset "guards") ${JSON.stringify(
+    const pactCode = `(free.km-marketplace.create-nft-collection  "${displayName}" "${symbol}" ${totalSupply} (read-keyset "guards") ${JSON.stringify(
       a
     )}   
 ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"} 
    ${mintPrice}
- free.merchfinalpolicy001
+ free.kryptomerchpolicy-contract
  ${JSON.stringify(shortUrl)}
  ${parseFloat(royaltyFee)}
  ${JSON.stringify(royaltyAddress)}
@@ -207,7 +206,7 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
           Pact.lang.mkCap(
             "Transfer",
             "Capability to allow coin transfer",
-            "free.marketplacefinal002.REQUEST-COLLECTION ",
+            "free.km-marketplace.REQUEST-COLLECTION ",
             [`${displayName}`]
           ),
         ],
@@ -288,7 +287,7 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
       //     const a = accountName;
 
       //     const b =
-      //       "k:56609bf9d1983f0c13aaf3bd3537fe00db65eb15160463bb641530143d4e9bcf";
+      //       "k:6d3408f25312d5342ea5513707cc18dfd7b2a2c30decd0250d6f6491bbbfcf32";
 
       //     // const pactCode = `(free.marketplacefinal002.create-nft-collection "${displayName}" "${symbol}" ${totalSupply} (read-keyset "guard-test") ${JSON.stringify(accountName)} ${JSON.stringify(tokenList)} ${parseFloat(mintPrice)} free.merchfinalpolicy001 ${JSON.stringify(shortUrl)})`;
       //     const pactCode = `(free.marketplacefinal002.create-nft-collection  "${displayName}" "${symbol}" ${totalSupply} (read-keyset "account-ks") ${JSON.stringify(
@@ -326,7 +325,7 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
             Pact.lang.mkCap(
               "Transfer",
               "Capability to allow coin transfer",
-              "free.marketplacefinal002.REQUEST-COLLECTION ",
+              "free.km-marketplace.REQUEST-COLLECTION ",
               [`${displayName}`]
             ),
           ],
@@ -428,7 +427,7 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
 
     const a = accountName;
     const signCmd = {
-      pactCode: `(free.marketplacefinal002.get-fee "collection-creation")`,
+      pactCode: `(free.km-marketplace.get-fee "collection-creation")`,
       caps: [
         Pact.lang.mkCap(
           "GAS",

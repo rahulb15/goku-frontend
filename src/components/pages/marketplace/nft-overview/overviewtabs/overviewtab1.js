@@ -217,11 +217,11 @@ console.log(bigs)
                   nightModeStatus ? { color: "white" } : { color: "black" }
                 }
               >
-                {collectionName == "pass3"
-                  ? "pass"
-                  : collectionName == "dbcooper"
-                  ? "dbcooper"
-                  : "free.merchfinal001"}
+                {collectionName == "pass"
+                  ? "free.km-pass-contract"
+                  : collectionName == "dbc"
+                  ? "free.km-dbcooper-contract"
+                  : "free.kryptomerch-contract"}
               </a>
             </div>
           </li>

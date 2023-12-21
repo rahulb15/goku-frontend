@@ -23,7 +23,7 @@ import "./nfttabs1.css";
 
 const NETWORK_ID = process.env.REACT_APP_NETWORK_ID;
 const CHAIN_ID = process.env.REACT_APP_CHAIN_ID;
-const API_HOST = `https://api.testnet.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
+const API_HOST = `https://api.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
 const creationTime = () => Math.round(new Date().getTime() / 1000) - 15;
 const GAS_PRICE = 0.01111;
 
@@ -139,7 +139,7 @@ const NftTabs1 = () => {
     const publicKey1 = accountName1.slice(2, accountName1.length);
     const guard1 = { keys: [publicKey1], pred: "keys-all" };
     const a = accountName1;
-    const pactCode = `(free.merchfinalpolicy001.get-nft-price "${
+    const pactCode = `(free.kryptomerchpolicy-contract.get-nft-price "${
       userNft?.collectionName || ""
     }")`;
     const signCmd = {
@@ -386,7 +386,7 @@ const NftTabs1 = () => {
             const a = accountName;
             const b = receiver;
 
-            const pactCode = `(free.marketplacefinal002.gift-nft ${JSON.stringify(
+            const pactCode = `(free.km-marketplace.gift-nft ${JSON.stringify(
               tokenId
             )} ${JSON.stringify(a)} ${JSON.stringify(b)})`;
 
@@ -403,7 +403,7 @@ const NftTabs1 = () => {
                   Pact.lang.mkCap(
                     "TRANSFER",
                     "Capability to allow buying gas",
-                    "free.marketplacefinal002.TRANSFER",
+                    "free.km-marketplace.TRANSFER",
                     []
                   ),
                 ],
@@ -508,7 +508,7 @@ const NftTabs1 = () => {
                     Pact.lang.mkCap(
                       "TRANSFER",
                       "Capability to allow buying gas",
-                      "free.marketplacefinal002.TRANSFER",
+                      "free.km-marketplace.TRANSFER",
                       []
                     ),
                   ],

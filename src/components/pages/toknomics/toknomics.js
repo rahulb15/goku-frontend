@@ -14,20 +14,7 @@ const GAS_LIMIT = 150000;
 const TTL = 28000;
 const CHAIN_ID = "1";
 const creationTime = () => Math.round(new Date().getTime() / 1000) - 15;
-const API_HOST = `https://api.testnet.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
-const KEY_PAIR = {
-  publicKey: "260fe7bca08c45c03d4fc5f3d0a7fafaa8d28d4a3c3db0b2158dd18725ab0586",
-  secretKey: "4aaeb090601faa327e37b1ec26b7adca1469e25ccd776e33776496edc860d383",
-};
-const KP = {
-  publicKey: "057644c6dc3da0b6e5c695508afd24198171577802fcaaa351ae77bc0f2244c1",
-  secretKey: "e5b9aafbfafb4998ef3e2bfd5cc2671f6306258d34e4b8963ea9dea1e855884d",
-};
-
-const KPTWO = {
-  publicKey: "fa48b2939c5b1770c9161f4eb9ccaddc73b18c6501243dd54697d757c1914934",
-  secretKey: "a0c28907dce337e1d11042a4169615f5609be1204d847cdf68974f5c8a55df80",
-};
+const API_HOST = `https://api.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
 
 const Toknomics = () => {
   return (

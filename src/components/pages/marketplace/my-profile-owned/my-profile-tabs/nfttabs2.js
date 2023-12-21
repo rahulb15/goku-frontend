@@ -22,7 +22,7 @@ import "./nfttabs1.css";
 
 const NETWORK_ID = process.env.REACT_APP_NETWORK_ID;
 const CHAIN_ID = process.env.REACT_APP_CHAIN_ID;
-const API_HOST = `https://api.testnet.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
+const API_HOST = `https://api.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
 const creationTime = () => Math.round(new Date().getTime() / 1000) - 15;
 const GAS_PRICE = 0.01111;
 
@@ -215,7 +215,7 @@ const NftTabs1 = () => {
 
     const a = accountName;
 
-    const pactCode = `(free.marketplacefinal002.accept-last-bid ${JSON.stringify(
+    const pactCode = `(free.km-marketplace.accept-last-bid ${JSON.stringify(
       tokenId
     )} )`;
     if (walletName == "Zelcore" || walletName == "Chainweaver") {
@@ -432,7 +432,7 @@ const NftTabs1 = () => {
     const a = accountName;
 
     // id:string buyer:string amount:decimal bid_days:integer
-    const pactCode = `(free.marketplacefinal002.decline-bid ${JSON.stringify(
+    const pactCode = `(free.km-marketplace.decline-bid ${JSON.stringify(
       tokenId2
     )})`;
 
@@ -623,7 +623,7 @@ const NftTabs1 = () => {
 
     const a = accountName;
 
-    const pactCode = `(free.marketplacefinal002.close-sale ${JSON.stringify(
+    const pactCode = `(free.km-marketplace.close-sale ${JSON.stringify(
       tokenId2
     )})`;
 
@@ -830,7 +830,7 @@ const NftTabs1 = () => {
 
     const a = accountName;
 
-    const pactCode = `(free.marketplacefinal002.close-sale ${JSON.stringify(
+    const pactCode = `(free.km-marketplace.close-sale ${JSON.stringify(
       tokenId2
     )})`;
 

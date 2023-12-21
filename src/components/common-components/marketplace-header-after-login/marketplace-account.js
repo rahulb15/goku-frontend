@@ -98,7 +98,7 @@ const MarketplaceAccount = () => {
       if (checkNetwork.name == "Mainnet") {
         const disconnects = await window.kadena.request({
           method: "kda_disconnect",
-          networkId: "mainnet01",
+          networkId: NETWORK_ID,
         });
         dispatch(
           walletStatusUpdate({
@@ -115,7 +115,7 @@ const MarketplaceAccount = () => {
       if (checkNetwork.name == "Testnet") {
         const disconnects = await window.kadena.request({
           method: "kda_disconnect",
-          networkId: "testnet04",
+          networkId: NETWORK_ID,
         });
         dispatch(
           walletStatusUpdate({

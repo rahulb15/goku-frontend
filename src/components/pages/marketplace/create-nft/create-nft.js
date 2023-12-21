@@ -20,7 +20,7 @@ import "./create-nft.scss";
 
 const NETWORK_ID = process.env.REACT_APP_NETWORK_ID;
 const CHAIN_ID = process.env.REACT_APP_CHAIN_ID;
-const API_HOST = `https://api.testnet.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
+const API_HOST = `https://api.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
 const creationTime = () => Math.round(new Date().getTime() / 1000) - 15;
 const GAS_PRICE = 0.01111;
 
@@ -159,7 +159,7 @@ const CommunityMarketplace = () => {
 
     const a = accountName;
     const signCmd = {
-      pactCode: `(free.marketplacefinal002.get-royalty-rate "${data?.collectionName}")`,
+      pactCode: `(free.km-marketplace.get-royalty-rate "${data?.collectionName}")`,
       caps: [
         Pact.lang.mkCap(
           "GAS",
@@ -269,9 +269,9 @@ const CommunityMarketplace = () => {
 
     const a = accountName;
     const b =
-      "00fd7ca27f0ab6cfb03e3316c23599890f7a82043cb73925dc080307b771528d";
+      "kryptomerch-bank";
 
-    const pactCode = `(free.marketplacefinal002.open-sale "direct-sale" ${JSON.stringify(
+    const pactCode = `(free.km-marketplace.open-sale "direct-sale" ${JSON.stringify(
       tokenId
     )}  ${JSON.stringify(a)} ${nftPrice} 0 ${parseInt(duration)} false)`;
 
@@ -534,9 +534,9 @@ const CommunityMarketplace = () => {
 
     const a = accountName;
     const b =
-      "00fd7ca27f0ab6cfb03e3316c23599890f7a82043cb73925dc080307b771528d";
+      "kryptomerch-bank";
 
-    const pactCode = `(free.marketplacefinal002.open-sale "Auction" ${JSON.stringify(
+    const pactCode = `(free.km-marketplace.open-sale "Auction" ${JSON.stringify(
       tokenId
     )}  ${JSON.stringify(a)} ${nftPrice} 0 ${parseInt(duration)} true)`;
 
@@ -820,7 +820,7 @@ const CommunityMarketplace = () => {
   const getFee = async () => {
     const accountName = walletAddress;
     const signCmd = {
-      pactCode: `(free.marketplacefinal002.get-fee "marketplace")`,
+      pactCode: `(free.km-marketplace.get-fee "marketplace")`,
       caps: [
         Pact.lang.mkCap(
           "GAS",

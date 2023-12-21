@@ -87,7 +87,7 @@ const NftTabs1 = () => {
                     <Link
                       to={{
                         pathname: "/marketplace/nft-overview",
-                        search: item?.collectionName == "pass3" || item?.collectionName == "dbc" ? `?id=${item?._id}` :
+                        search: item?.collectionName == "pass" || item?.collectionName == "dbc" ? `?id=${item?._id}` :
                         `?id=${item?._id}&for=all`,
                       }}
                     >
@@ -127,7 +127,7 @@ const NftTabs1 = () => {
                               ? item?.onAuction
                                 ? "Open For Bids"
                                 : item?.nftPrice + " KDA"
-                              : item?.collectionName == "pass3" || item?.collectionName == "dbc"
+                              : item?.collectionName == "pass" || item?.collectionName == "dbc"
                               ?   item?.passCost   :item?.nftPrice + " KDA"
                                }
                           </span>{" "}

@@ -42,7 +42,7 @@ const RegisterPopup = () => {
     try {
       var checkConnection = await window.kadena.request({
         method: "kda_checkStatus",
-        networkId: "testnet04",
+        networkId: NETWORK_ID,
       });
       if ((checkConnection.status = "fail")) {
         setWalletConnected(false);

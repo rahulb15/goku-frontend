@@ -45,7 +45,7 @@ import {
 
 const NETWORK_ID = process.env.REACT_APP_NETWORK_ID;
 const CHAIN_ID = process.env.REACT_APP_CHAIN_ID;
-const API_HOST = `https://api.testnet.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
+const API_HOST = `https://api.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
 const creationTime = () => Math.round(new Date().getTime() / 1000) - 15;
 const GAS_PRICE = 0.01111;
 
@@ -238,7 +238,7 @@ export default function CommunityMarketplace() {
 
     console.log(tokenList, "tokenList");
 
-    const pactCode = `(free.merchfinal001.updatetokenlist ${
+    const pactCode = `(free.kryptomerch-contract.updatetokenlist ${
       tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"
     } 
     "${collectionData?.collection_info[0]?.collectionName}")`;
@@ -529,7 +529,7 @@ export default function CommunityMarketplace() {
     const publicKey1 = accountName1.slice(2, accountName1.length);
     const guard1 = { keys: [publicKey1], pred: "keys-all" };
     const a = accountName1;
-    const pactCode = `(free.merchfinal001.get-collection-price "${collectionData?.collection_info[0]?.collectionName}")`;
+    const pactCode = `(free.kryptomerch-contract.get-collection-price "${collectionData?.collection_info[0]?.collectionName}")`;
     const signCmd = {
       pactCode: pactCode,
       caps: [
@@ -563,7 +563,7 @@ export default function CommunityMarketplace() {
     const publicKey1 = accountName1.slice(2, accountName1.length);
     const guard1 = { keys: [publicKey1], pred: "keys-all" };
     const a = accountName1;
-    const pactCode = `(free.merchfinal001.get-collection-creator "${collectionData?.collection_info[0]?.collectionName}")`;
+    const pactCode = `(free.kryptomerch-contract.get-collection-creator "${collectionData?.collection_info[0]?.collectionName}")`;
     const signCmd = {
       pactCode: pactCode,
       caps: [
@@ -598,7 +598,7 @@ export default function CommunityMarketplace() {
     const a = accountName;
     const b = accountName1; //comment
     if (walletName == "Zelcore" || walletName == "Chainweaver") {
-      const pactCode = `(free.merchfinal001.mint ${JSON.stringify(
+      const pactCode = `(free.kryptomerch-contract.mint ${JSON.stringify(
         a
       )} (read-keyset "guard") 1.0 "${
         collectionData?.collection_info[0]?.collectionName
@@ -621,7 +621,7 @@ export default function CommunityMarketplace() {
             Pact.lang.mkCap(
               "MINT-COOPER",
               "Capability for owner",
-              "free.merchfinal001.MINT",
+              "free.kryptomerch-contract.MINT",
               [a, 1.0]
             ),
           ],
@@ -653,7 +653,7 @@ export default function CommunityMarketplace() {
             Pact.lang.mkCap(
               "MINT-COOPER",
               "Capability for owner",
-              "free.merchfinal001.MINT",
+              "free.kryptomerch-contract.MINT",
               [a, 1.0]
             ),
           ],
@@ -701,7 +701,7 @@ export default function CommunityMarketplace() {
       }
     }
     if (walletName == "Xwallet") {
-      const pactCode = `(free.merchfinal001.mint ${JSON.stringify(
+      const pactCode = `(free.kryptomerch-contract.mint ${JSON.stringify(
         a
       )} (read-keyset "guard") 1.0 "${
         collectionData?.collection_info[0]?.collectionName
@@ -731,7 +731,7 @@ export default function CommunityMarketplace() {
             Pact.lang.mkCap(
               "MINT-COOPER",
               "Capability for owner",
-              "free.merchfinal001.MINT",
+              "free.kryptomerch-contract.MINT",
               [a, 1.0]
             ),
           ],

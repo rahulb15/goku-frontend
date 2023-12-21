@@ -34,7 +34,7 @@ const HotCollectionsTab = (props) => {
   const TTL = 28000;
 
   const creationTime = () => Math.round(new Date().getTime() / 1000) - 15;
-  const API_HOST = `https://api.testnet.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
+  const API_HOST = `https://api.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
   const { walletStatus, walletName, walletAddress } = useSelector(
     (state) => state.walletStatus
   );
@@ -65,14 +65,14 @@ const HotCollectionsTab = (props) => {
       if (checkNetwork.name == "Testnet") {
         walletInfo = await window.kadena.request({
           method: "kda_requestAccount",
-          networkId: "testnet04",
+          networkId: NETWORK_ID,
         });
       }
 
       if (checkNetwork.name == "Mainnet") {
         walletInfo = await window.kadena.request({
           method: "kda_requestAccount",
-          networkId: "mainnet01",
+          networkId: NETWORK_ID,
         });
       }
 
@@ -187,7 +187,7 @@ const HotCollectionsTab = (props) => {
 
     const a = accountName;
 
-    const pactCode = `(free.marketplacefinal002.accept-last-bid ${JSON.stringify(
+    const pactCode = `(free.km-marketplace.accept-last-bid ${JSON.stringify(
       tokenId
     )} )`;
     if (walletName == "Zelcore" || walletName == "Chainweaver") {
@@ -398,7 +398,7 @@ const HotCollectionsTab = (props) => {
     const a = accountName;
 
     // id:string buyer:string amount:decimal bid_days:integer
-    const pactCode = `(free.marketplacefinal002.decline-bid ${JSON.stringify(
+    const pactCode = `(free.km-marketplace.decline-bid ${JSON.stringify(
       tokenId2
     )})`;
 
@@ -582,7 +582,7 @@ const HotCollectionsTab = (props) => {
 
     const a = accountName;
 
-    const pactCode = `(free.marketplacefinal002.close-sale ${JSON.stringify(
+    const pactCode = `(free.km-marketplace.close-sale ${JSON.stringify(
       tokenId2
     )})`;
 
@@ -782,7 +782,7 @@ const HotCollectionsTab = (props) => {
 
     const a = accountName;
 
-    const pactCode = `(free.marketplacefinal002.close-sale ${JSON.stringify(
+    const pactCode = `(free.km-marketplace.close-sale ${JSON.stringify(
       tokenId2
     )})`;
 

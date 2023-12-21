@@ -37,7 +37,7 @@ import { FaDiscord, FaKickstarterK } from "react-icons/fa";
 
 const NETWORK_ID = process.env.REACT_APP_NETWORK_ID;
 const CHAIN_ID = process.env.REACT_APP_CHAIN_ID;
-const API_HOST = `https://api.testnet.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
+const API_HOST = `https://api.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
 const creationTime = () => Math.round(new Date().getTime() / 1000) - 15;
 const GAS_PRICE = 0.01111;
 
@@ -182,7 +182,7 @@ const CommunityMarketplace = () => {
     const publicKey1 = accountName1.slice(2, accountName1.length);
     const guard1 = { keys: [publicKey1], pred: "keys-all" };
     const a = accountName1;
-    const pactCode = `(free.merchfinal001.get-collection-price "${collectionData?.collection_info[0]?.collectionName}")`;
+    const pactCode = `(free.kryptomerch-contract.get-collection-price "${collectionData?.collection_info[0]?.collectionName}")`;
     const signCmd = {
       pactCode: pactCode,
       caps: [
@@ -216,7 +216,7 @@ const CommunityMarketplace = () => {
     const publicKey1 = accountName1.slice(2, accountName1.length);
     const guard1 = { keys: [publicKey1], pred: "keys-all" };
     const a = accountName1;
-    const pactCode = `(free.merchfinal001.get-collection-creator "${collectionData?.collection_info[0]?.collectionName}")`;
+    const pactCode = `(free.kryptomerch-contract.get-collection-creator "${collectionData?.collection_info[0]?.collectionName}")`;
     const signCmd = {
       pactCode: pactCode,
       caps: [
@@ -251,7 +251,7 @@ const CommunityMarketplace = () => {
     const a = accountName;
     const b = accountName1; //comment
     if (walletName == "Zelcore" || walletName == "Chainweaver") {
-      const pactCode = `(free.merchfinal001.mint ${JSON.stringify(
+      const pactCode = `(free.kryptomerch-contract.mint ${JSON.stringify(
         a
       )} (read-keyset "guard") 1.0 "${collectionData?.collection_info[0]?.collectionName}" 1)`;
       let signCmd;
@@ -265,14 +265,11 @@ const CommunityMarketplace = () => {
               "coin.GAS",
               []
             ),
-            //  Pact.lang.mkCap("MERCH","Capability for owner", "free.dbcfinal002.COOPER"),
-            //    Pact.lang.mkCap("Transfer","Capability to allow coin transfer","coin.TRANSFER",
-            //       [a, b, 2.0]
-            //), //if creaotr == mint user  comment this 2419 to 2421
+
             Pact.lang.mkCap(
               "MINT-COOPER",
               "Capability for owner",
-              "free.merchfinal001.MINT",
+              "free.kryptomerch-contract.MINT",
               [a, 1.0]
             ),
           ],
@@ -294,17 +291,16 @@ const CommunityMarketplace = () => {
               "coin.GAS",
               []
             ),
-            //  Pact.lang.mkCap("MERCH","Capability for owner", "free.dbcfinal002.COOPER"),
             Pact.lang.mkCap(
               "Transfer",
               "Capability to allow coin transfer",
               "coin.TRANSFER",
               [a, b, collectionPrice]
-            ), //if creaotr == mint user  comment this 2419 to 2421
+            ),
             Pact.lang.mkCap(
               "MINT-COOPER",
               "Capability for owner",
-              "free.merchfinal001.MINT",
+              "free.kryptomerch-contract.MINT",
               [a, 1.0]
             ),
           ],
@@ -352,7 +348,7 @@ const CommunityMarketplace = () => {
       }
     }
     if (walletName == "Xwallet") {
-      const pactCode = `(free.merchfinal001.mint ${JSON.stringify(
+      const pactCode = `(free.kryptomerch-contract.mint ${JSON.stringify(
         a
       )} (read-keyset "guard") 1.0 "${collectionData?.collection_info[0]?.collectionName}" 1)`;
       const XWalletRequest = {
@@ -370,17 +366,16 @@ const CommunityMarketplace = () => {
               "coin.GAS",
               []
             ),
-            //  Pact.lang.mkCap("MERCH","Capability for owner", "free.dbcfinal002.COOPER"),
             Pact.lang.mkCap(
               "Transfer",
               "Capability to allow coin transfer",
               "coin.TRANSFER",
               [a, b, collectionPrice]
-            ), //if creaotr == mint user  comment this 2419 to 2421
+            ), 
             Pact.lang.mkCap(
               "MINT-COOPER",
               "Capability for owner",
-              "free.merchfinal001.MINT",
+              "free.kryptomerch-contract.MINT",
               [a, 1.0]
             ),
           ],

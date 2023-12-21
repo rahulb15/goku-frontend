@@ -58,7 +58,7 @@ const NftTabs1 = (props) => {
         //       });
         // }
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
 
   // console.log(profileImg, "profileImg");
@@ -113,25 +113,23 @@ const NftTabs1 = (props) => {
     // }
 
     // Validate the twitterUrl
-    const twitterUrlPattern =
-      /^https?:\/\/(www\.)?twitter\.com\/[a-zA-Z0-9_]+\/?$/;
+    const twitterUrlPattern = /^https?:\/\/(www\.)?twitter\.com\/[a-zA-Z0-9_\-\.]+\/?$/;
     if (twitterUrl && !twitterUrl.match(twitterUrlPattern)) {
-      toast.error("Invalid Twitter URL", {
-        position: "top-right",
-      });
-      return; // Prevent further execution if the URL is invalid
+     toast.error("Invalid Twitter URL", {
+       position: "top-right",
+     });
+     return; // Prevent further execution if the URL is invalid
     }
 
     // Validate the instaUrl
-    const instaUrlPattern =
-      /^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9_]+\/?$/;
+    const instaUrlPattern = /^(?:https?:\/\/)?(?:www\.)?instagram\.com\/[a-zA-Z0-9_\-\.]+\/?(?:\?[^\/]*)?$/;
     if (instaUrl && !instaUrl.match(instaUrlPattern)) {
       toast.error("Invalid Instagram URL", {
         position: "top-right",
       });
       return; // Prevent further execution if the URL is invalid
     }
-
+    
     const formData = new FormData();
     // Append the user information fields to the FormData
     formData.append("name", firstName);
@@ -409,7 +407,7 @@ const NftTabs1 = (props) => {
             onChange={handleOnChange}
             id="exampleEmail"
             className="iconInp"
-            placeholder="Enter your Twitter username"
+            placeholder="Enter your Instagram username"
           />
         </FormGroup>
         <i>

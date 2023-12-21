@@ -28,7 +28,7 @@ import "./nfttabs1.css";
 
 const NETWORK_ID = process.env.REACT_APP_NETWORK_ID;
 const CHAIN_ID = process.env.REACT_APP_CHAIN_ID;
-const API_HOST = `https://api.testnet.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
+const API_HOST = `https://api.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
 const creationTime = () => Math.round(new Date().getTime() / 1000) - 15;
 const GAS_PRICE = 0.01111;
 
@@ -93,7 +93,7 @@ const NftTabs1 = (props) => {
   //   const guard = { keys: [publicKey], pred: "keys-all" };
   //   const tokenId = item.tokenId;
   //   const a = accountName;
-  //   const pactCode = `(free.marketplacefinal002.get-last-bid ${JSON.stringify(
+  //   const pactCode = `(free.km-marketplace.get-last-bid ${JSON.stringify(
   //     tokenId
   //   )})`;
   //   const signCmd = {
@@ -205,7 +205,7 @@ const NftTabs1 = (props) => {
   const getFee = async () => {
     const accountName = walletAddress;
     const signCmd = {
-      pactCode: `(free.marketplacefinal002.get-fee "marketplace")`,
+      pactCode: `(free.km-marketplace.get-fee "marketplace")`,
       caps: [
         Pact.lang.mkCap(
           "GAS",
@@ -259,7 +259,7 @@ const NftTabs1 = (props) => {
 
     const a = accountName;
     const signCmd = {
-      pactCode: `(free.marketplacefinal002.get-royalty-account "${data?.collectionName}")`,
+      pactCode: `(free.km-marketplace.get-royalty-account "${data?.collectionName}")`,
       caps: [
         Pact.lang.mkCap(
           "GAS",
@@ -309,7 +309,7 @@ const NftTabs1 = (props) => {
 
     const a = accountName;
     const signCmd = {
-      pactCode: `(free.marketplacefinal002.get-royalty-rate "${data?.collectionName}")`,
+      pactCode: `(free.km-marketplace.get-royalty-rate "${data?.collectionName}")`,
       caps: [
         Pact.lang.mkCap(
           "GAS",
@@ -384,12 +384,12 @@ const NftTabs1 = (props) => {
     // const b = data.collection_info[0].royaltyAddress;
     const b = royaltyA;
     const c =
-      "00fd7ca27f0ab6cfb03e3316c23599890f7a82043cb73925dc080307b771528d";
+      "kryptomerch-bank";
     const d = data.creator;
     console.log("a", a, "b", b, "c", c, "d", d);
     console.log("royalityAddress", royaltyA);
     console.log("royalityRate", royaltyR);
-    const pactCode = `(free.marketplacefinal002.buy ${JSON.stringify(
+    const pactCode = `(free.km-marketplace.buy ${JSON.stringify(
       data.tokenId
     )} ${JSON.stringify(a)})`;
     if (walletName == "Zelcore" || walletName == "Chainweaver") {
@@ -611,295 +611,7 @@ const NftTabs1 = (props) => {
       }
     }
   };
-  // var collectionCreator = "";
-  // var collectionPrice = 0;
-  // const getCollectionPrice = async () => {
-  //   const accountName1 = walletAddress;
-  //   const publicKey1 = accountName1.slice(2, accountName1.length);
-  //   const guard1 = { keys: [publicKey1], pred: "keys-all" };
-  //   const a = accountName1;
-  //   const pactCode = `(free.merchfinal001.get-collection-price "${props.collectionName}")`;
-  //   const signCmd = {
-  //     pactCode: pactCode,
-  //     caps: [
-  //       Pact.lang.mkCap(
-  //         "GAS",
-  //         "Capability to allow buying gas",
-  //         "coin.GAS",
-  //         []
-  //       ),
-  //     ],
-  //     meta: {
-  //       creationTime: creationTime(),
-  //       gasLimit: 100000,
-  //       chainId: CHAIN_ID,
-  //       ttl: 28800,
-  //       gasPrice: GAS_PRICE,
-  //       // IMPORTANT: the API requires this attribute even if it's an empty value like in this case
-  //       sender: "",
-  //     },
-  //   }; //alert to sign tx
-  //   const response = await Pact.fetch.local(signCmd, API_HOST);
-  //   if (response.result.status === "success") {
-  //     // setCollectionPrice(response.result.data);
-  //     collectionPrice = response.result.data;
-  //   }
-  // };
-  // const getCollectionCreator = async () => {
-  //   setLoading(true);
-  //   const accountName1 = walletAddress;
-  //   const publicKey1 = accountName1.slice(2, accountName1.length);
-  //   const guard1 = { keys: [publicKey1], pred: "keys-all" };
-  //   const a = accountName1;
-  //   const pactCode = `(free.merchfinal001.get-collection-creator "${props.collectionName}")`;
-  //   const signCmd = {
-  //     pactCode: pactCode,
-  //     caps: [
-  //       Pact.lang.mkCap(
-  //         "GAS",
-  //         "Capability to allow buying gas",
-  //         "coin.GAS",
-  //         []
-  //       ),
-  //     ],
-  //     meta: {
-  //       creationTime: creationTime(),
-  //       gasLimit: 100000,
-  //       chainId: CHAIN_ID,
-  //       ttl: 28800,
-  //       gasPrice: GAS_PRICE,
-  //       // IMPORTANT: the API requires this attribute even if it's an empty value like in this case
-  //       sender: "",
-  //     },
-  //   }; //alert to sign tx
-  //   const response = await Pact.fetch.local(signCmd, API_HOST);
-  //   if (response.result.status === "success") {
-  //     // setCollectionCreator(response.result.data);
-  //     collectionCreator = response.result.data;
-  //   }
-  // };
-  // const mintCollectionTwo = async () => {
-  //   const accountName1 = collectionCreator;
-  //   const accountName = walletAddress;
-  //   const publicKey = accountName.slice(2, accountName.length);
-  //   const guard = { keys: [publicKey], pred: "keys-all" };
-  //   const a = accountName;
-  //   const b = accountName1; //comment
-  //   if (walletName == "Zelcore" || walletName == "Chainweaver") {
-  //     const pactCode = `(free.merchfinal001.mint ${JSON.stringify(
-  //       a
-  //     )} (read-keyset "guard") 1.0 "${props.collectionName}" 1)`;
-  //     let signCmd;
-  //     if (a === b) {
-  //       signCmd = {
-  //         pactCode: pactCode,
-  //         caps: [
-  //           Pact.lang.mkCap(
-  //             "GAS",
-  //             "Capability to allow buying gas",
-  //             "coin.GAS",
-  //             []
-  //           ),
-  //           //  Pact.lang.mkCap("MERCH","Capability for owner", "free.dbcfinal002.COOPER"),
-  //           //    Pact.lang.mkCap("Transfer","Capability to allow coin transfer","coin.TRANSFER",
-  //           //       [a, b, 2.0]
-  //           //), //if creaotr == mint user  comment this 2419 to 2421
-  //           Pact.lang.mkCap(
-  //             "MINT-COOPER",
-  //             "Capability for owner",
-  //             "free.merchfinal001.MINT",
-  //             [a, 1.0]
-  //           ),
-  //         ],
-  //         sender: a,
-  //         gasLimit: 150000,
-  //         chainId: CHAIN_ID,
-  //         ttl: 28800,
-  //         envData: {
-  //           guard: guard,
-  //         },
-  //       }; //alert to sign tx
-  //     } else {
-  //       signCmd = {
-  //         pactCode: pactCode,
-  //         caps: [
-  //           Pact.lang.mkCap(
-  //             "GAS",
-  //             "Capability to allow buying gas",
-  //             "coin.GAS",
-  //             []
-  //           ),
-  //           //  Pact.lang.mkCap("MERCH","Capability for owner", "free.dbcfinal002.COOPER"),
-  //           Pact.lang.mkCap(
-  //             "Transfer",
-  //             "Capability to allow coin transfer",
-  //             "coin.TRANSFER",
-  //             [a, b, collectionPrice]
-  //           ), //if creaotr == mint user  comment this 2419 to 2421
-  //           Pact.lang.mkCap(
-  //             "MINT-COOPER",
-  //             "Capability for owner",
-  //             "free.merchfinal001.MINT",
-  //             [a, 1.0]
-  //           ),
-  //         ],
-  //         sender: a,
-  //         gasLimit: 150000,
-  //         chainId: CHAIN_ID,
-  //         ttl: 28800,
-  //         envData: {
-  //           guard: guard,
-  //         },
-  //       }; //alert to sign tx
-  //     }
-  //     const cmd = await Pact.wallet.sign(signCmd);
-  //     if (cmd) {
-  //       const localRes = await fetch(`${API_HOST}/api/v1/local`, {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         method: "POST",
-  //         body: JSON.stringify(cmd),
-  //       });
-  //       const rawRes = await localRes;
-  //       const resJSON = await rawRes.json();
-  //       if (resJSON.result.status === "success") {
-  //         const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
-  //         const signedtxx = await Pact.fetch.listen(
-  //           { listen: reqKey.requestKeys[0] },
-  //           API_HOST
-  //         );
-  //         if (signedtxx.result.status === "success") {
-  //           const token_id = signedtxx.events[3].params[0];
-  //           // const token_owner = signedtxx.events[3].params[1];
-  //           nftSubmit(token_id);
-  //         } else {
-  //           toast.error("Transaction failed");
-  //           setLoading(false);
-  //         }
-  //       } else {
-  //         toast.error("Transaction failed");
-  //         setLoading(false);
-  //       }
-  //     } else {
-  //       toast.error("Rejected from wallet");
-  //       setLoading(false);
-  //     }
-  //   }
-  //   if (walletName == "Xwallet") {
-  //     const pactCode = `(free.merchfinal001.mint ${JSON.stringify(
-  //       a
-  //     )} (read-keyset "guard") 1.0 "${props.collectionName}" 1)`;
-  //     const XWalletRequest = {
-  //       networkId: NETWORK_ID,
-  //       signingCmd: {
-  //         sender: a,
-  //         chainId: CHAIN_ID,
-  //         gasPrice: 0.0000001,
-  //         gasLimit: 150000,
-  //         ttl: 28000,
-  //         caps: [
-  //           Pact.lang.mkCap(
-  //             "GAS",
-  //             "Capability to allow buying gas",
-  //             "coin.GAS",
-  //             []
-  //           ),
-  //           //  Pact.lang.mkCap("MERCH","Capability for owner", "free.dbcfinal002.COOPER"),
-  //           Pact.lang.mkCap(
-  //             "Transfer",
-  //             "Capability to allow coin transfer",
-  //             "coin.TRANSFER",
-  //             [a, b, collectionPrice]
-  //           ), //if creaotr == mint user  comment this 2419 to 2421
-  //           Pact.lang.mkCap(
-  //             "MINT-COOPER",
-  //             "Capability for owner",
-  //             "free.merchfinal001.MINT",
-  //             [a, 1.0]
-  //           ),
-  //         ],
-  //         envData: {
-  //           guard: guard,
-  //         },
-  //         pactCode: pactCode,
-  //         networkId: NETWORK_ID,
-  //         signingPubKey: publicKey,
-  //         creationTime: creationTime(),
-  //       }, //alert to sign tx
-  //     };
-  //     // 18.87350
-  //     const cmd = await window.kadena.request({
-  //       method: "kda_requestSign",
-  //       networkId: NETWORK_ID,
-  //       data: XWalletRequest,
-  //     });
-  //     const gore2 = await Pact.wallet.sendSigned(cmd.signedCmd, API_HOST);
-  //     setSpinner("true");
-  //     const txResult = await Pact.fetch.listen(
-  //       { listen: `${gore2.requestKeys[0]}` },
-  //       API_HOST
-  //     );
-  //     if (txResult.result.status === "success") {
-  //       const token_id = txResult.events[3].params[0];
-  //       // const token_owner = signedtxx.events[3].params[1];
-  //       nftSubmit(token_id);
-  //     } else {
-  //       toast.error("Transaction failed");
-  //       setLoading(false);
-  //     }
-  //     if (txResult.result.status == "failure") {
-  //       toast.error("Minting Issue", {
-  //         position: "top-right",
-  //       });
-  //     }
-  //   }
-  // };
-  // const nftSubmit = async (token) => {
-  //   // const token_id =
-  //   // "newCollectionGuy:dU4W2bg2_QhqkPTvwbH3afcqzkvr30AOhcxugfmlxlc";
-  //   // const tokenId = token_id.split(":")[1];
-  //   const tokenId = token;
-  //   const collectionId = foo;
-  //   const obj = {
-  //     tokenId: tokenId,
-  //     walletAddress: walletAddress,
-  //     // clientId: props.collectionData.clientId,
-  //     collectionId: props.collectionData._id,
-  //     onMarketplace: false,
-  //     history: [
-  //       {
-  //         owner: walletAddress,
-  //         price: "0.00",
-  //         category: "mint",
-  //       },
-  //     ],
-  //   };
-  //   Axios.post("/nft/add-nft-marketplace", obj, {
-  //     headers: { authorization: localStorage.getItem("accessJWT") },
-  //   })
-  //     .then((response) => {
-  //       if (response.data.status == "success") {
-  //         toast.success("NFT added successfully");
-  //         setRefresh(!refresh);
-  //         setLoading(false);
-  //       } else {
-  //         toast.error("NFT not added");
-  //         setLoading(false);
-  //       }
-  //     })
-  //     .catch((error) => {
-        
-  //       setLoading(false);
-  //     });
-  // };
-  // const submitData = async () => {
-  //   await getCollectionPrice();
-  //   await getCollectionCreator();
-  //   mintCollectionTwo();
-  //   // nftSubmit();
-  // };
-
+ 
   const rangeSelect = () => {
     setRefresh(!refresh);
   };

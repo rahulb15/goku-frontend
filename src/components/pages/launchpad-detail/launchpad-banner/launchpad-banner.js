@@ -65,7 +65,7 @@ const GAS_LIMIT = 150000;
 const TTL = 28000;
 
 const creationTime = () => Math.round(new Date().getTime() / 1000) - 15;
-const API_HOST = `https://api.testnet.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
+const API_HOST = `https://api.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
 //testnet
 // const pactCodePPtotalPass=`(free.policytest15.get-total-supply)`
 // const pactCodePPtotalMint=`(free.policytest15.get-minted)`
@@ -73,24 +73,18 @@ const API_HOST = `https://api.testnet.chainweb.com/chainweb/0.0/${NETWORK_ID}/ch
 // const pactCodeDBtotalMint=`(free.dbpolicytest10.get-minted)`
 
 //mainnet
-const pactCodePPtotalPass = `(free.passfinalpolicy001.get-total-supply)`;
-const pactCodePPtotalMint = `(free.passfinalpolicy001.get-minted)`;
-const pactCodeDBtotalPass = `(free.dbcfinalpolicy002.get-total-supply)`;
-const pactCodeDBtotalMint = `(free.dbcfinalpolicy002.get-minted)`;
+const pactCodePPtotalPass = `(free.km-passpolicy-contract.get-total-supply)`;
+const pactCodePPtotalMint = `(free.km-passpolicy-contract.get-minted)`;
+const pactCodeDBtotalPass = `(free.km-dbcooperpolicy-contract.get-total-supply)`;
+const pactCodeDBtotalMint = `(free.km-dbcooperpolicy-contract.get-minted)`;
 
 // ${node}/chainweb/0.0/${networkId}/chain/${chainId}/pact
 // `https://api.testnet.chainweb.com/chainweb/0.0/testnet04/chain/${chainId}/pact`;
-
-const KPTWO = {
-  publicKey: "fa48b2939c5b1770c9161f4eb9ccaddc73b18c6501243dd54697d757c1914934",
-  secretKey: "a0c28907dce337e1d11042a4169615f5609be1204d847cdf68974f5c8a55df80",
-};
 
 const LaunchpadDetails = () => {
   const a = useContext(walletContext);
   const params = useParams();
   const dispatch = useDispatch();
-  //useEffect(() => { localStorage. setItem('dataKey', JSON. stringify(data)); }, [data]);
   const [project, setProject] = useState({});
 
   useEffect(() => {
@@ -100,11 +94,7 @@ const LaunchpadDetails = () => {
   const getPassAll = async () => {
     dispatch(fetchPriorityPass());
     dispatch(fetchDbPass());
-    // const passno=await getAllPass()
-    // const dbPassno=await getDbPass()
-    // 
-    // setPassNumber(passno.data.result[0].passNumber)
-    // setDbPassNumber(dbPassno.data.result[0].passNumber)
+   
   };
 
   const renderTooltip = (props) => (
@@ -152,20 +142,11 @@ const LaunchpadDetails = () => {
         } else {
           setUserRegistered(false);
         }
-        // toast.success("We have received your Enquiry and will get get back to you in next 24 hours", {
-        //     position: "top-right"
-        // })
-        // setMessage(data.message);
-        // setEmail("");
-        // setEnquiryTitle("");
-        // setBokkingId("");
-        // setEnquiry("");s
+        
       })
       .catch((error) => {
         setUserRegistered(false);
-        //setLoading(false);
-        // setMessage('Something went wrong while creating Enquiry! Please try again');
-        // setErrorStatus(true);
+
       });
   };
 
@@ -221,13 +202,9 @@ const LaunchpadDetails = () => {
   let price;
   console.log("pricePASSSSSSSS", price);
   const getPassPrice = async () => {
-    // const accountName =
-    //   "k:";
-    // // const accountName = walletAddress;
-    // const publicKey = accountName.slice(2, accountName.length);
-
+  
     const signCmd = {
-      pactCode: `(free.passfinalpolicy001.get-price)`,
+      pactCode: `(free.km-passpolicy-contract.get-price)`,
       caps: [
         Pact.lang.mkCap(
           "GAS",
@@ -249,19 +226,14 @@ const LaunchpadDetails = () => {
 
     const response = await Pact.fetch.local(signCmd, API_HOST);
     if (response.result.status == "success") {
-      // setPrice(response.result.data)
-      // price = response.result.data;
+      
       setPassPrice(response.result.data);
     }
   };
   const getDbCooperPrice = async () => {
-    // const accountName =
-    //   "k:";
-    // // const accountName = walletAddress;
-    // const publicKey = accountName.slice(2, accountName.length);
-
+   
     const signCmd = {
-      pactCode: `(free.dbcfinalpolicy002.get-nft-price)`,
+      pactCode: `(free.km-dbcooperpolicy-contract.get-nft-price)`,
       caps: [
         Pact.lang.mkCap(
           "GAS",
@@ -283,20 +255,15 @@ const LaunchpadDetails = () => {
 
     const response = await Pact.fetch.local(signCmd, API_HOST);
     if (response.result.status == "success") {
-      // setPrice(response.result.data)
-      // price = response.result.data;
+
       setDbCooperPrice(response.result.data);
     }
   };
 
   const getDbCooperPriceWl = async () => {
-    // const accountName =
-    //   "k:";
-    // // const accountName = walletAddress;
-    // const publicKey = accountName.slice(2, accountName.length);
-
+   
     const signCmd = {
-      pactCode: `(free.dbcfinalpolicy002.get-wl-price)`,
+      pactCode: `(free.km-dbcooperpolicy-contract.get-wl-price)`,
       caps: [
         Pact.lang.mkCap(
           "GAS",
@@ -318,8 +285,7 @@ const LaunchpadDetails = () => {
 
     const response = await Pact.fetch.local(signCmd, API_HOST);
     if (response.result.status == "success") {
-      // setPrice(response.result.data)
-      // price = response.result.data;
+
       setDbCooperPriceWl(response.result.data);
     }
   };
@@ -341,31 +307,6 @@ const LaunchpadDetails = () => {
     setModal(!modal);
     toggle3();
   };
-
-  // const getaccountbalance=async()=>
-  // {
-  //   //const pactCode = `(coin.get-balance ${JSON.stringify("k:057644c6dc3da0b6e5c695508afd24198171577802fcaaa351ae77bc0f2244c1")})`
-  //   const pactCode = `(coin.get-balance ${JSON.stringify("k:fa48b2939c5b1770c9161f4eb9ccaddc73b18c6501243dd54697d757c1914934")})`
-
-  //     const cmdObj = {
-  //         networkId: NETWORK_ID,
-  //         keyPairs: KEY_PAIR,
-  //         pactCode:pactCode,
-  //         envData: {
-  //           },
-  //        meta: {
-  //         creationTime: creationTime(),
-  //         ttl: 28000,
-  //         gasLimit: 150000,
-  //         chainId: CHAIN_ID,
-  //         gasPrice: 0.0000001,
-  //         sender: "k:"+ KEY_PAIR.publicKey
-  //       }
-
-  //     }
-  //     const result = await Pact.fetch.local(cmdObj, API_HOST);
-  //     
-  // }
 
   const isXWalletInstalled = () => {
     const { kadena } = window;
@@ -730,11 +671,6 @@ const LaunchpadDetails = () => {
     if (isXWalletInstalled()) {
       setModal(!modal);
 
-      // const checkStat=window.kadena.request({
-      //   method: 'kda_checkStatus',
-      //   networkId: NETWORKID,
-      // });
-
       const checkNetwork = await window.kadena.request({
         method: "kda_getNetwork",
       });
@@ -748,110 +684,71 @@ const LaunchpadDetails = () => {
       // }
 
       if (checkNetwork.name == "Testnet") {
-        // toast.error("Network Invalid", {
-        //   position: "top-right"
-
-        // });
-        // const checkStat=await window.kadena.request({
-        //   method: 'kda_checkStatus',
-        //   networkId: "testnet04",
-        // });
-
-        // if(checkStat.message=="Not connected"){
-        const staat = await window.kadena.request({
-          method: "kda_connect",
-          networkId: "testnet04",
+        toast.error("Switch the network from Testnet to Mainnet.", {
+          position: "top-right",
         });
-        // afterConnection()
-
-        const checkStat2 = await window.kadena.request({
-          method: "kda_checkStatus",
-          networkId: "testnet04",
-        });
-
-        if (checkStat2.status == "success") {
-          const isAuth = await userLogin({
-            walletAddress: checkStat2.account.account,
-          });
-          if (isAuth.status === "error") {
-            return dispatch(loginFail(isAuth.message));
-          }
-          dispatch(loginSuccess());
-          dispatch(
-            walletStatusUpdate({
-              walletStatus: "true",
-              walletName: "Xwallet",
-              walletAddress: checkStat2.account.account,
-            })
-          );
-          // checkUserRegisteration()
-        } else {
-          toast.error("Please Reconnect Wallet", {
-            position: "top-right",
-          });
-        }
 
         return;
       }
 
-      // if (checkNetwork.name == "Mainnet") {
-      //   const checkStat = await window.kadena.request({
-      //     method: 'kda_checkStatus',
-      //     networkId: "mainnet01",
-      //   });
+      if (checkNetwork.name == "Mainnet") {
+        const checkStat = await window.kadena.request({
+          method: 'kda_checkStatus',
+          networkId: NETWORK_ID,
+        });
 
-      //   if (checkStat.message == "Not connected") {
-      //     const connectXwallet = await window.kadena.request({
-      //       method: 'kda_connect',
-      //       networkId: "mainnet01",
-      //     });
-      //     let data = await Pact.fetch.local(
-      //       {
-      //         pactCode: `(coin.details ${JSON.stringify(connectXwallet.account.account)})`,
-      //         meta: Pact.lang.mkMeta(
-      //           "",
-      //           "1",
-      //           0.01111,
-      //           3000,
-      //           creationTime(),
-      //           600,
-      //         ),
-      //       },
-      //       `https://api.chainweb.com/chainweb/0.0/${process.env.REACT_APP_NETWORK_ID}/chain/${process.env.REACT_APP_CHAIN_ID}/pact`,
-      //     );
+        if (checkStat.message == "Not connected") {
+          const connectXwallet = await window.kadena.request({
+            method: 'kda_connect',
+            networkId: NETWORK_ID,
+          });
+          let data = await Pact.fetch.local(
+            {
+              pactCode: `(coin.details ${JSON.stringify(connectXwallet.account.account)})`,
+              meta: Pact.lang.mkMeta(
+                "",
+                "8",
+                0.01111,
+                3000,
+                creationTime(),
+                600,
+              ),
+            },
+            `https://api.chainweb.com/chainweb/0.0/${process.env.REACT_APP_NETWORK_ID}/chain/${process.env.REACT_APP_CHAIN_ID}/pact`,
+          );
 
-      //     if (data.result.status === "success") {
-      //       const checkStat2 = await window.kadena.request({
-      //         method: 'kda_checkStatus',
-      //         networkId: "mainnet01",
-      //       });
-      //       if (checkStat2.status == "success") {
+          if (data.result.status === "success") {
+            const checkStat2 = await window.kadena.request({
+              method: 'kda_checkStatus',
+              networkId: NETWORK_ID,
+            });
+            if (checkStat2.status == "success") {
 
-      //         const isAuth = await userLogin({ walletAddress: checkStat2.account.account });
-      //         if (isAuth.status === 'error') {
-      //           return dispatch(loginFail(isAuth.message));
-      //         }
-      //         dispatch(loginSuccess());
-      //         dispatch(walletStatusUpdate({ walletStatus: "true", walletName: "Xwallet", walletAddress: checkStat2.account.account }))
-      //         checkUserRegisteration()
-      //       }
-      //     } else {
-      //       const discon = await window.kadena.request({
-      //         method: 'kda_disconnect',
-      //         networkId: 'mainnet01 ',
-      //       });
+              const isAuth = await userLogin({ walletAddress: checkStat2.account.account });
+              if (isAuth.status === 'error') {
+                return dispatch(loginFail(isAuth.message));
+              }
+              dispatch(loginSuccess());
+              dispatch(walletStatusUpdate({ walletStatus: "true", walletName: "Xwallet", walletAddress: checkStat2.account.account }))
+              checkUserRegisteration()
+            }
+          } else {
+            const discon = await window.kadena.request({
+              method: 'kda_disconnect',
+              networkId: NETWORK_ID,
+            });
 
-      //       toast.error("Account not found in the preferred chain", {
-      //         position: "top-right"
+            toast.error("Account not found in the preferred chain", {
+              position: "top-right"
 
-      //       });
+            });
 
-      //       return
-      //     }
+            return
+          }
 
-      //   }
+        }
 
-      // }
+      }
     }
 
     if (!isXWalletInstalled()) {
@@ -881,33 +778,22 @@ const LaunchpadDetails = () => {
 
             walletInfo = await window.kadena.request({
               method: "kda_requestAccount",
-              networkId: "testnet04",
+              networkId: NETWORK_ID,
             });
-
-            //   const networkInfo= await window.kadena.request({
-            //     method: 'kda_getNetwork',
-            //   });
-
-            //     const result = await Pact.fetch.local(signCmd4, API_HOST);
-
-            // }
 
             const guard = {
               keys: [walletInfo.wallet.publicKey],
               pred: "keys-all",
             };
 
-            // 52.63826
-            // k:fa48b2939c5b1770c9161f4eb9ccaddc73b18c6501243dd54697d757c1914934
-            // 2bf96bfc2cfeee85800aff1aa4a83eafe4cb5f81442713be8b64f293f31a5c7e
+           
             const a = walletInfo.wallet.account;
             const b =
-              "k:56609bf9d1983f0c13aaf3bd3537fe00db65eb15160463bb641530143d4e9bcf";
-            const pactCode = `(free.passfinal001.mint-pass ${JSON.stringify(
+              "k:6d3408f25312d5342ea5513707cc18dfd7b2a2c30decd0250d6f6491bbbfcf32";
+            const pactCode = `(free.km-pass-contract.mint-pass ${JSON.stringify(
               a
-            )} (read-keyset "guard") 1.0 "pass3" 1)`;
+            )} (read-keyset "guard") 1.0 "pass" 1)`;
 
-            //  const pactCode = `(coin.get-balance ${JSON.stringify("k:fa48b2939c5b1770c9161f4eb9ccaddc73b18c6501243dd54697d757c1914934")})`
             const XWalletRequest = {
               networkId: NETWORK_ID,
               signingCmd: {
@@ -927,7 +813,7 @@ const LaunchpadDetails = () => {
                   Pact.lang.mkCap(
                     "MERCH",
                     "Capability for owner",
-                    "free.passfinal001.PASS"
+                    "free.km-pass-contract.PASS"
                   ),
                   Pact.lang.mkCap(
                     "Transfer",
@@ -938,7 +824,7 @@ const LaunchpadDetails = () => {
                   Pact.lang.mkCap(
                     "",
                     "Capability for owner",
-                    "free.passfinal001.MINT-PASS",
+                    "free.km-pass-contract.MINT-PASS",
                     [a, 1.0]
                   ),
                 ],
@@ -985,107 +871,25 @@ const LaunchpadDetails = () => {
             setSpinner("false");
           }
 
-          //  // const response = await Pact.fetch.send(cmdObj, API_HOST);
-          //   const txResult = await Pact.fetch.listen({ listen: response.requestKeys[0] }, API_HOST);
-
           if (walletName == "Zelcore" || walletName == "Chainweaver") {
             const accountName =
               walletName == "Chainweaver"
                 ? localStorage.getItem("chainWeaverWalletAdd")
                 : localStorage.getItem("zelcorewalletadd");
 
-            // const signCmd4 = {
-
-            //   pactCode: `(free.passfinal001.mint-pass ${JSON.stringify(accountName)} (read-keyset "guard") 1.0 "pass2" 1)`,
-
-            //   caps: [
-
-            //     Pact.lang.mkCap("GAS","Capability to allow buying gas","coin.GAS",[]),
-            //     Pact.lang.mkCap("MERCH","Capability for owner", "free.passfinal001.PASS"),
-            //     Pact.lang.mkCap("Transfer","Capability to allow coin transfer","coin.TRANSFER",
-            //        [a, b, 2.0]
-            //      ),
-            //    Pact.lang.mkCap("MINT-PASS","Capability for owner", "free.passfinal001.MINT-PASS",
-            //         [a,1.0]),
-
-            //   ],
-
-            //   meta: {
-
-            //     creationTime: creationTime(),
-
-            //     gasLimit: 100000,
-
-            //     chainId: CHAIN_ID,
-
-            //     ttl: 28800,
-
-            //     gasPrice: GAS_PRICE,
-
-            //     sender: ''
-
-            //   }
-            // }
-
-            // const result = await Pact.fetch.local(signCmd4, API_HOST);
-            // //balncechecka
-            // if (result.result.data <= 101) {
-
-            //   toast.error("Low Balance", {
-            //     position: "top-right"
-
-            //   })
-
-            //   return
-            // }
 
             const publicKey = accountName.slice(2, accountName.length);
             const guard = { keys: [publicKey], pred: "keys-all" };
-
-            // 52.63826
-            // k:fa48b2939c5b1770c9161f4eb9ccaddc73b18c6501243dd54697d757c1914934
-            // 2bf96bfc2cfeee85800aff1aa4a83eafe4cb5f81442713be8b64f293f31a5c7e
+        
             const a = accountName;
             const b =
-              "k:56609bf9d1983f0c13aaf3bd3537fe00db65eb15160463bb641530143d4e9bcf";
-            const pactCode = `(free.passfinal001.mint-pass ${JSON.stringify(
+              "k:6d3408f25312d5342ea5513707cc18dfd7b2a2c30decd0250d6f6491bbbfcf32";
+            const pactCode = `(free.km-pass-contract.mint-pass ${JSON.stringify(
               a
-            )} (read-keyset "guard") 1.0 "pass3" 1)`;
+            )} (read-keyset "guard") 1.0 "pass" 1)`;
 
-            //  const pactCode=`(free.passtest10.mint-bulk-pass  ${JSON.stringify(a)} (read-keyset "demothreeaccount-keyset") 1.0 "pcol1" 1)`
-            //  const pactCode = `(coin.get-balance ${JSON.stringify("k:fa48b2939c5b1770c9161f4eb9ccaddc73b18c6501243dd54697d757c1914934")})`
             const signCmd = {
               pactCode: pactCode,
-
-              // pactCode: `(coin.transfer "sender01" "sender00" 1.0)`,
-              //testnet caps:[
-              //   Pact.lang.mkCap(
-              //     "GAS",
-              //     "Capability to allow buying gas",
-              //     "coin.GAS",
-              //     []
-              //   ),
-              //   Pact.lang.mkCap("PRIVATE",
-              //    "Capability for owner", "free.passtest15.PRIVATE"),
-              //    Pact.lang.mkCap(
-              //     "Transfer",
-              //     "Capability to allow coin transfer",
-              //     "coin.TRANSFER",
-              //     [a, b, 2.0]
-              //   ),
-              //   Pact.lang.mkCap("CREDIT",
-              //    "Capability for owner", "free.passtest15.CREDIT",
-              //     ["",a]),
-              //   Pact.lang.mkCap("CREDIT",
-              //     "Capability for owner", "free.passtest15.MINT-PASS",
-              //      [a,1.0]),
-              //   Pact.lang.mkCap("CREDIT_MERCH",
-              //     "Capability for owner", "free.passtest15.CREDIT-MERCH",
-              //      [a]),
-              //   Pact.lang.mkCap("MERCH",
-              //    "Capability for owner", "free.passtest15.MERCH",
-              //     ["padmin-15-ks"])
-              //   ]
 
               caps: [
                 Pact.lang.mkCap(
@@ -1097,7 +901,7 @@ const LaunchpadDetails = () => {
                 Pact.lang.mkCap(
                   "MERCH",
                   "Capability for owner",
-                  "free.passfinal001.PASS"
+                  "free.km-pass-contract.PASS"
                 ),
                 Pact.lang.mkCap(
                   "Transfer",
@@ -1108,7 +912,7 @@ const LaunchpadDetails = () => {
                 Pact.lang.mkCap(
                   "MINT-PASS",
                   "Capability for owner",
-                  "free.passfinal001.MINT-PASS",
+                  "free.km-pass-contract.MINT-PASS",
                   [a, 1.0]
                 ),
               ],
@@ -1216,7 +1020,7 @@ const LaunchpadDetails = () => {
               method: "kda_getNetwork",
             });
             var walletInfo;
-            if (checkNetwork.name == "Testnet") {
+            // if (checkNetwork.name == "Testnet") {
               // walletInfo = await window.kadena.request({
               //   method: 'kda_requestAccount',
               //   networkId: "testnet04",
@@ -1224,7 +1028,7 @@ const LaunchpadDetails = () => {
 
               walletInfo = await window.kadena.request({
                 method: "kda_requestAccount",
-                networkId: "testnet04",
+                networkId: NETWORK_ID,
               });
 
               const signCmd4 = {
@@ -1233,29 +1037,11 @@ const LaunchpadDetails = () => {
                 )})`,
 
                 caps: [
-                  Pact.lang.mkCap(
-                    "GAS",
-
-                    "Capability to allow buying gas",
-
-                    "coin.GAS",
-
-                    []
-                  ),
+                  Pact.lang.mkCap("GAS","Capability to allow buying gas","coin.GAS",[]),
                 ],
 
                 meta: {
-                  creationTime: creationTime(),
-
-                  gasLimit: 100000,
-
-                  chainId: CHAIN_ID,
-
-                  ttl: 28800,
-
-                  gasPrice: GAS_PRICE,
-
-                  sender: "",
+                  creationTime: creationTime(),gasLimit: 100000,chainId: CHAIN_ID,ttl: 28800,gasPrice: GAS_PRICE,sender: "",
                 },
               };
 
@@ -1270,22 +1056,16 @@ const LaunchpadDetails = () => {
 
                 return;
               }
-            }
+            // }
 
             const guard = {
               keys: [walletInfo.wallet.publicKey],
               pred: "keys-all",
             };
-            //k:178f05a90477ef6501b08082e93ccd2b6d2d5bd11af70a93e35406c5ba082de8
-            // 52.63826
-            // k:fa48b2939c5b1770c9161f4eb9ccaddc73b18c6501243dd54697d757c1914934
-            // 2bf96bfc2cfeee85800aff1aa4a83eafe4cb5f81442713be8b64f293f31a5c7e
             const a = walletInfo.wallet.account;
-            // const b = "dbtestacc10"
             const b =
-              "k:56609bf9d1983f0c13aaf3bd3537fe00db65eb15160463bb641530143d4e9bcf";
-            // const pactCode = `(free.dbcontracttest8.mint-bulk-cooper  ${JSON.stringify(a)} (read-keyset "demothreeaccount-keyset") 1.0 "mcol3" 1)`
-            const pactCode = `(free.dbcfinal002.mint-cooper ${JSON.stringify(
+              "k:688b1b8531fcfa4b893cd8d7d787e39331746d3cece83523eef30fb21cbfb890";
+            const pactCode = `(free.km-dbcooper-contract.mint-cooper ${JSON.stringify(
               a
             )} (read-keyset "guard") 1.0 "dbc" 1)`;
             const XWalletRequest = {
@@ -1295,36 +1075,7 @@ const LaunchpadDetails = () => {
                 chainId: CHAIN_ID,
                 gasPrice: 0.0000001,
                 gasLimit: 150000,
-                ttl: 28000,
-                // caps:[
-                //   Pact.lang.mkCap(
-                //     "GAS",
-                //     "Capability to allow buying gas",
-                //     "coin.GAS",
-                //     []
-                //   ),
-                //   Pact.lang.mkCap("PRIVATE",
-                //    "Capability for owner", "free.dbcontracttest8.PRIVATE"),
-                //    Pact.lang.mkCap(
-                //     "Transfer",
-                //     "Capability to allow coin transfer",
-                //     "coin.TRANSFER",
-                //     [a, b, 3.0]
-                //   ),
-                //   Pact.lang.mkCap("CREDIT",
-                //    "Capability for owner", "free.dbcontracttest8.CREDIT",
-                //     ["",a]),
-                //   Pact.lang.mkCap("CREDIT",
-                //     "Capability for owner", "free.dbcontracttest8.MINT-COOPER",
-                //      [a,1.0]),
-                //   Pact.lang.mkCap("CREDIT_COOPER",
-                //     "Capability for owner", "free.dbcontracttest8.CREDIT-COOPER",
-                //      [a]),
-                //   Pact.lang.mkCap("COOPER",
-                //    "Capability for owner", "free.dbcontracttest8.COOPER",
-                //     ["dbtest-ks-8"])
-                // ]
-
+                ttl: 28000,           
                 caps: [
                   Pact.lang.mkCap(
                     "GAS",
@@ -1335,7 +1086,7 @@ const LaunchpadDetails = () => {
                   Pact.lang.mkCap(
                     "MERCH",
                     "Capability for owner",
-                    "free.dbcfinal002.COOPER"
+                    "free.km-dbcooper-contract.COOPER"
                   ),
                   Pact.lang.mkCap(
                     "Transfer",
@@ -1346,7 +1097,7 @@ const LaunchpadDetails = () => {
                   Pact.lang.mkCap(
                     "MINT-COOPER",
                     "Capability for owner",
-                    "free.dbcfinal002.MINT-COOPER",
+                    "free.km-dbcooper-contract.MINT-COOPER",
                     [a, 1.0]
                   ),
                 ],
@@ -1358,18 +1109,9 @@ const LaunchpadDetails = () => {
                 signingPubKey: walletInfo.wallet.publicKey,
                 creationTime: creationTime(),
 
-                // meta: {
-                //   creationTime: creationTime(),
-                //   ttl: 28000,
-                //   gasLimit: 150000,
-                //   chainId: CHAIN_ID,
-                //   gasPrice: 0.0000001,
-                //   sender:"k:fa48b2939c5b1770c9161f4eb9ccaddc73b18c6501243dd54697d757c1914934"
-                // }
+                
               }, //alert to sign tx
             };
-
-            // 18.87350
 
             const cmd = await window.kadena.request({
               method: "kda_requestSign",
@@ -1448,49 +1190,15 @@ const LaunchpadDetails = () => {
             const publicKey = accountName.slice(2, accountName.length);
             const guard = { keys: [publicKey], pred: "keys-all" };
 
-            // 52.63826
-            // k:fa48b2939c5b1770c9161f4eb9ccaddc73b18c6501243dd54697d757c1914934
-            // 2bf96bfc2cfeee85800aff1aa4a83eafe4cb5f81442713be8b64f293f31a5c7e
             const a = accountName;
-            // const b = "dbtestacc10"
             const b =
-              "k:56609bf9d1983f0c13aaf3bd3537fe00db65eb15160463bb641530143d4e9bcf";
-            //  const pactCode=`(free.passtest10.mint-bulk-pass  ${JSON.stringify(a)} (read-keyset "demothreeaccount-keyset") 1.0 "col4" 1)`
-            //  const pactCode = `(coin.get-balance ${JSON.stringify("k:fa48b2939c5b1770c9161f4eb9ccaddc73b18c6501243dd54697d757c1914934")})`
+              "k:688b1b8531fcfa4b893cd8d7d787e39331746d3cece83523eef30fb21cbfb890";
+           
             const signCmd = {
-              //  pactCode:`(free.dbcontracttest8.mint-bulk-cooper  ${JSON.stringify(a)} (read-keyset "demothreeaccount-keyset") 1.0 "mcol3" 1)`,
-              pactCode: `(free.dbcfinal002.mint-cooper ${JSON.stringify(
+              pactCode: `(free.km-dbcooper-contract.mint-cooper ${JSON.stringify(
                 a
               )} (read-keyset "guard") 1.0 "dbc" 1)`,
 
-              // caps:[
-              //   Pact.lang.mkCap(
-              //     "GAS",
-              //     "Capability to allow buying gas",
-              //     "coin.GAS",
-              //     []
-              //   ),
-              //   Pact.lang.mkCap("PRIVATE",
-              //    "Capability for owner", "free.dbcontracttest8.PRIVATE"),
-              //    Pact.lang.mkCap(
-              //     "Transfer",
-              //     "Capability to allow coin transfer",
-              //     "coin.TRANSFER",
-              //     [a, b, 3.0]
-              //   ),
-              //   Pact.lang.mkCap("CREDIT",
-              //    "Capability for owner", "free.dbcontracttest8.CREDIT",
-              //     ["",a]),
-              //   Pact.lang.mkCap("CREDIT",
-              //     "Capability for owner", "free.dbcontracttest8.MINT-COOPER",
-              //      [a,1.0]),
-              //   Pact.lang.mkCap("CREDIT_COOPER",
-              //     "Capability for owner", "free.dbcontracttest8.CREDIT-COOPER",
-              //      [a]),
-              //   Pact.lang.mkCap("COOPER",
-              //    "Capability for owner", "free.dbcontracttest8.COOPER",
-              //     ["dbtest-ks-8"])
-              //   ]
 
               caps: [
                 Pact.lang.mkCap(
@@ -1502,7 +1210,7 @@ const LaunchpadDetails = () => {
                 Pact.lang.mkCap(
                   "MERCH",
                   "Capability for owner",
-                  "free.dbcfinal002.COOPER"
+                  "free.km-dbcooper-contract.COOPER"
                 ),
                 Pact.lang.mkCap(
                   "Transfer",
@@ -1513,7 +1221,7 @@ const LaunchpadDetails = () => {
                 Pact.lang.mkCap(
                   "MINT-COOPER",
                   "Capability for owner",
-                  "free.dbcfinal002.MINT-COOPER",
+                  "free.km-dbcooper-contract.MINT-COOPER",
                   [a, 1.0]
                 ),
               ],
@@ -1609,7 +1317,7 @@ const LaunchpadDetails = () => {
 
   const checkWhitelist = async () => {
     const signCmd = {
-      pactCode: `(free.dbcfinalpolicy002.check-whitelist)`,
+      pactCode: `(free.km-dbcooperpolicy-contract.check-whitelist)`,
 
       // pactCode: `(coin.transfer "sender01" "sender00" 1.0)`,
       caps: [
@@ -1639,7 +1347,7 @@ const LaunchpadDetails = () => {
 
   const checkPublicRound = async () => {
     const signCmd = {
-      pactCode: `(free.dbcfinalpolicy002.check-public)`,
+      pactCode: `(free.km-dbcooperpolicy-contract.check-public)`,
 
       // pactCode: `(coin.transfer "sender01" "sender00" 1.0)`,
       caps: [

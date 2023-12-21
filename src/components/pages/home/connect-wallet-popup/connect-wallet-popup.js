@@ -30,7 +30,7 @@ const ConnectPopup = () => {
   const NETWORK_ID = process.env.REACT_APP_NETWORK_ID;
   const CHAIN_ID = process.env.REACT_APP_CHAIN_ID;
 
-  const API_HOST = `https://api.testnet.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
+  const API_HOST = `https://api.chainweb.com/chainweb/0.0/${NETWORK_ID}/chain/${CHAIN_ID}/pact`;
 
   const [modal, setModal] = useState(false);
   const [modal2, setModal2] = useState(false);
@@ -162,7 +162,7 @@ const ConnectPopup = () => {
 
       const disconnects = await window.kadena.request({
         method: "kda_disconnect",
-        networkId: "testnet04",
+        networkId: NETWORK_ID,
       });
       dispatch(
         walletStatusUpdate({
@@ -208,7 +208,7 @@ const ConnectPopup = () => {
       if (checkNetwork.name == "Testnet") {
         var checkConnection = await window.kadena.request({
           method: "kda_checkStatus",
-          networkId: "testnet04",
+          networkId: NETWORK_ID,
         });
         if (checkConnection.status == "fail") {
           setWalletConnected(false);
@@ -218,7 +218,7 @@ const ConnectPopup = () => {
         if (checkConnection.status == "success") {
           var getBalance = await window.kadena.request({
             method: "kda_requestAccount",
-            networkId: "testnet04",
+            networkId: NETWORK_ID,
           });
           setBalance(getBalance.wallet.balance);
           setWalletConnected(true);
@@ -229,7 +229,7 @@ const ConnectPopup = () => {
       if (checkNetwork.name == "Mainnet") {
         var checkConnection = await window.kadena.request({
           method: "kda_checkStatus",
-          networkId: "mainnet01",
+          networkId: NETWORK_ID,
         });
         if (checkConnection.status == "fail") {
           setWalletConnected(false);
@@ -239,7 +239,7 @@ const ConnectPopup = () => {
         if (checkConnection.status == "success") {
           var getBalance = await window.kadena.request({
             method: "kda_requestAccount",
-            networkId: "mainnet01",
+            networkId: NETWORK_ID,
           });
           setBalance(getBalance.wallet.balance);
           setWalletConnected(true);
@@ -364,7 +364,7 @@ const ConnectPopup = () => {
       let data = await Pact.fetch.local(
         {
           pactCode: `(coin.details ${JSON.stringify(res2.data[0])})`,
-          meta: Pact.lang.mkMeta("", "1", 0.01111, 3000, creationTime(), 600),
+          meta: Pact.lang.mkMeta("", "8", 0.01111, 3000, creationTime(), 600),
         },
         API_HOST
       );
@@ -445,135 +445,114 @@ const ConnectPopup = () => {
     if (isXWalletInstalled()) {
       setModal(!modal);
 
-      // const checkStat=window.kadena.request({
-      //   method: 'kda_checkStatus',
-      //   networkId: NETWORKID,
-      // });
-
       const checkNetwork = await window.kadena.request({
         method: "kda_getNetwork",
       });
 
-      // if  (checkNetwork.id!="8"){
-      //   toast.error("Invalid Chain", {
-      //     position: "top-right"
-
-      // });
-
-      // }
-
       if (checkNetwork.name == "Testnet") {
-        // toast.error("Network Invalid", {
-        //   position: "top-right"
-
-        // });
-        // const checkStat=await window.kadena.request({
-        //   method: 'kda_checkStatus',
-        //   networkId: "testnet04",
-        // });
-
-        // if(checkStat.message=="Not connected"){
-        const staat = await window.kadena.request({
-          method: "kda_connect",
-          networkId: "testnet04",
+        toast.error("Switch the network from Testnet to Mainnet.", {
+          position: "top-right",
         });
-        // afterConnection()
+        // const staat = await window.kadena.request({
+        //   method: "kda_connect",
+        //   networkId: NETWORK_ID,
+        // });
+        // // afterConnection()
 
-        const checkStat2 = await window.kadena.request({
-          method: "kda_checkStatus",
-          networkId: "testnet04",
-        });
+        // const checkStat2 = await window.kadena.request({
+        //   method: "kda_checkStatus",
+        //   networkId: NETWORK_ID,
+        // });
 
-        if (checkStat2.status == "success") {
-          const isAuth = await userLogin({
-            walletAddress: checkStat2.account.account,
-          });
-          if (isAuth.status === "error") {
-            return dispatch(loginFail(isAuth.message));
-          }
-          dispatch(loginSuccess());
-          dispatch(
-            walletStatusUpdate({
-              walletStatus: "true",
-              walletName: "Xwallet",
-              walletAddress: checkStat2.account.account,
-            })
-          );
-          checkUserRegisteration();
-          window.location.reload();
-        } else {
-          toast.error("Please Reconnect Wallet", {
-            position: "top-right",
-          });
-        }
+        // if (checkStat2.status == "success") {
+        //   const isAuth = await userLogin({
+        //     walletAddress: checkStat2.account.account,
+        //   });
+        //   if (isAuth.status === "error") {
+        //     return dispatch(loginFail(isAuth.message));
+        //   }
+        //   dispatch(loginSuccess());
+        //   dispatch(
+        //     walletStatusUpdate({
+        //       walletStatus: "true",
+        //       walletName: "Xwallet",
+        //       walletAddress: checkStat2.account.account,
+        //     })
+        //   );
+        //   checkUserRegisteration();
+        //   window.location.reload();
+        // } else {
+        //   toast.error("Please Reconnect Wallet", {
+        //     position: "top-right",
+        //   });
+        // }
 
         return;
       }
 
-      // if (checkNetwork.name == "Mainnet") {
-      //   const checkStat = await window.kadena.request({
-      //     method: 'kda_checkStatus',
-      //     networkId: "mainnet01",
-      //   });
+      if (checkNetwork.name == "Mainnet") {
+        const checkStat = await window.kadena.request({
+          method: 'kda_checkStatus',
+          networkId: NETWORK_ID,
+        });
 
-      //   
+      
+        if (checkStat.message == "Not connected") {
+          const connectXwallet = await window.kadena.request({
+            method: 'kda_connect',
+            networkId: NETWORK_ID,
+          });
+          
+          let data = await Pact.fetch.local(
+            {
+              pactCode: `(coin.details ${JSON.stringify(connectXwallet.account.account)})`,
+              meta: Pact.lang.mkMeta(
+                "",
+                "8",
+                0.01111,
+                3000,
+                creationTime(),
+                600,
+              ),
+            },
+            `https://api.chainweb.com/chainweb/0.0/${process.env.REACT_APP_NETWORK_ID}/chain/${process.env.REACT_APP_CHAIN_ID}/pact`,
+          );
 
-      //   if (checkStat.message == "Not connected") {
-      //     const connectXwallet = await window.kadena.request({
-      //       method: 'kda_connect',
-      //       networkId: "mainnet01",
-      //     });
-      //     
-      //     let data = await Pact.fetch.local(
-      //       {
-      //         pactCode: `(coin.details ${JSON.stringify(connectXwallet.account.account)})`,
-      //         meta: Pact.lang.mkMeta(
-      //           "",
-      //           "1",
-      //           0.01111,
-      //           3000,
-      //           creationTime(),
-      //           600,
-      //         ),
-      //       },
-      //       `https://api.chainweb.com/chainweb/0.0/${process.env.REACT_APP_NETWORK_ID}/chain/${process.env.REACT_APP_CHAIN_ID}/pact`,
-      //     );
+          
+          if (data.result.status === "success") {
+            const checkStat2 = await window.kadena.request({
+              method: 'kda_checkStatus',
+              networkId: NETWORK_ID,
+            });
+            
+            if (checkStat2.status == "success") {
 
-      //     
-      //     if (data.result.status === "success") {
-      //       const checkStat2 = await window.kadena.request({
-      //         method: 'kda_checkStatus',
-      //         networkId: "mainnet01",
-      //       });
-      //       
-      //       if (checkStat2.status == "success") {
+              const isAuth = await userLogin({ walletAddress: checkStat2.account.account });
+              
+              if (isAuth.status === 'error') {
+                return dispatch(loginFail(isAuth.message));
+              }
+              dispatch(loginSuccess());
+              dispatch(walletStatusUpdate({ walletStatus: "true", walletName: "Xwallet", walletAddress: checkStat2.account.account }))
+              checkUserRegisteration()
+            }
+          } else {
+            const discon = await window.kadena.request({
+              method: 'kda_disconnect',
+              networkId: NETWORK_ID,
+            });
 
-      //         const isAuth = await userLogin({ walletAddress: checkStat2.account.account });
-      //         
-      //         if (isAuth.status === 'error') {
-      //           return dispatch(loginFail(isAuth.message));
-      //         }
-      //         dispatch(loginSuccess());
-      //         dispatch(walletStatusUpdate({ walletStatus: "true", walletName: "Xwallet", walletAddress: checkStat2.account.account }))
-      //         checkUserRegisteration()
-      //       }
-      //     } else {
-      //       const discon = await window.kadena.request({
-      //         method: 'kda_disconnect',
-      //         networkId: 'mainnet01 ',
-      //       });
+            toast.error("Account not found in the preferred chain", {
+              position: "top-right"
 
-      //       toast.error("Account not found in the preferred chain", {
-      //         position: "top-right"
+            });
 
-      //       });
+            return
+          }
 
-      //       return
-      //     }
+        }
 
-      //   }
-
-      // }
+      }
     }
 
     if (!isXWalletInstalled()) {
