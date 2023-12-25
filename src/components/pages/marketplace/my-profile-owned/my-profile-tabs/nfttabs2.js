@@ -948,12 +948,7 @@ const NftTabs1 = () => {
           gasLimit: 150000,
           ttl: 28000,
           caps: [
-            // Pact.lang.mkCap(
-            //   "GAS",
-            //   "Capability to allow buying gas",
-            //   "coin.GAS",
-            //   []
-            // ),
+            
           ],
           envData: {
             guard: guard,
