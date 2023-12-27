@@ -213,27 +213,27 @@ const DialogBid = ({ dataUSer, setRefresh, refresh, setLoading, loading,setSelec
             .then((response) => {
                 
                 if (response.data.status == "success") {
-                  toast.success("Bid Successfull");
+                  toast.success("Bid Successful");
                   setLoading(false);
                   setRefresh(!refresh);
                 } else {
                   
                   setLoading(false);
-                  toast.error("Bid Unsuccessfull");
+                  toast.error("Bid Unsuccessful");
                 }
               })
               .catch((error) => {
                 
                 setLoading(false);
-                toast.error("Bid Unsuccessfull");
+                toast.error("Bid Unsuccessful");
               });
           } else {
             setLoading(false);
-            toast.error("Bid Unsuccessfull");
+            toast.error("Bid Unsuccessful");
           }
         }
       } else {
-        toast.error("Bid Unsuccessfull");
+        toast.error("Bid Unsuccessful");
         handleOpen();
         setLoading(false);
       }
@@ -316,23 +316,23 @@ const DialogBid = ({ dataUSer, setRefresh, refresh, setLoading, loading,setSelec
           .then((response) => {
               
               if (response.data.status == "success") {
-                toast.success("Bid Successfull");
+                toast.success("Bid Successful");
                 setLoading(false);
                 setRefresh(!refresh);
               } else {
                 
                 setLoading(false);
-                toast.error("Bid Unsuccessfull");
+                toast.error("Bid Unsuccessful");
               }
             })
             .catch((error) => {
               
               setLoading(false);
-              toast.error("Bid Unsuccessfull");
+              toast.error("Bid Unsuccessful");
             });
         } else {
           setLoading(false);
-          toast.error("Bid Unsuccessfull");
+          toast.error("Bid Unsuccessful");
         }
       }
       else {
