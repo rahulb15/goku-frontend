@@ -42,7 +42,7 @@ export default function OverviewTab1(props) {
             setCollectionName("");
           }
         })
-        .catch((error) => {});
+        .catch((error) => { });
     }
   };
 
@@ -67,7 +67,7 @@ export default function OverviewTab1(props) {
             setCollectionName("");
           }
         })
-        .catch((error) => {});
+        .catch((error) => { });
     } else {
       console.log("pass");
       Axios.post("/passDetails/getNftPassbyId", body)
@@ -84,7 +84,7 @@ export default function OverviewTab1(props) {
             setCollectionName("");
           }
         })
-        .catch((error) => {});
+        .catch((error) => { });
     }
   };
 
@@ -92,169 +92,126 @@ export default function OverviewTab1(props) {
     getAllAuction();
     getAllCollectionById();
   }, []);
-console.log(bigs)
+  console.log(bigs)
   return (
     <div>
-      {/* <div className='descBx'>
-                            <h3>Description</h3>
-                            <p>Nft description</p>
-                        </div> */}
-      <div className="latestBidBx">
+      <div className='latestBidBx'>
         <h3>Latest Bids</h3>
-        {bigs?.length > 0 && bigs
-          ?.filter((item, index) => {
-            item.bidTime = new Date(item?.bidTime)
-              ?.toISOString()
-              ?.slice(0, 19)
-              ?.replace("T", " ");
-            return index < 5;
-          })
-          ?.map((item, index) => {
-            return (
-              <ul key={index}>
-                <li>
-                  <div
-                    className="collectionLeft"
-                    style={
-                      nightModeStatus ? { color: "white" } : { color: "black" }
-                    }
-                  >
-                    <strong>
-                      {(item?.bidder)?.slice(0, 12)}...{(item?.bidder)?.slice(-5)}
-                    </strong>
-                    <small>
-                      Floor: {floorPrice} KDA <a href="">Floor Bid</a>
-                    </small>
-                  </div>
-                  <div
-                    className="collectionRight"
-                    style={
-                      nightModeStatus ? { color: "white" } : { color: "black" }
-                    }
-                  >
-                    <strong>{item?.bidPrice} KDA</strong>
-                    <small>{(item?.bidTime).toString()}</small>
-                  </div>
-                </li>
-              </ul>
-            );
-          })}
-        {bigs?.length == 0 ? (
+        {bigs?.length > 0 &&
+          bigs
+            ?.filter(item => {
+              return (item.bidPrice !== null && item.bidPrice !== "") && (item.bidder !== null && item.bidder !== "");
+            })
+            .slice(0, 5)
+            ?.map((item, index) => {
+              item.bidTime = new Date(item?.bidTime)
+                ?.toISOString()
+                ?.slice(0, 19)
+                ?.replace('T', ' ');
+
+              return (
+                <ul key={index}>
+                  <li>
+                    <div
+                      className='collectionLeft'
+                      style={
+                        nightModeStatus
+                          ? { color: 'white' }
+                          : { color: 'black' }
+                      }
+                    >
+                      <strong>{(item?.bidder)?.slice(0, 12)}...{(item?.bidder)?.slice(-5)}</strong>
+                      <small>Floor: {floorPrice} KDA <a href=''>Floor Bid</a></small>
+                    </div>
+                    <div
+                      className='collectionRight'
+                      style={
+                        nightModeStatus
+                          ? { color: 'white' }
+                          : { color: 'black' }
+                      }
+                    >
+                      <strong>{item?.bidPrice} KDA</strong>
+                      <small>{(item?.bidTime).toString()}</small>
+                    </div>
+                  </li>
+                </ul>
+              );
+            })}
+        {bigs?.length === 0 ? (
           <a
-            href="#"
-            style={nightModeStatus ? { color: "white" } : { color: "black" }}
+            href='#'
+            style={
+              nightModeStatus
+                ? { color: 'white' }
+                : { color: 'black' }
+            }
           >
             No Bids Yet
           </a>
         ) : null}
-        {/* <ul>
-                                <li>
-                                    <div className='collectionLeft'>
-                                        <i><img src={CollectImg1} alt="" /></i>
-                                        <strong>Reese Hoffman</strong>
-                                        <small>Floor: 0.25 KDA <a href=''>Floor Bid</a></small>
-                                    </div>
-                                    <div className='collectionRight'>
-                                        <strong>6.8 KDA</strong>
-                                        <small>24h</small>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div className='collectionLeft'>
-                                        <i><img src={CollectImg2} alt="" /></i>
-                                        <strong>Reese Hoffman</strong>
-                                        <small>Floor: 0.25 KDA <a href=''>Floor Bid</a></small>
-                                    </div>
-                                    <div className='collectionRight'>
-                                        <strong>6.8 KDA</strong>
-                                        <small>24h</small>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div className='collectionLeft'>
-                                        <i><img src={CollectImg3} alt="" /></i>
-                                        <strong>Reese Hoffman</strong>
-                                        <small>Floor: 0.25 KDA <a href=''>Floor Bid</a></small>
-                                    </div>
-                                    <div className='collectionRight'>
-                                        <strong>6.8 KDA</strong>
-                                        <small>24h</small>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div className='collectionLeft'>
-                                        <i><img src={CollectImg4} alt="" /></i>
-                                        <strong>Reese Hoffman</strong>
-                                        <small>Floor: 0.25 KDA <a href=''>Floor Bid</a></small>
-                                    </div>
-                                    <div className='collectionRight'>
-                                        <strong>6.8 KDA</strong>
-                                        <small>24h</small>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div className='collectionLeft'>
-                                        <i><img src={CollectImg5} alt="" /></i>
-                                        <strong>Reese Hoffman</strong>
-                                        <small>Floor: 0.25 KDA <a href=''>Floor Bid</a></small>
-                                    </div>
-                                    <div className='collectionRight'>
-                                        <strong>6.8 KDA</strong>
-                                        <small>24h</small>
-                                    </div>
-                                </li>
-                            </ul> */}
       </div>
-      <div className="detailsBid">
+
+      <div className='detailsBid'>
         <h3>Details</h3>
         <ul>
           <li>
-            <div className="biddetLeft">Contract Address</div>
-            <div className="biddetRight" style={{ wordBreak: "break-all" }}>
+            <div className='biddetLeft'>Contract Address</div>
+            <div className='biddetRight' style={{ wordBreak: 'break-all' }}>
               <a
-                href="#"
+                href='#'
                 style={
-                  nightModeStatus ? { color: "white" } : { color: "black" }
+                  nightModeStatus
+                    ? { color: 'white' }
+                    : { color: 'black' }
                 }
               >
-                {collectionName == "pass3"
-                  ? "pass"
-                  : collectionName == "dbcooper"
-                  ? "dbcooper"
-                  : "free.merchfinal001"}
+                {collectionName === 'pass3'
+                  ? 'pass'
+                  : collectionName === 'dbcooper'
+                    ? 'dbcooper'
+                    : 'free.merchfinal001'}
               </a>
             </div>
           </li>
           <li>
-            <div className="biddetLeft">Token ID.</div>
-            <div className="biddetRight" style={{ wordBreak: "break-all" }}>
+            <div className='biddetLeft'>Token ID.</div>
+            <div className='biddetRight' style={{ wordBreak: 'break-all' }}>
               <a
-                href="#"
+                href='#'
                 style={
-                  nightModeStatus ? { color: "white" } : { color: "black" }
+                  nightModeStatus
+                    ? { color: 'white' }
+                    : { color: 'black' }
                 }
               >
-                {" "}
-                {foo2 == "all"
-                  ? tokenId?.slice(0, 5) + "..." + tokenId?.slice(-5)
+                {foo2 === 'all'
+                  ? tokenId?.slice(0, 5) + '...' + tokenId?.slice(-5)
                   : tokenId}
               </a>
             </div>
           </li>
           <li>
-            <div className="biddetLeft">Token Standard</div>
-            <div className="biddetRight">Marmalade</div>
+            <div className='biddetLeft'>Token Standard</div>
+            <div className='biddetRight'>Marmalade</div>
           </li>
           <li>
-            <div className="biddetLeft">Blockchain</div>
-            <div className="biddetRight">Kadena</div>
+            <div className='biddetLeft'>Blockchain</div>
+            <div className='biddetRight'>Kadena</div>
           </li>
           <li>
-            <div className="biddetLeft">Metadata</div>
-            <div className="biddetRight">Centralized</div>
+            <div className='biddetLeft'>Metadata</div>
+            <div className='biddetRight'>Centralized</div>
           </li>
+          {/* Add more list items for details if needed */}
         </ul>
       </div>
     </div>
   );
 }
+
+
+
+
+
+
