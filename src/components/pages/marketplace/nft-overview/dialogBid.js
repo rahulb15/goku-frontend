@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import Axios from "axios";
 import { IconButton } from "@material-ui/core";
 import CloseIcon from "@mui/icons-material/Close";
+import { SpinnerCircular } from "spinners-react";
 import "../collection-listing/collectionTabs/nfttabs1.css";
 
 const NETWORK_ID = process.env.REACT_APP_NETWORK_ID;
@@ -62,6 +63,7 @@ const DialogBid = ({
   setRefresh,
   refresh,
   setLoading,
+  loading,
   setSelectedData,
   selectedData }) => {
 
@@ -186,6 +188,7 @@ const DialogBid = ({
         const resJSON = await rawRes.json();
 
         if (resJSON.result.status === "success") {
+          handleClose();
           const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
 
 
@@ -224,17 +227,18 @@ const DialogBid = ({
                   handleClose();
 
                 } else {
-
+                  setOpen(true);
                   setLoading(false);
                   toast.error("Bid Unsuccessful");
                 }
               })
               .catch((error) => {
-
+                setOpen(true);
                 setLoading(false);
                 toast.error("Bid Unsuccessful");
               });
           } else {
+            setOpen(true);
             setLoading(false);
             toast.error("Bid Unsuccessful");
           }
@@ -289,7 +293,7 @@ const DialogBid = ({
       });
 
       if (cmd.status === "success") {
-
+        handleClose();
         const gore2 = await Pact.wallet.sendSigned(cmd.signedCmd, API_HOST);
         // setSpinner("true");
 
@@ -326,18 +330,20 @@ const DialogBid = ({
                 toast.success("Bid Successful");
                 setLoading(false);
                 setRefresh(!refresh);
+                handleClose();
               } else {
-
+                setOpen(true);
                 setLoading(false);
                 toast.error("Bid Unsuccessful");
               }
             })
             .catch((error) => {
-
+              setOpen(true);
               setLoading(false);
               toast.error("Bid Unsuccessful");
             });
         } else {
+          setOpen(true);
           setLoading(false);
           toast.error("Bid Unsuccessful");
         }
@@ -373,7 +379,11 @@ const DialogBid = ({
         }}
         variant="contained"
         onClick={handleOpen}>
-        Place a Bid
+        {loading ? (
+                  <SpinnerCircular size={20} color="white" style={{ width: "80px", height: "40px" }} />
+                ) : (
+                  "Place a Bid"
+                )}
       </Button>
 
       <Modal open={open} onClose={handleClose}>

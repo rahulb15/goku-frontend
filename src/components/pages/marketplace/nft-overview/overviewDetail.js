@@ -82,7 +82,15 @@ const OverviewDetail = () => {
     getNft();
     getNftLikes();
     getNftLikeStatus();
-  }, []);
+  }, [refresh]);
+
+  // useEffect(() => {
+  //   window.scrollTo(0, 200);
+  //     getNft();
+  //     getNftLikes();
+  //     getNftLikeStatus();
+
+  // }, [refresh]);
 
   useEffect(() => {
     getNftLikeStatus();
