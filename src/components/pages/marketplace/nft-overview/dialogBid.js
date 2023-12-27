@@ -57,8 +57,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DialogBid = ({ dataUSer, setRefresh, refresh, setLoading, loading,setSelectedData,selectedData }) => {
-  
+const DialogBid = ({
+  dataUSer,
+  setRefresh,
+  refresh,
+  setLoading,
+  setSelectedData,
+  selectedData }) => {
+
   const classes = useStyles();
   const dispatch = useDispatch();
   const [bidAmount, setBidAmount] = useState(0);
@@ -70,17 +76,16 @@ const DialogBid = ({ dataUSer, setRefresh, refresh, setLoading, loading,setSelec
   const [totalFee, setTotalFee] = useState(0.0);
   const { nightModeStatus } = useSelector((state) => state.nightModeStatus);
 
-  const { walletStatus, walletAddress, walletName,userEmail } = useSelector(
+  const { walletStatus, walletAddress, walletName, userEmail } = useSelector(
     (state) => state.walletStatus
   );
-  
+
 
   const handleClose = () => {
-    
     setOpen(false);
   };
+
   const handleOpen = () => {
-    
     setOpen(true);
   };
 
@@ -94,9 +99,9 @@ const DialogBid = ({ dataUSer, setRefresh, refresh, setLoading, loading,setSelec
       setBidAmountErrorMessage("");
     }
   };
-  
 
-  const handleBid = (e) => {
+
+  const handleBid = async (e) => {
     e.preventDefault();
     if (bidAmount == 0) {
       setBidAmountError(true);
@@ -108,9 +113,13 @@ const DialogBid = ({ dataUSer, setRefresh, refresh, setLoading, loading,setSelec
         parseFloat(dataUSer.bidInfo.bidPrice)
       );
     } else {
-      bid();
-      // setBidAmountError(false);
-      // setBidAmountErrorMessage("");
+      try {
+        await bid(); // Perform the bid operation
+      } catch (error) {
+        // Handle errors if the bid fails
+        toast.error("Bid Unsuccessful");
+        setLoading(false);
+      }
     }
   };
 
@@ -120,19 +129,15 @@ const DialogBid = ({ dataUSer, setRefresh, refresh, setLoading, loading,setSelec
     setTotalFee(parseFloat(amount) + parseFloat(amount * 2) / 100);
   }, [amount]);
 
-  
+
 
   const bid = async () => {
     setLoading(true);
     setSelectedData(dataUSer);
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    
-    
     const guard = { keys: [publicKey], pred: "keys-all" };
     const tokenId = dataUSer.tokenId;
-    
-    
     const a = accountName;
     const b = "00fd7ca27f0ab6cfb03e3316c23599890f7a82043cb73925dc080307b771528d";
     // id:string buyer:string amount:decimal bid_days:integer
@@ -165,9 +170,9 @@ const DialogBid = ({ dataUSer, setRefresh, refresh, setLoading, loading,setSelec
           "demothreeaccount-keyset": guard,
         },
       };
-      
+
       const cmd = await Pact.wallet.sign(signCmd);
-      
+
       if (cmd) {
         const localRes = await fetch(`${API_HOST}/api/v1/local`, {
           headers: {
@@ -176,19 +181,19 @@ const DialogBid = ({ dataUSer, setRefresh, refresh, setLoading, loading,setSelec
           method: "POST",
           body: JSON.stringify(cmd),
         });
-        
+
         const rawRes = await localRes;
         const resJSON = await rawRes.json();
-        
+
         if (resJSON.result.status === "success") {
           const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
 
-          
+
           const signedtxx = await Pact.fetch.listen(
             { listen: reqKey.requestKeys[0] },
             API_HOST
           );
-          
+
           if (signedtxx.result.status == "success") {
             const obj = {
               onAuction: true,
@@ -202,7 +207,7 @@ const DialogBid = ({ dataUSer, setRefresh, refresh, setLoading, loading,setSelec
                 category: "bid",
               },
             };
-            
+
             const accessJWT = localStorage.getItem("accessJWT");
             const config = {
               headers: {
@@ -210,30 +215,32 @@ const DialogBid = ({ dataUSer, setRefresh, refresh, setLoading, loading,setSelec
               },
             };
             Axios.patch(`/passDetails/${dataUSer?.passCost ? "bidding-pass" : "bidding"}`, obj, config)
-            .then((response) => {
-                
+              .then((response) => {
+
                 if (response.data.status == "success") {
-                  toast.success("Bid Successfull");
+                  toast.success("Bid Successful");
                   setLoading(false);
                   setRefresh(!refresh);
+                  handleClose();
+
                 } else {
-                  
+
                   setLoading(false);
-                  toast.error("Bid Unsuccessfull");
+                  toast.error("Bid Unsuccessful");
                 }
               })
               .catch((error) => {
-                
+
                 setLoading(false);
-                toast.error("Bid Unsuccessfull");
+                toast.error("Bid Unsuccessful");
               });
           } else {
             setLoading(false);
-            toast.error("Bid Unsuccessfull");
+            toast.error("Bid Unsuccessful");
           }
         }
       } else {
-        toast.error("Bid Unsuccessfull");
+        toast.error("Bid Unsuccessful");
         handleOpen();
         setLoading(false);
       }
@@ -274,24 +281,24 @@ const DialogBid = ({ dataUSer, setRefresh, refresh, setLoading, loading,setSelec
       };
 
       // 18.87350
-      
+
       const cmd = await window.kadena.request({
         method: "kda_requestSign",
         networkId: NETWORK_ID,
         data: XWalletRequest,
       });
-      
+
       if (cmd.status === "success") {
-        
+
         const gore2 = await Pact.wallet.sendSigned(cmd.signedCmd, API_HOST);
         // setSpinner("true");
-        
+
         const txResult = await Pact.fetch.listen(
           { listen: `${gore2.requestKeys[0]}` },
           API_HOST
         );
 
-        
+
         if (txResult.result.status == "success") {
           const obj = {
             onAuction: true,
@@ -305,7 +312,7 @@ const DialogBid = ({ dataUSer, setRefresh, refresh, setLoading, loading,setSelec
               category: "bid",
             },
           };
-          
+
           const accessJWT = localStorage.getItem("accessJWT");
           const config = {
             headers: {
@@ -313,26 +320,26 @@ const DialogBid = ({ dataUSer, setRefresh, refresh, setLoading, loading,setSelec
             },
           };
           Axios.patch(`/passDetails/${dataUSer?.passCost ? "bidding-pass" : "bidding"}`, obj, config)
-          .then((response) => {
-              
+            .then((response) => {
+
               if (response.data.status == "success") {
-                toast.success("Bid Successfull");
+                toast.success("Bid Successful");
                 setLoading(false);
                 setRefresh(!refresh);
               } else {
-                
+
                 setLoading(false);
-                toast.error("Bid Unsuccessfull");
+                toast.error("Bid Unsuccessful");
               }
             })
             .catch((error) => {
-              
+
               setLoading(false);
-              toast.error("Bid Unsuccessfull");
+              toast.error("Bid Unsuccessful");
             });
         } else {
           setLoading(false);
-          toast.error("Bid Unsuccessfull");
+          toast.error("Bid Unsuccessful");
         }
       }
       else {
@@ -344,29 +351,30 @@ const DialogBid = ({ dataUSer, setRefresh, refresh, setLoading, loading,setSelec
 
   return (
     <div>
-    
-      <button
-                        className="placebidBtn"
-                        style={{
-                          backgroundColor: nightModeStatus ? "#fff" : "#000",
-                          color: nightModeStatus ? "#000" : "#fff",
-                          width: "100%",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          outline: "none",
-                          boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
-                          height: "76px",
-                          borderRadius: "10px",
-                          cursor: "pointer",
-                          fontWeight: "bold",
-                          fontSize: "15px",
-                          marginTop: "10px",
-                          marginBottom: "10px",
-                        }}
-                        onClick={handleOpen}>
-                        Place a Bid
-                      </button>
+
+      <Button
+        className="placebidBtn"
+        style={{
+          backgroundColor: nightModeStatus ? "#fff" : "#000",
+          color: nightModeStatus ? "#000" : "#fff",
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          outline: "none",
+          boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
+          height: "76px",
+          borderRadius: "10px",
+          cursor: "pointer",
+          fontWeight: "bold",
+          fontSize: "15px",
+          marginTop: "10px",
+          marginBottom: "10px",
+        }}
+        variant="contained"
+        onClick={handleOpen}>
+        Place a Bid
+      </Button>
 
       <Modal open={open} onClose={handleClose}>
         <div className={classes.modal}>
@@ -405,32 +413,20 @@ const DialogBid = ({ dataUSer, setRefresh, refresh, setLoading, loading,setSelec
               <ul>
                 <li>
                   <span>Service fee</span>
-                 
                   &nbsp;
                   &nbsp;
                   &nbsp;
                   <strong style={{ float: "right" }}
                   >{serviceFee.toFixed(3)}{" (2%)"}</strong>
-                  
                 </li>
                 <li>
                   <span>Your Bid</span>
-                  
-                  
-
-
-
-
                   <strong style={{ float: "right" }}>{bidAmount}</strong>
                 </li>
                 <li>
                   <span>Total</span>
-                 
-
-
-
                   <strong style={{ float: "right" }}>
-                  {totalFee.toFixed(3)}</strong>
+                    {totalFee.toFixed(3)}</strong>
                 </li>
               </ul>
             </div>

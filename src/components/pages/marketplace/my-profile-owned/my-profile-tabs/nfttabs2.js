@@ -420,198 +420,296 @@ const NftTabs1 = () => {
     }
   };
 
+  // const declineBid = async (data) => {
+  //   setLoading(true);
+  //   const accountName = walletAddress;
+  //   const publicKey = accountName.slice(2, accountName.length);
+    
+    
+  //   const guard = { keys: [publicKey], pred: "keys-all" };
+  //   const tokenId2 = data.tokenId;
+
+  //   const a = accountName;
+
+  //   // id:string buyer:string amount:decimal bid_days:integer
+  //   const pactCode = `(free.marketplacefinal002.decline-bid ${JSON.stringify(
+  //     tokenId2
+  //   )})`;
+
+  //   if (walletName == "Zelcore" || walletName == "Chainweaver") {
+  //     const signCmd = {
+  //       pactCode: pactCode,
+  //       caps: [],
+  //       sender: a,
+  //       gasLimit: 150000,
+  //       chainId: CHAIN_ID,
+  //       ttl: 28800,
+  //       envData: {
+  //         "demothreeaccount-keyset": guard,
+  //       },
+  //     };
+      
+  //     const cmd = await Pact.wallet.sign(signCmd);
+  //     if (cmd === undefined) {
+  //       toast.error("User cancelled request", {
+  //         position: "top-right",
+  //       });
+  //       setLoading(false);
+  //       return;
+  //     }
+      
+  //     const localRes = await fetch(`${API_HOST}/api/v1/local`, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       method: "POST",
+  //       body: JSON.stringify(cmd),
+  //     });
+      
+  //     const rawRes = await localRes;
+  //     const resJSON = await rawRes.json();
+      
+  //     if (resJSON.result.status === "success") {
+  //       const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
+
+        
+  //       const signedtxx = await Pact.fetch.listen(
+  //         { listen: reqKey.requestKeys[0] },
+  //         API_HOST
+  //       );
+        
+  //       if (signedtxx.result.status == "success") {
+  //         const obj = {
+  //           onAuction: true,
+  //           _id: data._id,
+  //           bidPrice: "",
+  //           bidder: "",
+  //           history: {
+  //             owner: walletAddress,
+  //             price: data.nftPrice,
+  //             category: "rejectBid",
+  //           },
+  //         };
+          
+  //         const accessJWT = localStorage.getItem("accessJWT");
+  //         const config = {
+  //           headers: {
+  //             Authorization: accessJWT,
+  //           },
+  //         };
+  //         Axios.patch("/nft/update-nft", obj, config)
+  //           .then((response) => {
+              
+  //             if (response.data.status == "success") {
+  //               toast.success("NFT Bid Declined");
+  //               setRefresh(!refresh);
+  //               setLoading(false);
+  //             } else {
+                
+  //               toast.error("NFt bid not declined");
+  //               setLoading(false);
+  //             }
+  //           })
+  //           .catch((error) => {
+              
+  //             toast.error("NFt bid not declined");
+  //             setLoading(false);
+  //           });
+  //       } else {
+  //         toast.error("NFt bid not declined");
+  //         setLoading(false);
+  //       }
+  //     } else {
+  //       toast.error("NFt bid not declined");
+  //       setLoading(false);
+  //     }
+  //   }
+
+  //   if (walletName == "Xwallet") {
+  //     const XWalletRequest = {
+  //       networkId: NETWORK_ID,
+  //       signingCmd: {
+  //         sender: a,
+  //         chainId: CHAIN_ID,
+  //         gasPrice: 0.0000001,
+  //         gasLimit: 150000,
+  //         ttl: 28000,
+  //         caps: [],
+  //         envData: {
+  //           guard: guard,
+  //         },
+  //         pactCode: pactCode,
+  //         networkId: NETWORK_ID,
+  //         signingPubKey: publicKey,
+  //         creationTime: creationTime(),
+  //       }, //alert to sign tx
+  //     };
+
+  //     // 18.87350
+      
+  //     const cmd = await window.kadena.request({
+  //       method: "kda_requestSign",
+  //       networkId: NETWORK_ID,
+  //       data: XWalletRequest,
+  //     });
+      
+  //     if (cmd.status === "success") {
+        
+  //       const gore2 = await Pact.wallet.sendSigned(cmd.signedCmd, API_HOST);
+  //       // setSpinner("true");
+        
+  //       const txResult = await Pact.fetch.listen(
+  //         { listen: `${gore2.requestKeys[0]}` },
+  //         API_HOST
+  //       );
+
+        
+  //       if (txResult.result.status == "success") {
+  //         const obj = {
+  //           onAuction: true,
+  //           _id: data._id,
+  //           bidPrice: "",
+  //           bidder: "",
+  //           history: {
+  //             owner: walletAddress,
+  //             price: data.nftPrice,
+  //             category: "rejectBid",
+  //           },
+  //         };
+          
+  //         const accessJWT = localStorage.getItem("accessJWT");
+  //         const config = {
+  //           headers: {
+  //             Authorization: accessJWT,
+  //           },
+  //         };
+  //         Axios.patch("/nft/update-nft", obj, config)
+  //           .then((response) => {
+              
+  //             if (response.data.status == "success") {
+  //               toast.success("NFT Bid Declined");
+  //               setRefresh(!refresh);
+  //               setLoading(false);
+  //             } else {
+                
+  //               toast.error("NFt bid not declined");
+  //               setLoading(false);
+  //             }
+  //           })
+  //           .catch((error) => {
+              
+  //             toast.error("NFT bid not declined");
+  //             setLoading(false);
+  //           });
+  //       } else {
+  //         toast.error("NFt bid not declined");
+  //         setLoading(false);
+  //       }
+  //     }
+  //   } else {
+  //     toast.error("NFt bid not declined");
+  //     setLoading(false);
+  //   }
+  // };
+
   const declineBid = async (data) => {
     setLoading(true);
     const accountName = walletAddress;
-    const publicKey = accountName.slice(2, accountName.length);
-    
-    
+    const publicKey = accountName.slice(2);
+  
     const guard = { keys: [publicKey], pred: "keys-all" };
     const tokenId2 = data.tokenId;
-
     const a = accountName;
-
-    // id:string buyer:string amount:decimal bid_days:integer
-    const pactCode = `(free.marketplacefinal002.decline-bid ${JSON.stringify(
-      tokenId2
-    )})`;
-
-    if (walletName == "Zelcore" || walletName == "Chainweaver") {
-      const signCmd = {
-        pactCode: pactCode,
-        caps: [],
-        sender: a,
-        gasLimit: 150000,
-        chainId: CHAIN_ID,
-        ttl: 28800,
-        envData: {
-          "demothreeaccount-keyset": guard,
-        },
-      };
-      
-      const cmd = await Pact.wallet.sign(signCmd);
-      if (cmd === undefined) {
-        toast.error("User cancelled request", {
-          position: "top-right",
+  
+    const pactCode = `(free.marketplacefinal002.decline-bid ${JSON.stringify(tokenId2)})`;
+  
+    try {
+      let cmd, txResult;
+  
+      if (walletName === "Zelcore" || walletName === "Chainweaver") {
+        const signCmd = {
+          pactCode: pactCode,
+          caps: [],
+          sender: a,
+          gasLimit: 150000,
+          chainId: CHAIN_ID,
+          ttl: 28800,
+          envData: {
+            "demothreeaccount-keyset": guard,
+          },
+        };
+  
+        cmd = await Pact.wallet.sign(signCmd);
+        if (cmd === undefined) {
+          throw new Error("User cancelled request");
+        }
+      } else if (walletName === "Xwallet") {
+        const XWalletRequest = {
+          networkId: NETWORK_ID,
+          signingCmd: {
+            sender: a,
+            chainId: CHAIN_ID,
+            gasPrice: 0.0000001,
+            gasLimit: 150000,
+            ttl: 28000,
+            caps: [],
+            envData: {
+              guard: guard,
+            },
+            pactCode: pactCode,
+            networkId: NETWORK_ID,
+            signingPubKey: publicKey,
+            creationTime: creationTime(),
+          },
+        };
+  
+        const xWalletCmd = await window.kadena.request({
+          method: "kda_requestSign",
+          networkId: NETWORK_ID,
+          data: XWalletRequest,
         });
-        setLoading(false);
-        return;
-      }
-      
-      const localRes = await fetch(`${API_HOST}/api/v1/local`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(cmd),
-      });
-      
-      const rawRes = await localRes;
-      const resJSON = await rawRes.json();
-      
-      if (resJSON.result.status === "success") {
-        const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
-
-        
-        const signedtxx = await Pact.fetch.listen(
-          { listen: reqKey.requestKeys[0] },
-          API_HOST
-        );
-        
-        if (signedtxx.result.status == "success") {
-          const obj = {
-            onAuction: true,
-            _id: data._id,
-            bidPrice: "",
-            bidder: "",
-            history: {
-              owner: walletAddress,
-              price: data.nftPrice,
-              category: "rejectBid",
-            },
-          };
-          
-          const accessJWT = localStorage.getItem("accessJWT");
-          const config = {
-            headers: {
-              Authorization: accessJWT,
-            },
-          };
-          Axios.patch("/nft/update-nft", obj, config)
-            .then((response) => {
-              
-              if (response.data.status == "success") {
-                toast.success("NFT Bid Declined");
-                setRefresh(!refresh);
-                setLoading(false);
-              } else {
-                
-                toast.error("NFt bid not declined");
-                setLoading(false);
-              }
-            })
-            .catch((error) => {
-              
-              toast.error("NFt bid not declined");
-              setLoading(false);
-            });
+  
+        if (xWalletCmd.status === "success") {
+          cmd = xWalletCmd.signedCmd;
         } else {
-          toast.error("NFt bid not declined");
-          setLoading(false);
+          throw new Error("Xwallet command failed");
         }
       } else {
-        toast.error("NFt bid not declined");
-        setLoading(false);
+        throw new Error("Unsupported wallet");
       }
-    }
-
-    if (walletName == "Xwallet") {
-      const XWalletRequest = {
-        networkId: NETWORK_ID,
-        signingCmd: {
-          sender: a,
-          chainId: CHAIN_ID,
-          gasPrice: 0.0000001,
-          gasLimit: 150000,
-          ttl: 28000,
-          caps: [],
-          envData: {
-            guard: guard,
+  
+      const sendCmd = await Pact.wallet.sendSigned(cmd, API_HOST);
+      txResult = await Pact.fetch.listen({ listen: sendCmd.requestKeys[0] }, API_HOST);
+  
+      if (txResult.result.status === "success") {
+        const obj = {
+          onAuction: true,
+          _id: data._id,
+          bidPrice: "",
+          bidder: "",
+          history: {
+            owner: walletAddress,
+            price: data.nftPrice,
+            category: "rejectBid",
           },
-          pactCode: pactCode,
-          networkId: NETWORK_ID,
-          signingPubKey: publicKey,
-          creationTime: creationTime(),
-        }, //alert to sign tx
-      };
-
-      // 18.87350
-      
-      const cmd = await window.kadena.request({
-        method: "kda_requestSign",
-        networkId: NETWORK_ID,
-        data: XWalletRequest,
-      });
-      
-      if (cmd.status === "success") {
-        
-        const gore2 = await Pact.wallet.sendSigned(cmd.signedCmd, API_HOST);
-        // setSpinner("true");
-        
-        const txResult = await Pact.fetch.listen(
-          { listen: `${gore2.requestKeys[0]}` },
-          API_HOST
-        );
-
-        
-        if (txResult.result.status == "success") {
-          const obj = {
-            onAuction: true,
-            _id: data._id,
-            bidPrice: "",
-            bidder: "",
-            history: {
-              owner: walletAddress,
-              price: data.nftPrice,
-              category: "rejectBid",
-            },
-          };
-          
-          const accessJWT = localStorage.getItem("accessJWT");
-          const config = {
-            headers: {
-              Authorization: accessJWT,
-            },
-          };
-          Axios.patch("/nft/update-nft", obj, config)
-            .then((response) => {
-              
-              if (response.data.status == "success") {
-                toast.success("NFT Bid Declined");
-                setRefresh(!refresh);
-                setLoading(false);
-              } else {
-                
-                toast.error("NFt bid not declined");
-                setLoading(false);
-              }
-            })
-            .catch((error) => {
-              
-              toast.error("NFT bid not declined");
-              setLoading(false);
-            });
-        } else {
-          toast.error("NFt bid not declined");
-          setLoading(false);
-        }
+        };
+  
+        const accessJWT = localStorage.getItem("accessJWT");
+        const config = { headers: { Authorization: accessJWT } };
+  
+        await Axios.patch("/nft/update-nft", obj, config);
+        toast.success("NFT Bid Declined");
+        setRefresh(!refresh);
+      } else {
+        throw new Error("NFT bid not declined");
       }
-    } else {
-      toast.error("NFt bid not declined");
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
       setLoading(false);
     }
   };
-
+  
   const closeSale = async (data) => {
     setLoading(true);
     const accountName = walletAddress;
