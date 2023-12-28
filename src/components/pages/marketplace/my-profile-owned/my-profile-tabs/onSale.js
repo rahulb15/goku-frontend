@@ -653,6 +653,8 @@ const HotCollectionsTab = (props) => {
       if (txResult.result.status === "success") {
         const obj = {
           onAuction: true,
+          onMarketplace: true,
+          nftPrice:data.nftPrice,
           _id: data._id,
           bidPrice: "",
           bidder: "",
