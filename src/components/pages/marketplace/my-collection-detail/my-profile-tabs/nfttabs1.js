@@ -956,7 +956,7 @@ const NftTabs1 = (props) => {
               
               if (response.data.status == "success") {
                 setLoadingGift(false);
-                toast.success("NFT gifted   y");
+                toast.success("NFT gifted successfully");
                 setRefresh(!refresh);
                 setGiftModal(false);
               } else {
