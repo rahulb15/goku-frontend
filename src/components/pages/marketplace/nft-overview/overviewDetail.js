@@ -1504,6 +1504,7 @@ const OverviewDetail = () => {
             onSale: false,
             sellingType: "All",
             onMarketplace: false,
+            nftPrice:data.nftPrice,
             imageIndex: data.imageIndex,
             _id: data._id,
             history: {
@@ -1612,6 +1613,7 @@ const OverviewDetail = () => {
             sellingType: "All",
             imageIndex: data.imageIndex,
             onMarketplace: false,
+            nftPrice:data.nftPrice,
             _id: data._id,
             history: {
               owner: walletAddress,

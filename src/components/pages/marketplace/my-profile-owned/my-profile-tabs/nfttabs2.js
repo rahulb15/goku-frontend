@@ -780,6 +780,7 @@ const NftTabs1 = () => {
           const obj = {
             onSale: false,
             sellingType: "All",
+            nftPrice:data.nftPrice,
             onMarketplace: false,
             _id: data._id,
             imageIndex: data.imageIndex,
@@ -876,6 +877,7 @@ const NftTabs1 = () => {
             sellingType: "All",
             onMarketplace: false,
             imageIndex: data.imageIndex,
+            nftPrice:data.nftPrice,
             _id: data._id,
             history: {
               owner: walletAddress,

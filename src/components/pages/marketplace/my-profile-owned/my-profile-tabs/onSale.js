@@ -745,6 +745,7 @@ const HotCollectionsTab = (props) => {
             sellingType: "All",
             onMarketplace: false,
             imageIndex: data.imageIndex,
+            nftPrice:data.nftPrice,
             _id: data._id,
             history: {
               owner: walletAddress,
@@ -838,6 +839,7 @@ const HotCollectionsTab = (props) => {
             onSale: false,
             sellingType: "All",
             imageIndex: data.imageIndex,
+            nftPrice:data.nftPrice,
             onMarketplace: false,
             _id: data._id,
             history: {
