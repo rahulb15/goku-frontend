@@ -63,16 +63,32 @@ export default function SimpleAccordion() {
       getAllAuction();
   }, [])
   useEffect(() => {
-    if (history.length > 0) {
-                // Format your data to match the series structure for ApexCharts
-      const data = history.map((item) => ({
-        x: new Date(item.date).getTime(),
-        y: [parseFloat(item.price), parseFloat(item.price), parseFloat(item.price), parseFloat(item.price)],
-      }));
-      console.log(data,"data");
-      setLineChartkData(data);
+    // if (history.length > 0) {
+    //             // Format your data to match the series structure for ApexCharts
+    //   const data = history.map((item) => ({
+    //     x: new Date(item.date).getTime(),
+    //     y: [parseFloat(item.price), parseFloat(item.price), parseFloat(item.price), parseFloat(item.price)],
+    //   }));
+    //   console.log(data,"data");
+    //   setLineChartkData(data);
+    // }
+
+    //filter only those data in history whose category is mint,gift,transfer
+    const filteredData = history.filter((item) => {
+      return item.category == "mint" || item.category == "gift" || item.category == "transfer";
     }
-  }, [history]);
+    )
+    console.log(filteredData,"filteredData");
+    // Format your data to match the series structure for ApexCharts
+    const data = filteredData.map((item) => ({
+      x: new Date(item.date).getTime(),
+      y: parseFloat(item.price),
+    }));
+    console.log(data,"data");
+    setLineChartkData(data);
+  }
+  , [history]);
+
 
   console.log(history,"history");
 

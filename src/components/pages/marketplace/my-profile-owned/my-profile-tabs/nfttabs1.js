@@ -448,7 +448,7 @@ const NftTabs1 = () => {
                       history: {
                         owner: walletAddress,
                         price: data.nftPrice,
-                        category: "transfer",
+                        category: "gift",
                       },
                     };
 

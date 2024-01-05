@@ -2021,7 +2021,7 @@ const OverviewDetail = () => {
                       history: {
                         owner: walletAddress,
                         price: data.nftPrice,
-                        category: "transfer",
+                        category: "gift",
                       },
                     };
 

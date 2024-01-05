@@ -947,7 +947,7 @@ console.log("b", b, "c", c, "a", a, "d", d);
               history: {
                 owner: walletAddress,
                 price: data.nftPrice,
-                category: "transfer",
+                category: "gift",
               },
             };
             console.log("obj", obj);
