@@ -76,8 +76,11 @@ export default function OverviewTab1() {
                         const hoursAgo = moment(newDate).fromNow();
                         
                         item.hoursAgo = hoursAgo;
-                      
-                    
+
+                        //filter return all categories except originalPrice
+                        return item.category != "originalPrice"
+                    }
+                    )?.filter((item, index) => {
                         return index < 10;
                     }
                     )?.map((item, index) => {

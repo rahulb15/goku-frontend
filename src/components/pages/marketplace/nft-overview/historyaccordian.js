@@ -75,7 +75,7 @@ export default function SimpleAccordion() {
 
     //filter only those data in history whose category is mint,gift,transfer
     const filteredData = history.filter((item) => {
-      return item.category == "mint" || item.category == "gift" || item.category == "transfer";
+      return item.category == "mint" || item.category == "gift" || item.category == "transfer" || item.category == "closeSale" || item.category == "originalPrice"
     }
     )
     console.log(filteredData,"filteredData");
@@ -88,7 +88,6 @@ export default function SimpleAccordion() {
     setLineChartkData(data);
   }
   , [history]);
-
 
   console.log(history,"history");
 
