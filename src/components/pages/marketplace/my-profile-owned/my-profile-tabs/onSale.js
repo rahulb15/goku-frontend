@@ -1129,6 +1129,7 @@ const HotCollectionsTab = (props) => {
             <ul>
               {passes.length ? (
                 passes.map((data) => {
+                  console.log(data,"zox");
                   
                   return (
                     <>
@@ -1307,7 +1308,7 @@ const HotCollectionsTab = (props) => {
                                   <small>Highest Bid</small>
                                   <span className="bold">
                                     {data?.onAuction
-                                      ? data?.bidInfo.bidPrice
+                                      ? data?.bidInfo[0].bidPrice
                                       : "Not Revealed"}
                                   </span>
                                 </div>

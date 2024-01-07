@@ -815,6 +815,8 @@ const OverviewDetail = () => {
   };
 
   const acceptLastBid = async (data) => {
+    console.log("dataOverview", data.bidInfo[0].bidder);
+    // return;
     setLoading(true);
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
@@ -884,13 +886,14 @@ const OverviewDetail = () => {
               bidPrice: "",
               bidder: "",
               creator: data.bidInfo[0].bidder,
-              sellingType: "",
+              sellingType: "All",
               duration: "",
               onMarketplace: false,
               tokenId: data.tokenId,
+              nftPrice: data.bidInfo[0].bidPrice,
               history: {
                 owner: walletAddress,
-                price: data.nftPrice,
+                price: data.bidInfo[0].bidPrice,
                 category: "transfer",
               },
             };
@@ -908,15 +911,15 @@ const OverviewDetail = () => {
                 bidPrice: "",
                 bidder: "",
                 creator: data.bidInfo[0].bidder,
-                sellingType: "",
+                sellingType: "All",
                 passTokenId: data.passTokenId,
                 duration: "",
                 onMarketplace: false,
                 tokenId: data.tokenId,
-
+                nftPrice: data.bidInfo[0].bidPrice,
                 history: {
                   owner: walletAddress,
-                  price: data.nftPrice,
+                  price: data.bidInfo[0].bidPrice,
                   category: "transfer",
                 },
               };
@@ -1019,14 +1022,15 @@ const OverviewDetail = () => {
             _id: data._id,
             bidPrice: "",
             bidder: "",
-            creator: data.bidInfo.bidder,
-            sellingType: "",
+            creator: data.bidInfo[0].bidder,
+            sellingType: "All",
             duration: "",
             onMarketplace: false,
             tokenId: data.tokenId,
+            nftPrice: data.bidInfo[0].bidPrice,
             history: {
               owner: walletAddress,
-              price: data.nftPrice,
+              price: data.bidInfo[0].bidPrice,
               category: "transfer",
             },
           };
@@ -1059,16 +1063,16 @@ const OverviewDetail = () => {
               _id: data._id,
               bidPrice: "",
               bidder: "",
-              creator: data.bidInfo.bidder,
-              sellingType: "",
+              creator: data.bidInfo[0].bidder,
+              sellingType: "All",
               passTokenId: data.passTokenId,
               duration: "",
               onMarketplace: false,
               tokenId: data.tokenId,
-
+              nftPrice: data.bidInfo[0].bidPrice,
               history: {
                 owner: walletAddress,
-                price: data.nftPrice,
+                price: data.bidInfo[0].bidPrice,
                 category: "transfer",
               },
             };

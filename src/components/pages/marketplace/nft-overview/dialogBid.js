@@ -105,14 +105,16 @@ const DialogBid = ({
 
   const handleBid = async (e) => {
     e.preventDefault();
+    // console.log(dataUSer, "dataUSer");
+    // return;
     if (bidAmount == 0) {
       setBidAmountError(true);
       setBidAmountErrorMessage("Bid Amount is Required");
-    } else if (bidAmount < parseFloat(dataUSer.bidInfo.bidPrice)) {
+    } else if (bidAmount < parseFloat(dataUSer.bidInfo[0].bidPrice)) {
       setBidAmountError(true);
       setBidAmountErrorMessage(
         "Bid Amount must be greater than or equal to " +
-        parseFloat(dataUSer.bidInfo.bidPrice)
+        parseFloat(dataUSer.bidInfo[0].bidPrice)
       );
     } else {
       try {
