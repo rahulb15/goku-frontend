@@ -224,23 +224,44 @@ const HotCollectionsTab = (props) => {
           );
 
           if (signedtxx.result.status == "success") {
+            // const obj = {
+            //   onAuction: false,
+            //   _id: data._id,
+            //   bidPrice: "",
+            //   bidder: "",
+            //   creator: data.bidInfo.bidder,
+            //   sellingType: "",
+            //   duration: "",
+            //   onMarketplace: false,
+            //   tokenId: data.tokenId,
+            //   passTokenId: data.passTokenId,
+            //   history: {
+            //     owner: walletAddress,
+            //     price: data.nftPrice,
+            //     category: "bid",
+            //   },
+            // };
+
             const obj = {
               onAuction: false,
               _id: data._id,
               bidPrice: "",
               bidder: "",
-              creator: data.bidInfo.bidder,
-              sellingType: "",
+              creator: data.bidInfo[0].bidder,
+              sellingType: "All",
+              passTokenId: data.passTokenId,
               duration: "",
               onMarketplace: false,
               tokenId: data.tokenId,
-              passTokenId: data.passTokenId,
+              nftPrice: data.bidInfo[0].bidPrice,
               history: {
                 owner: walletAddress,
-                price: data.nftPrice,
-                category: "bid",
+                price: data.bidInfo[0].bidPrice,
+                category: "transfer",
               },
             };
+            
+            
 
             const accessJWT = localStorage.getItem("accessJWT");
             const config = {
@@ -318,21 +339,40 @@ const HotCollectionsTab = (props) => {
         );
 
         if (txResult.result.status == "success") {
+          // const obj = {
+          //   onAuction: false,
+          //   _id: data._id,
+          //   bidPrice: "",
+          //   bidder: "",
+          //   creator: data.bidInfo.bidder,
+          //   sellingType: "",
+          //   duration: "",
+          //   onMarketplace: false,
+          //   tokenId: data.tokenId,
+          //   passTokenId: data.passTokenId,
+          //   history: {
+          //     owner: walletAddress,
+          //     price: data.nftPrice,
+          //     category: "bid",
+          //   },
+          // };
+
           const obj = {
             onAuction: false,
             _id: data._id,
             bidPrice: "",
             bidder: "",
-            creator: data.bidInfo.bidder,
-            sellingType: "",
+            creator: data.bidInfo[0].bidder,
+            sellingType: "All",
+            passTokenId: data.passTokenId,
             duration: "",
             onMarketplace: false,
             tokenId: data.tokenId,
-            passTokenId: data.passTokenId,
+            nftPrice: data.bidInfo[0].bidPrice,
             history: {
               owner: walletAddress,
-              price: data.nftPrice,
-              category: "bid",
+              price: data.bidInfo[0].bidPrice,
+              category: "transfer",
             },
           };
 
@@ -1163,7 +1203,7 @@ const HotCollectionsTab = (props) => {
                                   <small>Highest Bid</small>
                                   <span className="bold">
                                     {data?.onAuction
-                                      ? data?.bidInfo.bidPrice
+                                      ? data?.bidInfo[0].bidPrice
                                       : "Not Revealed"}
                                   </span>
                                 </div>

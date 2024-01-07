@@ -1132,7 +1132,7 @@ const NftTabs1 = (props) => {
                                   <small>Highest Bid</small>
                                   <span className="bold">
                                     {data?.onAuction
-                                      ? data?.bidInfo.bidPrice
+                                      ? data?.bidInfo[0].bidPrice
                                       : "Not Revealed"}
                                   </span>
                                 </div>
