@@ -351,7 +351,6 @@ const NftTabs1 = () => {
             bidder: "",
             creator: data.bidInfo[0].bidder,
             sellingType: "All",
-            passTokenId: data.passTokenId,
             duration: "",
             onMarketplace: false,
             tokenId: data.tokenId,
