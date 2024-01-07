@@ -27,7 +27,6 @@ const NftTabs1 = () => {
     getCollection();
   }, [activeTab]);
   const getCollection = () => {
-    console.log("getCollection",activeTab)
     if(activeTab == 1){
 
     Axios.get("/liked-nft/get-favorited-nft?type=nft", {
@@ -35,7 +34,6 @@ const NftTabs1 = () => {
     })
       .then((response) => {
         if (response.data.status == "success") {
-          console.log(response.data.data, "responsessssss");
           setCollectionList(response.data.data);
         } else {
           setCollectionList([]);
@@ -52,7 +50,6 @@ const NftTabs1 = () => {
       })
         .then((response) => {
           if (response.data.status == "success") {
-            console.log(response.data.data, "responsessssss");
             setCollectionList(response.data.data);
           } else {
             setCollectionList([]);

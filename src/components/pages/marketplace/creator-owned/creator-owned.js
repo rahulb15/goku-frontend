@@ -48,7 +48,6 @@ const CommunityMarketplace = () => {
   const search = window.location.search;
   const params = new URLSearchParams(search);
   let foo = params.get("name");
-  console.log(foo, "foo");
 
   useEffect(() => {
     getUserInfo();

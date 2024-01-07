@@ -63,18 +63,18 @@ export default function SimpleAccordion() {
       getAllAuction();
   }, [])
   useEffect(() => {
-    if (history.length > 0) {
-                // Format your data to match the series structure for ApexCharts
-      const data = history.map((item) => ({
-        x: new Date(item.date).getTime(),
-        y: [parseFloat(item.price), parseFloat(item.price), parseFloat(item.price), parseFloat(item.price)],
-      }));
-      console.log(data,"data");
-      setLineChartkData(data);
+    const filteredData = history.filter((item) => {
+      return item.category == "mint" || item.category == "gift" || item.category == "transfer" || item.category == "closeSale" || item.category == "originalPrice"
     }
-  }, [history]);
+    )
+    const data = filteredData.map((item) => ({
+      x: new Date(item.date).getTime(),
+      y: parseFloat(item.price),
+    }));
+    setLineChartkData(data);
+  }
+  , [history]);
 
-  console.log(history,"history");
 
 
  

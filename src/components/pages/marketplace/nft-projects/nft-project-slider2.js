@@ -62,7 +62,6 @@ export default function NftProjectSlider() {
     getAllCollections();
   }, []);
 
-  console.log(hotCollections, "hotCollections");
 
   return (
     <div className="nftslideOuter">

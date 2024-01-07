@@ -72,19 +72,15 @@ const CommunityMarketplace = () => {
     })
       .then((response) => {
         if (response.data.status == "success") {
-          console.log(response.data.data[0], "collection data");
           if (response.data.data[0]) {
             setCollectionData(response.data.data[0]);
           } else {
-            console.log("no data");
             Axios.get(`/collection/user-collection-by-id?id=${foo}`, {
               headers: { authorization: localStorage.getItem("accessJWT") },
             })
               .then((response) => {
                 if (response.data.status == "success") {
-                  console.log(response.data.data[0], "collection data");
                   if (response.data.data[0]) {
-                    console.log("collection found");
                     setCollectionData({ collection_info: [response.data.data[0]] });
                   }
                   else{
@@ -120,7 +116,6 @@ const CommunityMarketplace = () => {
       headers: { authorization: localStorage.getItem("accessJWT") },
     })
       .then((response) => {
-        console.log("heyllo6", response.data.data);
         if (response.data.status == "success") {
           setBaseValue(response.data.baseNftPrice);
           setTotalNftPrice(response.data.totalNftPrice);
@@ -133,7 +128,6 @@ const CommunityMarketplace = () => {
           let filteredNftList = nftList.filter(
             (data) => data.collectionId === foo
           );
-          console.log("filteredddd2", filteredNftList);
           const list = filteredNftList.filter((item) => {
             if (item.onMarketplace == false) {
               return item;
@@ -144,7 +138,6 @@ const CommunityMarketplace = () => {
         } else {
           // setCollectionList([])
           setFilteredNft([]);
-          console.log("hello");
         }
       })
       .catch((error) => {
@@ -155,8 +148,6 @@ const CommunityMarketplace = () => {
       });
   };
 
-  console.log("collectionData", collectionData);
-  console.log("collectionName", collectionName);
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(walletAddress);

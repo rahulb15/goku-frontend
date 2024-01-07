@@ -19,7 +19,6 @@ const HotCollectionsTab = (props) => {
   const search = window.location.search;
   const params = new URLSearchParams(search);
   let foo = params.get("name");
-  console.log("foo", foo);
   var publickKey;
   var accountName;
   const NETWORK_ID = process.env.REACT_APP_NETWORK_ID;
@@ -57,8 +56,6 @@ const HotCollectionsTab = (props) => {
   const [selectedNft, setSelectedNft] = React.useState();
   const [royalityAddress, setRoyalityAddress] = React.useState("");
   const [royalityRate, setRoyalityRate] = React.useState("");
-  console.log("royalityAddress", royalityAddress);
-  console.log("royalityRate", royalityRate);
 
 
   if (walletName == "Xwallet") {
@@ -87,11 +84,9 @@ const HotCollectionsTab = (props) => {
       //   networkId: "testnet04",
       // });
       if (walletInfo.status == "success") {
-        console.log("ssda", walletInfo);
         publickKey = walletInfo.wallet.publicKey;
         accountName = walletInfo.wallet.account;
-        console.log("pubk", publickKey);
-        console.log("accountn", accountName);
+ 
       }
 
       return;
@@ -113,14 +108,11 @@ const HotCollectionsTab = (props) => {
 
   const revealPass = async (data) => {
     const tokenId = data.passTokenId;
-    console.log("tokenid", tokenId);
-    console.log("Data", data);
-    console.log(walletAddress, "walletAddress");
+
 
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    console.log("publicKeycw", publicKey);
-    console.log("accountnamecw", accountName);
+  
     setSpinner(data._id);
 
     // const pactCode = `(marmalade.ledger.get-manifest  ${JSON.stringify(tokenId)})`
@@ -148,11 +140,9 @@ const HotCollectionsTab = (props) => {
     }; //alert to sign tx
 
     const response = await Pact.fetch.local(signCmd, API_HOST);
-    console.log("response", response);
     if (response.result.status == "success") {
       const datum = response.result.data.data[0].datum;
-      console.log("datum", datum);
-      console.log("dataxcvbnm",data);
+    
       const filteredNft = data;
       let fileImageUrl;
       let fileName;
@@ -160,32 +150,20 @@ const HotCollectionsTab = (props) => {
       if (filteredNft) {
         let token;
         if(filteredNft.tokenId && filteredNft.tokenId.split(":")[0] === "dbc"){
-          // token = filteredNft.tokenId.split(":")[1]
           token = filteredNft.tokenId
-        //   console.log("filteredNft", filteredNft.tokenId.split(":")[1]);
-
-        // //   //add collection name to token
-        //   token = filteredNft.tokenId.split(":")[1]
         }
         else{
-          console.log(filteredNft,"filteredNft1234 ")
           token = filteredNft.hash;
         }
-        console.log(token,"tokenxdxdxdxd");
-        // // console.log("token", token);
+
 
         Axios.get(
           `/properties/getPropertyByToken?token=${token}`
-          // `/properties/getPropertyByToken?token=${fakeTokenId}`
 
         )
           .then(async (response) => {
             if (response.data.status == "success" && response.data.data.length > 0) {
               let propertyList = response.data.data;
-              console.log("propertyListDBCooper", propertyList);
-              // setFilteredNft(nftList);
-              // setUserId(nftList.creator);
-              console.log("propertyList", propertyList);
               fileImageUrl = propertyList[0].image;
               fileName = propertyList[0].name;
               obj = {
@@ -205,7 +183,6 @@ const HotCollectionsTab = (props) => {
                 fileImageUrl: fileImageUrl,
                 fileName: fileName,
               };
-              console.log("obj", obj);
               const accessJWT = localStorage.getItem("accessJWT");
               const config = {
                 headers: {
@@ -213,29 +190,13 @@ const HotCollectionsTab = (props) => {
                 },
               };
               const res = await axios.patch("/passDetails/updatePass", obj, config);
-              console.log("res", res);
               if (res.status == 200) {
-                console.log("success");
                 setReload(!reload);
                 setSpinner("");
                 toast.success("NFT revealed successfully");
-                // const obj2 = {
-                //   clientId: data.clientId,
-                //   activityType:"mint",
-                //   activityInfo:"Nft is Mint",
-                //   collectionName:passName,
-                //   collectionId:datum["collection-name"],
-                //   activityStatus:"Mint",
-                //   activityImageUrl:datum["image-url"],
-                // }
-                // const res2 = await axios.post("/activity/insertActivity" , obj2 , config)
-                // console.log("res2", res2)
-        
-                // setPasses(res.data.data)
               } else {
                 console.log("error");
               }
-              // setCollectionList(filteredCollectionList)
             } else {
               obj = {
                 _id: data._id,
@@ -252,7 +213,6 @@ const HotCollectionsTab = (props) => {
                   category: "mint",
                 },
               };
-              console.log("obj", obj);
               const accessJWT = localStorage.getItem("accessJWT");
               const config = {
                 headers: {
@@ -260,87 +220,36 @@ const HotCollectionsTab = (props) => {
                 },
               };
               const res = await axios.patch("/passDetails/updatePass", obj, config);
-              console.log("res", res);
               if (res.status == 200) {
-                console.log("success");
                 setReload(!reload);
                 setSpinner("");
                 toast.success("NFT revealed successfully");
-                // const obj2 = {
-                //   clientId: data.clientId,
-                //   activityType:"mint",
-                //   activityInfo:"Nft is Mint",
-                //   collectionName:passName,
-                //   collectionId:datum["collection-name"],
-                //   activityStatus:"Mint",
-                //   activityImageUrl:datum["image-url"],
-                // }
-                // const res2 = await axios.post("/activity/insertActivity" , obj2 , config)
-                // console.log("res2", res2)
-        
-                // setPasses(res.data.data)
               } else {
                 console.log("error");
               }
-              // setCollectionList([])
-              // setFilteredNft([]);
             }
           })
           .catch((error) => {
-            // setFilteredNft([]);
-            //   setCollectionList([])
-            //   setUserRegistered(false)
+            console.log("error", error);
           });
       }
-
- 
-    
-
-      // setHashImageUrl(response.data.data);
-      // })
-      // .catch((error) => {
-      //   console.log("error", error);
-      // });
-
-      //   const accessJWT = localStorage.getItem('accessJWT')
-      //   const config = {
-      //     headers: {
-      //       Authorization: accessJWT
-      //     }
-      //   }
-      //   const res = await axios.patch("/passDetails/updatePass", obj, config)
-      //   console.log("res", res)
-      //   if (res.status == 200) {
-      //     console.log("success")
-
-      //     setSpinner(false)
-      //     toast.success("Pass Revealed Successfully")
-      //     // setPasses(res.data.data)
-      //     setReload(!reload)
-      //   }
-      // else {
-      //   console.log("error")
-      // }
     }
   };
 
   useEffect(() => {
     setScreenLoading(true);
     if (foo) {
-      console.log("fooFA", foo);
       let name;
       if (foo == "PriorityPass") {
         name = "Priority Pass";
       } else if (foo == "DBCooper") {
         name = "DB Cooper";
       }
-      console.log("name", name);
       axios
         .get("/passDetails/all-nft-on-marketplace", {
           headers: { authorization: localStorage.getItem("accessJWT") },
         })
         .then((response) => {
-          console.log("heyllo65", response.data.data);
           const data = response.data.data.filter((item) => {
             return item.passName === name;
           });
@@ -366,7 +275,6 @@ const HotCollectionsTab = (props) => {
           }
         )
         .then((response) => {
-          console.log("heyllo65", response.data.data);
           setTotal(response.data.count);
           const data = response.data.data;
           // const data = response.data.data.filter((item) => {
@@ -386,8 +294,6 @@ const HotCollectionsTab = (props) => {
   const getFee = async () => {
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    console.log("publicKeycw", publicKey);
-    console.log("accountnamecw", accountName);
     const guard = { keys: [publicKey], pred: "keys-all" };
 
     const a = accountName;
@@ -413,7 +319,6 @@ const HotCollectionsTab = (props) => {
     }; //alert to sign tx
 
     const response = await Pact.fetch.local(signCmd, API_HOST);
-    console.log("response", response);
     if (response.result.status == "success") {
       const datum = response.result.data;
       setFee(datum);
@@ -434,10 +339,7 @@ const HotCollectionsTab = (props) => {
   const getRoyalityAddress = async (data) => {
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    console.log("publicKeycw", publicKey);
-    console.log("accountnamecw", accountName);
     const guard = { keys: [publicKey], pred: "keys-all" };
-    // console.log("data.collectionName", data.collectionName);
 
     const a = accountName;
     const signCmd = {
@@ -462,7 +364,6 @@ const HotCollectionsTab = (props) => {
     }; //alert to sign tx
 
     const response = await Pact.fetch.local(signCmd, API_HOST);
-    console.log("response", response);
     if (response.result.status == "success") {
       const datum = response.result.data;
       setRoyalityAddress(datum);
@@ -485,8 +386,6 @@ const HotCollectionsTab = (props) => {
   const getRoyalityRate = async (data) => {
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    console.log("publicKeycw", publicKey);
-    console.log("accountnamecw", accountName);
     const guard = { keys: [publicKey], pred: "keys-all" };
 
     const a = accountName;
@@ -512,7 +411,6 @@ const HotCollectionsTab = (props) => {
     }; //alert to sign tx
 
     const response = await Pact.fetch.local(signCmd, API_HOST);
-    console.log("response", response);
     if (response.result.status == "success") {
       const datum = response.result.data;
       setRoyalityRate(datum);
@@ -544,57 +442,29 @@ const HotCollectionsTab = (props) => {
   }, [fee]);
 
   const buyIdOnSale = async (data) => {
-    console.log("dataxcxcxcxcxc", data);
 
     const royaltyA = await getRoyalityAddress(data);
     const royaltyR = await getRoyalityRate(data);
-    console.log("royaltyA", royaltyA);
-    console.log("royaltyR", royaltyR);
 
 
 
 
     setLoading(true);
     const MarketplaceCharges = fee * parseFloat(data.nftPrice);
-    console.log("MarketplaceCharges", MarketplaceCharges);
     const priceWithoutMarketplaceCharges =
       parseFloat(data.nftPrice) - MarketplaceCharges;
-    console.log(
-      "priceWithoutMarketplaceCharges",
-      priceWithoutMarketplaceCharges
-    );
-    // const royaltyPayout =
-    //   props.collectionData.royaltyFee * priceWithoutMarketplaceCharges;
     const royaltyPayout = royaltyR * priceWithoutMarketplaceCharges;
-    console.log("royaltyPayout", royaltyPayout);
     const sellerPayout = priceWithoutMarketplaceCharges - royaltyPayout;
-    console.log("sellerPayout", sellerPayout);
-    console.log("data", data);
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    console.log("publicKeycw", publicKey);
-    console.log("accountnamecw", accountName);
     const guard = { keys: [publicKey], pred: "keys-all" };
 
-    // (test-capability (pass.coin.TRANSFER "user2" "arya" 0.08))
-    // (test-capability (pass.coin.TRANSFER "user2" "user" 1.96))
-
-    // const a = accountName;
-    // // const b = "k:78a6d3d3ea9f2ad21a347d6715554de20b0ac9234057ed50ae8776fa96493826"
-    // const b = data.creator;
-    // const c = "00fd7ca27f0ab6cfb03e3316c23599890f7a82043cb73925dc080307b771528d";
-    // console.log("b", b, "c", c, "a", a);
     const a = accountName;
-    // account -> a = buyer account
-    // account -> b = royalty account
-    // account -> c = marketplace admin account
-    //account -> d = seller account
-    // const b = data.collection_info[0].royaltyAddress;
+
     const b = royaltyA;
     const c =
       "kryptomerch-bank";
     const d = data.creator;
-console.log("b", b, "c", c, "a", a, "d", d);
     const pactCode = `(free.km-marketplace.buy ${JSON.stringify(
       data.tokenId
     )} ${JSON.stringify(a)})`;
@@ -635,9 +505,7 @@ console.log("b", b, "c", c, "a", a, "d", d);
           guard: guard,
         },
       }; //alert to sign tx
-      console.log(signCmd, "signcmd");
       const cmd = await Pact.wallet.sign(signCmd);
-      console.log("cmjj", cmd);
       if (cmd) {
         const localRes = await fetch(`${API_HOST}/api/v1/local`, {
           headers: {
@@ -646,19 +514,15 @@ console.log("b", b, "c", c, "a", a, "d", d);
           method: "POST",
           body: JSON.stringify(cmd),
         });
-        console.log(localRes, "localrp");
         const rawRes = await localRes;
         const resJSON = await rawRes.json();
-        console.log("rawraw", resJSON);
         if (resJSON.result.status === "success") {
           const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
 
-          console.log(reqKey, "Reqkey");
           const signedtxx = await Pact.fetch.listen(
             { listen: reqKey.requestKeys[0] },
             API_HOST
           );
-          console.log(signedtxx, "xxxxxxxxxxxxxx");
           if (signedtxx.result.status == "success") {
             const obj = {
               tokenId: data.tokenId,
@@ -676,7 +540,6 @@ console.log("b", b, "c", c, "a", a, "d", d);
                 category: "transfer",
               },
             };
-            console.log("obj", obj);
             const accessJWT = localStorage.getItem("accessJWT");
             const config = {
               headers: {
@@ -685,13 +548,11 @@ console.log("b", b, "c", c, "a", a, "d", d);
             };
             Axios.patch("/passDetails/update-nft-pass-gift", obj, config)
               .then((response) => {
-                console.log("Updatezzzzz", response.data.data);
                 if (response.data.status == "success") {
                   toast.success("Successfully bought");
                   setLoading(false);
                   setRefresh(!refresh);
                 } else {
-                  console.log("hello");
                   setLoading(false);
                   toast.error("NFT not bought");
                 }
@@ -713,11 +574,6 @@ console.log("b", b, "c", c, "a", a, "d", d);
     }
 
     if (walletName == "Xwallet") {
-      console.log("XWalet");
-      console.log("MarketplaceCharges", MarketplaceCharges);
-      console.log("royaltyPayout", royaltyPayout);
-      console.log("sellerPayout", sellerPayout);
-      console.log("a", a, "b", b, "c", c, "d", d);
       const XWalletRequest = {
         networkId: NETWORK_ID,
         signingCmd: {
@@ -764,24 +620,19 @@ console.log("b", b, "c", c, "a", a, "d", d);
       };
 
       // 18.87350
-      console.log("nml");
       const cmd = await window.kadena.request({
         method: "kda_requestSign",
         networkId: NETWORK_ID,
         data: XWalletRequest,
       });
-      console.log("cmd", cmd);
+     
       if (cmd.status == "success") {
-        console.log("WALLETINFB", cmd.signedCmd.cmd);
         const gore2 = await Pact.wallet.sendSigned(cmd.signedCmd, API_HOST);
-        // setSpinner("true");
-        console.log("sdsf", gore2);
         const txResult = await Pact.fetch.listen(
           { listen: `${gore2.requestKeys[0]}` },
           API_HOST
         );
 
-        console.log("Ssffs", txResult);
         if (txResult.result.status == "success") {
           const obj = {
             tokenId: data.tokenId,
@@ -799,7 +650,6 @@ console.log("b", b, "c", c, "a", a, "d", d);
               category: "transfer",
             },
           };
-          console.log("obj", obj);
           const accessJWT = localStorage.getItem("accessJWT");
           const config = {
             headers: {
@@ -808,13 +658,11 @@ console.log("b", b, "c", c, "a", a, "d", d);
           };
           Axios.patch("/passDetails/update-nft-pass-gift", obj, config)
             .then((response) => {
-              console.log("Updatezzzzz", response.data.data);
               if (response.data.status == "success") {
                 toast.success("Successfully bought");
                 setLoading(false);
                 setRefresh(!refresh);
               } else {
-                console.log("hello");
                 setLoading(false);
                 toast.error("NFT not bought");
               }
@@ -860,26 +708,19 @@ console.log("b", b, "c", c, "a", a, "d", d);
       };
       Axios.post("/user/checkUserByWallet", { recipientAddress }, config)
         .then(async(response) => {
-          console.log("response", response);
           if(response.data.status == 'error'){
             toast.error("The user you are trying to gift the nft is not registered with Kryptomerch");
             setLoadingGift(false);
             return;
           }
           else{
-            console.log("data", data);
     const tokenId = data.tokenId;
-    console.log("tokenid", tokenId);
-    console.log("walletAddress", walletAddress);
 
     // const accountName = "k:a9ca12cafb238d8789899de1b2303783435f201b1dfb9e2fdca28fa3b7077fcf"//owner
     const accountName = walletAddress;
     //   const receiver="k:78a6d3d3ea9f2ad21a347d6715554de20b0ac9234057ed50ae8776fa96493826"
     const receiver = recipientAddress;
-    console.log("receiver", receiver, "accountName", accountName);
     const publicKey = accountName.slice(2, accountName.length);
-    console.log("publicKeycw", publicKey);
-    console.log("accountnamecw", accountName);
     const guard = { keys: [publicKey], pred: "keys-all" };
 
     const a = accountName;
@@ -914,9 +755,7 @@ console.log("b", b, "c", c, "a", a, "d", d);
           "demothreeaccount-keyset": guard,
         },
       };
-      console.log(signCmd, "signcmd");
       const cmd = await Pact.wallet.sign(signCmd);
-      console.log("cmjj", cmd);
       if (cmd) {
         const localRes = await fetch(`${API_HOST}/api/v1/local`, {
           headers: {
@@ -925,19 +764,15 @@ console.log("b", b, "c", c, "a", a, "d", d);
           method: "POST",
           body: JSON.stringify(cmd),
         });
-        console.log(localRes, "localrp");
         const rawRes = await localRes;
         const resJSON = await rawRes.json();
-        console.log("rawraw", resJSON);
         if (resJSON.result.status === "success") {
           const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
 
-          console.log(reqKey, "Reqkey");
           const signedtxx = await Pact.fetch.listen(
             { listen: reqKey.requestKeys[0] },
             API_HOST
           );
-          console.log(signedtxx, "xxxxxxxxxxxxxxNFTGIFT");
           if (signedtxx.result.status == "success") {
             const obj = {
               passTokenId: tokenId,
@@ -947,10 +782,9 @@ console.log("b", b, "c", c, "a", a, "d", d);
               history: {
                 owner: walletAddress,
                 price: data.nftPrice,
-                category: "transfer",
+                category: "gift",
               },
             };
-            console.log("obj", obj);
             const accessJWT = localStorage.getItem("accessJWT");
             const config = {
               headers: {
@@ -959,14 +793,12 @@ console.log("b", b, "c", c, "a", a, "d", d);
             };
             Axios.patch("/passDetails/update-nft-pass-gift", obj, config)
               .then((response) => {
-                console.log("Updatezzzzz", response.data.data);
                 if (response.data.status == "success") {
                   setLoadingGift(false);
                   toast.success("NFT gifted successfully");
                   setRefresh(!refresh);
                   setGiftModal(false);
                 } else {
-                  console.log("hello");
                   toast.error("NFT not gifted");
                   setGiftModal(false);
                   setLoadingGift(false);
@@ -1025,24 +857,19 @@ console.log("b", b, "c", c, "a", a, "d", d);
       };
 
       // 18.87350
-      console.log("nml");
       const cmd = await window.kadena.request({
         method: "kda_requestSign",
         networkId: NETWORK_ID,
         data: XWalletRequest,
       });
-      console.log("cmd", cmd);
       if (cmd.status == "success") {
-        console.log("WALLETINFB", cmd.signedCmd.cmd);
         const gore2 = await Pact.wallet.sendSigned(cmd.signedCmd, API_HOST);
         setSpinner("true");
-        console.log("sdsf", gore2);
         const txResult = await Pact.fetch.listen(
           { listen: `${gore2.requestKeys[0]}` },
           API_HOST
         );
 
-        console.log("Ssffs", txResult);
         if (txResult.result.status == "success") {
           const obj = {
             passTokenId: tokenId,
@@ -1052,10 +879,9 @@ console.log("b", b, "c", c, "a", a, "d", d);
             history: {
               owner: walletAddress,
               price: data.nftPrice,
-              category: "transfer",
+              category: "gift",
             },
           };
-          console.log("obj", obj);
           const accessJWT = localStorage.getItem("accessJWT");
           const config = {
             headers: {
@@ -1064,14 +890,12 @@ console.log("b", b, "c", c, "a", a, "d", d);
           };
           Axios.patch("/passDetails/update-nft-pass-gift", obj, config)
             .then((response) => {
-              console.log("Updatezzzzz", response.data.data);
               if (response.data.status == "success") {
                 setLoadingGift(false);
                 toast.success("NFT gifted successfully");
                 setRefresh(!refresh);
                 setGiftModal(false);
               } else {
-                console.log("hello");
                 toast.error("NFT not gifted");
                 setGiftModal(false);
                 setLoadingGift(false);
@@ -1122,7 +946,6 @@ console.log("b", b, "c", c, "a", a, "d", d);
             <ul>
               {passes.length ? (
                 passes.map((data) => {
-                  console.log("dataMAP", data);
                   return (
                     <>
                       {/* <Link

@@ -40,7 +40,6 @@ const options = {
 };
 export default function CollectionSlider(props) {
   const { item } = props;
-  console.log(item, "item");
   
   // const [nfts, setNfts] = useState([]);
 

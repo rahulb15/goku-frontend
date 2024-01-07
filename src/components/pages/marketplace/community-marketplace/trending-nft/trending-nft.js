@@ -14,7 +14,6 @@ export const TrendingCrousalMain = () => {
       headers: { authorization: localStorage.getItem("accessJWT") },
     })
       .then((response) => {
-        console.log(response.data.data, "response");
         if (response.data.status == "success") {
           let nfts = response.data.data;
           setNfts(nfts);
@@ -30,7 +29,6 @@ export const TrendingCrousalMain = () => {
       });
   } , []);
 
-  console.log(nfts, "nftsTrending")
   return (
     <div>
       <div className="marketplaceAbout">

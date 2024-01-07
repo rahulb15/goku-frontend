@@ -76,7 +76,6 @@ export default function NftProjectSlider() {
   useEffect(() => {
     getDbCooper();
   }, [searchInput, page, limit]);
-  console.log(filteredDbCooper, "filteredDbCooper");
 
   return (
     <div className="nftslideOuter">

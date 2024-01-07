@@ -150,11 +150,8 @@ const CommunityMarketplace = () => {
   };
 
   const getRoyalityRate = async (data) => {
-    console.log("data", data?.collectionName);
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    console.log("publicKeycw", publicKey);
-    console.log("accountnamecw", accountName);
     const guard = { keys: [publicKey], pred: "keys-all" };
 
     const a = accountName;
@@ -180,7 +177,6 @@ const CommunityMarketplace = () => {
     }; //alert to sign tx
 
     const response = await Pact.fetch.local(signCmd, API_HOST);
-    console.log("response", response);
     if (response.result.status == "success") {
       const datum = response.result.data;
       setRoyalityRate(datum);
@@ -201,28 +197,16 @@ const CommunityMarketplace = () => {
   };
 
   React.useEffect(async () => {
-    console.log(nft);
     let royaltyR = 0;
     if (nftPrice > 0) {
       royaltyR = await getRoyalityRate(nft[0]);
     }
-    console.log("royaltyR", royaltyR);
-    console.log("nftPrice", nftPrice, serviceFee / 100);
-    console.log("price", price);
-    console.log("parseFloat(nftPrice)", parseFloat(nftPrice));
     const MarketplaceCharges = (serviceFee / 100) * parseFloat(nftPrice);
-    console.log("MarketplaceCharges", MarketplaceCharges);
     const priceWithoutMarketplaceCharges =
       parseFloat(nftPrice) - MarketplaceCharges;
-    console.log(
-      "priceWithoutMarketplaceCharges",
-      priceWithoutMarketplaceCharges
-    );
 
     const royaltyPayout = royaltyR * priceWithoutMarketplaceCharges;
-    console.log("royaltyPayout", royaltyPayout);
     const sellerPayout = priceWithoutMarketplaceCharges - royaltyPayout;
-    console.log("sellerPayout", sellerPayout);
     setReceive(sellerPayout);
   }, [nftPrice]);
 
@@ -231,7 +215,6 @@ const CommunityMarketplace = () => {
   }, [price]);
 
   const handleOnSubmit = () => {
-    console.log(nftPrice, "nftPrice");
     if (timedAuction == "") {
       toast.error("Please select selling type");
       return;
@@ -842,7 +825,6 @@ const CommunityMarketplace = () => {
     const response = await Pact.fetch.local(signCmd, API_HOST);
     if (response.result.status == "success") {
       const datum = response.result.data;
-      console.log(datum, "feeeeeeeeee");
       setServiceFee(datum * 100);
     } else {
       toast.error("Transaction Failed", {
@@ -861,7 +843,6 @@ const CommunityMarketplace = () => {
   useEffect(() => {
     getFee();
   }, []);
-  console.log(serviceFee, "serviceFee");
 
   //
   return (

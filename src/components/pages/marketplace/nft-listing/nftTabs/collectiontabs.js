@@ -31,7 +31,6 @@ export default function NftTabs1() {
   const [collectionList, setCollectionList] = useState([]);
     const [active, setActive] = useState(false);
 
-    console.log(search, "search");
   
   
   
@@ -50,7 +49,6 @@ export default function NftTabs1() {
     )
       .then((response) => {
         if (response.data.status == "success") {
-            console.log(response.data.data, "collection data");
             setCollectionList(response.data.data);
        
         } else {

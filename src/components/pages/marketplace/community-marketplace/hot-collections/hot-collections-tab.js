@@ -88,7 +88,6 @@ export default function HotCollectionsTab() {
     getDbCooper();
   }, [searchInput, page, limit]);
 
-  console.log("filteredDbCooper", filteredDbCooper, page, limit, searchInput);
 
   return (
     <div className="marketplace_tabsOuter">
@@ -174,7 +173,6 @@ export default function HotCollectionsTab() {
 
             {hotCollections?.length > 0 &&
               hotCollections?.map((item, index) => {
-                console.log("item", item);
                 return (
                   <div className="colListOutBx" key={index}>
                     <Link

@@ -200,7 +200,6 @@ const LaunchpadDetails = () => {
   };
 
   let price;
-  console.log("pricePASSSSSSSS", price);
   const getPassPrice = async () => {
   
     const signCmd = {
@@ -1389,8 +1388,6 @@ const LaunchpadDetails = () => {
     getPassAllDetails();
   }, []);
 
-  console.log("passPrice", passPrice);
-  console.log("dbCooperPrice", dbCooperPrice);
 
   // const toggle=()=> {
   //     setModal(!modal)

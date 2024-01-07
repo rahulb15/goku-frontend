@@ -59,17 +59,13 @@ const OverviewDetail = () => {
   const [royalityAddress, setRoyalityAddress] = React.useState("");
   const [royalityRate, setRoyalityRate] = React.useState("");
   const [kadenaConversionRate, setKadenaConversionRate] = React.useState(0);
-  console.log("royalityAddress", royalityAddress);
-  console.log("royalityRate", royalityRate);
   const search = window.location.search;
   const params = new URLSearchParams(search);
   let foo2 = params.get("for");
-  console.log("foo2", foo2);
 
   const { walletStatus, walletName, walletAddress } = useSelector(
     (state) => state.walletStatus
   );
-  console.log("walletStatus", walletAddress);
 
   const toggle = () => {
     setModal(!modal);
@@ -82,7 +78,7 @@ const OverviewDetail = () => {
     getNft();
     getNftLikes();
     getNftLikeStatus();
-  }, []);
+  }, [refresh]);
 
   useEffect(() => {
     getNftLikeStatus();
@@ -99,7 +95,6 @@ const OverviewDetail = () => {
     const params = new URLSearchParams(search);
     let foo = params.get("id");
     const type = params.get("for") == "all" ? "nft" : "pass";
-    console.log("type", type);
 
     const formdata = {
       nftLiked: foo,
@@ -128,7 +123,6 @@ const OverviewDetail = () => {
     const params = new URLSearchParams(search);
     let foo = params.get("id");
     const type = params.get("for") == "all" ? "nft" : "pass";
-    console.log("type", type);
 
     const formdata = {
       nftLiked: foo,
@@ -254,7 +248,9 @@ const OverviewDetail = () => {
 
   //useEffect for getting kadena conversion rate by calling api
   useEffect(() => {
-    Axios.get("https://api.coingecko.com/api/v3/simple/price?ids=kadena&vs_currencies=usd")
+    Axios.get(
+      "https://api.coingecko.com/api/v3/simple/price?ids=kadena&vs_currencies=usd"
+    )
       .then((response) => {
         if (response.data.kadena.usd) {
           setKadenaConversionRate(response.data.kadena.usd);
@@ -265,17 +261,10 @@ const OverviewDetail = () => {
       });
   }, [filteredNft]);
 
-  console.log("kadenaConversionRate", kadenaConversionRate);
-
-
-
-
 
   const getFee = async () => {
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    console.log("publicKeycw", publicKey);
-    console.log("accountnamecw", accountName);
     const guard = { keys: [publicKey], pred: "keys-all" };
 
     const a = accountName;
@@ -301,7 +290,6 @@ const OverviewDetail = () => {
     }; //alert to sign tx
 
     const response = await Pact.fetch.local(signCmd, API_HOST);
-    console.log("response", response);
     if (response?.result?.status == "success") {
       const datum = response?.result?.data;
       setFee(datum);
@@ -326,8 +314,7 @@ const OverviewDetail = () => {
   const getRoyalityAddress = async (data) => {
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    console.log("publicKeycw", publicKey);
-    console.log("accountnamecw", accountName);
+
     const guard = { keys: [publicKey], pred: "keys-all" };
 
     const a = accountName;
@@ -353,7 +340,6 @@ const OverviewDetail = () => {
     }; //alert to sign tx
 
     const response = await Pact.fetch.local(signCmd, API_HOST);
-    console.log("response", response);
     if (response.result.status == "success") {
       const datum = response.result.data;
       setRoyalityAddress(datum);
@@ -376,8 +362,7 @@ const OverviewDetail = () => {
   const getRoyalityRate = async (data) => {
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    console.log("publicKeycw", publicKey);
-    console.log("accountnamecw", accountName);
+ 
     const guard = { keys: [publicKey], pred: "keys-all" };
 
     const a = accountName;
@@ -403,10 +388,8 @@ const OverviewDetail = () => {
     }; //alert to sign tx
 
     const response = await Pact.fetch.local(signCmd, API_HOST);
-    console.log("response", response);
     if (response.result.status == "success") {
       const datum = response.result.data;
-      console.log("datumxxxxxxxxxxxx", datum);
       setRoyalityRate(datum);
       return datum;
     } else {
@@ -425,55 +408,25 @@ const OverviewDetail = () => {
   };
 
   const buyIdOnSale = async (data) => {
-    console.log("dataOverview", data);
     setLoading(true);
     const royaltyA = await getRoyalityAddress(data);
     const royaltyR = await getRoyalityRate(data);
-    console.log("royaltyA", royaltyA);
-    console.log("royaltyR", royaltyR);
+ 
 
-    console.log("data", data);
     const MarketplaceCharges = fee * parseFloat(data.nftPrice);
-    console.log("MarketplaceCharges", MarketplaceCharges);
     const priceWithoutMarketplaceCharges =
       parseFloat(data.nftPrice) - MarketplaceCharges;
-    console.log(
-      "priceWithoutMarketplaceCharges",
-      priceWithoutMarketplaceCharges
-    );
-    // const royaltyPayout =
-    //   data.collection_info[0].royaltyFee * priceWithoutMarketplaceCharges;
+ 
     const royaltyPayout = royaltyR * priceWithoutMarketplaceCharges;
-    console.log("royaltyPayout", royaltyPayout);
     const sellerPayout = priceWithoutMarketplaceCharges - royaltyPayout;
-    console.log("sellerPayout", sellerPayout);
-    console.log("data", data);
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    console.log("publicKeycw", publicKey);
-    console.log("accountnamecw", accountName);
     const guard = { keys: [publicKey], pred: "keys-all" };
-
-    // (test-capability (pass.coin.TRANSFER "user2" "arya" 0.08))
-    // (test-capability (pass.coin.TRANSFER "user2" "user" 1.96))
-
-    // const a = accountName;
-    // // const b = "k:78a6d3d3ea9f2ad21a347d6715554de20b0ac9234057ed50ae8776fa96493826"
-    // const b = data.creator;
-    // const c = "00fd7ca27f0ab6cfb03e3316c23599890f7a82043cb73925dc080307b771528d";
-    // console.log("b", b, "c", c, "a", a);
     const a = accountName;
-    // account -> a = buyer account
-    // account -> b = royalty account
-    // account -> c = marketplace admin account
-    //account -> d = seller account
-    // const b = data.collection_info[0].royaltyAddress;
     const b = royaltyA;
-    const c =
-      "kryptomerch-bank";
+    const c = "kryptomerch-bank";
     const d = data.creator;
 
-    console.log("a", a, "b", b, "c", c, "d", d);
 
     const pactCode = `(free.km-marketplace.buy ${JSON.stringify(
       data.tokenId
@@ -515,7 +468,6 @@ const OverviewDetail = () => {
           guard: guard,
         },
       }; //alert to sign tx
-      console.log(signCmd, "signcmd");
       const cmd = await Pact.wallet.sign(signCmd);
       if (cmd === undefined) {
         toast.error("User cancelled request", {
@@ -533,19 +485,15 @@ const OverviewDetail = () => {
           method: "POST",
           body: JSON.stringify(cmd),
         });
-        console.log(localRes, "localrp");
         const rawRes = await localRes;
         const resJSON = await rawRes.json();
-        console.log("rawraw", resJSON);
         if (resJSON.result.status === "success") {
           const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
 
-          console.log(reqKey, "Reqkey");
           const signedtxx = await Pact.fetch.listen(
             { listen: reqKey.requestKeys[0] },
             API_HOST
           );
-          console.log(signedtxx, "xxxxxxxxxxxxxx");
           if (signedtxx.result.status == "success") {
             if (foo2 == "all") {
               const obj = {
@@ -563,7 +511,6 @@ const OverviewDetail = () => {
                   category: "transfer",
                 },
               };
-              console.log("obj", obj);
               const accessJWT = localStorage.getItem("accessJWT");
               const config = {
                 headers: {
@@ -577,7 +524,6 @@ const OverviewDetail = () => {
                     setLoading(false);
                     setRefresh(!refresh);
                   } else {
-                    console.log("hello");
                     setLoading(false);
                     toast.error("NFT not bought");
                   }
@@ -604,7 +550,6 @@ const OverviewDetail = () => {
                   category: "transfer",
                 },
               };
-              console.log("obj", obj);
               const accessJWT = localStorage.getItem("accessJWT");
               const config = {
                 headers: {
@@ -613,13 +558,11 @@ const OverviewDetail = () => {
               };
               Axios.patch("/passDetails/update-nft-pass-gift", obj, config)
                 .then((response) => {
-                  console.log("Updatezzzzz", response.data.data);
                   if (response.data.status == "success") {
                     toast.success("Successfully bought");
                     setLoading(false);
                     setRefresh(!refresh);
                   } else {
-                    console.log("hello");
                     setLoading(false);
                     toast.error("NFT not bought");
                   }
@@ -642,11 +585,6 @@ const OverviewDetail = () => {
     }
 
     if (walletName == "Xwallet") {
-      console.log("XWalet");
-      console.log("MarketplaceCharges", MarketplaceCharges);
-      console.log("royaltyPayout", royaltyPayout);
-      console.log("sellerPayout", sellerPayout);
-      console.log("a", a, "b", b, "c", c, "d", d);
       const XWalletRequest = {
         networkId: NETWORK_ID,
         signingCmd: {
@@ -693,24 +631,19 @@ const OverviewDetail = () => {
       };
 
       // 18.87350
-      console.log("nml");
       const cmd = await window.kadena.request({
         method: "kda_requestSign",
         networkId: NETWORK_ID,
         data: XWalletRequest,
       });
-      console.log("cmd", cmd);
       if (cmd.status == "success") {
-        console.log("WALLETINFB", cmd.signedCmd.cmd);
         const gore2 = await Pact.wallet.sendSigned(cmd.signedCmd, API_HOST);
         // setSpinner("true");
-        console.log("sdsf", gore2);
         const txResult = await Pact.fetch.listen(
           { listen: `${gore2.requestKeys[0]}` },
           API_HOST
         );
 
-        console.log("Ssffs", txResult);
         if (txResult.result.status == "success") {
           if (foo2 == "all") {
             const obj = {
@@ -728,7 +661,6 @@ const OverviewDetail = () => {
                 category: "transfer",
               },
             };
-            console.log("obj", obj);
             const accessJWT = localStorage.getItem("accessJWT");
             const config = {
               headers: {
@@ -742,7 +674,6 @@ const OverviewDetail = () => {
                   setLoading(false);
                   setRefresh(!refresh);
                 } else {
-                  console.log("hello");
                   setLoading(false);
                   toast.error("NFT not bought");
                 }
@@ -769,7 +700,6 @@ const OverviewDetail = () => {
                 category: "transfer",
               },
             };
-            console.log("obj", obj);
             const accessJWT = localStorage.getItem("accessJWT");
             const config = {
               headers: {
@@ -778,13 +708,11 @@ const OverviewDetail = () => {
             };
             Axios.patch("/passDetails/update-nft-pass-gift", obj, config)
               .then((response) => {
-                console.log("Updatezzzzz", response.data.data);
                 if (response.data.status == "success") {
                   toast.success("Successfully bought");
                   setLoading(false);
                   setRefresh(!refresh);
                 } else {
-                  console.log("hello");
                   setLoading(false);
                   toast.error("NFT not bought");
                 }
@@ -840,7 +768,6 @@ const OverviewDetail = () => {
       };
 
       const cmd = await Pact.wallet.sign(signCmd);
-      console.log("cmd", cmd);
       if (cmd === undefined) {
         toast.error("User cancelled request", {
           position: "top-right",
@@ -1158,6 +1085,8 @@ const OverviewDetail = () => {
           const obj = {
             onAuction: true,
             _id: data._id,
+            onMarketplace: true,
+            nftPrice: data.nftPrice,
             bidPrice: "",
             bidder: "",
             history: {
@@ -1257,6 +1186,8 @@ const OverviewDetail = () => {
           const obj = {
             onAuction: true,
             _id: data._id,
+            onMarketplace: true,
+            nftPrice: data.nftPrice,
             bidPrice: "",
             bidder: "",
             history: {
@@ -1383,6 +1314,7 @@ const OverviewDetail = () => {
             onSale: false,
             sellingType: "All",
             onMarketplace: false,
+            nftPrice: data.nftPrice,
             imageIndex: data.imageIndex,
             _id: data._id,
             history: {
@@ -1490,6 +1422,7 @@ const OverviewDetail = () => {
             onSale: false,
             sellingType: "All",
             imageIndex: data.imageIndex,
+            nftPrice: data.nftPrice,
             onMarketplace: false,
             _id: data._id,
             history: {
@@ -1807,7 +1740,6 @@ const OverviewDetail = () => {
       };
       Axios.post("/user/checkUserByWallet", { recipientAddress }, config)
         .then(async (response) => {
-          console.log("response", response);
           if (response.data.status == "error") {
             toast.error(
               "The user you are trying to gift the nft is not registered with Kryptomerch"
@@ -1898,7 +1830,7 @@ const OverviewDetail = () => {
                       history: {
                         owner: walletAddress,
                         price: data.nftPrice,
-                        category: "transfer",
+                        category: "gift",
                       },
                     };
 
@@ -1938,10 +1870,9 @@ const OverviewDetail = () => {
                         history: {
                           owner: walletAddress,
                           price: data.nftPrice,
-                          category: "transfer",
+                          category: "gift",
                         },
                       };
-                      console.log("obj", obj);
                       const accessJWT = localStorage.getItem("accessJWT");
                       const config = {
                         headers: {
@@ -1954,14 +1885,12 @@ const OverviewDetail = () => {
                         config
                       )
                         .then((response) => {
-                          console.log("Updatezzzzz", response.data.data);
                           if (response.data.status == "success") {
                             setLoadingGift(false);
                             toast.success("NFT gifted successfully");
                             setRefresh(!refresh);
                             setGiftModal(false);
                           } else {
-                            console.log("hello");
                             toast.error("NFT not gifted");
                             setGiftModal(false);
                             setLoadingGift(false);
@@ -2051,7 +1980,7 @@ const OverviewDetail = () => {
                   history: {
                     owner: walletAddress,
                     price: data.nftPrice,
-                    category: "transfer",
+                    category: "gift",
                   },
                 };
 
@@ -2091,10 +2020,9 @@ const OverviewDetail = () => {
                     history: {
                       owner: walletAddress,
                       price: data.nftPrice,
-                      category: "transfer",
+                      category: "gift",
                     },
                   };
-                  console.log("obj", obj);
                   const accessJWT = localStorage.getItem("accessJWT");
                   const config = {
                     headers: {
@@ -2103,14 +2031,12 @@ const OverviewDetail = () => {
                   };
                   Axios.patch("/passDetails/update-nft-pass-gift", obj, config)
                     .then((response) => {
-                      console.log("Updatezzzzz", response.data.data);
                       if (response.data.status == "success") {
                         setLoadingGift(false);
                         toast.success("NFT gifted successfully");
                         setRefresh(!refresh);
                         setGiftModal(false);
                       } else {
-                        console.log("hello");
                         toast.error("NFT not gifted");
                         setGiftModal(false);
                         setLoadingGift(false);
@@ -2151,8 +2077,7 @@ const OverviewDetail = () => {
   const endTime = new Date(
     new Date().getTime() + filteredNft.duration * 24 * 60 * 60 * 1000
   ).toLocaleString();
-  console.log("isAuth", walletAddress, userId);
-  console.log("filteredNft", filteredNft);
+
   return (
     <div>
       <div className="overDet_Outer">
@@ -2162,9 +2087,11 @@ const OverviewDetail = () => {
               <div className="featImg">
                 <img
                   src={
-                   
-                    filteredNft?.fileImageUrl ? filteredNft?.fileImageUrl : filteredNft?.tokenImage ? filteredNft?.tokenImage : overviewDetImg
-
+                    filteredNft?.fileImageUrl
+                      ? filteredNft?.fileImageUrl
+                      : filteredNft?.tokenImage
+                      ? filteredNft?.tokenImage
+                      : overviewDetImg
                   }
                   alt=""
                 />
@@ -2202,8 +2129,13 @@ const OverviewDetail = () => {
           <div className="overviewName bold">
             {/* {filteredNft?.collectionName ? filteredNft?.collectionName : "--"}#
             {filteredNft?.imageIndex ? filteredNft?.imageIndex : "--"} */}
-          {filteredNft?.fileName  ? filteredNft?.fileName : `${filteredNft?.collectionName ? filteredNft?.collectionName : "--"}#${filteredNft?.imageIndex ? filteredNft?.imageIndex : "--"}`}
-
+            {filteredNft?.fileName
+              ? filteredNft?.fileName
+              : `${
+                  filteredNft?.collectionName
+                    ? filteredNft?.collectionName
+                    : "--"
+                }#${filteredNft?.imageIndex ? filteredNft?.imageIndex : "--"}`}
           </div>
           <div className="overviewOwnerOuter">
             <div className="overwOwner">
@@ -2326,7 +2258,15 @@ const OverviewDetail = () => {
                     <strong>
                       {filteredNft?.nftPrice ? filteredNft?.nftPrice : "--"} KDA
                     </strong>
-                    <span>${filteredNft?.nftPrice ? (filteredNft?.nftPrice * kadenaConversionRate).toFixed(2) : "--"} USD</span>
+                    <span>
+                      $
+                      {filteredNft?.nftPrice
+                        ? (
+                            filteredNft?.nftPrice * kadenaConversionRate
+                          ).toFixed(2)
+                        : "--"}{" "}
+                      USD
+                    </span>
                   </div>
                   <div className="bidBx">
                     <small>Highest Floor bid</small>
@@ -2618,7 +2558,15 @@ const OverviewDetail = () => {
                     <strong>
                       {filteredNft?.nftPrice ? filteredNft?.nftPrice : "--"} KDA
                     </strong>
-                    <span>${filteredNft?.nftPrice ? (filteredNft?.nftPrice * kadenaConversionRate).toFixed(2) : "--"} USD</span>
+                    <span>
+                      $
+                      {filteredNft?.nftPrice
+                        ? (
+                            filteredNft?.nftPrice * kadenaConversionRate
+                          ).toFixed(2)
+                        : "--"}{" "}
+                      USD
+                    </span>
                   </div>
                   <div className="bidBx">
                     <small>Sale is live</small>

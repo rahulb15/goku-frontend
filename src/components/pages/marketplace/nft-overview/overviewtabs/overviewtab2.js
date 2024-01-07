@@ -45,7 +45,6 @@ export default function OverviewTab1() {
           Axios.post("/passDetails/getNftPassbyId2", formdta)
             .then((response) => {
               if (response.data.status == "success") {
-                console.log("response.data.dataProperty", response.data.data);
                 let nftList = response.data.data;
                 setFilteredNft(nftList);
                 setUserId(nftList.creator);
@@ -65,26 +64,17 @@ export default function OverviewTab1() {
       };
 
       useEffect(() => {
-        console.log("filteredNftUSEEFFECT", filteredNft);
         const fakeTokenId = "dbc:yHxNRKzSUSGEN2VaE6gLzqjqWXF47uTz0Xw-t565Q0E"
         //http://localhost:3001/properties/getPropertyByToken?token=dbc:yHxNRKzSUSGEN2VaE6gLzqjqWXF47uTz0Xw-t565Q0E
         if (filteredNft) {
-          console.log("filteredNft", filteredNft.tokenId ? filteredNft.tokenId.split(":")[1] : fakeTokenId);
           let token;
           if(filteredNft.tokenId && filteredNft.tokenId.split(":")[0] === "dbc"){
-            // token = filteredNft.tokenId.split(":")[1]
             token = filteredNft.tokenId
-          //   console.log("filteredNft", filteredNft.tokenId.split(":")[1]);
-
-          // //   //add collection name to token
-          //   token = filteredNft.tokenId.split(":")[1]
           }
           else{
-            console.log(filteredNft,"filteredNft1234 ")
             token = filteredNft.hash;
           }
-          console.log(token,"tokenxdxdxdxd");
-          // // console.log("token", token);
+      
 
           Axios.get(
             `/properties/getPropertyByToken?token=${token}`
@@ -96,7 +86,6 @@ export default function OverviewTab1() {
                 let propertyList = response.data.data;
                 // setFilteredNft(nftList);
                 // setUserId(nftList.creator);
-                console.log("propertyList", propertyList);
                 setPropertyData(propertyList[0]);
                 // setCollectionList(filteredCollectionList)
               } else {

@@ -76,7 +76,6 @@ const NftTabs1 = () => {
     })
       .then((response) => {
         if (response.data.status == "success") {
-          console.log("userNft", response.data.data);
           let nfts = response.data.data;
           setUserNft(nfts);
           setScreenLoading(false);
@@ -134,7 +133,6 @@ const NftTabs1 = () => {
   };
 
   const getNftPrice = async () => {
-    console.log("nftPrice", userNft);
     const accountName1 = walletAddress;
     const publicKey1 = accountName1.slice(2, accountName1.length);
     const guard1 = { keys: [publicKey1], pred: "keys-all" };
@@ -164,9 +162,6 @@ const NftTabs1 = () => {
     }; //alert to sign tx
     const response = await Pact.fetch.local(signCmd, API_HOST);
     if (response.result.status === "success") {
-      console.log("nftPricexcxc", response.result.data);
-      // setCollectionPrice(response.result.data);
-      // nftPrice = response.result.data;
       setNftPrice(response.result.data);
     }
   };
@@ -218,29 +213,17 @@ const NftTabs1 = () => {
           filteredNft.tokenId &&
           filteredNft.tokenId.split(":")[0] === "dbc"
         ) {
-          // token = filteredNft.tokenId.split(":")[1]
           token = filteredNft.tokenId;
-          //   console.log("filteredNft", filteredNft.tokenId.split(":")[1]);
-
-          // //   //add collection name to token
-          //   token = filteredNft.tokenId.split(":")[1]
         } else {
-          console.log(filteredNft, "filteredNft1234 ");
           token = datum["hash"];
         }
-        console.log(token, "tokenxdxdxdxd");
-        // // console.log("token", token);
 
         Axios.get(
           `/properties/getPropertyByToken?token=${token}`
-          // `/properties/getPropertyByToken?token=${fakeTokenId}`
         )
           .then(async (response) => {
             if (response.data.status == "success" && response.data.data.length > 0) {
               let propertyList = response.data.data;
-              // setFilteredNft(nftList);
-              // setUserId(nftList.creator);
-              console.log("propertyList", propertyList);
               fileImageUrl = propertyList[0].image;
               fileName = propertyList[0].name;
               obj = {
@@ -262,7 +245,6 @@ const NftTabs1 = () => {
                 fileImageUrl: fileImageUrl,
                 fileName: fileName,
               };
-              console.log("obj", obj);
               const accessJWT = localStorage.getItem("accessJWT");
               const config = {
                 headers: {
@@ -298,7 +280,6 @@ const NftTabs1 = () => {
                   category: "mint",
                 },
               };
-              console.log("obj", obj);
               const accessJWT = localStorage.getItem("accessJWT");
               const config = {
                 headers: {
@@ -346,7 +327,6 @@ const NftTabs1 = () => {
   };
 
   const giftNft = async (data) => {
-    console.log(data, "data");
     setLoadingGift(true);
 
     if (recipientAddress == walletAddress) {
@@ -364,7 +344,6 @@ const NftTabs1 = () => {
       };
       Axios.post("/user/checkUserByWallet", { recipientAddress }, config)
         .then(async (response) => {
-          console.log("response", response);
           if (response.data.status == "error") {
             toast.error(
               "The user you are trying to gift the nft is not registered with Kryptomerch"
@@ -448,7 +427,7 @@ const NftTabs1 = () => {
                       history: {
                         owner: walletAddress,
                         price: data.nftPrice,
-                        category: "transfer",
+                        category: "gift",
                       },
                     };
 
@@ -551,7 +530,7 @@ const NftTabs1 = () => {
                   history: {
                     owner: walletAddress,
                     price: data.nftPrice,
-                    category: "transfer",
+                    category: "gift",
                   },
                 };
 

@@ -49,7 +49,6 @@ const CommunityMarketplace = () => {
       });
   }, []);
 
-  console.log(userDetails, "userDetails");
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(walletAddress);

@@ -50,7 +50,6 @@ const SellingCrousal = (props) => {
           {items &&
             items?.length > 0 &&
             items?.map((nft, index) => {
-              console.log(nft, "nftTrending");
               return (
                 <div
                   className="item"

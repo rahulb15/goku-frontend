@@ -14,7 +14,6 @@ export default function NftTabs1()  {
     const [selected, setSelected] = useState([]);
     const [screenLoading, setScreenLoading] = useState(false);
     const [activityList, setActivityList] = useState([]);
-    console.log("selected", selected);
 
     const handleSelect = (e) => {
         if (selected.includes(e.target.value)) {
@@ -36,9 +35,7 @@ export default function NftTabs1()  {
           headers: { authorization: localStorage.getItem("accessJWT") },
         })
           .then((response) => {
-            console.log("response", response);
             if (response.data) {
-              console.log("useractivity", response.data);
                 setActivityList(response.data);
               setScreenLoading(false);
     
@@ -53,7 +50,6 @@ export default function NftTabs1()  {
           });
       };
 
-      console.log("activityList", activityList);
    
         return (
             <>
@@ -62,7 +58,6 @@ export default function NftTabs1()  {
                         <div className='activityList'>
                             <ul>
                                 {activityList?.map((item, index) => {
-                                    console.log("item", item);
                                     return (
                                         <li key={index}>
                                             <div className='tagIcon'>

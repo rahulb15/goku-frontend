@@ -15,7 +15,6 @@ export default function OverviewTab1() {
     const params = new URLSearchParams(search)
     let foo = params.get('id')
     let foo2 = params.get("for");
-    console.log("foo2", foo2);
 
     const getAllAuction = () => {
         const body = {
@@ -37,7 +36,6 @@ export default function OverviewTab1() {
                 });
         }
         else {
-            console.log("else");
             Axios.post("/passDetails/all-nft-bids-pass", body, {
                 headers: { authorization: localStorage.getItem("accessJWT") },
             })

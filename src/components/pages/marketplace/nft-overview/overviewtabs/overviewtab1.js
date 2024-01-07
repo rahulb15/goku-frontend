@@ -69,7 +69,6 @@ export default function OverviewTab1(props) {
         })
         .catch((error) => { });
     } else {
-      console.log("pass");
       Axios.post("/passDetails/getNftPassbyId", body)
         .then((response) => {
           if (response?.data?.status == "success") {
@@ -92,7 +91,6 @@ export default function OverviewTab1(props) {
     getAllAuction();
     getAllCollectionById();
   }, []);
-  console.log(bigs)
   return (
     <div>
       <div className='latestBidBx'>

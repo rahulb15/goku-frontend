@@ -76,7 +76,6 @@ export default function CommunityMarketplace() {
   }, []);
 
   const uploadProperty = async () => {
-    console.log("propertyFile", propertyFile);
     const formData = new FormData();
     formData.append("propertyFile", propertyFile);
     Axios.post("/properties/insertProperty", formData, {
@@ -86,7 +85,6 @@ export default function CommunityMarketplace() {
       },
     })
       .then((response) => {
-        console.log("heyllo2", response);
         if (response.data.status == "success") {
           toast.success("Property Uploaded", {
             position: "top-right",
@@ -117,17 +115,14 @@ export default function CommunityMarketplace() {
     })
       .then((response) => {
         if (response.data.status == "success") {
-          console.log(response.data.data[0], "collection data");
           if (response.data.data[0]) {
             setCollectionData(response.data.data[0]);
           } else {
-            console.log("no data");
             Axios.get(`/collection/user-collection-by-id?id=${foo}`, {
               headers: { authorization: localStorage.getItem("accessJWT") },
             })
               .then((response) => {
                 if (response.data.status == "success") {
-                  console.log(response.data.data[0], "collection data");
                   setCollectionData({
                     collection_info: [response.data.data[0]],
                   });
@@ -199,7 +194,6 @@ export default function CommunityMarketplace() {
   };
 
   const toggle2 = () => {
-    console.log("toggle2");
     setModal2(!modal2);
   };
   const authToggle = () => {
@@ -224,19 +218,12 @@ export default function CommunityMarketplace() {
 
   const updateTokenList = async () => {
     setLoading(true);
-    console.log(tokenList, "tokenListsss");
-    console.log(
-      collectionData?.collection_info[0]?._id,
-      "collectionData?.collection_info[0]?._id"
-    );
 
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
     const guard = { keys: [publicKey], pred: "keys-all" };
 
     const a = accountName;
-
-    console.log(tokenList, "tokenList");
 
     const pactCode = `(free.kryptomerch-contract.updatetokenlist ${
       tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"
@@ -261,9 +248,7 @@ export default function CommunityMarketplace() {
           guard: guard,
         },
       }; //alert to sign tx
-      console.log(signCmd, "signcmd");
       const cmd = await Pact.wallet.sign(signCmd);
-      console.log("cmjj", cmd);
 
       const localRes = await fetch(`${API_HOST}/api/v1/local`, {
         headers: {
@@ -272,19 +257,15 @@ export default function CommunityMarketplace() {
         method: "POST",
         body: JSON.stringify(cmd),
       });
-      console.log(localRes, "localrp");
       const rawRes = await localRes;
       const resJSON = await rawRes.json();
-      console.log("rawraw", resJSON);
       if (resJSON.result.status === "success") {
         const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
 
-        console.log(reqKey, "Reqkey");
         const signedtxx = await Pact.fetch.listen(
           { listen: reqKey.requestKeys[0] },
           API_HOST
         );
-        console.log(signedtxx, "xxxxxxxxxxxxxx");
         if (signedtxx.result.status === "success") {
           Axios.put(
             "/collection/update-token-list",
@@ -356,7 +337,6 @@ export default function CommunityMarketplace() {
           networkId: NETWORK_ID,
           data: XWalletRequest,
         });
-        console.log("cmd", cmd);
         if (cmd.status === "success") {
           toast.success("Token List Added Successfully", {
             position: "top-right",
@@ -370,17 +350,12 @@ export default function CommunityMarketplace() {
           setModal(false);
           setLoading(true);
           const gore2 = await Pact.wallet.sendSigned(cmd.signedCmd, API_HOST);
-          console.log("sdsf", gore2);
 
           const txResult = await Pact.fetch.listen(
             { listen: `${gore2.requestKeys[0]}` },
             API_HOST
           );
-          console.log("txn result", txResult);
 
-          // const txResult1 = await Pact.fetch.listen({ listen: `${gore2}` }, API_HOST);
-          // console.log("txn result", txResult1.result);
-          console.log("Ssffs", txResult);
           if (txResult.result.status === "success") {
             Axios.put(
               "/collection/update-token-list",
@@ -467,8 +442,6 @@ export default function CommunityMarketplace() {
         progress: undefined,
       });
     } else {
-      //add function here
-      console.log(tokenList, "tokenList");
       updateTokenList();
       setModal(!modal);
     }
@@ -813,13 +786,10 @@ export default function CommunityMarketplace() {
     await getCollectionPrice();
     await getCollectionCreator();
     mintCollectionTwo();
-    // nftSubmit();
   };
 
-  console.log(collectionData, "collectionData");
   return (
     <div>
-      {/* <MarketplaceHeader /> */}
       <HeaderafterLogin />
       <div
         className="creatorOuterBx"
@@ -843,61 +813,6 @@ export default function CommunityMarketplace() {
                 </div>
                 <div className="wishlist">
                   <span>
-                    {/* <EmailShareButton url={window.location.href}>
-                      <EmailIcon
-                        style={{
-                          width: "40px",
-                          height: "40px",
-                          marginRight: "10px",
-                          cursor: "pointer",
-                          borderRadius: "50%",
-                        }}
-                      />
-                    </EmailShareButton>
-                    <FacebookShareButton url={window.location.href}>
-                      <FacebookIcon
-                        style={{
-                          width: "40px",
-                          height: "40px",
-                          marginRight: "10px",
-                          cursor: "pointer",
-                          borderRadius: "50%",
-                        }}
-                      />
-                    </FacebookShareButton>
-                    <TwitterShareButton url={window.location.href}>
-                      <TwitterIcon
-                        style={{
-                          width: "40px",
-                          height: "40px",
-                          marginRight: "10px",
-                          cursor: "pointer",
-                          borderRadius: "50%",
-                        }}
-                      />
-                    </TwitterShareButton>
-                    <WhatsappShareButton url={window.location.href}>
-                      <WhatsappIcon
-                        style={{
-                          width: "40px",
-                          height: "40px",
-                          marginRight: "10px",
-                          cursor: "pointer",
-                          borderRadius: "50%",
-                        }}
-                      />
-                    </WhatsappShareButton>
-                    <TelegramShareButton url={window.location.href}>
-                      <TelegramIcon
-                        style={{
-                          width: "40px",
-                          height: "40px",
-                          marginRight: "10px",
-                          cursor: "pointer",
-                          borderRadius: "50%",
-                        }}
-                      />
-                    </TelegramShareButton> */}
                     <BsGlobe
                       style={{
                         width: "20px",
@@ -925,12 +840,7 @@ export default function CommunityMarketplace() {
                       }}
                       onClick={shareToInstagram}
                     />
-                    {/* <span style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }}> */}
-                    {/* <InstapaperShareButton url={window.location.href}>
-                                                <BsInstagram style={{ width: '20px', height: '20px',marginRight:'10px',cursor:'pointer' }}/>
-                                            </InstapaperShareButton> */}
 
-                    {/* </span> */}
                     <FaDiscord
                       style={{
                         width: "20px",
@@ -948,11 +858,6 @@ export default function CommunityMarketplace() {
               </div>
 
               <div className="kryptoCont">
-                {/* The collection name here is a collection of 10,000 unique
-                Collection NFTsd— unique digital collectibles living on the
-                Kadena blockchain. Your Collection doubles as your Collection
-                membership card, and grants access to...{" "} */}
-                {/* <a href="">Show more</a> */}
                 {collectionData?.collection_info[0]
                   ? collectionData?.collection_info[0]?.collectionInfo
                   : "The collection name here is a collection of 10,000 unique Collection NFTsd— unique digital collectibles living on the Kadena blockchain. Your Collection doubles as your Collection membership card, and grants access to..."}
@@ -1000,10 +905,6 @@ export default function CommunityMarketplace() {
                 </div>
               </div>
               <div className="editProf_Outer">
-                {/* <button className="editProf" onClick={toggle}>
-                  Add Token
-                </button> */}
-                {/* <Link to="/marketplace/profile-setting">Edit Profile</Link> */}
                 {isAuth ? (
                   <>
                     <button
@@ -1043,14 +944,7 @@ export default function CommunityMarketplace() {
                   <span style={{ color: "black" }}>
                     Enter multiple tokens by separating them with a comma (,).
                   </span>
-                  {/* <Input
-                  type="email"
-                  name="tokenList"
-                  onChange={handleOnChange}
-                  value={tokenList}
-                  id="exampleEmail"
-                  placeholder="Enter token list"
-                /> */}
+
                   <TagsInput
                     value={tokenList}
                     onlyUnique={true}
@@ -1085,18 +979,17 @@ export default function CommunityMarketplace() {
                     Update Metadata
                   </Label>
                   <br />
-                  <span style={{ color: "black", fontSize: "15px",justifyContent:'center',display:'flex' }}>
+                  <span
+                    style={{
+                      color: "black",
+                      fontSize: "15px",
+                      justifyContent: "center",
+                      display: "flex",
+                    }}
+                  >
                     Upload Metadata JSON file by specific format.
                   </span>
 
-                  {/* <button>
-                Upload Metadata
-                <input
-                  type="file"
-                  name="file"
-                  onChange={(e) => setPropertyFile(e.target.files[0])}
-                />
-              </button> */}
                   <div class="file file--upload" style={{ marginTop: "10px" }}>
                     <label for="input-file">Upload Metadata</label>
                     <input

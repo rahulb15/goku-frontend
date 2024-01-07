@@ -63,8 +63,6 @@ const NftTabs1 = (props) => {
   const [serarchCollection, setSearchCollection] = React.useState("");
   const [royalityAddress, setRoyalityAddress] = React.useState("");
   const [royalityRate, setRoyalityRate] = React.useState("");
-  console.log("royalityAddress", royalityAddress);
-  console.log("royalityRate", royalityRate);
 
   const handleChange = (event) => {
     const {
@@ -253,8 +251,6 @@ const NftTabs1 = (props) => {
   const getRoyalityAddress = async (data) => {
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    console.log("publicKeycw", publicKey);
-    console.log("accountnamecw", accountName);
     const guard = { keys: [publicKey], pred: "keys-all" };
 
     const a = accountName;
@@ -280,7 +276,6 @@ const NftTabs1 = (props) => {
     }; //alert to sign tx
 
     const response = await Pact.fetch.local(signCmd, API_HOST);
-    console.log("response", response);
     if (response.result.status == "success") {
       const datum = response.result.data;
       setRoyalityAddress(datum);
@@ -303,8 +298,6 @@ const NftTabs1 = (props) => {
   const getRoyalityRate = async (data) => {
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    console.log("publicKeycw", publicKey);
-    console.log("accountnamecw", accountName);
     const guard = { keys: [publicKey], pred: "keys-all" };
 
     const a = accountName;
@@ -330,7 +323,6 @@ const NftTabs1 = (props) => {
     }; //alert to sign tx
 
     const response = await Pact.fetch.local(signCmd, API_HOST);
-    console.log("response", response);
     if (response.result.status == "success") {
       const datum = response.result.data;
       setRoyalityRate(datum);
@@ -353,25 +345,18 @@ const NftTabs1 = (props) => {
 
   const buyIdOnSale = async (data) => {
     setLoading(true);
-    console.log("dataxcxcxcxcxc", data);
   
     const royaltyA = await getRoyalityAddress(data);
     const royaltyR = await getRoyalityRate(data);
-    console.log("royaltyA", royaltyA);
-    console.log("royaltyR", royaltyR);
-    console.log("fee",fee);
+   
     setSelectedData(data);
     const MarketplaceCharges = fee * parseFloat(data.nftPrice);
-    console.log("MarketplaceCharges", MarketplaceCharges);
     const priceWithoutMarketplaceCharges =
       parseFloat(data.nftPrice) - MarketplaceCharges;
-    console.log("priceWithoutMarketplaceCharges", priceWithoutMarketplaceCharges);
     // const royaltyPayout =
     //   props.collectionData.royaltyFee * priceWithoutMarketplaceCharges;
     const royaltyPayout = royaltyR * priceWithoutMarketplaceCharges;
-    console.log("royaltyPayout", royaltyPayout);
     const sellerPayout = priceWithoutMarketplaceCharges - royaltyPayout;
-    console.log("sellerPayout", sellerPayout);
     // const sellerPayout = priceWithoutMarketplaceCharges; //for db cooper and priority pass
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
@@ -386,9 +371,6 @@ const NftTabs1 = (props) => {
     const c =
       "kryptomerch-bank";
     const d = data.creator;
-    console.log("a", a, "b", b, "c", c, "d", d);
-    console.log("royalityAddress", royaltyA);
-    console.log("royalityRate", royaltyR);
     const pactCode = `(free.km-marketplace.buy ${JSON.stringify(
       data.tokenId
     )} ${JSON.stringify(a)})`;
@@ -503,11 +485,6 @@ const NftTabs1 = (props) => {
       }
     }
     if (walletName == "Xwallet") {
-      console.log("XWalet");
-      console.log("MarketplaceCharges", MarketplaceCharges);
-      console.log("royaltyPayout", royaltyPayout);
-      console.log("sellerPayout", sellerPayout);
-      console.log("a", a, "b", b, "c", c, "d", d);
       const XWalletRequest = {
         networkId: NETWORK_ID,
         signingCmd: {

@@ -43,17 +43,9 @@ const NftTabs1 = () => {
   const [maxAmount, setMaxAmount] = React.useState(0);
   const [options, setOptions] = React.useState([]);
 
-  
-  
-  
-  
-  
-
   const { walletStatus, walletName, walletAddress } = useSelector(
     (state) => state.walletStatus
   );
-
-
 
   useEffect(() => {
     //getNftList();
@@ -85,7 +77,6 @@ const NftTabs1 = () => {
       }
     )
       .then((response) => {
-        
         if (response.data.status == "success") {
           let nftList = response.data.data.paginatedResults;
           setTotal(response.data.totalCount);
@@ -93,7 +84,7 @@ const NftTabs1 = () => {
           // let filteredNftList = nftList.filter(
           //   (data) => data.collectionId === foo
           // );
-          // 
+          //
           // const list = filteredNftList.filter((item) => {
           //   if (item.onMarketplace == false) {
           //     return item;
@@ -106,7 +97,6 @@ const NftTabs1 = () => {
           // setCollectionList([])
           setFilteredNft([]);
           setScreenLoading(false);
-          
         }
       })
       .catch((error) => {
@@ -114,7 +104,6 @@ const NftTabs1 = () => {
         setScreenLoading(false);
         //   setCollectionList([])
         //   setUserRegistered(false)
-        
       });
   };
 
@@ -138,7 +127,6 @@ const NftTabs1 = () => {
       }
     )
       .then((response) => {
-        
         if (response.data.status == "success") {
           let nftList = response.data.data.paginatedResults;
           setTotal(response.data.totalCount);
@@ -146,7 +134,7 @@ const NftTabs1 = () => {
           // let filteredNftList = nftList.filter(
           //   (data) => data.collectionId === foo
           // );
-          // 
+          //
           // const list = filteredNftList.filter((item) => {
           //   if (item.onMarketplace == false) {
           //     return item;
@@ -159,7 +147,6 @@ const NftTabs1 = () => {
           // setCollectionList([])
           setFilteredNft([]);
           setScreenLoading(false);
-          
         }
       })
       .catch((error) => {
@@ -167,7 +154,6 @@ const NftTabs1 = () => {
         setScreenLoading(false);
         //   setCollectionList([])
         //   setUserRegistered(false)
-        
       });
   };
 
@@ -177,14 +163,13 @@ const NftTabs1 = () => {
       headers: { authorization: localStorage.getItem("accessJWT") },
     })
       .then((response) => {
-        
         if (response.data.status == "success") {
           let nftList = response.data.data;
 
           let filteredNftList = nftList.filter(
             (data) => data.onMarketplace == true
           );
-          
+
           setFilteredNft(filteredNftList);
           setScreenLoading(false);
           // setCollectionList(filteredCollectionList)
@@ -192,7 +177,6 @@ const NftTabs1 = () => {
           // setCollectionList([])
           setFilteredNft([]);
           setScreenLoading(false);
-          
         }
       })
       .catch((error) => {
@@ -200,7 +184,6 @@ const NftTabs1 = () => {
         setScreenLoading(false);
         //   setCollectionList([])
         //   setUserRegistered(false)
-        
       });
   };
 
@@ -208,8 +191,7 @@ const NftTabs1 = () => {
     setLoading(true);
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    
-    
+
     const guard = { keys: [publicKey], pred: "keys-all" };
     const tokenId = data.tokenId;
 
@@ -237,7 +219,7 @@ const NftTabs1 = () => {
           "demothreeaccount-keyset": guard,
         },
       };
-      
+
       const cmd = await Pact.wallet.sign(signCmd);
       if (cmd === undefined) {
         toast.error("User cancelled request", {
@@ -246,7 +228,7 @@ const NftTabs1 = () => {
         setLoading(false);
         return;
       }
-      
+
       if (cmd) {
         const localRes = await fetch(`${API_HOST}/api/v1/local`, {
           headers: {
@@ -255,19 +237,18 @@ const NftTabs1 = () => {
           method: "POST",
           body: JSON.stringify(cmd),
         });
-        
+
         const rawRes = await localRes;
         const resJSON = await rawRes.json();
-        
+
         if (resJSON.result.status === "success") {
           const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
 
-          
           const signedtxx = await Pact.fetch.listen(
             { listen: reqKey.requestKeys[0] },
             API_HOST
           );
-          
+
           if (signedtxx.result.status == "success") {
             const obj = {
               onAuction: false,
@@ -284,9 +265,8 @@ const NftTabs1 = () => {
                 price: data.nftPrice,
                 category: "transfer",
               },
-              
             };
-            
+
             const accessJWT = localStorage.getItem("accessJWT");
             const config = {
               headers: {
@@ -295,19 +275,16 @@ const NftTabs1 = () => {
             };
             Axios.patch("/nft/update-nft-gift", obj, config)
               .then((response) => {
-                
                 if (response.data.status == "success") {
                   toast.success("NFT Bid Accepted");
                   setRefresh(!refresh);
                   setLoading(false);
                 } else {
-                  
                   toast.error("NFt bid not accepted");
                   setLoading(false);
                 }
               })
               .catch((error) => {
-                
                 toast.error("NFt bid not accepted");
                 setLoading(false);
               });
@@ -349,24 +326,22 @@ const NftTabs1 = () => {
       };
 
       // 18.87350
-      
+
       const cmd = await window.kadena.request({
         method: "kda_requestSign",
         networkId: NETWORK_ID,
         data: XWalletRequest,
       });
-      
+
       if (cmd.status === "success") {
-        
         const gore2 = await Pact.wallet.sendSigned(cmd.signedCmd, API_HOST);
         // setSpinner("true");
-        
+
         const txResult = await Pact.fetch.listen(
           { listen: `${gore2.requestKeys[0]}` },
           API_HOST
         );
 
-        
         if (txResult.result.status == "success") {
           const obj = {
             onAuction: false,
@@ -384,7 +359,7 @@ const NftTabs1 = () => {
               category: "transfer",
             },
           };
-          
+
           const accessJWT = localStorage.getItem("accessJWT");
           const config = {
             headers: {
@@ -393,19 +368,16 @@ const NftTabs1 = () => {
           };
           Axios.patch("/nft/update-nft-gift", obj, config)
             .then((response) => {
-              
               if (response.data.status == "success") {
                 toast.success("NFT Bid Accepted");
                 setRefresh(!refresh);
                 setLoading(false);
               } else {
-                
                 toast.error("NFt bid not accepted");
                 setLoading(false);
               }
             })
             .catch((error) => {
-              
               toast.error("NFT bid not accepted");
               setLoading(false);
             });
@@ -424,8 +396,7 @@ const NftTabs1 = () => {
     setLoading(true);
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    
-    
+
     const guard = { keys: [publicKey], pred: "keys-all" };
     const tokenId2 = data.tokenId;
 
@@ -448,7 +419,7 @@ const NftTabs1 = () => {
           "demothreeaccount-keyset": guard,
         },
       };
-      
+
       const cmd = await Pact.wallet.sign(signCmd);
       if (cmd === undefined) {
         toast.error("User cancelled request", {
@@ -457,7 +428,7 @@ const NftTabs1 = () => {
         setLoading(false);
         return;
       }
-      
+
       const localRes = await fetch(`${API_HOST}/api/v1/local`, {
         headers: {
           "Content-Type": "application/json",
@@ -465,22 +436,34 @@ const NftTabs1 = () => {
         method: "POST",
         body: JSON.stringify(cmd),
       });
-      
+
       const rawRes = await localRes;
       const resJSON = await rawRes.json();
-      
+
       if (resJSON.result.status === "success") {
         const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
 
-        
         const signedtxx = await Pact.fetch.listen(
           { listen: reqKey.requestKeys[0] },
           API_HOST
         );
-        
+
         if (signedtxx.result.status == "success") {
+          // const obj = {
+          //   onAuction: true,
+          //   _id: data._id,
+          //   bidPrice: "",
+          //   bidder: "",
+          //   history: {
+          //     owner: walletAddress,
+          //     price: data.nftPrice,
+          //     category: "rejectBid",
+          //   },
+          // };
           const obj = {
             onAuction: true,
+            onMarketplace: true,
+            nftPrice: data.nftPrice,
             _id: data._id,
             bidPrice: "",
             bidder: "",
@@ -490,7 +473,7 @@ const NftTabs1 = () => {
               category: "rejectBid",
             },
           };
-          
+
           const accessJWT = localStorage.getItem("accessJWT");
           const config = {
             headers: {
@@ -499,19 +482,16 @@ const NftTabs1 = () => {
           };
           Axios.patch("/nft/update-nft", obj, config)
             .then((response) => {
-              
               if (response.data.status == "success") {
                 toast.success("NFT Bid Declined");
                 setRefresh(!refresh);
                 setLoading(false);
               } else {
-                
                 toast.error("NFt bid not declined");
                 setLoading(false);
               }
             })
             .catch((error) => {
-              
               toast.error("NFt bid not declined");
               setLoading(false);
             });
@@ -546,27 +526,38 @@ const NftTabs1 = () => {
       };
 
       // 18.87350
-      
+
       const cmd = await window.kadena.request({
         method: "kda_requestSign",
         networkId: NETWORK_ID,
         data: XWalletRequest,
       });
-      
+
       if (cmd.status === "success") {
-        
         const gore2 = await Pact.wallet.sendSigned(cmd.signedCmd, API_HOST);
         // setSpinner("true");
-        
+
         const txResult = await Pact.fetch.listen(
           { listen: `${gore2.requestKeys[0]}` },
           API_HOST
         );
 
-        
         if (txResult.result.status == "success") {
+          // const obj = {
+          //   onAuction: true,
+          //   _id: data._id,
+          //   bidPrice: "",
+          //   bidder: "",
+          //   history: {
+          //     owner: walletAddress,
+          //     price: data.nftPrice,
+          //     category: "rejectBid",
+          //   },
+          // };
           const obj = {
             onAuction: true,
+            onMarketplace: true,
+            nftPrice: data.nftPrice,
             _id: data._id,
             bidPrice: "",
             bidder: "",
@@ -576,7 +567,7 @@ const NftTabs1 = () => {
               category: "rejectBid",
             },
           };
-          
+
           const accessJWT = localStorage.getItem("accessJWT");
           const config = {
             headers: {
@@ -585,19 +576,16 @@ const NftTabs1 = () => {
           };
           Axios.patch("/nft/update-nft", obj, config)
             .then((response) => {
-              
               if (response.data.status == "success") {
                 toast.success("NFT Bid Declined");
                 setRefresh(!refresh);
                 setLoading(false);
               } else {
-                
                 toast.error("NFt bid not declined");
                 setLoading(false);
               }
             })
             .catch((error) => {
-              
               toast.error("NFT bid not declined");
               setLoading(false);
             });
@@ -616,8 +604,7 @@ const NftTabs1 = () => {
     setLoading(true);
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    
-    
+
     const guard = { keys: [publicKey], pred: "keys-all" };
     const tokenId2 = data.tokenId;
 
@@ -646,7 +633,7 @@ const NftTabs1 = () => {
           "demothreeaccount-keyset": guard,
         },
       };
-      
+
       const cmd = await Pact.wallet.sign(signCmd);
       if (cmd === undefined) {
         toast.error("User cancelled request", {
@@ -655,7 +642,7 @@ const NftTabs1 = () => {
         setLoading(false);
         return;
       }
-      
+
       const localRes = await fetch(`${API_HOST}/api/v1/local`, {
         headers: {
           "Content-Type": "application/json",
@@ -663,23 +650,35 @@ const NftTabs1 = () => {
         method: "POST",
         body: JSON.stringify(cmd),
       });
-      
+
       const rawRes = await localRes;
       const resJSON = await rawRes.json();
-      
+
       if (resJSON.result.status === "success") {
         const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
 
-        
         const signedtxx = await Pact.fetch.listen(
           { listen: reqKey.requestKeys[0] },
           API_HOST
         );
-        
+
         if (signedtxx.result.status == "success") {
+          // const obj = {
+          //   onSale: false,
+          //   sellingType: "All",
+          //   onMarketplace: false,
+          //   _id: data._id,
+          //   imageIndex: data.imageIndex,
+          //   history: {
+          //     owner: walletAddress,
+          //     price: data.nftPrice,
+          //     category: "closeSale",
+          //   },
+          // };
           const obj = {
             onSale: false,
             sellingType: "All",
+            nftPrice: data.nftPrice,
             onMarketplace: false,
             _id: data._id,
             imageIndex: data.imageIndex,
@@ -689,7 +688,8 @@ const NftTabs1 = () => {
               category: "closeSale",
             },
           };
-          
+
+
           const accessJWT = localStorage.getItem("accessJWT");
           const config = {
             headers: {
@@ -698,19 +698,16 @@ const NftTabs1 = () => {
           };
           Axios.patch("/nft/update-nft", obj, config)
             .then((response) => {
-              
               if (response.data.status == "success") {
                 toast.success("NFT Sale Closed");
                 setRefresh(!refresh);
                 setLoading(false);
               } else {
-                
                 toast.error("NFt Sale not closed");
                 setLoading(false);
               }
             })
             .catch((error) => {
-              
               toast.error("NFt Sale not closed");
               setLoading(false);
             });
@@ -752,30 +749,41 @@ const NftTabs1 = () => {
       };
 
       // 18.87350
-      
+
       const cmd = await window.kadena.request({
         method: "kda_requestSign",
         networkId: NETWORK_ID,
         data: XWalletRequest,
       });
-      
+
       if (cmd.status === "success") {
-        
         const gore2 = await Pact.wallet.sendSigned(cmd.signedCmd, API_HOST);
         // setSpinner("true");
-        
+
         const txResult = await Pact.fetch.listen(
           { listen: `${gore2.requestKeys[0]}` },
           API_HOST
         );
 
-        
         if (txResult.result.status == "success") {
+          // const obj = {
+          //   onSale: false,
+          //   sellingType: "All",
+          //   onMarketplace: false,
+          //   imageIndex: data.imageIndex,
+          //   _id: data._id,
+          //   history: {
+          //     owner: walletAddress,
+          //     price: data.nftPrice,
+          //     category: "closeSale",
+          //   },
+          // };
           const obj = {
             onSale: false,
             sellingType: "All",
             onMarketplace: false,
             imageIndex: data.imageIndex,
+            nftPrice: data.nftPrice,
             _id: data._id,
             history: {
               owner: walletAddress,
@@ -783,7 +791,7 @@ const NftTabs1 = () => {
               category: "closeSale",
             },
           };
-          
+
           const accessJWT = localStorage.getItem("accessJWT");
           const config = {
             headers: {
@@ -792,19 +800,16 @@ const NftTabs1 = () => {
           };
           Axios.patch("/nft/update-nft", obj, config)
             .then((response) => {
-              
               if (response.data.status == "success") {
                 toast.success("NFT Sale Closed");
                 setRefresh(!refresh);
                 setLoading(false);
               } else {
-                
                 toast.error("NFt Sale not closed");
                 setLoading(false);
               }
             })
             .catch((error) => {
-              
               toast.error("NFT Sale not closed");
               setLoading(false);
             });
@@ -823,8 +828,7 @@ const NftTabs1 = () => {
     setLoading(true);
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    
-    
+
     const guard = { keys: [publicKey], pred: "keys-all" };
     const tokenId2 = data.tokenId;
 
@@ -853,7 +857,7 @@ const NftTabs1 = () => {
           "demothreeaccount-keyset": guard,
         },
       };
-      
+
       const cmd = await Pact.wallet.sign(signCmd);
       if (cmd === undefined) {
         toast.error("User cancelled request", {
@@ -862,7 +866,7 @@ const NftTabs1 = () => {
         setLoading(false);
         return;
       }
-      
+
       if (cmd) {
         const localRes = await fetch(`${API_HOST}/api/v1/local`, {
           headers: {
@@ -871,19 +875,18 @@ const NftTabs1 = () => {
           method: "POST",
           body: JSON.stringify(cmd),
         });
-        
+
         const rawRes = await localRes;
         const resJSON = await rawRes.json();
-        
+
         if (resJSON.result.status === "success") {
           const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
 
-          
           const signedtxx = await Pact.fetch.listen(
             { listen: reqKey.requestKeys[0] },
             API_HOST
           );
-          
+
           if (signedtxx.result.status == "success") {
             const obj = {
               onAuction: false,
@@ -899,7 +902,7 @@ const NftTabs1 = () => {
                 category: "cancelBid",
               },
             };
-            
+
             const accessJWT = localStorage.getItem("accessJWT");
             const config = {
               headers: {
@@ -908,19 +911,16 @@ const NftTabs1 = () => {
             };
             Axios.patch("/nft/update-nft", obj, config)
               .then((response) => {
-                
                 if (response.data.status == "success") {
                   toast.success("NFT Sale Closed");
                   setRefresh(!refresh);
                   setLoading(false);
                 } else {
-                  
                   toast.error("NFt Sale not closed");
                   setLoading(false);
                 }
               })
               .catch((error) => {
-                
                 toast.error("NFt Sale not closed");
                 setLoading(false);
               });
@@ -947,9 +947,7 @@ const NftTabs1 = () => {
           gasPrice: 0.0000001,
           gasLimit: 150000,
           ttl: 28000,
-          caps: [
-            
-          ],
+          caps: [],
           envData: {
             guard: guard,
           },
@@ -959,24 +957,22 @@ const NftTabs1 = () => {
           creationTime: creationTime(),
         }, //alert to sign tx
       };
-      
+
       const cmd = await window.kadena.request({
         method: "kda_requestSign",
         networkId: NETWORK_ID,
         data: XWalletRequest,
       });
-      
+
       if (cmd.status === "success") {
-        
         const gore2 = await Pact.wallet.sendSigned(cmd.signedCmd, API_HOST);
         // setSpinner("true");
-        
+
         const txResult = await Pact.fetch.listen(
           { listen: `${gore2.requestKeys[0]}` },
           API_HOST
         );
 
-        
         if (txResult.result.status == "success") {
           const obj = {
             onAuction: false,
@@ -992,7 +988,7 @@ const NftTabs1 = () => {
               category: "cancelBid",
             },
           };
-          
+
           const accessJWT = localStorage.getItem("accessJWT");
           const config = {
             headers: {
@@ -1001,19 +997,16 @@ const NftTabs1 = () => {
           };
           Axios.patch("/nft/update-nft", obj, config)
             .then((response) => {
-              
               if (response.data.status == "success") {
                 toast.success("NFT Sale Closed");
                 setRefresh(!refresh);
                 setLoading(false);
               } else {
-                
                 toast.error("NFt Sale not closed");
                 setLoading(false);
               }
             })
             .catch((error) => {
-              
               toast.error("NFT Sale not closed");
               setLoading(false);
             });
@@ -1107,7 +1100,6 @@ const NftTabs1 = () => {
                   className={classnames({ active: activeTab === "1" })}
                   onClick={() => setActiveTab("1")}
                   style={{ cursor: "pointer" }}
-
                 >
                   Sale
                 </NavLink>
@@ -1117,7 +1109,6 @@ const NftTabs1 = () => {
                   className={classnames({ active: activeTab === "2" })}
                   onClick={() => setActiveTab("2")}
                   style={{ cursor: "pointer" }}
-
                 >
                   Auction
                 </NavLink>
@@ -1163,7 +1154,13 @@ const NftTabs1 = () => {
                               <div className="featImg">
                                 <img
                                   // src={data.tokenImage}
-                                  src={data?.fileImageUrl ? data?.fileImageUrl : data?.tokenImage ? data?.tokenImage : ""}
+                                  src={
+                                    data?.fileImageUrl
+                                      ? data?.fileImageUrl
+                                      : data?.tokenImage
+                                      ? data?.tokenImage
+                                      : ""
+                                  }
                                   alt=""
                                   // style={
                                   //   data._id == userId && hover
@@ -1208,7 +1205,15 @@ const NftTabs1 = () => {
                                     //     flex: 1,
                                     //   }}
                                     // >
-                                    <div className="featpriceOut" style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", flex: 1 }}>
+                                    <div
+                                      className="featpriceOut"
+                                      style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        justifyContent: "space-between",
+                                        flex: 1,
+                                      }}
+                                    >
                                       <Button
                                         className="btm-accept-bid"
                                         onClick={() => {
@@ -1224,9 +1229,7 @@ const NftTabs1 = () => {
                                       >
                                         Accept Bid
                                       </Button>
-                                      &nbsp;
-                                      &nbsp;
-
+                                      &nbsp; &nbsp;
                                       <Button
                                         className="btn-reject-bid"
                                         onClick={() => {
@@ -1242,9 +1245,7 @@ const NftTabs1 = () => {
                                       >
                                         Reject Bid
                                       </Button>
-                                      &nbsp;
-                                      &nbsp;
-
+                                      &nbsp; &nbsp;
                                       <Button
                                         className="btn-cancel-bid"
                                         onClick={() => {
@@ -1290,11 +1291,17 @@ const NftTabs1 = () => {
                             >
                               <div className="feattitle">
                                 <small>
-                                {data.fileName  ? data.fileName : data?.collectionName} <HiCheckCircle />
+                                  {data.fileName
+                                    ? data.fileName
+                                    : data?.collectionName}{" "}
+                                  <HiCheckCircle />
                                 </small>
                                 <span className="bold">
                                   {/* {data.collectionName} #{data.imageIndex} */}
-                                  {data.fileName  ? data.fileName : data?.collectionName} {data?.fileName ? "" : "#" + data?.imageIndex}
+                                  {data.fileName
+                                    ? data.fileName
+                                    : data?.collectionName}{" "}
+                                  {data?.fileName ? "" : "#" + data?.imageIndex}
                                 </span>
                               </div>
                               <div className="featpriceOut">

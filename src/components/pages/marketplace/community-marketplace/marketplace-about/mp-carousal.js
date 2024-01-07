@@ -79,14 +79,12 @@ export default function MpCrousal() {
     getDbCooper();
   }, []);
 
-  console.log("filteredDbCooper", filteredDbCooper, page, limit, searchInput);
 
   return (
     <div>
       <div className="carousalOuter">
         <OwlCarousel className="slider-items owl-carousel" {...options}>
           {filteredDbCooper?.map((item, index) => {
-            console.log("itemfilter", item);
             return (
               <div className="item" style={{ marginRight: "25px" }} key={index}>
                 <div className="featItemBx">

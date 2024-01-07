@@ -101,7 +101,6 @@ const ModalExample = () => {
         break;
 
       case "totalSupply":
-        console.log("value", value);
         if (value < 0) {
           setTotalSupply(0);
         } else setTotalSupply(value);
@@ -111,7 +110,6 @@ const ModalExample = () => {
         break;
 
       case "mintPrice":
-        console.log("value", value);
         if (value < 0) {
           // setMintPrice(0);
           setAmount(0);
@@ -119,14 +117,12 @@ const ModalExample = () => {
         // setMintPrice(value);
         break;
       case "royalityFee":
-        console.log("value", value);
         if (value < 0) {
           setFee(0);
         } else setFee(value);
         break;
 
       case "royalityAddress":
-        console.log("value", value);
         setRoyaltyAddress(value);
         break;
 
@@ -152,30 +148,14 @@ const ModalExample = () => {
     setPrice1(parseFloat(price).toFixed(1));
   }, [amount, fee, price]);
 
-  console.log("category", category);
-  console.log("shortUrl", shortUrl);
-  console.log("description", description);
-  console.log("symbol", symbol);
-  console.log("displayName", displayName);
-  console.log("tokenList", tokenList);
-  console.log("totalSupply", totalSupply);
-  console.log("mintPrice", mintPrice);
-  console.log("royaltyFee", royaltyFee);
-  console.log("royaltyAddress", royaltyAddress);
-  console.log("price", price);
-  console.log("price1", price1);
-  console.log("bannerUrl", bannerUrl);
-
   const create_col_one = async () => {
-    console.log("walletName", walletName);
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    console.log("publicKeycw", publicKey);
-    console.log("accountnamecw", accountName);
     const guard = { keys: [publicKey], pred: "keys-all" };
 
     const a = accountName;
-    const b = "k:6d3408f25312d5342ea5513707cc18dfd7b2a2c30decd0250d6f6491bbbfcf32";
+    const b =
+      "k:6d3408f25312d5342ea5513707cc18dfd7b2a2c30decd0250d6f6491bbbfcf32";
 
     const pactCode = `(free.km-marketplace.create-nft-collection  "${displayName}" "${symbol}" ${totalSupply} (read-keyset "guards") ${JSON.stringify(
       a
@@ -219,9 +199,7 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
           guards: guard,
         },
       }; //alert to sign tx
-      console.log(signCmd, "signcmd");
       const cmd = await Pact.wallet.sign(signCmd);
-      console.log("cmjj", cmd);
       if (cmd) {
         const localRes = await fetch(`${API_HOST}/api/v1/local`, {
           headers: {
@@ -230,21 +208,17 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
           method: "POST",
           body: JSON.stringify(cmd),
         });
-        console.log(localRes, "localrp");
         const rawRes = await localRes;
         const resJSON = await rawRes.json();
-        console.log("rawraw", resJSON);
         if (resJSON.result.status === "success") {
           setModal(false);
           setLoading(true);
           const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
 
-          console.log(reqKey, "Reqkey");
           const signedtxx = await Pact.fetch.listen(
             { listen: reqKey.requestKeys[0] },
             API_HOST
           );
-          console.log(signedtxx, "xxxxxxxxxxxxxx");
           if (signedtxx.result.status === "success") {
             submitAftrSign();
           }
@@ -260,47 +234,6 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
 
     if (walletName == "Xwallet") {
       const creationTime = () => Math.round(new Date().getTime() / 1000) - 15;
-      // console.log("walletName", walletName);
-      // // const nonce = Date.now().toString();
-      // const accountName = walletAddress;
-      // const publicKey = accountName.slice(2, accountName.length);
-      // console.log("publicKeycw", publicKey);
-      // console.log("accountnamecw", accountName);
-      // const guard = { keys: [publicKey], pred: "keys-all" };
-
-      // const a = accountName;
-
-      //     const walletInfo = await window.kadena.request({
-      //       method: "kda_checkStatus",
-      //       networkId: NETWORK_ID,
-      //     });
-
-      //     console.log("wallet info", walletInfo);
-      //     const p = walletInfo.account.account;
-      //     console.log("wallet info", p);
-      //     const guard = { keys: [publicKey], pred: "keys-all" };
-      //     // const guard = { keys: [walletInfo.account.publicKey], pred: "keys-all" };
-
-      //     // const guard = { keys: ["260fe7bca08c45c03d4fc5f3d0a7fafaa8d28d4a3c3db0b2158dd18725ab0586"], pred: "keys-all", }
-
-      //     // const a = walletInfo.account.account;
-      //     const a = accountName;
-
-      //     const b =
-      //       "k:6d3408f25312d5342ea5513707cc18dfd7b2a2c30decd0250d6f6491bbbfcf32";
-
-      //     // const pactCode = `(free.marketplacefinal002.create-nft-collection "${displayName}" "${symbol}" ${totalSupply} (read-keyset "guard-test") ${JSON.stringify(accountName)} ${JSON.stringify(tokenList)} ${parseFloat(mintPrice)} free.merchfinalpolicy001 ${JSON.stringify(shortUrl)})`;
-      //     const pactCode = `(free.marketplacefinal002.create-nft-collection  "${displayName}" "${symbol}" ${totalSupply} (read-keyset "account-ks") ${JSON.stringify(
-      //       a
-      //     )}
-      //   ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
-      //    ${parseFloat(mintPrice)}
-      //  free.merchfinalpolicy001
-      //  ${JSON.stringify(shortUrl)}
-      //  ${parseFloat(royaltyFee)}
-      //  ${JSON.stringify(royaltyAddress)}
-      //  )`;
-
       const XWalletRequest = {
         networkId: NETWORK_ID,
         signingCmd: {
@@ -345,7 +278,6 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
           networkId: NETWORK_ID,
           data: XWalletRequest,
         });
-        console.log("cmd", cmd);
         if (cmd.status === "success") {
           toast.success("Transaction Submitted", {
             position: "top-right",
@@ -359,17 +291,12 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
           setModal(false);
           setLoading(true);
           const gore2 = await Pact.wallet.sendSigned(cmd.signedCmd, API_HOST);
-          console.log("sdsf", gore2);
 
           const txResult = await Pact.fetch.listen(
             { listen: `${gore2.requestKeys[0]}` },
             API_HOST
           );
-          console.log("txn result", txResult);
 
-          // const txResult1 = await Pact.fetch.listen({ listen: `${gore2}` }, API_HOST);
-          // console.log("txn result", txResult1.result);
-          console.log("Ssffs", txResult);
           if (txResult.result.status === "success") {
             setModal(false);
             setLoading(true);
@@ -421,8 +348,7 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
   const getFee = async () => {
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    console.log("publicKeycw", publicKey);
-    console.log("accountnamecw", accountName);
+
     const guard = { keys: [publicKey], pred: "keys-all" };
 
     const a = accountName;
@@ -448,7 +374,6 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
     }; //alert to sign tx
 
     const response = await Pact.fetch.local(signCmd, API_HOST);
-    console.log("response", response);
     if (response.result.status == "success") {
       const datum = response.result.data;
       setPrice(datum);
@@ -470,24 +395,7 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
     getFee();
   }, []);
 
-  console.log("price", price);
-
   const submitAftrSign = async () => {
-    console.log(
-      "formdatas",
-      displayName,
-      symbol,
-      description,
-      category,
-      shortUrl,
-      bannerUrl,
-      image,
-      totalSupply,
-      mintPrice,
-      tokenList,
-      royaltyAddress,
-      royaltyFee
-    );
     const formData = new FormData();
     formData.append("collectionName", displayName);
     formData.append("tokenSymbol", symbol);
@@ -514,20 +422,18 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
           position: "top-right",
         });
         navigate("/marketplace/my-profile-owned?tab=Collections");
-        console.log("heyllo2", response);
       })
       .catch((error) => {
         console.log("error", error);
       });
   };
   useEffect(() => {
-    if(shortUrl != ""){
+    if (shortUrl != "") {
       setUploadFileBool(true);
     }
   }, [shortUrl]);
 
   const handleOnSubmit = () => {
-    console.log("formdatas", displayName, symbol, description, category,uploadFileBool,shortUrl);
     if (displayName === "") {
       toast.error("Please enter collection name", {
         position: "top-right",
@@ -558,7 +464,7 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
         draggable: true,
         progress: undefined,
       });
-    } else if ( uploadFileBool === false) {
+    } else if (uploadFileBool === false) {
       toast.error("Please enter collection url or upload metadata", {
         position: "top-right",
         autoClose: 5000,
@@ -656,47 +562,39 @@ ${tokenList.length > 0 ? JSON.stringify(tokenList) : "[]"}
       create_col_one();
     }
   };
-  console.log("image", image);
-  console.log("mintPrice", parseFloat(mintPrice));
-  console.log("totalSupply", parseInt(totalSupply));
-  console.log("totalSupply", tokenList.length);
-  console.log("royaltyFee", royaltyFee);
 
-const uploadProperty = async () => {
-  console.log("propertyFile", propertyFile);
-  const formData = new FormData();
-  formData.append("propertyFile", propertyFile);
-  Axios.post("/properties/insertProperty", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-      authorization: localStorage.getItem("accessJWT"),
-    },
-  })
-    .then((response) => {
-      console.log("heyllo2", response);
-      if (response.data.status == "success") {
-        setUploadFileBool(true);
-        toast.success("Property Uploaded", {
-          position: "top-right",
-        });
-      } else {
-        toast.error("Property Upload Failed", {
-          position: "top-right",
-        });
-      }
+  const uploadProperty = async () => {
+    const formData = new FormData();
+    formData.append("propertyFile", propertyFile);
+    Axios.post("/properties/insertProperty", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        authorization: localStorage.getItem("accessJWT"),
+      },
     })
-    .catch((error) => {
-      console.log("error", error);
-      toast.error("Property Upload Failed or Already Exists", {
-        position: "top-right",
+      .then((response) => {
+        if (response.data.status == "success") {
+          setUploadFileBool(true);
+          toast.success("Property Uploaded", {
+            position: "top-right",
+          });
+        } else {
+          toast.error("Property Upload Failed", {
+            position: "top-right",
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+        toast.error("Property Upload Failed or Already Exists", {
+          position: "top-right",
+        });
       });
-    });
-};
-
+  };
 
   useEffect(() => {
-    if (propertyFile){
-    uploadProperty();
+    if (propertyFile) {
+      uploadProperty();
     }
   }, [propertyFile]);
 
@@ -726,23 +624,23 @@ const uploadProperty = async () => {
                 5mb.
               </span>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <button>
-                Choose File
-                <input
-                   type="file"
-                   name="file"
-                  onChange={(e) => setImage(e.target.files[0])}
-                />
-              </button>
-              {/* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}
-              <button>
-                Upload Metadata
-                <input
-                  type="file"
-                  name="file"
-                  onChange={(e) => setPropertyFile(e.target.files[0])}
-                />
-              </button>
+                <button>
+                  Choose File
+                  <input
+                    type="file"
+                    name="file"
+                    onChange={(e) => setImage(e.target.files[0])}
+                  />
+                </button>
+                {/* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}
+                <button>
+                  Upload Metadata
+                  <input
+                    type="file"
+                    name="file"
+                    onChange={(e) => setPropertyFile(e.target.files[0])}
+                  />
+                </button>
               </div>
             </div>
             <div className="createFrmBx">
@@ -790,12 +688,7 @@ const uploadProperty = async () => {
                 />
               </FormGroup>
             </div>
-            {/* <div className='createFrmBx'>
-              <FormGroup>
-                <Label for="exampleEmail" style={{ color: "black" }}>Description</Label>
-                <Input type="email" name="description" onChange={handleOnChange} value={description} id="exampleEmail" placeholder="Spread some words about your token collection" />
-              </FormGroup>
-            </div> */}
+
             <div className="createFrmBx">
               <FormGroup>
                 <Label for="exampleEmail" style={{ color: "black" }}>

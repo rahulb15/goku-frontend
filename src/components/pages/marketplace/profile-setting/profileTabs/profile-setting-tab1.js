@@ -58,11 +58,8 @@ const NftTabs1 = (props) => {
         //       });
         // }
       })
-      .catch((error) => { });
+      .catch((error) => {});
   };
-
-  // console.log(profileImg, "profileImg");
-  // console.log(coverImg, "coverImg");
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -95,41 +92,33 @@ const NftTabs1 = (props) => {
 
   const handleOnSubmit = () => {
     //valida url
-    console.log(webUrl, "webUrl");
     if (webUrl && !webUrl.startsWith("http")) {
       toast.error("Invalid URL", {
         position: "top-right",
       });
       return;
     }
-    // try {
-    //   const url = new URL(webUrl);
-    //   console.log(url, "url");
-    // } catch (_) {
-    //   toast.error("Invalid URL", {
-    //     position: "top-right",
-    //   });
-    //   return;
-    // }
 
     // Validate the twitterUrl
-    const twitterUrlPattern = /^https?:\/\/(www\.)?twitter\.com\/[a-zA-Z0-9_\-\.]+\/?$/;
+    const twitterUrlPattern =
+      /^https?:\/\/(www\.)?twitter\.com\/[a-zA-Z0-9_\-\.]+\/?$/;
     if (twitterUrl && !twitterUrl.match(twitterUrlPattern)) {
-     toast.error("Invalid Twitter URL", {
-       position: "top-right",
-     });
-     return; // Prevent further execution if the URL is invalid
+      toast.error("Invalid Twitter URL", {
+        position: "top-right",
+      });
+      return; // Prevent further execution if the URL is invalid
     }
 
     // Validate the instaUrl
-    const instaUrlPattern = /^(?:https?:\/\/)?(?:www\.)?instagram\.com\/[a-zA-Z0-9_\-\.]+\/?(?:\?[^\/]*)?$/;
+    const instaUrlPattern =
+      /^(?:https?:\/\/)?(?:www\.)?instagram\.com\/[a-zA-Z0-9_\-\.]+\/?(?:\?[^\/]*)?$/;
     if (instaUrl && !instaUrl.match(instaUrlPattern)) {
       toast.error("Invalid Instagram URL", {
         position: "top-right",
       });
       return; // Prevent further execution if the URL is invalid
     }
-    
+
     const formData = new FormData();
     // Append the user information fields to the FormData
     formData.append("name", firstName);
@@ -248,24 +237,13 @@ const NftTabs1 = (props) => {
       const img = new Image();
       img.src = URL.createObjectURL(selectedImage);
       img.onload = () => {
-        console.log(
-          img.width,
-          img.height,
-          requiredWidth,
-          requiredHeight,
-          "img"
-        );
         if (img.width > requiredWidth || img.height > requiredHeight) {
-          // alert(
-          //   "Profile picture dimensions are incorrect. Please choose an image with dimensions 650x650 pixels."
-          // );
           toast.error(
             "Profile picture dimensions are incorrect. Please choose an image with dimensions 650x650 pixels.",
             {
               position: "top-right",
             }
           );
-
         } else {
           setProfileImg(selectedImage);
           setProfileImg1(URL.createObjectURL(selectedImage));

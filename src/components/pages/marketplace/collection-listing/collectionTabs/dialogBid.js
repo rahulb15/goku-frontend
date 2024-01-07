@@ -119,7 +119,6 @@ const DialogBid = ({
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
     const guard = { keys: [publicKey], pred: "keys-all" };
-    console.log(dataUSer,"sdsdsdsdsdsdssd");
     const tokenId = dataUSer.tokenId;
     const a = accountName;
     const b = "kryptomerch-bank";

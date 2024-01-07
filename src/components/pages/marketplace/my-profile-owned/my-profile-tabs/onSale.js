@@ -19,7 +19,6 @@ const HotCollectionsTab = (props) => {
   const search = window.location.search;
   const params = new URLSearchParams(search);
   let foo = params.get("name");
-  
 
   var publickKey;
   var accountName;
@@ -81,11 +80,8 @@ const HotCollectionsTab = (props) => {
       //   networkId: "testnet04",
       // });
       if (walletInfo.status == "success") {
-        
         publickKey = walletInfo.wallet.publicKey;
         accountName = walletInfo.wallet.account;
-        
-        
       }
 
       return;
@@ -121,7 +117,6 @@ const HotCollectionsTab = (props) => {
           }
         )
         .then((response) => {
-          
           const data = response.data.data;
           if (data) {
             setPasses(data);
@@ -138,7 +133,6 @@ const HotCollectionsTab = (props) => {
         })
         .catch((error) => {
           setScreenLoading(false);
-          
         });
     } else if (activeTab == "2") {
       axios
@@ -154,9 +148,8 @@ const HotCollectionsTab = (props) => {
           }
         )
         .then((response) => {
-          
           const data = response.data.data;
-          
+
           if (data) {
             setPasses(data);
           } else {
@@ -171,7 +164,6 @@ const HotCollectionsTab = (props) => {
         })
         .catch((error) => {
           setScreenLoading(false);
-          
         });
     }
   }, [reload, refresh, props.search, limit, props.refresh, activeTab]);
@@ -180,8 +172,7 @@ const HotCollectionsTab = (props) => {
     setLoading(true);
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    
-    
+
     const guard = { keys: [publicKey], pred: "keys-all" };
     const tokenId = data.tokenId;
 
@@ -209,9 +200,9 @@ const HotCollectionsTab = (props) => {
           "demothreeaccount-keyset": guard,
         },
       };
-      
+
       const cmd = await Pact.wallet.sign(signCmd);
-      
+
       if (cmd) {
         const localRes = await fetch(`${API_HOST}/api/v1/local`, {
           headers: {
@@ -220,19 +211,18 @@ const HotCollectionsTab = (props) => {
           method: "POST",
           body: JSON.stringify(cmd),
         });
-        
+
         const rawRes = await localRes;
         const resJSON = await rawRes.json();
-        
+
         if (resJSON.result.status === "success") {
           const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
 
-          
           const signedtxx = await Pact.fetch.listen(
             { listen: reqKey.requestKeys[0] },
             API_HOST
           );
-          
+
           if (signedtxx.result.status == "success") {
             const obj = {
               onAuction: false,
@@ -251,7 +241,7 @@ const HotCollectionsTab = (props) => {
                 category: "bid",
               },
             };
-            
+
             const accessJWT = localStorage.getItem("accessJWT");
             const config = {
               headers: {
@@ -260,19 +250,16 @@ const HotCollectionsTab = (props) => {
             };
             Axios.patch("/passDetails/update-nft-pass-gift", obj, config)
               .then((response) => {
-                
                 if (response.data.status == "success") {
                   toast.success("NFT Bid Accepted");
                   setRefresh(!refresh);
                   setLoading(false);
                 } else {
-                  
                   toast.error("NFt bid not accepted");
                   setLoading(false);
                 }
               })
               .catch((error) => {
-                
                 toast.error("NFt bid not accepted");
                 setLoading(false);
               });
@@ -314,24 +301,22 @@ const HotCollectionsTab = (props) => {
       };
 
       // 18.87350
-      
+
       const cmd = await window.kadena.request({
         method: "kda_requestSign",
         networkId: NETWORK_ID,
         data: XWalletRequest,
       });
-      
+
       if (cmd.status === "success") {
-        
         const gore2 = await Pact.wallet.sendSigned(cmd.signedCmd, API_HOST);
         // setSpinner("true");
-        
+
         const txResult = await Pact.fetch.listen(
           { listen: `${gore2.requestKeys[0]}` },
           API_HOST
         );
 
-        
         if (txResult.result.status == "success") {
           const obj = {
             onAuction: false,
@@ -350,7 +335,7 @@ const HotCollectionsTab = (props) => {
               category: "bid",
             },
           };
-          
+
           const accessJWT = localStorage.getItem("accessJWT");
           const config = {
             headers: {
@@ -359,19 +344,16 @@ const HotCollectionsTab = (props) => {
           };
           Axios.patch("/passDetails/update-nft-pass-gift", obj, config)
             .then((response) => {
-              
               if (response.data.status == "success") {
                 toast.success("NFT Bid Accepted");
                 setRefresh(!refresh);
                 setLoading(false);
               } else {
-                
                 toast.error("NFt bid not accepted");
                 setLoading(false);
               }
             })
             .catch((error) => {
-              
               toast.error("NFT bid not accepted");
               setLoading(false);
             });
@@ -390,8 +372,7 @@ const HotCollectionsTab = (props) => {
     setLoading(true);
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    
-    
+
     const guard = { keys: [publicKey], pred: "keys-all" };
     const tokenId2 = data.tokenId;
 
@@ -414,9 +395,9 @@ const HotCollectionsTab = (props) => {
           "demothreeaccount-keyset": guard,
         },
       };
-      
+
       const cmd = await Pact.wallet.sign(signCmd);
-      
+
       const localRes = await fetch(`${API_HOST}/api/v1/local`, {
         headers: {
           "Content-Type": "application/json",
@@ -424,22 +405,23 @@ const HotCollectionsTab = (props) => {
         method: "POST",
         body: JSON.stringify(cmd),
       });
-      
+
       const rawRes = await localRes;
       const resJSON = await rawRes.json();
-      
+
       if (resJSON.result.status === "success") {
         const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
 
-        
         const signedtxx = await Pact.fetch.listen(
           { listen: reqKey.requestKeys[0] },
           API_HOST
         );
-        
+
         if (signedtxx.result.status == "success") {
           const obj = {
             onAuction: true,
+            onMarketplace: true,
+            nftPrice: data.nftPrice,
             _id: data._id,
             bidPrice: "",
             bidder: "",
@@ -449,7 +431,7 @@ const HotCollectionsTab = (props) => {
               category: "cancelBid",
             },
           };
-          
+
           const accessJWT = localStorage.getItem("accessJWT");
           const config = {
             headers: {
@@ -458,19 +440,16 @@ const HotCollectionsTab = (props) => {
           };
           Axios.patch("/passDetails/update-nft-pass", obj, config)
             .then((response) => {
-              
               if (response.data.status == "success") {
                 toast.success("NFT Bid Declined");
                 setRefresh(!refresh);
                 setLoading(false);
               } else {
-                
                 toast.error("NFt bid not declined");
                 setLoading(false);
               }
             })
             .catch((error) => {
-              
               toast.error("NFt bid not declined");
               setLoading(false);
             });
@@ -505,27 +484,27 @@ const HotCollectionsTab = (props) => {
       };
 
       // 18.87350
-      
+
       const cmd = await window.kadena.request({
         method: "kda_requestSign",
         networkId: NETWORK_ID,
         data: XWalletRequest,
       });
-      
+
       if (cmd.status === "success") {
-        
         const gore2 = await Pact.wallet.sendSigned(cmd.signedCmd, API_HOST);
         // setSpinner("true");
-        
+
         const txResult = await Pact.fetch.listen(
           { listen: `${gore2.requestKeys[0]}` },
           API_HOST
         );
 
-        
         if (txResult.result.status == "success") {
           const obj = {
             onAuction: true,
+            onMarketplace: true,
+            nftPrice: data.nftPrice,
             _id: data._id,
             bidPrice: "",
             bidder: "",
@@ -535,7 +514,7 @@ const HotCollectionsTab = (props) => {
               category: "cancelBid",
             },
           };
-          
+
           const accessJWT = localStorage.getItem("accessJWT");
           const config = {
             headers: {
@@ -544,19 +523,16 @@ const HotCollectionsTab = (props) => {
           };
           Axios.patch("/passDetails/update-nft-pass", obj, config)
             .then((response) => {
-              
               if (response.data.status == "success") {
                 toast.success("NFT Bid Declined");
                 setRefresh(!refresh);
                 setLoading(false);
               } else {
-                
                 toast.error("NFt bid not declined");
                 setLoading(false);
               }
             })
             .catch((error) => {
-              
               toast.error("NFT bid not declined");
               setLoading(false);
             });
@@ -575,8 +551,7 @@ const HotCollectionsTab = (props) => {
     setLoading(true);
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    
-    
+
     const guard = { keys: [publicKey], pred: "keys-all" };
     const tokenId2 = data.tokenId;
 
@@ -605,9 +580,9 @@ const HotCollectionsTab = (props) => {
           "demothreeaccount-keyset": guard,
         },
       };
-      
+
       const cmd = await Pact.wallet.sign(signCmd);
-      
+
       const localRes = await fetch(`${API_HOST}/api/v1/local`, {
         headers: {
           "Content-Type": "application/json",
@@ -615,25 +590,25 @@ const HotCollectionsTab = (props) => {
         method: "POST",
         body: JSON.stringify(cmd),
       });
-      
+
       const rawRes = await localRes;
       const resJSON = await rawRes.json();
-      
+
       if (resJSON.result.status === "success") {
         const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
 
-        
         const signedtxx = await Pact.fetch.listen(
           { listen: reqKey.requestKeys[0] },
           API_HOST
         );
-        
+
         if (signedtxx.result.status == "success") {
           const obj = {
             onSale: false,
             sellingType: "All",
             onMarketplace: false,
             imageIndex: data.imageIndex,
+            nftPrice: data.nftPrice,
             _id: data._id,
             history: {
               owner: walletAddress,
@@ -641,7 +616,7 @@ const HotCollectionsTab = (props) => {
               category: "closeSale",
             },
           };
-          
+
           const accessJWT = localStorage.getItem("accessJWT");
           const config = {
             headers: {
@@ -650,19 +625,16 @@ const HotCollectionsTab = (props) => {
           };
           Axios.patch("/passDetails/update-nft-pass", obj, config)
             .then((response) => {
-              
               if (response.data.status == "success") {
                 toast.success("NFT Sale Closed");
                 setRefresh(!refresh);
                 setLoading(false);
               } else {
-                
                 toast.error("NFt Sale not closed");
                 setLoading(false);
               }
             })
             .catch((error) => {
-              
               toast.error("NFt Sale not closed");
               setLoading(false);
             });
@@ -704,30 +676,29 @@ const HotCollectionsTab = (props) => {
       };
 
       // 18.87350
-      
+
       const cmd = await window.kadena.request({
         method: "kda_requestSign",
         networkId: NETWORK_ID,
         data: XWalletRequest,
       });
-      
+
       if (cmd.status === "success") {
-        
         const gore2 = await Pact.wallet.sendSigned(cmd.signedCmd, API_HOST);
         // setSpinner("true");
-        
+
         const txResult = await Pact.fetch.listen(
           { listen: `${gore2.requestKeys[0]}` },
           API_HOST
         );
 
-        
         if (txResult.result.status == "success") {
           const obj = {
             onSale: false,
             sellingType: "All",
             imageIndex: data.imageIndex,
             onMarketplace: false,
+            nftPrice: data.nftPrice,
             _id: data._id,
             history: {
               owner: walletAddress,
@@ -735,7 +706,7 @@ const HotCollectionsTab = (props) => {
               category: "closeSale",
             },
           };
-          
+
           const accessJWT = localStorage.getItem("accessJWT");
           const config = {
             headers: {
@@ -744,19 +715,16 @@ const HotCollectionsTab = (props) => {
           };
           Axios.patch("/passDetails/update-nft-pass", obj, config)
             .then((response) => {
-              
               if (response.data.status == "success") {
                 toast.success("NFT Sale Closed");
                 setRefresh(!refresh);
                 setLoading(false);
               } else {
-                
                 toast.error("NFt Sale not closed");
                 setLoading(false);
               }
             })
             .catch((error) => {
-              
               toast.error("NFT Sale not closed");
               setLoading(false);
             });
@@ -775,8 +743,7 @@ const HotCollectionsTab = (props) => {
     setLoading(true);
     const accountName = walletAddress;
     const publicKey = accountName.slice(2, accountName.length);
-    
-    
+
     const guard = { keys: [publicKey], pred: "keys-all" };
     const tokenId2 = data.tokenId;
 
@@ -805,9 +772,9 @@ const HotCollectionsTab = (props) => {
           "demothreeaccount-keyset": guard,
         },
       };
-      
+
       const cmd = await Pact.wallet.sign(signCmd);
-      
+
       if (cmd) {
         const localRes = await fetch(`${API_HOST}/api/v1/local`, {
           headers: {
@@ -816,19 +783,18 @@ const HotCollectionsTab = (props) => {
           method: "POST",
           body: JSON.stringify(cmd),
         });
-        
+
         const rawRes = await localRes;
         const resJSON = await rawRes.json();
-        
+
         if (resJSON.result.status === "success") {
           const reqKey = await Pact.wallet.sendSigned(cmd, API_HOST);
 
-          
           const signedtxx = await Pact.fetch.listen(
             { listen: reqKey.requestKeys[0] },
             API_HOST
           );
-          
+
           if (signedtxx.result.status == "success") {
             const obj = {
               onAuction: false,
@@ -844,7 +810,7 @@ const HotCollectionsTab = (props) => {
                 category: "cancelAuction",
               },
             };
-            
+
             const accessJWT = localStorage.getItem("accessJWT");
             const config = {
               headers: {
@@ -853,19 +819,16 @@ const HotCollectionsTab = (props) => {
             };
             Axios.patch("/passDetails/update-nft-pass", obj, config)
               .then((response) => {
-                
                 if (response.data.status == "success") {
                   toast.success("NFT Sale Closed");
                   setRefresh(!refresh);
                   setLoading(false);
                 } else {
-                  
                   toast.error("NFt Sale not closed");
                   setLoading(false);
                 }
               })
               .catch((error) => {
-                
                 toast.error("NFt Sale not closed");
                 setLoading(false);
               });
@@ -909,24 +872,22 @@ const HotCollectionsTab = (props) => {
           creationTime: creationTime(),
         }, //alert to sign tx
       };
-      
+
       const cmd = await window.kadena.request({
         method: "kda_requestSign",
         networkId: NETWORK_ID,
         data: XWalletRequest,
       });
-      
+
       if (cmd.status === "success") {
-        
         const gore2 = await Pact.wallet.sendSigned(cmd.signedCmd, API_HOST);
         // setSpinner("true");
-        
+
         const txResult = await Pact.fetch.listen(
           { listen: `${gore2.requestKeys[0]}` },
           API_HOST
         );
 
-        
         if (txResult.result.status == "success") {
           const obj = {
             onAuction: false,
@@ -941,7 +902,7 @@ const HotCollectionsTab = (props) => {
               category: "cancelAuction",
             },
           };
-          
+
           const accessJWT = localStorage.getItem("accessJWT");
           const config = {
             headers: {
@@ -950,19 +911,16 @@ const HotCollectionsTab = (props) => {
           };
           Axios.patch("/passDetails/update-nft-pass", obj, config)
             .then((response) => {
-              
               if (response.data.status == "success") {
                 toast.success("NFT Sale Closed");
                 setRefresh(!refresh);
                 setLoading(false);
               } else {
-                
                 toast.error("NFt Sale not closed");
                 setLoading(false);
               }
             })
             .catch((error) => {
-              
               toast.error("NFT Sale not closed");
               setLoading(false);
             });
@@ -991,7 +949,6 @@ const HotCollectionsTab = (props) => {
                 className={classnames({ active: activeTab === "1" })}
                 onClick={() => setActiveTab("1")}
                 style={{ cursor: "pointer" }}
-
               >
                 Sale
               </NavLink>
@@ -1001,7 +958,6 @@ const HotCollectionsTab = (props) => {
                 className={classnames({ active: activeTab === "2" })}
                 onClick={() => setActiveTab("2")}
                 style={{ cursor: "pointer" }}
-
               >
                 Auction
               </NavLink>
@@ -1016,7 +972,6 @@ const HotCollectionsTab = (props) => {
             <ul>
               {passes.length ? (
                 passes.map((data) => {
-                  
                   return (
                     <>
                       {/* <Link
@@ -1053,7 +1008,13 @@ const HotCollectionsTab = (props) => {
                                 // }
                               >
                                 <img
-                                  src={data?.fileImageUrl ? data?.fileImageUrl : data?.tokenImage ? data?.tokenImage : ""}
+                                  src={
+                                    data?.fileImageUrl
+                                      ? data?.fileImageUrl
+                                      : data?.tokenImage
+                                      ? data?.tokenImage
+                                      : ""
+                                  }
                                 />
                                 <div className="tshirtIcon">
                                   <FaTshirt />
@@ -1092,7 +1053,15 @@ const HotCollectionsTab = (props) => {
                                     //     flex: 1,
                                     //   }}
                                     // >
-                                    <div className="featpriceOut" style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", flex: 1 }}>
+                                    <div
+                                      className="featpriceOut"
+                                      style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        justifyContent: "space-between",
+                                        flex: 1,
+                                      }}
+                                    >
                                       <Button
                                         className="btm-accept-bid"
                                         style={{
@@ -1108,8 +1077,7 @@ const HotCollectionsTab = (props) => {
                                       >
                                         Accept Bid
                                       </Button>
-                                      &nbsp;
-                                      &nbsp;
+                                      &nbsp; &nbsp;
                                       <Button
                                         className="btn-reject-bid"
                                         style={{
@@ -1125,8 +1093,7 @@ const HotCollectionsTab = (props) => {
                                       >
                                         Reject Bid
                                       </Button>
-                                       &nbsp;
-                                      &nbsp;
+                                      &nbsp; &nbsp;
                                       <Button
                                         className="btn-cancel-bid"
                                         style={{
@@ -1179,8 +1146,10 @@ const HotCollectionsTab = (props) => {
                                   {data?.imageIndex
                                     ? data?.imageIndex
                                     : "Not Revealed"} */}
-         {data.fileName  ? data.fileName : data?.collectionName} {data?.fileName ? "" : "#" + data?.imageIndex}
-
+                                  {data.fileName
+                                    ? data.fileName
+                                    : data?.collectionName}{" "}
+                                  {data?.fileName ? "" : "#" + data?.imageIndex}
                                 </span>
                               </div>
                               <div className="featpriceOut">
