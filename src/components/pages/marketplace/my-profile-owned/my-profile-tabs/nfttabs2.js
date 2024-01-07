@@ -275,16 +275,16 @@ const NftTabs1 = () => {
               bidPrice: "",
               bidder: "",
               creator: data.bidInfo[0].bidder,
-              sellingType: "",
+              sellingType: "All",
               duration: "",
               onMarketplace: false,
               tokenId: data.tokenId,
+              nftPrice: data.bidInfo[0].bidPrice,
               history: {
                 owner: walletAddress,
-                price: data.nftPrice,
+                price: data.bidInfo[0].bidPrice,
                 category: "transfer",
               },
-              
             };
             
             const accessJWT = localStorage.getItem("accessJWT");
@@ -374,13 +374,14 @@ const NftTabs1 = () => {
             bidPrice: "",
             bidder: "",
             creator: data.bidInfo[0].bidder,
-            sellingType: "",
+            sellingType: "All",
             duration: "",
             onMarketplace: false,
             tokenId: data.tokenId,
+            nftPrice: data.bidInfo[0].bidPrice,
             history: {
               owner: walletAddress,
-              price: data.nftPrice,
+              price: data.bidInfo[0].bidPrice,
               category: "transfer",
             },
           };
