@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/static/css/main.e541637a.chunk.css",
-    "main.js": "/static/js/main.ca108031.chunk.js",
+    "main.js": "/static/js/main.b25e6cc0.chunk.js",
     "runtime-main.js": "/static/js/runtime-main.79b8f66f.js",
     "static/css/2.48575f49.chunk.css": "/static/css/2.48575f49.chunk.css",
-    "static/js/2.eaea5a35.chunk.js": "/static/js/2.eaea5a35.chunk.js",
+    "static/js/2.0575b2c9.chunk.js": "/static/js/2.0575b2c9.chunk.js",
     "static/js/3.7b597790.chunk.js": "/static/js/3.7b597790.chunk.js",
     "index.html": "/index.html",
-    "static/js/2.eaea5a35.chunk.js.LICENSE.txt": "/static/js/2.eaea5a35.chunk.js.LICENSE.txt",
+    "static/js/2.0575b2c9.chunk.js.LICENSE.txt": "/static/js/2.0575b2c9.chunk.js.LICENSE.txt",
     "static/media/Art_Dark.91f10d69.png": "/static/media/Art_Dark.91f10d69.png",
     "static/media/Art_Day.f977dc31.png": "/static/media/Art_Day.f977dc31.png",
     "static/media/Collectibles_Dark.6e4805a8.png": "/static/media/Collectibles_Dark.6e4805a8.png",
@@ -123,8 +123,8 @@
   "entrypoints": [
     "static/js/runtime-main.79b8f66f.js",
     "static/css/2.48575f49.chunk.css",
-    "static/js/2.eaea5a35.chunk.js",
+    "static/js/2.0575b2c9.chunk.js",
     "static/css/main.e541637a.chunk.css",
-    "static/js/main.ca108031.chunk.js"
+    "static/js/main.b25e6cc0.chunk.js"
   ]
 }

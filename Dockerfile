@@ -28,10 +28,10 @@ RUN npm install
 COPY . .
 
 # Set environment variables
-ENV REACT_APP_URL=https://kdafrontned.onrender.com/
+ENV REACT_APP_URL=https://kryptomerch.onrender.com/
 ENV REACT_APP_API_KEY=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
-ENV REACT_APP_NETWORK_ID=testnet04
-ENV REACT_APP_CHAIN_ID=1
+ENV REACT_APP_NETWORK_ID=mainnet01
+ENV REACT_APP_CHAIN_ID=8
 ENV REACT_APP_NODE_URL=https://goku-backend-production.up.railway.app/
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 
@@ -52,7 +52,10 @@ COPY . .
 # COPY --from=node /usr/local/include /usr/local/include
 # COPY --from=node /usr/local/bin /usr/local/bin
 
-FROM node:18.17.1-alpine3.18
+FROM node:20.10.0-alpine3.19
+
+RUN apk add --no-cache openssl=3.1.4-r3
+
 
 # Install dependencies
  RUN npm install -g npm@latest
