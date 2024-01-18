@@ -17,7 +17,7 @@
     "@walletconnect/node": "^1.0.0",
     "@walletconnect/qrcode-modal": "^1.8.0",
     "apexcharts": "^3.44.0",
-    "axios": "^0.27.2",
+    "axios": "^1.6.0",
     "bfj": "^7.0.2",
     "bootstrap": "^5.2.0",
     "camelcase": "^6.1.0",
