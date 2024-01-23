@@ -24,7 +24,7 @@ export const RegisterationModal = (props) => {
 
     if (name == "email") {
       //validate email
-      const emailRegex = /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
       if (!emailRegex.test(value)) {
         toast.error("Please enter a valid email address", {
           position: "top-right",

@@ -80,7 +80,7 @@ const ConnectPopup = () => {
         break;
 
       case "email":
-        const emailRegex = /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
         setEmail(value.toLowerCase());
         if (!emailRegex.test(value)) {
           setEmailError("Please enter a valid email address");
@@ -290,7 +290,7 @@ const ConnectPopup = () => {
       email: email,
     };
     //email regex
-    const emailRegex = /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (!emailRegex.test(email)) {
       toast.error("Please enter a valid email address", {
         position: "top-right",
